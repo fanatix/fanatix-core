@@ -1,0 +1,1 @@
+UPDATE instance_template SET script='instance_hellfire_ramparts' WHERE map=543;
