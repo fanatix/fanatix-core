@@ -63,7 +63,7 @@ void PetAI::MoveInLineOfSight(Unit *u)
 
 void PetAI::AttackStart(Unit *u)
 {
-    if( inCombat || !u || (i_pet.isPet() && ((Pet&)i_pet).getPetType() == MINI_PET) )
+    if( !u || (inCombat && i_pet.getVictim()) || (i_pet.isPet() && ((Pet&)i_pet).getPetType() == MINI_PET) )
         return;
 
     if(i_pet.Attack(u,true))
@@ -162,7 +162,7 @@ void PetAI::UpdateAI(const uint32 diff)
                     return;
             }
             // not required to be stopped case
-            else if( i_pet.isAttackReady() && i_pet.canReachWithAttack(i_pet.getVictim()) )
+            else if( i_pet.isAttackReady() && i_pet.IsWithinDistInMap(i_pet.getVictim(), ATTACK_DISTANCE) )
             {
                 i_pet.AttackerStateUpdate(i_pet.getVictim());
 
@@ -298,7 +298,7 @@ void PetAI::UpdateAllies()
     Unit* owner = i_pet.GetCharmerOrOwner();
     Group *pGroup = NULL;
 
-    m_updateAlliesTimer = 10000;                            //update friendly targets every 10 seconds, lesser checks increase performance
+    m_updateAlliesTimer = 10*IN_MILISECONDS;                //update friendly targets every 10 seconds, lesser checks increase performance
 
     if(!owner)
         return;
@@ -336,6 +336,6 @@ void PetAI::AttackedBy(Unit *attacker)
 {
     //when attacked, fight back in case 1)no victim already AND 2)not set to passive AND 3)not set to stay, unless can it can reach attacker with melee attack anyway
     if(!i_pet.getVictim() && i_pet.GetCharmInfo() && !i_pet.GetCharmInfo()->HasReactState(REACT_PASSIVE) &&
-        (!i_pet.GetCharmInfo()->HasCommandState(COMMAND_STAY) || i_pet.canReachWithAttack(attacker)))
+        (!i_pet.GetCharmInfo()->HasCommandState(COMMAND_STAY) || i_pet.IsWithinDistInMap(i_pet.getVictim(), ATTACK_DISTANCE)))
         AttackStart(attacker);
 }

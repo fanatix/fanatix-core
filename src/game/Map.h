@@ -73,7 +73,7 @@ typedef MaNGOS::SingleThreaded<GridRWLock>::Lock NullGuard;
 // Map file format defines
 //******************************************
 #define MAP_MAGIC             'SPAM'
-#define MAP_VERSION_MAGIC     '0.1v'
+#define MAP_VERSION_MAGIC     '2.1v'
 #define MAP_AREA_MAGIC        'AERA'
 #define MAP_HEIGTH_MAGIC      'TGHM'
 #define MAP_LIQUID_MAGIC      'QILM'
@@ -97,9 +97,13 @@ struct map_areaHeader{
 };
 
 #define MAP_HEIGHT_NO_HIGHT   0x0001
+#define MAP_HEIGHT_AS_INT16   0x0002
+#define MAP_HEIGHT_AS_INT8    0x0004
+
 struct map_heightHeader{
     uint32 fourcc;
     uint32 flags;
+    uint16 int_store_mode;
     float  gridHeight;
 };
 
@@ -116,23 +120,33 @@ struct map_liquidHeader{
     float  liquidLevel;
 };
 
-#define LIQUID_MAP_ABOVE_WATER  0x00000001
-#define LIQUID_MAP_WATER_WALK   0x00000002
-#define LIQUID_MAP_IN_WATER     0x00000004
-#define LIQUID_MAP_UNDER_WATER  0x00000008
+enum ZLiquidStatus{
+    LIQUID_MAP_NO_WATER     = 0x00000000,
+    LIQUID_MAP_ABOVE_WATER  = 0x00000001,
+    LIQUID_MAP_WATER_WALK   = 0x00000002,
+    LIQUID_MAP_IN_WATER     = 0x00000004,
+    LIQUID_MAP_UNDER_WATER  = 0x00000008
+};
 
-#define LIQUID_TYPE_NO_WATER    0x00
-#define LIQUID_TYPE_WATER       0x01
-#define LIQUID_TYPE_LAVA        0x02
-#define LIQUID_TYPE_DARK_WATER  0x04
+#define MAP_LIQUID_TYPE_NO_WATER    0x00
+#define MAP_LIQUID_TYPE_WATER       0x01
+#define MAP_LIQUID_TYPE_OCEAN       0x02
+#define MAP_LIQUID_TYPE_MAGMA       0x04
+#define MAP_LIQUID_TYPE_SLIME       0x08
+
+#define MAP_ALL_LIQUIDS   (MAP_LIQUID_TYPE_WATER | MAP_LIQUID_TYPE_OCEAN | MAP_LIQUID_TYPE_MAGMA | MAP_LIQUID_TYPE_SLIME)
+
+#define MAP_LIQUID_TYPE_DARK_WATER  0x10
+#define MAP_LIQUID_TYPE_WMO_WATER   0x20
 
 struct LiquidData{
-    uint32 liquidStatus;
     uint32 type;
     float  level;
     float  depth_level;
 };
 
+#define GRID_MAP_HEIGHT_AS_INT16   0x01
+#define GRID_MAP_HEIGHT_AS_INT8    0x02
 class GridMap
 {
     uint32  m_flags;
@@ -140,9 +154,18 @@ class GridMap
     uint16  m_gridArea;
     uint16 *m_area_map;
     // Height level data
+    uint16  m_height_step;
     float   m_gridHeight;
-    float  *m_V9;
-    float  *m_V8;
+    union{
+        float  *m_V9;
+        uint16 *m_uint16_V9;
+        uint8  *m_uint8_V9;
+    };
+    union{
+        float  *m_V8;
+        uint16 *m_uint16_V8;
+        uint8  *m_uint8_V8;
+    };
     // Liquid data
     uint16  m_liquidType;
     uint8   m_liquid_offX;
@@ -159,12 +182,17 @@ public:
     bool  loadAreaData(FILE *in, uint32 offset, uint32 size);
     bool  loadHeihgtData(FILE *in, uint32 offset, uint32 size);
     bool  loadLiquidData(FILE *in, uint32 offset, uint32 size);
+    void  unloadData();
 
     uint16 getArea(float x, float y);
+    float  getHeightFromFloat(float x, float y);
+    float  getHeightFromUint16(float x, float y);
+    float  getHeightFromUint8(float x, float y);
+
     float  getHeight(float x, float y);
     float  getLiquidLevel(float x, float y);
     uint8  getTerrainType(float x, float y);
-    bool   getLiquidStatus(float x, float y, float z, LiquidData *data);
+    ZLiquidStatus getLiquidStatus(float x, float y, float z, uint8 ReqLiquidType, LiquidData *data = 0);
 };
 
 struct CreatureMover
@@ -284,6 +312,8 @@ class MANGOS_DLL_SPEC Map : public GridRefManager<NGridType>, public MaNGOS::Obj
         float GetHeight(float x, float y, float z, bool pCheckVMap=true) const;
         bool IsInWater(float x, float y, float z) const;    // does not use z pos. This is for future use
 
+        ZLiquidStatus getLiquidStatus(float x, float y, float z, uint8 ReqLiquidType, LiquidData *data = 0) const;
+
         uint16 GetAreaFlag(float x, float y, float z) const;
         uint8 GetTerrainType(float x, float y ) const;
         float GetWaterLevel(float x, float y ) const;
@@ -310,8 +340,8 @@ class MANGOS_DLL_SPEC Map : public GridRefManager<NGridType>, public MaNGOS::Obj
         // assert print helper
         bool CheckGridIntegrity(Creature* c, bool moved) const;
 
-        uint32 GetInstanceId() { return i_InstanceId; }
-        uint8 GetSpawnMode() { return (i_spawnMode); }
+        uint32 GetInstanceId() const { return i_InstanceId; }
+        uint8 GetSpawnMode() const { return (i_spawnMode); }
         virtual bool CanEnter(Player* /*player*/) { return true; }
         const char* GetMapName() const;
 
@@ -371,6 +401,7 @@ class MANGOS_DLL_SPEC Map : public GridRefManager<NGridType>, public MaNGOS::Obj
     private:
         void LoadVMap(int pX, int pY);
         void LoadMap(uint32 mapid, uint32 instanceid, int x,int y);
+        GridMap *GetGrid(float x, float y);
 
         void SetTimer(uint32 t) { i_gridExpiry = t < MIN_GRID_DELAY ? MIN_GRID_DELAY : t; }
         //uint64 CalculateGridMask(const uint32 &y) const;
@@ -456,26 +487,22 @@ class MANGOS_DLL_SPEC Map : public GridRefManager<NGridType>, public MaNGOS::Obj
         template<class T>
         void AddToActiveHelper(T* obj)
         {
-            if(obj->isActiveObject())
-                m_activeNonPlayers.insert(obj);
+            m_activeNonPlayers.insert(obj);
         }
 
         template<class T>
         void RemoveFromActiveHelper(T* obj)
         {
-            if(obj->isActiveObject())
+            // Map::Update for active object in proccess
+            if(m_activeNonPlayersIter != m_activeNonPlayers.end())
             {
-                // Map::Update for active object in proccess
-                if(m_activeNonPlayersIter != m_activeNonPlayers.end())
-                {
-                    ActiveNonPlayers::iterator itr = m_activeNonPlayers.find(obj);
-                    if(itr==m_activeNonPlayersIter)
-                        ++m_activeNonPlayersIter;
-                    m_activeNonPlayers.erase(itr);
-                }
-                else
-                    m_activeNonPlayers.erase(obj);
+                ActiveNonPlayers::iterator itr = m_activeNonPlayers.find(obj);
+                if(itr==m_activeNonPlayersIter)
+                    ++m_activeNonPlayersIter;
+                m_activeNonPlayers.erase(itr);
             }
+            else
+                m_activeNonPlayers.erase(obj);
         }
 };
 
