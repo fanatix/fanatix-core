@@ -78,6 +78,8 @@ extern void AddSC_generic_creature();
 extern void AddSC_npc_acherus_taxi();
 extern void AddSC_npc_wyrmresttempel_taxi();
 extern void AddSC_teleguy();
+extern void AddSC_npc_paymaster();
+extern void AddSC_npc_sickness();
 
 // -- Examples --
 extern void AddSC_example_creature();
@@ -218,6 +220,7 @@ extern void AddSC_burning_steppes();
 extern void AddSC_hyjal();
 extern void AddSC_boss_archimonde();
 extern void AddSC_instance_mount_hyjal();
+extern void AddSC_boss_rage_winterchill();
 
 //--Old Hillsbrad
 extern void AddSC_boss_captain_skarloc();
@@ -241,6 +244,7 @@ extern void AddSC_boss_lady_vashj();
 extern void AddSC_boss_leotheras_the_blind();
 extern void AddSC_boss_morogrim_tidewalker();
 extern void AddSC_instance_serpentshrine_cavern();
+extern void AddSC_mob_underbog_colossus();
 
 //--Slave Pens
 
@@ -487,6 +491,15 @@ extern void AddSC_instance_stratholme();
 extern void AddSC_stratholme();
 
 //Sunken Temple
+//Sunwell Plateau
+extern void AddSC_instance_sunwell_plateau();
+extern void AddSC_boss_kalecgos();
+extern void AddSC_boss_brutallus();
+extern void AddSC_boss_felmist();
+extern void AddSC_boss_eredar_twins();
+extern void AddSC_boss_muru_entropius();
+//extern void AddSC_boss_kiljaeden();
+//Swamp of Sorrows
 //Tanaris
 extern void AddSC_tanaris();
 
@@ -582,9 +595,14 @@ extern void AddSC_boss_wushoolay();
 extern void AddSC_instance_zulgurub();
 
 //Zul'Aman
-extern void AddSC_boss_janalai();
-extern void AddSC_boss_nalorakk();
 extern void AddSC_instance_zulaman();
+extern void AddSC_zulaman();
+extern void AddSC_boss_nalorakk();
+extern void AddSC_boss_akilzon();
+extern void AddSC_boss_janalai();
+extern void AddSC_boss_halazzi();
+extern void AddSC_boss_hex_lord_malacrass();
+extern void AddSC_boss_zuljin();
 extern void AddSC_zulaman();
 
 //WOTLK BY NOTAGAIN
@@ -1487,6 +1505,8 @@ void ScriptsInit()
     AddSC_npc_acherus_taxi();
     AddSC_npc_wyrmresttempel_taxi();
     AddSC_teleguy();
+	AddSC_npc_paymaster();
+	AddSC_npc_sickness();
 
     // -- Examples --
     AddSC_example_creature();
@@ -1628,6 +1648,7 @@ void ScriptsInit()
     AddSC_hyjal();
     AddSC_boss_archimonde();
     AddSC_instance_mount_hyjal();
+	AddSC_boss_rage_winterchill();
 
     //--Old Hillsbrad
     AddSC_boss_captain_skarloc();
@@ -1651,9 +1672,11 @@ void ScriptsInit()
     AddSC_boss_leotheras_the_blind();
     AddSC_boss_morogrim_tidewalker();
     AddSC_instance_serpentshrine_cavern();
+	AddSC_mob_underbog_colossus();
 
     //--Slave Pens
     //--Steam Vault
+	AddSC_mob_underbog_colossus();
     AddSC_boss_hydromancer_thespia();
     AddSC_boss_mekgineer_steamrigger();
     AddSC_boss_warlord_kalithresh();
@@ -1896,6 +1919,15 @@ void ScriptsInit()
     AddSC_stratholme();
 
     //Sunken Temple
+	//Sunwell Plateau
+    AddSC_instance_sunwell_plateau();
+    AddSC_boss_kalecgos();
+    AddSC_boss_brutallus();
+    AddSC_boss_felmist();
+    AddSC_boss_eredar_twins();
+    AddSC_boss_muru_entropius();
+    //AddSC_boss_kiljaeden();
+
     //Tanaris
     AddSC_tanaris();
 
@@ -1991,9 +2023,14 @@ void ScriptsInit()
     AddSC_instance_zulgurub();
 
     //Zul'Aman
-    AddSC_boss_janalai();
-    AddSC_boss_nalorakk();
     AddSC_instance_zulaman();
+    AddSC_zulaman();
+    AddSC_boss_nalorakk();
+    AddSC_boss_akilzon();
+    AddSC_boss_janalai();
+    AddSC_boss_halazzi();
+    AddSC_boss_hex_lord_malacrass();
+    AddSC_boss_zuljin();
     AddSC_zulaman();
     
    //WOTLK BY NOTAGAIN

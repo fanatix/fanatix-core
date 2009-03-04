@@ -480,7 +480,15 @@
 					>
 				</File>
 				<File
+					RelativePath="..\scripts\custom\npc_sickness.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\scripts\custom\npc_wyrmresttempel_taxi.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\scripts\custom\paymaster.cpp"
 					>
 				</File>
 				<File
@@ -1961,6 +1969,10 @@
 							RelativePath="..\scripts\zone\coilfang_resevoir\serpent_shrine\instance_serpent_shrine.cpp"
 							>
 						</File>
+						<File
+							RelativePath="..\scripts\zone\coilfang_resevoir\serpent_shrine\mob_underbog_colossus.cpp"
+							>
+						</File>
 					</Filter>
 					<Filter
 						Name="Slave Pens"
@@ -2035,6 +2047,10 @@
 						>
 						<File
 							RelativePath="..\scripts\zone\caverns_of_time\hyjal\boss_archimonde.cpp"
+							>
+						</File>
+						<File
+							RelativePath="..\scripts\zone\caverns_of_time\hyjal\boss_rage_winterchill.cpp"
 							>
 						</File>
 						<File
@@ -2175,11 +2191,27 @@
 					Name="Zul&apos;Aman"
 					>
 					<File
+						RelativePath="..\scripts\zone\zulaman\boss_akilzon.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\scripts\zone\zulaman\boss_halazzi.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\scripts\zone\zulaman\boss_hexlord.cpp"
+						>
+					</File>
+					<File
 						RelativePath="..\scripts\zone\zulaman\boss_janalai.cpp"
 						>
 					</File>
 					<File
 						RelativePath="..\scripts\zone\zulaman\boss_nalorakk.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\scripts\zone\zulaman\boss_zuljin.cpp"
 						>
 					</File>
 					<File
@@ -2239,7 +2271,23 @@
 						>
 					</File>
 					<File
+						RelativePath="..\scripts\zone\sunwell_plateau\boss_eredar_twins.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\scripts\zone\sunwell_plateau\boss_felmist.cpp"
+						>
+					</File>
+					<File
 						RelativePath="..\scripts\zone\sunwell_plateau\boss_kalecgos.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\scripts\zone\sunwell_plateau\boss_kiljaeden.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\scripts\zone\sunwell_plateau\boss_muru_entropius.cpp"
 						>
 					</File>
 					<File
