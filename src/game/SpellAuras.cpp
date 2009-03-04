@@ -579,7 +579,7 @@ void Aura::Update(uint32 diff)
             {
                 Powers powertype = Powers(m_spellProto->powerType);
                 int32 manaPerSecond = m_spellProto->manaPerSecond + m_spellProto->manaPerSecondPerLevel * caster->getLevel();
-                m_timeCla = 1000;
+                m_timeCla = 1*IN_MILISECONDS;
                 if (manaPerSecond)
                 {
                     if(powertype==POWER_HEALTH)
@@ -938,6 +938,16 @@ void Aura::_AddAura()
 
     Unit* caster = GetCaster();
 
+    // set infinity cooldown state for spells
+    if(caster && caster->GetTypeId() == TYPEID_PLAYER)
+    {
+        if (m_spellProto->Attributes & SPELL_ATTR_DISABLED_WHILE_ACTIVE)
+        {
+            Item* castItem = m_castItemGuid ? ((Player*)caster)->GetItemByGuid(m_castItemGuid) : NULL;
+            ((Player*)caster)->AddSpellAndCategoryCooldowns(m_spellProto,castItem ? castItem->GetEntry() : 0, NULL,true);
+        }
+    }
+
     // passive auras (except totem auras) do not get placed in the slots
     // area auras with SPELL_AURA_NONE are not shown on target
     if((!m_isPassive || (caster && caster->GetTypeId() == TYPEID_UNIT && ((Creature*)caster)->isTotem())) &&
@@ -1120,6 +1130,7 @@ void Aura::_RemoveAura()
         if(caster && caster->GetTypeId() == TYPEID_PLAYER)
         {
             if ( GetSpellProto()->Attributes & SPELL_ATTR_DISABLED_WHILE_ACTIVE )
+                // note: item based cooldowns and cooldown spell mods with charges ignored (unknown existed cases)
                 ((Player*)caster)->SendCooldownEvent(GetSpellProto());
         }
     }
@@ -2126,6 +2137,22 @@ void Aura::HandleAuraDummy(bool apply, bool Real)
                 m_modifier.m_amount = caster->SpellHealingBonus(m_target, GetSpellProto(), m_modifier.m_amount, SPELL_DIRECT_DAMAGE);
             return;
         }
+
+        // some auras applied at aura apply
+        if(GetEffIndex()==0 && m_target->GetTypeId()==TYPEID_PLAYER)
+        {
+            SpellAreaForAreaMapBounds saBounds = spellmgr.GetSpellAreaForAuraMapBounds(GetId());
+            if(saBounds.first != saBounds.second)
+            {
+                uint32 zone = m_target->GetZoneId();
+                uint32 area = m_target->GetAreaId();
+
+                for(SpellAreaForAreaMap::const_iterator itr = saBounds.first; itr != saBounds.second; ++itr)
+                    if(itr->second->autocast && itr->second->IsFitToRequirements((Player*)m_target,zone,area))
+                        if( !m_target->HasAura(itr->second->spellId,0) )
+                            m_target->CastSpell(m_target,itr->second->spellId,true);
+            }
+        }
     }
     // AT REMOVE
     else
@@ -2171,29 +2198,38 @@ void Aura::HandleAuraDummy(bool apply, bool Real)
             return;
         }
 
-        // Waiting to Resurrect
-        if(GetId()==2584)
+        switch(GetId())
         {
-            // Waiting to resurrect spell cancel, we must remove player from resurrect queue
-            if(m_target->GetTypeId() == TYPEID_PLAYER)
-                if(BattleGround *bg = ((Player*)m_target)->GetBattleGround())
-                    bg->RemovePlayerFromResurrectQueue(m_target->GetGUID());
-            return;
+            case 2584:                                      // Waiting to Resurrect
+            {
+                // Waiting to resurrect spell cancel, we must remove player from resurrect queue
+                if(m_target->GetTypeId() == TYPEID_PLAYER)
+                    if(BattleGround *bg = ((Player*)m_target)->GetBattleGround())
+                        bg->RemovePlayerFromResurrectQueue(m_target->GetGUID());
+                return;
+            }
+            case 45934:                                     // Dark Fiend
+            {
+                // Kill target if dispelled
+                if (m_removeMode==AURA_REMOVE_BY_DISPEL)
+                    m_target->DealDamage(m_target, m_target->GetHealth(), NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, NULL, false);
+                return;
+            }
+            case 46308:                                     // Burning Winds
+            {
+                // casted only at creatures at spawn
+                m_target->CastSpell(m_target,47287,true,NULL,this);
+                return;
+            }
         }
 
-        // Dark Fiend
-        if(GetId()==45934)
+        // Living Bomb
+        if(m_spellProto->SpellIconID == 3000 && m_spellProto->SpellFamilyName == SPELLFAMILY_MAGE)
         {
-            // Kill target if dispelled
-            if (m_removeMode==AURA_REMOVE_BY_DISPEL)
-                m_target->DealDamage(m_target, m_target->GetHealth(), NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, NULL, false);
-            return;
-        }
+            if(!m_target)
+                return;
 
-        // Burning Winds
-        if(GetId()==46308)                                  // casted only at creatures at spawn
-        {
-            m_target->CastSpell(m_target,47287,true,NULL,this);
+            m_target->CastSpell(m_target, m_spellProto->EffectBasePoints[1], false);
             return;
         }
 
@@ -2214,6 +2250,21 @@ void Aura::HandleAuraDummy(bool apply, bool Real)
                 return;
             }
 
+        }
+
+        // some auras remove at aura remove
+        if(GetEffIndex()==0 && m_target->GetTypeId()==TYPEID_PLAYER)
+        {
+            SpellAreaForAreaMapBounds saBounds = spellmgr.GetSpellAreaForAuraMapBounds(GetId());
+            if(saBounds.first != saBounds.second)
+            {
+                uint32 zone = m_target->GetZoneId();
+                uint32 area = m_target->GetAreaId();
+
+                for(SpellAreaForAreaMap::const_iterator itr = saBounds.first; itr != saBounds.second; ++itr)
+                    if(!itr->second->IsFitToRequirements((Player*)m_target,zone,area))
+                        m_target->RemoveAurasDueToSpell(itr->second->spellId);
+            }
         }
     }
 
@@ -2861,7 +2912,7 @@ void Aura::HandleAuraTransform(bool apply, bool Real)
             // for players, start regeneration after 1s (in polymorph fast regeneration case)
             // only if caster is Player (after patch 2.4.2)
             if(IS_PLAYER_GUID(GetCasterGUID()) )
-                ((Player*)m_target)->setRegenTimer(1000);
+                ((Player*)m_target)->setRegenTimer(1*IN_MILISECONDS);
 
             //dismount polymorphed target (after patch 2.4.2)
             if (m_target->IsMounted())
@@ -4060,6 +4111,17 @@ void Aura::HandleModMechanicImmunity(bool apply, bool Real)
             m_target->RemoveAurasDueToSpell(24397);
             m_target->RemoveAurasDueToSpell(26592);
         }
+    }
+
+    // Heroic Fury (remove Intercept cooldown)
+    if( apply && GetId() == 60970 && m_target->GetTypeId() == TYPEID_PLAYER )
+    {
+        ((Player*)m_target)->RemoveSpellCooldown(20252);
+
+        WorldPacket data(SMSG_CLEAR_COOLDOWN, (4+8));
+        data << uint32(20252);
+        data << uint64(m_target->GetGUID());
+        ((Player*)m_target)->GetSession()->SendPacket(&data);
     }
 }
 
