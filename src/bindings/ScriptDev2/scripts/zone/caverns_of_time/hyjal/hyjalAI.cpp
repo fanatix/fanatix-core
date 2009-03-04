@@ -205,8 +205,8 @@ void hyjalAI::TeleportRaid(Player* player, float X, float Y, float Z)
     {
         for(Map::PlayerList::const_iterator itr = players.begin(); itr != players.end(); ++itr)
         {
-        (*itr)->CastSpell((*itr), SPELL_TELEPORT_VISUAL, true);
-        DoTeleportPlayer((*itr), X,Y,Z,(*itr)->GetOrientation());
+//        (*itr)->CastSpell((*itr), SPELL_TELEPORT_VISUAL, true);
+//        DoTeleportPlayer((*itr), X,Y,Z,(*itr)->GetOrientation());
         }
     }
 }
