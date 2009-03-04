@@ -22,6 +22,7 @@ SDCategory: Game Objects
 EndScriptData */
 
 /* ContentData
+go_cat_figurine (the "trap" version of GO, two different exist)
 go_northern_crystal_pylon
 go_eastern_crystal_pylon
 go_western_crystal_pylon
@@ -30,7 +31,6 @@ go_field_repair_bot_74A
 go_orb_of_command
 go_tablet_of_madness
 go_tablet_of_the_seven
-go_cat_figurine
 EndContentData */
 
 #include "precompiled.h"
