@@ -16,7 +16,7 @@
 
 /* ScriptData
 SDName: Boss_Nightbane
-SD%Complete: 95
+SD%Complete: 0
 SDComment: Place holder
 SDCategory: Karazhan
 EndScriptData */

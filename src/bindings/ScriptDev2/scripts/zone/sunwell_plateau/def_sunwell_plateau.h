@@ -1,9 +1,11 @@
-/* Copyright (C) 2006 - 2009 ScriptDev2 <https://scriptdev2.svn.sourceforge.net/>
+/* Copyright (C) 2006 - 2008 ScriptDev2 <https://scriptdev2.svn.sourceforge.net/>
  * This program is free software licensed under GPL version 2
  * Please see the included DOCS/LICENSE.TXT for more information */
 
 #ifndef DEF_SUNWELLPLATEAU_H
 #define DEF_SUNWELLPLATEAU_H
+
+extern uint64 KalecWall;
 
 /*** Encounters ***/
 #define DATA_KALECGOS_EVENT         0
@@ -22,6 +24,7 @@
 #define DATA_ALYTHESS               11
 #define DATA_SACROLASH              12
 #define DATA_MURU                   13
+#define DATA_ENTROPIUS		    32
 #define DATA_KILJAEDEN              14
 #define DATA_KILJAEDEN_CONTROLLER   15
 #define DATA_ANVEENA                16
@@ -34,6 +37,10 @@
 #define DATA_GATE_3                 21
 #define DATA_GATE_4                 22
 #define DATA_GATE_5                 23
+#define DATA_KALECGOS_GATE          28
+#define DATA_KALECGOS_FIGHT_GATE_A  29
+#define DATA_KALECGOS_FIGHT_GATE_B  30
+#define DATA_FELMIST_GATE           31
 
 /*** Misc ***/
 #define DATA_PLAYER_SPECTRAL_REALM  24

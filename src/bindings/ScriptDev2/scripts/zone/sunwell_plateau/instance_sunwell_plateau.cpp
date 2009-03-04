@@ -1,4 +1,4 @@
-/* Copyright (C) 2006 - 2009 ScriptDev2 <https://scriptdev2.svn.sourceforge.net/>
+/* Copyright (C) 2006 - 2008 ScriptDev2 <https://scriptdev2.svn.sourceforge.net/>
  * This program is free software licensed under GPL version 2
  * Please see the included DOCS/LICENSE.TXT for more information */
 
@@ -51,6 +51,7 @@ struct MANGOS_DLL_DECL instance_sunwell_plateau : public ScriptedInstance
     uint64 Alythess;
     uint64 Sacrolash;
     uint64 Muru;
+    uint64 Entropius;
     uint64 KilJaeden;
     uint64 KilJaedenController;
     uint64 Anveena;
@@ -59,7 +60,11 @@ struct MANGOS_DLL_DECL instance_sunwell_plateau : public ScriptedInstance
     uint64 ForceField;                                      // Kalecgos Encounter
     uint64 FireBarrier;                                     // Brutallus Encounter
     uint64 Gate[5];                                         // Rename this to be more specific after door placement is verified.
-
+    uint64 KalecWall;
+    uint64 KalecFightWallA;
+    uint64 KalecFightWallB;
+    uint64 FelmistWall;
+    
     /*** Misc ***/
     uint32 SpectralRealmTimer;
     std::vector<uint64> SpectralRealmList;
@@ -75,6 +80,7 @@ struct MANGOS_DLL_DECL instance_sunwell_plateau : public ScriptedInstance
         Alythess                = 0;
         Sacrolash               = 0;
         Muru                    = 0;
+	 Entropius		    = 0;
         KilJaeden               = 0;
         KilJaedenController     = 0;
         Anveena                 = 0;
@@ -87,6 +93,10 @@ struct MANGOS_DLL_DECL instance_sunwell_plateau : public ScriptedInstance
         Gate[2]     = 0;
         Gate[3]     = 0;
         Gate[4]     = 0;
+        KalecWall   = 0;
+        KalecFightWallA = 0;
+        KalecFightWallB = 0;
+	 FelmistWall = 0;
 
         /*** Encounters ***/
         for(uint8 i = 0; i < ENCOUNTERS; ++i)
@@ -107,16 +117,17 @@ struct MANGOS_DLL_DECL instance_sunwell_plateau : public ScriptedInstance
 
     void OnCreatureCreate(Creature* creature, uint32 entry)
     {
-        switch(creature->GetEntry())
+        switch(entry)
         {
             case 24850: Kalecgos_Dragon     = creature->GetGUID(); break;
             case 24891: Kalecgos_Human      = creature->GetGUID(); break;
-            case 24892: Sathrovarr          = creature->GetGUID(); break;
+            case 24892: Sathrovarr          = creature->GetGUID(); creature->SetVisibility(VISIBILITY_OFF); creature->setFaction(35); break;
             case 24882: Brutallus           = creature->GetGUID(); break;
-            case 25038: Felmyst             = creature->GetGUID(); break;
+            case 25038: Felmyst             = creature->GetGUID(); creature->SetVisibility(VISIBILITY_OFF); creature->setFaction(35); break;
             case 25166: Alythess            = creature->GetGUID(); break;
             case 25165: Sacrolash           = creature->GetGUID(); break;
             case 25741: Muru                = creature->GetGUID(); break;
+	     case 25840: Entropius		  = creature->GetGUID(); creature->SetVisibility(VISIBILITY_OFF); creature->setFaction(35); break;
             case 25315: KilJaeden           = creature->GetGUID(); break;
             case 25608: KilJaedenController = creature->GetGUID(); break;
             case 26046: Anveena             = creature->GetGUID(); break;
@@ -128,12 +139,16 @@ struct MANGOS_DLL_DECL instance_sunwell_plateau : public ScriptedInstance
         switch(gobj->GetEntry())
         {
             case 188421: ForceField     = gobj->GetGUID(); break;
-            case 188075: FireBarrier    = gobj->GetGUID(); break;
+            case 188075: FireBarrier    = gobj->GetGUID(); if(GetData(DATA_BRUTALLUS_EVENT) == DONE) gobj->SetGoState(0); break;
             case 187979: Gate[0]        = gobj->GetGUID(); break;
             case 187770: Gate[1]        = gobj->GetGUID(); break;
             case 187896: Gate[2]        = gobj->GetGUID(); break;
-            case 187990: Gate[3]        = gobj->GetGUID(); break;
-            case 188118: Gate[4]        = gobj->GetGUID(); break;
+            case 187990: Gate[3]        = gobj->GetGUID(); if(GetData(DATA_EREDAR_TWINS_EVENT) == DONE) gobj->SetGoState(0); break;
+            case 188118: Gate[4]        = gobj->GetGUID(); if(GetData(DATA_MURU_EVENT) == DONE) gobj->SetGoState(0); break;
+            case 185483: KalecWall      = gobj->GetGUID(); if(GetData(DATA_KALECGOS_EVENT) == DONE) gobj->SetGoState(0); break;
+            case 186261: KalecFightWallA = gobj->GetGUID(); break;
+            case 186262: KalecFightWallB = gobj->GetGUID(); break;
+	     case 175946: FelmistWall    = gobj->GetGUID(); if(GetData(DATA_FELMYST_EVENT) == DONE) gobj->SetGoState(0); break;
         }
     }
 
@@ -156,18 +171,26 @@ struct MANGOS_DLL_DECL instance_sunwell_plateau : public ScriptedInstance
     {
         switch(id)
         {
-            case DATA_KALECGOS_DRAGON:      return Kalecgos_Dragon;     break;
-            case DATA_KALECGOS_HUMAN:       return Kalecgos_Human;      break;
-            case DATA_SATHROVARR:           return Sathrovarr;          break;
-            case DATA_BRUTALLUS:            return Brutallus;           break;
-            case DATA_FELMYST:              return Felmyst;             break;
-            case DATA_ALYTHESS:             return Alythess;            break;
-            case DATA_SACROLASH:            return Sacrolash;           break;
-            case DATA_MURU:                 return Muru;                break;
-            case DATA_KILJAEDEN:            return KilJaeden;           break;
-            case DATA_KILJAEDEN_CONTROLLER: return KilJaedenController; break;
-            case DATA_ANVEENA:              return Anveena;             break;
-
+            case DATA_KALECGOS_DRAGON:        return Kalecgos_Dragon;     break;
+            case DATA_KALECGOS_HUMAN:         return Kalecgos_Human;      break;
+            case DATA_SATHROVARR:             return Sathrovarr;          break;
+            case DATA_BRUTALLUS:              return Brutallus;           break;
+            case DATA_FELMYST:                return Felmyst;             break;
+            case DATA_ALYTHESS:               return Alythess;            break;
+            case DATA_SACROLASH:              return Sacrolash;           break;
+            case DATA_MURU:                   return Muru;                break;
+            case DATA_ENTROPIUS:              return Entropius;           break;
+            case DATA_KILJAEDEN:              return KilJaeden;           break;
+            case DATA_KILJAEDEN_CONTROLLER:   return KilJaedenController; break;
+            case DATA_ANVEENA:                return Anveena;             break;
+            case DATA_KALECGOS_GATE:          return KalecWall;           break;
+            case DATA_KALECGOS_FIGHT_GATE_A:  return KalecFightWallA;     break;
+            case DATA_KALECGOS_FIGHT_GATE_B:  return KalecFightWallB;     break;
+            case DATA_FELMIST_GATE:           return FelmistWall;         break;
+	    case DATA_GATE_4:	              return Gate[4];		  break;
+	    case DATA_GATE_3:		      return Gate[3];		  break;
+            case DATA_GO_FIRE_BARRIER:        return FireBarrier;         break;
+            
             case DATA_RANDOM_SPECTRAL_PLAYER:
                 return *(SpectralRealmList.begin() + rand()%SpectralRealmList.size());
                 break;
@@ -198,6 +221,11 @@ struct MANGOS_DLL_DECL instance_sunwell_plateau : public ScriptedInstance
             case DATA_PLAYER_SPECTRAL_REALM:
                 SpectralRealmList.push_back(guid);
                 break;
+
+	     case DATA_SATHROVARR:      
+		  Sathrovarr = guid;
+		  break;
+
         }
     }
 

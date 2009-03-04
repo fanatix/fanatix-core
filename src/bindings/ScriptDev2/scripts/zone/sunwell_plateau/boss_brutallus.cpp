@@ -72,28 +72,43 @@ struct MANGOS_DLL_DECL boss_brutallusAI : public ScriptedAI
         SlashTimer = 11000;
         StompTimer = 30000;
         BurnTimer = 60000;
-        BerserkTimer = 360000;
+        BerserkTimer = 1800000;
         LoveTimer = 10000 + rand()%7000;
     }
 
     void Aggro(Unit *who)
     {
         DoScriptText(YELL_AGGRO, m_creature);
+	 DoPlaySoundToSet(m_creature, 12463);
     }
 
     void KilledUnit(Unit* victim)
     {
         switch(rand()%3)
         {
-            case 0: DoScriptText(YELL_KILL1, m_creature); break;
-            case 1: DoScriptText(YELL_KILL2, m_creature); break;
-            case 2: DoScriptText(YELL_KILL3, m_creature); break;
+            case 0: DoScriptText(YELL_KILL1, m_creature); DoPlaySoundToSet(m_creature, 12464); break;
+            case 1: DoScriptText(YELL_KILL2, m_creature); DoPlaySoundToSet(m_creature, 12465); break;
+            case 2: DoScriptText(YELL_KILL3, m_creature); DoPlaySoundToSet(m_creature, 12466); break;
         }
     }
 
     void JustDied(Unit* Killer)
     {
         DoScriptText(YELL_DEATH, m_creature);
+	 DoPlaySoundToSet(m_creature, 12471);
+	
+        if (Creature* Felmist = ((Creature*)Unit::GetUnit(*m_creature, pInstance->GetData64(DATA_FELMYST))))
+        {
+               Felmist->SetVisibility(VISIBILITY_ON);
+               Felmist->setFaction(14);
+        }
+
+	if(GameObject* Gate = GameObject::GetGameObject(*m_creature, pInstance->GetData64(DATA_GO_FIRE_BARRIER)))
+	       Gate->SetGoState(0);
+
+        if(pInstance)
+               pInstance->SetData(DATA_BRUTALLUS_EVENT, DONE);
+
     }
 
     void UpdateAI(const uint32 diff)
@@ -105,9 +120,9 @@ struct MANGOS_DLL_DECL boss_brutallusAI : public ScriptedAI
         {
             switch(rand()%3)
             {
-                case 0: DoScriptText(YELL_LOVE1, m_creature); break;
-                case 1: DoScriptText(YELL_LOVE2, m_creature); break;
-                case 2: DoScriptText(YELL_LOVE3, m_creature); break;
+                case 0: DoScriptText(YELL_LOVE1, m_creature); DoPlaySoundToSet(m_creature, 12467); break;
+                case 1: DoScriptText(YELL_LOVE2, m_creature); DoPlaySoundToSet(m_creature, 12468); break;
+                case 2: DoScriptText(YELL_LOVE3, m_creature); DoPlaySoundToSet(m_creature, 12469); break;
             }
             LoveTimer = 15000 + rand()%8000;
         }else LoveTimer -= diff;
@@ -141,6 +156,7 @@ struct MANGOS_DLL_DECL boss_brutallusAI : public ScriptedAI
         if (BerserkTimer < diff)
         {
             DoScriptText(YELL_BERSERK, m_creature);
+	     DoPlaySoundToSet(m_creature, 12470);
             DoCast(m_creature,SPELL_BERSERK);
             BerserkTimer = 20000;
         }

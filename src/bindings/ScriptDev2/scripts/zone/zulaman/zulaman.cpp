@@ -97,6 +97,74 @@ CreatureAI* GetAI_npc_forest_frog(Creature *_Creature)
     return new npc_forest_frogAI (_Creature);
 }
 
+/*######
+## npc_zulaman_hostage
+######*/
+
+#define GOSSIP_HOSTAGE1        "I am glad to help you."
+
+static uint32 HostageInfo[] = {23790, 23999, 24024, 24001};
+
+struct MANGOS_DLL_DECL npc_zulaman_hostageAI : public ScriptedAI
+{
+    npc_zulaman_hostageAI(Creature *c) : ScriptedAI(c) {IsLoot = false;}
+    bool IsLoot;
+    uint64 PlayerGUID;
+    void Reset() {}
+    void Aggro(Unit *who) {}
+    /*void JustDied(Unit *)
+    {
+        Player* player = (Player*)Unit::GetUnit(*m_creature, PlayerGUID);
+        if(player) player->SendLoot(m_creature->GetGUID(), LOOT_CORPSE);
+    }*/
+    void UpdateAI(const uint32 diff)
+    {
+        if(IsLoot) m_creature->CastSpell(m_creature, 7, false);
+    }
+};
+
+bool GossipHello_npc_zulaman_hostage(Player* player, Creature* _Creature)
+{
+    player->ADD_GOSSIP_ITEM(0, GOSSIP_HOSTAGE1, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
+    player->SEND_GOSSIP_MENU(_Creature->GetNpcTextId(), _Creature->GetGUID());
+    return true;
+}
+
+bool GossipSelect_npc_zulaman_hostage(Player* player, Creature* _Creature, uint32 sender, uint32 action)
+{
+    if(action == GOSSIP_ACTION_INFO_DEF + 1)
+        player->CLOSE_GOSSIP_MENU();
+
+    if(!_Creature->HasFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_GOSSIP))
+        return true;
+    _Creature->RemoveFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_GOSSIP);
+
+    ScriptedInstance* pInstance = ((ScriptedInstance*)_Creature->GetInstanceData());
+    if(pInstance)
+    {
+        uint8 progress = pInstance->GetData(DATA_CHESTLOOTED);
+        pInstance->SetData(DATA_CHESTLOOTED, 0);
+        float x, y, z;
+        _Creature->GetPosition(x, y, z);
+        //Creature* summon = _Creature->SummonCreature(HostageInfo[progress], x, y, z, 0, TEMPSUMMON_TIMED_DESPAWN, 300000);
+        Creature* summon = _Creature->SummonCreature(HostageInfo[progress], x-2, y, z, 0, TEMPSUMMON_DEAD_DESPAWN, 0);
+        if(summon)
+        {
+            ((npc_zulaman_hostageAI*)summon->AI())->PlayerGUID = player->GetGUID();
+            ((npc_zulaman_hostageAI*)summon->AI())->IsLoot = true;
+            summon->SetDisplayId(10056);
+            summon->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
+            summon->RemoveFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_GOSSIP);
+        }
+    }
+    return true;
+}
+
+CreatureAI* GetAI_npc_zulaman_hostage(Creature *_Creature)
+{
+    return new npc_zulaman_hostageAI(_Creature);
+}
+
 void AddSC_zulaman()
 {
     Script *newscript;
@@ -104,5 +172,12 @@ void AddSC_zulaman()
     newscript = new Script;
     newscript->Name = "npc_forest_frog";
     newscript->GetAI = &GetAI_npc_forest_frog;
+    newscript->RegisterSelf();
+
+    newscript = new Script;
+    newscript->Name = "npc_zulaman_hostage";
+    newscript->GetAI = &GetAI_npc_zulaman_hostage;
+    newscript->pGossipHello = GossipHello_npc_zulaman_hostage;
+    newscript->pGossipSelect = GossipSelect_npc_zulaman_hostage;
     newscript->RegisterSelf();
 }
