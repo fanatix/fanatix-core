@@ -22,7 +22,7 @@
 DROP TABLE IF EXISTS `db_version`;
 CREATE TABLE `db_version` (
   `version` varchar(120) default NULL,
-  `required_7349_01_mangos_spell_area` bit(1) default NULL
+  `required_7376_01_mangos_spell_area` bit(1) default NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='Used DB version notes';
 
 --
@@ -13047,10 +13047,6 @@ CREATE TABLE `quest_template` (
   `ReqSourceCount2` smallint(5) unsigned NOT NULL default '0',
   `ReqSourceCount3` smallint(5) unsigned NOT NULL default '0',
   `ReqSourceCount4` smallint(5) unsigned NOT NULL default '0',
-  `ReqSourceRef1` tinyint(3) unsigned NOT NULL default '0',
-  `ReqSourceRef2` tinyint(3) unsigned NOT NULL default '0',
-  `ReqSourceRef3` tinyint(3) unsigned NOT NULL default '0',
-  `ReqSourceRef4` tinyint(3) unsigned NOT NULL default '0',
   `ReqCreatureOrGOId1` mediumint(9) NOT NULL default '0',
   `ReqCreatureOrGOId2` mediumint(9) NOT NULL default '0',
   `ReqCreatureOrGOId3` mediumint(9) NOT NULL default '0',
@@ -13299,7 +13295,7 @@ CREATE TABLE `spell_area` (
   `quest_start`        mediumint(8) unsigned NOT NULL default '0',
   `quest_start_active` tinyint(1) unsigned NOT NULL default '0',
   `quest_end`          mediumint(8) unsigned NOT NULL default '0',
-  `aura_spell`         mediumint(8) unsigned NOT NULL default '0',
+  `aura_spell`         mediumint(8) NOT NULL default '0',
   `racemask`           mediumint(8) unsigned NOT NULL default '0',
   `gender`             tinyint(1) unsigned NOT NULL default '2',
   `autocast`           tinyint(1) unsigned NOT NULL default '0',
