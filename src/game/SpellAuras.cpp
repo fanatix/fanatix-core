@@ -2137,22 +2137,6 @@ void Aura::HandleAuraDummy(bool apply, bool Real)
                 m_modifier.m_amount = caster->SpellHealingBonus(m_target, GetSpellProto(), m_modifier.m_amount, SPELL_DIRECT_DAMAGE);
             return;
         }
-
-        // some auras applied at aura apply
-        if(GetEffIndex()==0 && m_target->GetTypeId()==TYPEID_PLAYER)
-        {
-            SpellAreaForAreaMapBounds saBounds = spellmgr.GetSpellAreaForAuraMapBounds(GetId());
-            if(saBounds.first != saBounds.second)
-            {
-                uint32 zone = m_target->GetZoneId();
-                uint32 area = m_target->GetAreaId();
-
-                for(SpellAreaForAreaMap::const_iterator itr = saBounds.first; itr != saBounds.second; ++itr)
-                    if(itr->second->autocast && itr->second->IsFitToRequirements((Player*)m_target,zone,area))
-                        if( !m_target->HasAura(itr->second->spellId,0) )
-                            m_target->CastSpell(m_target,itr->second->spellId,true);
-            }
-        }
     }
     // AT REMOVE
     else
@@ -2250,21 +2234,6 @@ void Aura::HandleAuraDummy(bool apply, bool Real)
                 return;
             }
 
-        }
-
-        // some auras remove at aura remove
-        if(GetEffIndex()==0 && m_target->GetTypeId()==TYPEID_PLAYER)
-        {
-            SpellAreaForAreaMapBounds saBounds = spellmgr.GetSpellAreaForAuraMapBounds(GetId());
-            if(saBounds.first != saBounds.second)
-            {
-                uint32 zone = m_target->GetZoneId();
-                uint32 area = m_target->GetAreaId();
-
-                for(SpellAreaForAreaMap::const_iterator itr = saBounds.first; itr != saBounds.second; ++itr)
-                    if(!itr->second->IsFitToRequirements((Player*)m_target,zone,area))
-                        m_target->RemoveAurasDueToSpell(itr->second->spellId);
-            }
         }
     }
 
@@ -2489,6 +2458,29 @@ void Aura::HandleAuraDummy(bool apply, bool Real)
         else
             m_target->RemovePetAura(petSpell);
         return;
+    }
+
+    if(GetEffIndex()==0 && m_target->GetTypeId()==TYPEID_PLAYER)
+    {
+        SpellAreaForAreaMapBounds saBounds = spellmgr.GetSpellAreaForAuraMapBounds(GetId());
+        if(saBounds.first != saBounds.second)
+        {
+            uint32 zone = m_target->GetZoneId();
+            uint32 area = m_target->GetAreaId();
+
+            for(SpellAreaForAreaMap::const_iterator itr = saBounds.first; itr != saBounds.second; ++itr)
+            {
+                // some auras remove at aura remove
+                if(!itr->second->IsFitToRequirements((Player*)m_target,zone,area))
+                    m_target->RemoveAurasDueToSpell(itr->second->spellId);
+                // some auras applied at aura apply
+                else if(itr->second->autocast)
+                {
+                    if( !m_target->HasAura(itr->second->spellId,0) )
+                        m_target->CastSpell(m_target,itr->second->spellId,true);
+                }
+            }
+        }
     }
 }
 
@@ -6850,6 +6842,29 @@ void Aura::HandlePhase(bool apply, bool Real)
             m_target->SetPhaseMask(apply ? GetMiscValue() : PHASEMASK_NORMAL,false);
 
         ((Player*)m_target)->GetSession()->SendSetPhaseShift(apply ? GetMiscValue() : PHASEMASK_NORMAL);
+
+        if(GetEffIndex()==0)
+        {
+            SpellAreaForAreaMapBounds saBounds = spellmgr.GetSpellAreaForAuraMapBounds(GetId());
+            if(saBounds.first != saBounds.second)
+            {
+                uint32 zone = m_target->GetZoneId();
+                uint32 area = m_target->GetAreaId();
+
+                for(SpellAreaForAreaMap::const_iterator itr = saBounds.first; itr != saBounds.second; ++itr)
+                {
+                    // some auras remove at aura remove
+                    if(!itr->second->IsFitToRequirements((Player*)m_target,zone,area))
+                        m_target->RemoveAurasDueToSpell(itr->second->spellId);
+                    // some auras applied at aura apply
+                    else if(itr->second->autocast)
+                    {
+                        if( !m_target->HasAura(itr->second->spellId,0) )
+                            m_target->CastSpell(m_target,itr->second->spellId,true);
+                    }
+                }
+            }
+        }
     }
     else
         m_target->SetPhaseMask(apply ? GetMiscValue() : PHASEMASK_NORMAL,false);
