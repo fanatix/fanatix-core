@@ -1,4 +1,4 @@
-/* Copyright (C) 2006 - 2008 ScriptDev2 <https://scriptdev2.svn.sourceforge.net/>
+/* Copyright (C) 2006 - 2009 ScriptDev2 <https://scriptdev2.svn.sourceforge.net/>
 * This program is free software; you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
 * the Free Software Foundation; either version 2 of the License, or
@@ -25,6 +25,7 @@ EndScriptData */
 #include "hyjalAI.h"
 #include "Map.h"
 #include "WorldPacket.h"
+#include "sc_creature.h"
 
 float AllianceBase[4][3]= // Locations for summoning waves in Alliance base
 {
@@ -204,9 +205,11 @@ void hyjalAI::TeleportRaid(Player* player, float X, float Y, float Z)
     {
         for(Map::PlayerList::const_iterator itr = players.begin(); itr != players.end(); ++itr)
         {
-            if (Player* player = itr->getSource())
-                player->SendUpdateWorldState(id,state);
+        (*itr)->CastSpell((*itr), SPELL_TELEPORT_VISUAL, true);
+        DoTeleportPlayer((*itr), X,Y,Z,(*itr)->GetOrientation());
         }
+    }
+}
 
 void hyjalAI::StartEvent(Player* player)
 {
@@ -275,25 +278,25 @@ void hyjalAI::Talk(uint32 id)
 }
 
 // Slight workaround for now
-void hyjalAI::UpdateWorldState(uint32 id, uint32 state)
+void hyjalAI::UpdateWorldState(uint32 field, uint32 value)
 {
     Map * map = m_creature->GetMap();
 
-    if(!map->IsDungeon())
+    if (!map->IsDungeon())
         return;
 
     Map::PlayerList const& players = map->GetPlayers();
 
     if (!players.isEmpty())
     {
-            for(Map::PlayerList::const_iterator itr = players.begin(); itr != players.end(); ++itr)
-            {
-                if (Player* player = itr->getSource())
-                    player->SendUpdateWorldState(id,state);
-            }
-    }else debug_log("TSCR: HyjalAI: UpdateWorldState, but PlayerList is empty");
+        for(Map::PlayerList::const_iterator itr = players.begin(); itr != players.end(); ++itr)
+        {
+            if (Player* player = itr->getSource())
+                player->SendUpdateWorldState(field,value);
+        }
+    }else debug_log("SD2: HyjalAI: UpdateWorldState, but PlayerList is empty");
 
-     //remove everything above this line only when/if the core patch for this is accepted and needed
+    //remove everything above this line only when/if the core patch for this is accepted and needed
     //m_creature->GetMap()->UpdateWorldState(field, value);
 }
 
