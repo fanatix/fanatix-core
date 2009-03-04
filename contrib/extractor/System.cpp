@@ -14,10 +14,10 @@
 #include "dbcfile.h"
 #include "mpq_libmpq.h"
 
-extern unsigned int iRes;
-extern ArchiveSet gOpenArchives;
+#include "loadlib\adt.h"
+#include "loadlib\wdt.h"
 
-bool ConvertADT(char*, char*);
+extern ArchiveSet gOpenArchives;
 
 typedef struct
 {
@@ -41,8 +41,6 @@ int extract = EXTRACT_MAP | EXTRACT_DBC;
 
 static char* const langs[] = {"enGB", "enUS", "deDE", "esES", "frFR", "koKR", "zhCN", "zhTW", "enCN", "enTW", "esMX", "ruRU" };
 #define LANG_COUNT 12
-
-#define ADT_RES 64
 
 void CreateDir( const std::string& Path )
 {
@@ -161,10 +159,614 @@ void ReadLiquidTypeTableDBC()
     printf("Done! (%u LiqTypes loaded)\n", LiqType_count);
 }
 
+//
+// Adt file convertor function and data
+//
+
+// Map file format data
+#define MAP_MAGIC             'SPAM'
+#define MAP_VERSION_MAGIC     '3.1v'
+#define MAP_AREA_MAGIC        'AERA'
+#define MAP_HEIGTH_MAGIC      'TGHM'
+#define MAP_LIQUID_MAGIC      'QILM'
+
+struct map_fileheader{
+    uint32 mapMagic;
+    uint32 versionMagic;
+    uint32 areaMapOffset;
+    uint32 areaMapSize;
+    uint32 heightMapOffset;
+    uint32 heightMapSize;
+    uint32 liquidMapOffset;
+    uint32 liquidMapSize;
+};
+
+#define MAP_AREA_NO_AREA      0x0001
+struct map_areaHeader{
+    uint32 fourcc;
+    uint16 flags;
+    uint16 gridArea;
+};
+
+#define MAP_HEIGHT_NO_HIGHT   0x0001
+#define MAP_HEIGHT_AS_INT16   0x0002
+#define MAP_HEIGHT_AS_INT8    0x0004
+
+struct map_heightHeader{
+    uint32 fourcc;
+    uint16 flags;
+    uint16 int_store_mode;
+    float  gridHeight;
+};
+
+#define MAP_LIQUID_TYPE_NO_WATER    0x00
+#define MAP_LIQUID_TYPE_WATER       0x01
+#define MAP_LIQUID_TYPE_OCEAN       0x02
+#define MAP_LIQUID_TYPE_MAGMA       0x04
+#define MAP_LIQUID_TYPE_SLIME       0x08
+
+#define MAP_LIQUID_TYPE_DARK_WATER  0x10
+#define MAP_LIQUID_TYPE_WMO_WATER   0x20
+
+
+#define MAP_LIQUID_NO_TYPE    0x0001
+#define MAP_LIQUID_NO_HIGHT   0x0002
+#define MAP_LIQUID_AS_INT16   0x0004
+
+struct map_liquidHeader{
+    uint32 fourcc;
+    uint16 flags;
+    uint16 liquidType;
+    uint8  offsetX;
+    uint8  offsetY;
+    uint8  width;
+    uint8  height;
+    float  liquidLevel;
+};
+
+uint16 selectInt8StepStore(float maxDiff)
+{
+    // Select store mode from max delta
+         if (maxDiff< 1) return 256;
+    else if (maxDiff< 2) return 256/2;
+    else if (maxDiff< 4) return 256/4;
+    else if (maxDiff< 8) return 256/8;
+    else if (maxDiff<16) return 256/16;
+    else if (maxDiff<32) return 256/32;
+    return 0;
+}
+
+uint16 selectInt16StepStore(float maxDiff)
+{
+         if (maxDiff<   2) return 65536/2;
+    else if (maxDiff<   4) return 65536/4;
+    else if (maxDiff<   8) return 65536/8;
+    else if (maxDiff<  16) return 65536/16;
+    else if (maxDiff<  32) return 65536/32;
+    else if (maxDiff<  64) return 65536/64;
+    else if (maxDiff< 128) return 65536/128;
+    else if (maxDiff< 256) return 65536/256;
+    else if (maxDiff< 512) return 65536/512;
+    else if (maxDiff<1024) return 65536/1024;
+    else if (maxDiff<2048) return 65536/2048;
+    return 0;
+}
+// Temporary data store
+int16 area_flags[ADT_CELLS_PER_GRID][ADT_CELLS_PER_GRID];
+
+float V8[ADT_GRID_SIZE][ADT_GRID_SIZE];
+float V9[ADT_GRID_SIZE+1][ADT_GRID_SIZE+1];
+uint16 int_V8[ADT_GRID_SIZE][ADT_GRID_SIZE];
+uint16 int_V9[ADT_GRID_SIZE+1][ADT_GRID_SIZE+1];
+uint8 byte_V8[ADT_GRID_SIZE][ADT_GRID_SIZE];
+uint8 byte_V9[ADT_GRID_SIZE+1][ADT_GRID_SIZE+1];
+
+int8  liquid_type[ADT_CELLS_PER_GRID][ADT_CELLS_PER_GRID];
+bool  liquid_show[ADT_GRID_SIZE][ADT_GRID_SIZE];
+float liquid_height[ADT_GRID_SIZE+1][ADT_GRID_SIZE+1];
+
+#define SIZE_EL 128
+uint16 m_data[64*SIZE_EL][64*SIZE_EL];
+
+bool ConvertADT(char *filename, char *filename2)
+{
+    ADT_file adt;
+
+    if (!adt.loadFile(filename))
+        return false;
+
+    adt_MCIN *cells = adt.a_grid->getMCIN();
+    if (!cells)
+    {
+        printf("Can't find cells in '%s'\n", filename);
+        return false;
+    }
+
+    memset(liquid_show, 0, sizeof(liquid_show));
+    memset(liquid_type, 0, sizeof(liquid_type));
+    memset(liquid_height, 0, sizeof(liquid_height));
+    memset(area_flags, 0, sizeof(area_flags));
+
+    // Prepare map header
+    map_fileheader map;
+    map.mapMagic = MAP_MAGIC;
+    map.versionMagic = MAP_VERSION_MAGIC;
+
+    // Get area flags data
+    for (int i=0;i<ADT_CELLS_PER_GRID;i++)
+    {
+        for(int j=0;j<ADT_CELLS_PER_GRID;j++)
+        {
+            adt_MCNK * cell = cells->getMCNK(i,j);
+            uint32 areaid = cell->areaid;
+            if(areaid && areaid <= maxAreaId)
+            {
+                if(areas[areaid] != 0xffff)
+                {
+                    area_flags[i][j] = areas[areaid];
+                    continue;
+                }
+                printf("File: filename\nCan't find area flag for areaid %u [%d, %d].\n", filename, areaid, cell->ix, cell->iy);
+            }
+            area_flags[i][j] = 0;
+        }
+    }
+    //============================================
+    // Try pack area data
+    //============================================
+    bool fullAreaData = false;
+    uint32 areaflag = area_flags[0][0];
+    for (int y=0;y<ADT_CELLS_PER_GRID;y++)
+    {
+        for(int x=0;x<ADT_CELLS_PER_GRID;x++)
+        {
+            if(area_flags[y][x]!=areaflag)
+            {
+                fullAreaData = true;
+                break;
+            }
+        }
+    }
+
+    map.areaMapOffset = sizeof(map);
+    map.areaMapSize   = sizeof(map_areaHeader);
+
+    map_areaHeader areaHeader;
+    areaHeader.fourcc = MAP_AREA_MAGIC;
+    areaHeader.flags = 0;
+    if (fullAreaData)
+    {
+        areaHeader.gridArea = 0;
+        map.areaMapSize+=sizeof(area_flags);
+    }
+    else
+    {
+        areaHeader.flags |= MAP_AREA_NO_AREA;
+        areaHeader.gridArea = areaflag;
+    }
+
+    //
+    // Get Height map from grid
+    //
+    for (int i=0;i<ADT_CELLS_PER_GRID;i++)
+    {
+        for(int j=0;j<ADT_CELLS_PER_GRID;j++)
+        {
+            adt_MCNK * cell = cells->getMCNK(i,j);
+            if (!cell)
+                continue;
+            // Height values for triangles stored in order:
+            // 1     2     3     4     5     6     7     8     9
+            //    10    11    12    13    14    15    16    17
+            // 18    19    20    21    22    23    24    25    26
+            //    27    28    29    30    31    32    33    34
+            // . . . . . . . .
+            // For better get height values merge it to V9 and V8 map
+            // V9 height map:
+            // 1     2     3     4     5     6     7     8     9
+            // 18    19    20    21    22    23    24    25    26
+            // . . . . . . . .
+            // V8 height map:
+            //    10    11    12    13    14    15    16    17
+            //    27    28    29    30    31    32    33    34
+            // . . . . . . . .
+
+            // Set map height as grid height
+            for (int y=0; y <= ADT_CELL_SIZE; y++)
+            {
+                int cy = i*ADT_CELL_SIZE + y;
+                for (int x=0; x <= ADT_CELL_SIZE; x++)
+                {
+                    int cx = j*ADT_CELL_SIZE + x;
+                    V9[cy][cx]=cell->ypos;
+                }
+            }
+            for (int y=0; y < ADT_CELL_SIZE; y++)
+            {
+                int cy = i*ADT_CELL_SIZE + y;
+                for (int x=0; x < ADT_CELL_SIZE; x++)
+                {
+                    int cx = j*ADT_CELL_SIZE + x;
+                    V8[cy][cx]=cell->ypos;
+                }
+            }
+            // Get custom height
+            adt_MCVT *v = cell->getMCVT();
+            if (!v)
+                continue;
+            // get V9 height map
+            for (int y=0; y <= ADT_CELL_SIZE; y++)
+            {
+                int cy = i*ADT_CELL_SIZE + y;
+                for (int x=0; x <= ADT_CELL_SIZE; x++)
+                {
+                    int cx = j*ADT_CELL_SIZE + x;
+                    V9[cy][cx]+=v->height_map[y*(ADT_CELL_SIZE*2+1)+x];
+                }
+            }
+            // get V8 height map
+            for (int y=0; y < ADT_CELL_SIZE; y++)
+            {
+                int cy = i*ADT_CELL_SIZE + y;
+                for (int x=0; x < ADT_CELL_SIZE; x++)
+                {
+                    int cx = j*ADT_CELL_SIZE + x;
+                    V8[cy][cx]+=v->height_map[y*(ADT_CELL_SIZE*2+1)+ADT_CELL_SIZE+1+x];
+                }
+            }
+        }
+    }
+    //============================================
+    // Try pack height data
+    //============================================
+    float maxHeight = -20000;
+    float minHeight =  20000;
+    for (int y=0; y<ADT_GRID_SIZE; y++)
+    {
+        for(int x=0;x<ADT_GRID_SIZE;x++)
+        {
+            float h = V8[y][x];
+            if (maxHeight < h) maxHeight = h;
+            if (minHeight > h) minHeight = h;
+        }
+    }
+    for (int y=0; y<=ADT_GRID_SIZE; y++)
+    {
+        for(int x=0;x<=ADT_GRID_SIZE;x++)
+        {
+            float h = V9[y][x];
+            if (maxHeight < h) maxHeight = h;
+            if (minHeight > h) minHeight = h;
+        }
+    }
+    map.heightMapOffset = map.areaMapOffset + map.areaMapSize;
+    map.heightMapSize = sizeof(map_heightHeader);
+
+    map_heightHeader heightHeader;
+    heightHeader.fourcc = MAP_HEIGTH_MAGIC;
+    heightHeader.flags = 0;
+    heightHeader.gridHeight = minHeight;
+    heightHeader.int_store_mode = 0;
+
+    if (maxHeight!=minHeight)
+        map.heightMapSize+=sizeof(V9) + sizeof(V8);
+    else
+        heightHeader.flags |=MAP_HEIGHT_NO_HIGHT;
+
+    // Try store as packed in uint16 or uint8 values
+    if (!(heightHeader.flags&MAP_HEIGHT_NO_HIGHT))
+    {
+        // Calculate max height diff
+        float maxDiff = 0;
+        for (int y=0; y<ADT_GRID_SIZE; y++)
+            for(int x=0;x<ADT_GRID_SIZE;x++)
+            {
+                float diff = V8[y][x] - minHeight;
+                if(maxDiff<diff) maxDiff = diff;
+            }
+        for (int y=0; y<=ADT_GRID_SIZE; y++)
+        {
+            for(int x=0;x<=ADT_GRID_SIZE;x++)
+            {
+                float diff = V9[y][x] - minHeight;
+                if(maxDiff<diff) maxDiff = diff;
+            }
+        }
+
+        // Store as uint values if diff < 1024 (use float if accuracy > 1024/65536 (1/64))
+        if (maxDiff<1024)
+        {
+            // As uint8 if maxDiff < 2 (max accuracy = 2/256)
+            if (maxDiff<2)
+            {
+                heightHeader.flags|=MAP_HEIGHT_AS_INT8;
+                heightHeader.int_store_mode = selectInt8StepStore(maxDiff);
+            }
+            // As uint16 if maxDiff < 1024 (max accuracy = 1024/65536)
+            else
+            {
+                heightHeader.flags|=MAP_HEIGHT_AS_INT16;
+                heightHeader.int_store_mode = selectInt16StepStore(maxDiff);
+            }
+            // Pack it
+            float step = heightHeader.int_store_mode;
+            if (heightHeader.flags&MAP_HEIGHT_AS_INT8)
+            {
+                for (int y=0; y<ADT_GRID_SIZE; y++)
+                    for(int x=0;x<ADT_GRID_SIZE;x++)
+                        byte_V8[y][x] = uint8((V8[y][x] - minHeight) * step + 0.5f);
+                for (int y=0; y<=ADT_GRID_SIZE; y++)
+                    for(int x=0;x<=ADT_GRID_SIZE;x++)
+                        byte_V8[y][x] = uint8((V9[y][x] - minHeight) * step + 0.5f);
+                map.heightMapSize = sizeof(map_heightHeader) + sizeof(byte_V9) + sizeof(byte_V8);
+            }
+            else if (heightHeader.flags&MAP_HEIGHT_AS_INT16)
+            {
+                for (int y=0; y<ADT_GRID_SIZE; y++)
+                    for(int x=0;x<ADT_GRID_SIZE;x++)
+                        int_V8[y][x] = uint16((V8[y][x] - minHeight) * step + 0.5f);
+                for (int y=0; y<=ADT_GRID_SIZE; y++)
+                    for(int x=0;x<=ADT_GRID_SIZE;x++)
+                        int_V9[y][x] = uint16((V9[y][x] - minHeight) * step + 0.5f);
+                map.heightMapSize = sizeof(map_heightHeader) + sizeof(int_V9) + sizeof(int_V8);
+            }
+        }
+    }
+
+    // Get liquid map for grid (in WOTLK used MH2O chunk)
+    adt_MH2O * h2o = adt.a_grid->getMH2O();
+    if (h2o)
+    {
+        for (int i=0;i<ADT_CELLS_PER_GRID;i++)
+        {
+            for(int j=0;j<ADT_CELLS_PER_GRID;j++)
+            {
+                adt_liquid_header *h = h2o->getLiquidData(i,j);
+                if (!h)
+                    continue;
+
+                int count = 0;
+                uint64 show = h2o->getLiquidShowMap(h);
+                for (int y=0; y < h->height;y++)
+                {
+                    int cy = i*ADT_CELL_SIZE + y + h->yOffset;
+                    for (int x=0; x < h->width; x++)
+                    {
+                        int cx = j*ADT_CELL_SIZE + x + h->xOffset;
+                        if (show & 1)
+                        {
+                            liquid_show[cy][cx] = true;
+                            ++count;
+                        }
+                        show>>=1;
+                    }
+                }
+
+                uint32 type = LiqType[h->liquidType];
+                switch (type)
+                {
+                    case LIQUID_TYPE_WATER: liquid_type[i][j] |= MAP_LIQUID_TYPE_WATER; break;
+                    case LIQUID_TYPE_OCEAN: liquid_type[i][j] |= MAP_LIQUID_TYPE_OCEAN; break;
+                    case LIQUID_TYPE_MAGMA: liquid_type[i][j] |= MAP_LIQUID_TYPE_MAGMA; break;
+                    case LIQUID_TYPE_SLIME: liquid_type[i][j] |= MAP_LIQUID_TYPE_SLIME; break;
+                    default:
+                        printf("\nCan't find Liquid type %u for map %s\nchunk %d,%d\n", h->liquidType, filename, i, j);
+                        break;
+                }
+                // Dark water detect
+                if (type == LIQUID_TYPE_OCEAN)
+                {
+                    uint8 *lm = h2o->getLiquidLightMap(h); 
+                    if (!lm)
+                        liquid_type[i][j]|=MAP_LIQUID_TYPE_DARK_WATER;
+                }
+
+                if (!count && liquid_type[i][j])
+                    printf("Wrong liquid detect in MH2O chunk");
+
+                float *height = h2o->getLiquidHeightMap(h);
+                int pos = 0;
+                for (int y=0; y<=h->height;y++)
+                {
+                    int cy = i*ADT_CELL_SIZE + y + h->yOffset;
+                    for (int x=0; x<= h->width; x++)
+                    {
+                        int cx = j*ADT_CELL_SIZE + x + h->xOffset;
+                        if (height)
+                            liquid_height[cy][cx] = height[pos];
+                        else
+                            liquid_height[cy][cx] = h->heightLevel1;
+                        pos++;
+                    }
+                }
+            }
+        }
+    }
+    else
+    {
+        for (int i=0;i<ADT_CELLS_PER_GRID;i++)
+        {
+            for(int j=0;j<ADT_CELLS_PER_GRID;j++)
+            {
+                adt_MCNK *cell = cells->getMCNK(i, j);
+                if (!cell)
+                    continue;
+
+                adt_MCLQ *liquid = cell->getMCLQ();
+                int count = 0;
+                if (liquid && cell->sizeMCLQ > 8)
+                {
+                    for (int y=0; y < ADT_CELL_SIZE; y++)
+                    {
+                        int cy = i*ADT_CELL_SIZE + y;
+                        for (int x=0; x < ADT_CELL_SIZE; x++)
+                        {
+                            int cx = j*ADT_CELL_SIZE + x;
+                            if (liquid->flags[y][x] != 0x0F)
+                            {
+                                liquid_show[cy][cx] = true;
+                                ++count;
+                            }
+                        }
+                    }
+
+                    uint32 c_flag = cell->flags;
+                    if(c_flag & 4 || c_flag & 8)
+                        liquid_type[i][j] |= MAP_LIQUID_TYPE_WATER;            // water
+                    if(c_flag & 16)
+                        liquid_type[i][j] |= MAP_LIQUID_TYPE_MAGMA;            // magma/slime
+
+                    if (!count && liquid_type[i][j])
+                        printf("Wrong liquid detect in MCLQ chunk");
+
+                    for (int y=0; y <= ADT_CELL_SIZE; y++)
+                    {
+                        int cy = i*ADT_CELL_SIZE + y;
+                        for (int x=0; x<= ADT_CELL_SIZE; x++)
+                        {
+                            int cx = j*ADT_CELL_SIZE + x;
+                            liquid_height[cy][cx] = liquid->liquid[y][x].height;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    //============================================
+    // Pack liquid data
+    //============================================
+    uint8 type = liquid_type[0][0];
+    bool fullType = false;
+    for (int y=0;y<ADT_CELLS_PER_GRID;y++)
+    {
+        for(int x=0;x<ADT_CELLS_PER_GRID;x++)
+        {
+            if (liquid_type[y][x] !=type)
+            {
+                fullType = true;
+                y = ADT_CELLS_PER_GRID;
+                break;
+            }
+        }
+    }
+
+    map_liquidHeader liquidHeader;
+
+    // no water data (if all grid have 0 liquid type)
+    if (type == 0 && !fullType)
+    {
+        // No liquid data
+        map.liquidMapOffset = 0;
+        map.liquidMapSize   = 0;
+    }
+    else
+    {
+        int minX = 255, minY = 255;
+        int maxX = 0, maxY = 0;
+        maxHeight = -20000;
+        minHeight = 20000;
+        for (int y=0; y<ADT_GRID_SIZE; y++)
+        {
+            for(int x=0; x<ADT_GRID_SIZE; x++)
+            {
+                if (liquid_show[y][x])
+                {
+                    if (minX > x) minX = x;
+                    if (maxX < x) maxX = x;
+                    if (minY > y) minY = y;
+                    if (maxY < y) maxY = y;
+                    float h = liquid_height[y][x];
+                    if (maxHeight < h) maxHeight = h;
+                    if (minHeight > h) minHeight = h;
+                }
+            }
+        }
+
+        map.liquidMapOffset = map.heightMapOffset + map.heightMapSize;
+        map.liquidMapSize = sizeof(map_liquidHeader);
+        liquidHeader.fourcc = MAP_LIQUID_MAGIC;
+        liquidHeader.flags = 0;
+        liquidHeader.offsetX = minX;
+        liquidHeader.offsetY = minY;
+        liquidHeader.width   = maxX - minX + 1;
+        liquidHeader.height  = maxY - minY + 1;
+        liquidHeader.liquidLevel = minHeight;
+
+        if (fullType)
+        {
+            liquidHeader.liquidType = 0;
+            map.liquidMapSize+=sizeof(liquid_type);
+        }
+        else
+        {
+            liquidHeader.flags|=MAP_LIQUID_NO_TYPE;
+            liquidHeader.liquidType = type;
+        }
+
+        if (maxHeight!=minHeight)
+            map.liquidMapSize+=sizeof(float)*liquidHeader.width*liquidHeader.height;
+        else
+            liquidHeader.flags|=MAP_LIQUID_NO_HIGHT;
+    }
+
+//return true;
+    // Ok all data prepared - store it
+    FILE *output=fopen(filename2, "wb");
+    if(!output)
+    {
+        printf("Can't create the output file '%s'\n", filename2);
+        return false;
+    }
+    fwrite(&map, sizeof(map), 1, output);
+    // Store area data
+    fwrite(&areaHeader, sizeof(areaHeader), 1, output);
+    if (!(areaHeader.flags&MAP_AREA_NO_AREA))
+        fwrite(area_flags, sizeof(area_flags), 1, output);
+
+    // Store height data
+    fwrite(&heightHeader, sizeof(heightHeader), 1, output);
+    if (!(heightHeader.flags&MAP_HEIGHT_NO_HIGHT))
+    {
+        if (heightHeader.flags&MAP_HEIGHT_AS_INT16)
+        {
+            fwrite(int_V9, sizeof(int_V9), 1, output);
+            fwrite(int_V8, sizeof(int_V8), 1, output);
+        }
+        else if (heightHeader.flags&MAP_HEIGHT_AS_INT8)
+        {
+            fwrite(byte_V9, sizeof(byte_V9), 1, output);
+            fwrite(byte_V8, sizeof(byte_V8), 1, output);
+        }
+        else
+        {
+            fwrite(V9, sizeof(V9), 1, output);
+            fwrite(V8, sizeof(V8), 1, output);
+        }
+    }
+
+    // Store liquid data if need
+    if (map.liquidMapOffset)
+    {
+        fwrite(&liquidHeader, sizeof(liquidHeader), 1, output);
+        if (!(liquidHeader.flags&MAP_LIQUID_NO_TYPE))
+            fwrite(liquid_type, sizeof(liquid_type), 1, output);
+        if (!(liquidHeader.flags&MAP_LIQUID_NO_HIGHT))
+        {
+            for (int y=0; y<liquidHeader.height;y++)
+                fwrite(&liquid_height[y+liquidHeader.offsetY][liquidHeader.offsetX], sizeof(float), liquidHeader.width, output);
+        }
+    }
+    fclose(output);
+
+    return true;
+}
+
 void ExtractMapsFromMpq()
 {
     char mpq_filename[1024];
     char output_filename[1024];
+    char mpq_map_name[1024];
 
     printf("Extracting maps...\n");
 
@@ -173,29 +775,46 @@ void ExtractMapsFromMpq()
     ReadAreaTableDBC();
     ReadLiquidTypeTableDBC();
 
-    unsigned int total = map_count * ADT_RES * ADT_RES;
-    unsigned int done = 0;
-
     std::string path = output_path;
     path += "/maps/";
     CreateDir(path);
 
-    for(uint32 x = 0; x < ADT_RES; ++x)
+    printf("Convert map files\n");
+    for(uint32 z = 0; z < map_count; ++z)
     {
-        for(uint32 y = 0; y < ADT_RES; ++y)
+//        if (strcmp(map_ids[z].name, "Azeroth"))
+//            continue;
+        printf("Extract %s (%d/%d)                  \n", map_ids[z].name, z, map_count);
+        // Loadup map grid data
+        sprintf(mpq_map_name, "World\\Maps\\%s\\%s.wdt", map_ids[z].name, map_ids[z].name);
+        WDT_file wdt;
+        if (!wdt.loadFile(mpq_map_name))
         {
-            for(uint32 z = 0; z < map_count; ++z)
+//            printf("Error loading %s map wdt data\n", map_ids[z].name);
+            continue;
+        }
+
+        for(uint32 y = 0; y < WDT_MAP_SIZE; ++y)
+        {
+            for(uint32 x = 0; x < WDT_MAP_SIZE; ++x)
             {
+                if (!wdt.main->adt_list[y][x].exist)
+                    continue;
                 sprintf(mpq_filename, "World\\Maps\\%s\\%s_%u_%u.adt", map_ids[z].name, map_ids[z].name, x, y);
                 sprintf(output_filename, "%s/maps/%03u%02u%02u.map", output_path, map_ids[z].id, y, x);
                 ConvertADT(mpq_filename, output_filename);
-                done++;
+
+//                for (int i = 0;i<SIZE_EL;i++)
+//                    for (int j = 0;j<SIZE_EL;j++)
+//                        m_data[y*SIZE_EL+i][x*SIZE_EL+j] = V8[i][j];
             }
             // draw progress bar
-            printf("Processing........................%d%%\r", (100 * done) / total);
+            printf("Processing........................%d%%\r", (100 * (y+1)) / WDT_MAP_SIZE);
         }
     }
-
+//    FILE *out=fopen("c:\\res.raw","wb");
+//    fwrite(m_data, sizeof(m_data), 1, out);
+//    fclose(out);
     delete [] areas;
     delete [] map_ids;
 }
@@ -204,6 +823,7 @@ void ExtractMapsFromMpq()
 
 void ExtractDBCFiles(int locale, bool basicLocale)
 {
+//return;
     printf("Extracting dbc files...\n");
 
     set<string> dbcfiles;
