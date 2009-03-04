@@ -315,9 +315,16 @@ bool ChatHandler::HandleGPSCommand(const char* args)
         cell.GridX(), cell.GridY(), cell.CellX(), cell.CellY(), obj->GetInstanceId(),
         zone_x, zone_y, ground_z, floor_z, have_map, have_vmap );
 
-    float l_level = map->GetWaterLevel(obj->GetPositionX(), obj->GetPositionY());
-    uint8 l_type  = map->GetTerrainType(obj->GetPositionX(), obj->GetPositionY());
-    PSendSysMessage("Liquid level = %f, type = %d, in water = %d", l_level, l_type, l_level > obj->GetPositionZ());
+    LiquidData liquid_status;
+    ZLiquidStatus res = map->getLiquidStatus(obj->GetPositionX(), obj->GetPositionY(), obj->GetPositionZ(), 0, &liquid_status);
+
+    if (res)
+    {
+        PSendSysMessage("Liquid level = %f (depth %f), type = %d, ZStatus = %X", 
+            liquid_status.level,
+            liquid_status.depth_level,
+            liquid_status.type, res);
+    }
 
     sLog.outDebug("Player %s GPS call for %s '%s' (%s: %u):",
         m_session ? GetNameLink().c_str() : GetMangosString(LANG_CONSOLE_COMMAND),
@@ -385,7 +392,7 @@ bool ChatHandler::HandleNamegoCommand(const char* args)
             }
             // all's well, set bg id
             // when porting out from the bg, it will be reset to 0
-            chr->SetBattleGroundId(m_session->GetPlayer()->GetBattleGroundId());
+            chr->SetBattleGroundId(m_session->GetPlayer()->GetBattleGroundId(), m_session->GetPlayer()->GetBattleGroundTypeId());
             // remember current position as entry point for return at bg end teleportation
             chr->SetBattleGroundEntryPoint(chr->GetMapId(),chr->GetPositionX(),chr->GetPositionY(),chr->GetPositionZ(),chr->GetOrientation());
         }
@@ -503,7 +510,7 @@ bool ChatHandler::HandleGonameCommand(const char* args)
             }
             // all's well, set bg id
             // when porting out from the bg, it will be reset to 0
-            _player->SetBattleGroundId(chr->GetBattleGroundId());
+            _player->SetBattleGroundId(chr->GetBattleGroundId(), chr->GetBattleGroundTypeId());
             // remember current position as entry point for return at bg end teleportation
             _player->SetBattleGroundEntryPoint(_player->GetMapId(),_player->GetPositionX(),_player->GetPositionY(),_player->GetPositionZ(),_player->GetOrientation());
         }

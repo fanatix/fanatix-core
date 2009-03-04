@@ -25,16 +25,44 @@
 
 #define max_ge_check_delay 86400                            // 1 day in seconds
 
+enum GameEventState
+{
+    GAMEEVENT_NORMAL = 0,   // standard game events
+    GAMEEVENT_WORLD_INACTIVE,   // not yet started
+    GAMEEVENT_WORLD_CONDITIONS,  // condition matching phase
+    GAMEEVENT_WORLD_NEXTPHASE,   // conditions are met, now 'lenght' timer to start next event
+    GAMEEVENT_WORLD_FINISHED    // next events are started, unapply this one
+};
+
+struct GameEventFinishCondition
+{
+    float reqNum;  // required number // use float, since some events use percent
+    float done;    // done number
+    uint32 max_world_state;  // max resource count world state update id
+    uint32 done_world_state; // done resource count world state update id
+};
+
+struct GameEventQuestToEventConditionNum
+{
+    uint16 event_id;
+    uint32 condition;
+    float num;
+};
+
 struct GameEventData
 {
     GameEventData() : start(1),end(0),occurence(0),length(0) {}
-    time_t start;
-    time_t end;
-    uint32 occurence;
-    uint32 length;
+    time_t start;   // occurs after this time
+    time_t end;     // occurs before this time
+    time_t nextstart; // after this time the follow-up events count this phase completed
+    uint32 occurence;   // time between end and start
+    uint32 length;  // length of the event (minutes) after finishing all conditions
+    GameEventState state;   // state of the game event, these are saved into the game_event table on change!
+    std::map<uint32 /*condition id*/, GameEventFinishCondition> conditions;  // conditions to finish
+    std::set<uint16 /*gameevent id*/> prerequisite_events;  // events that must be completed before starting this event
     std::string description;
 
-    bool isValid() const { return length > 0; }
+    bool isValid() const { return (length > 0 || state > 0); }
 };
 
 struct ModelEquip
@@ -45,6 +73,7 @@ struct ModelEquip
     uint32 equipement_id_prev;
 };
 
+class Player;
 class GameEvent
 {
     public:
@@ -60,9 +89,14 @@ class GameEvent
         uint32 Update();
         bool IsActiveEvent(uint16 event_id) { return ( m_ActiveEvents.find(event_id)!=m_ActiveEvents.end()); }
         uint32 Initialize();
-        void StartEvent(uint16 event_id, bool overwrite = false);
+        bool StartEvent(uint16 event_id, bool overwrite = false);
         void StopEvent(uint16 event_id, bool overwrite = false);
+        void HandleQuestComplete(uint32 quest_id);  // called on world event type quest completions
+        void HandleWorldEventGossip(Player * plr, Creature * c);
+        uint32 GetNPCFlag(Creature * cr);
+        uint32 GetNpcTextId(uint32 guid);
     private:
+        void SendWorldStateUpdate(Player * plr, uint16 event_id);
         void AddActiveEvent(uint16 event_id) { m_ActiveEvents.insert(event_id); }
         void RemoveActiveEvent(uint16 event_id) { m_ActiveEvents.erase(event_id); }
         void ApplyNewEvent(uint16 event_id);
@@ -71,6 +105,13 @@ class GameEvent
         void GameEventUnspawn(int16 event_id);
         void ChangeEquipOrModel(int16 event_id, bool activate);
         void UpdateEventQuests(uint16 event_id, bool Activate);
+        void UpdateEventNPCFlags(uint16 event_id);
+        bool CheckOneGameEventConditions(uint16 event_id);
+        void SaveWorldEventStateToDB(uint16 event_id);
+        bool hasCreatureQuestActiveEventExcept(uint32 quest_id, uint16 event_id);
+        bool hasGameObjectQuestActiveEventExcept(uint32 quest_id, uint16 event_id);
+        bool hasCreatureActiveEventExcept(uint32 creature_guid, uint16 event_id);
+        bool hasGameObjectActiveEventExcept(uint32 go_guid, uint16 event_id);
     protected:
         typedef std::list<uint32> GuidList;
         typedef std::list<uint16> IdList;
@@ -82,12 +123,22 @@ class GameEvent
         typedef std::pair<uint32, uint32> QuestRelation;
         typedef std::list<QuestRelation> QuestRelList;
         typedef std::vector<QuestRelList> GameEventQuestMap;
-        GameEventQuestMap mGameEventQuests;
+        typedef std::map<uint32 /*quest id*/, GameEventQuestToEventConditionNum> QuestIdToEventConditionMap;
+        typedef std::pair<uint32 /*guid*/, uint32 /*npcflag*/> GuidNPCFlagPair;
+        typedef std::list<GuidNPCFlagPair> NPCFlagList;
+        typedef std::vector<NPCFlagList> GameEventNPCFlagMap;
+        typedef std::pair<uint16 /*event id*/, uint32 /*gossip id*/> EventNPCGossipIdPair;
+        typedef std::map<uint32 /*guid*/, EventNPCGossipIdPair> GuidEventNpcGossipIdMap;
+        GameEventQuestMap mGameEventCreatureQuests;
+        GameEventQuestMap mGameEventGameObjectQuests;
         GameEventModelEquipMap mGameEventModelEquip;
         GameEventGuidMap  mGameEventCreatureGuids;
         GameEventGuidMap  mGameEventGameobjectGuids;
         GameEventIdMap    mGameEventPoolIds;
         GameEventDataMap  mGameEvent;
+        QuestIdToEventConditionMap mQuestToEventConditions;
+        GameEventNPCFlagMap mGameEventNPCFlags;
+        GuidEventNpcGossipIdMap mNPCGossipIds;
         ActiveEvents m_ActiveEvents;
         bool isSystemInit;
 };
