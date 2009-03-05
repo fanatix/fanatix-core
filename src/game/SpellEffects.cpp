@@ -638,26 +638,24 @@ void Spell::EffectDummy(uint32 i)
 	EffectSpecialSummon( 52150, 0, m_caster );
 
     // Death Grip
-    //todo : insert it to right spell family
-    if (m_spellInfo->Id == 49560 || m_spellInfo->Id == 49576)//wtf 2 IDs
+      //todo: insert it to right spell family
+    if(m_spellInfo->Id == 49560 || m_spellInfo->Id == 49576)//wtf 2 IDs
     {
-        // Init dest coordinates
-        uint32 mapid = m_caster->GetMapId();
-        float x = m_caster->GetPositionX();
-        float y = m_caster->GetPositionY();
-        float z = m_caster->GetPositionZ() + 3;
-        float orientation = unitTarget->GetOrientation();
-        // Teleport
-        if(unitTarget->GetTypeId() == TYPEID_PLAYER)
-            ((Player*)unitTarget)->TeleportTo(mapid, x, y, z, orientation, TELE_TO_NOT_LEAVE_COMBAT | TELE_TO_NOT_UNSUMMON_PET );
-        else
-        {
-            MapManager::Instance().GetMap(mapid, m_caster)->CreatureRelocation((Creature*)unitTarget, x, y, z, orientation);
-            WorldPacket data;
-            unitTarget->BuildTeleportAckMsg(&data, x, y, z, orientation);
-            unitTarget->SendMessageToSet(&data, false);
-        }
+         // Init dest coordinates
+	 if(m_caster && unitTarget)
+	 {	      
+	    uint32 mapid = m_caster->GetMapId();
+	    float x = m_caster->GetPositionX();
+	    float y = m_caster->GetPositionY();
+	    float z = m_caster->GetPositionZ()+1;
+	    float orientation = unitTarget->GetOrientation();
+				
+	     unitTarget->SendMonsterMove(x, y, z, orientation, MOVEMENTFLAG_JUMPING, 1);
+	     if(unitTarget->GetTypeId() != TYPEID_PLAYER)
+	     unitTarget->GetMap()->CreatureRelocation((Creature*)unitTarget,x,y,z,unitTarget->GetOrientation());
+	 }
     }
+
 
     // selection by spell family
     switch(m_spellInfo->SpellFamilyName)
