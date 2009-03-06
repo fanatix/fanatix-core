@@ -17,7 +17,7 @@
 ## Process this file with automake to produce Makefile.in
 
 ## Sub-directories to parse
-SUBDIRS = updates tools fixes
+SUBDIRS = updates tools
 
 ## Change installation location
 #  datadir = mangos/sql
