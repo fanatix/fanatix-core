@@ -715,7 +715,7 @@ enum MangosStrings
     LANG_ARENA_NOT_ENOUGH_PLAYERS       = 723,              // "Your group does not have enough players to join this match."
     LANG_ARENA_GOLD_WINS                = 724,              // "The Gold Team wins!"
     LANG_ARENA_GREEN_WINS               = 725,              // "The Green Team wins!"
-    LANG_BATTLEGROUND_PREMATURE_FINISH_WARNING = 726,       // The battleground will end soon, because there aren't enough players. Get more ppl or win already!
+//                                      = 726, not used
     LANG_BG_GROUP_OFFLINE_MEMBER        = 727,              // "Your group has an offline member. Please remove him before joining."
     LANG_BG_GROUP_MIXED_FACTION         = 728,              // "Your group has players from the opposing faction. You can't join the battleground as a group."
     LANG_BG_GROUP_MIXED_LEVELS          = 729,              // "Your group has players from different battleground brakets. You can't join as group."
@@ -770,7 +770,12 @@ enum MangosStrings
     LANG_BG_AV_H_NEAR_LOSE              = 777,
     LANG_BG_AV_H_CAPTAIN_DEAD           = 778,
     LANG_BG_AV_A_CAPTAIN_DEAD           = 779,
-    // Room for batleground/arena strings 780-799 not used
+//                                      = 747, not used
+//                                      = 748, not used
+//                                      = 749, not used
+    LANG_BATTLEGROUND_PREMATURE_FINISH_WARNING = 750,       // "Not enough players. This game will close in %u mins."
+    LANG_BATTLEGROUND_PREMATURE_FINISH_WARNING_SECS = 751,  // "Not enough players. This game will close in %u seconds."
+    // Room for batleground/arena strings 752-799 not used
 
     // in game strings
     //                                  = 800, not used
