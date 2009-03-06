@@ -72,7 +72,7 @@ MapUpdater::MapUpdater () :
 m_mutex (),
 m_condition (m_mutex),
 m_executor (),
-pedning_requests (0)
+pending_requests (0)
 {
   return;
 }
@@ -103,7 +103,7 @@ MapUpdater::wait ()
 {
   ACE_GUARD_RETURN(ACE_Thread_Mutex,guard,this->m_mutex,-1);
 
-  while(this->pedning_requests > 0)
+  while(this->pending_requests > 0)
     this->m_condition.wait ();
 
   return 0;
@@ -114,7 +114,7 @@ MapUpdater::schedule_update(Map& map, ACE_UINT32 diff)
 {
   ACE_GUARD_RETURN(ACE_Thread_Mutex,guard,this->m_mutex,-1);
 
-  ++this->pedning_requests;
+  ++this->pending_requests;
 
   if( this->m_executor.execute (new MapUpdateRequest(map,*this,diff)) == -1)
     {
@@ -122,7 +122,7 @@ MapUpdater::schedule_update(Map& map, ACE_UINT32 diff)
                   ACE_TEXT ("(%t) \n"),
                   ACE_TEXT ("Failed to schedule Map Update")));
 
-      --this->pedning_requests;
+      --this->pending_requests;
       return -1;
     }
 
@@ -140,7 +140,7 @@ MapUpdater::update_finished ()
 {
   ACE_GUARD (ACE_Thread_Mutex, guard, this->m_mutex);
 
-  if (this->pedning_requests == 0)
+  if (this->pending_requests == 0)
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("(%t)\n"),
@@ -149,7 +149,7 @@ MapUpdater::update_finished ()
       return;
     }
 
-  --this->pedning_requests;
+  --this->pending_requests;
 
   //TODO can more than one thread call wait (), it shouldnt happen
   //however I ensure if in future more than 1 thread call it by
