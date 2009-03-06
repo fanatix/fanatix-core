@@ -1085,6 +1085,7 @@ bool GridMap::loadData(char *filename)
 {
     // Unload old data if exist
     unloadData();
+
     map_fileheader header;
     // Not return error if file not found
     FILE *in = fopen(filename, "rb");
@@ -1096,21 +1097,25 @@ bool GridMap::loadData(char *filename)
         // loadup area data
         if (header.areaMapOffset && !loadAreaData(in, header.areaMapOffset, header.areaMapSize))
         {
+            sLog.outError("Error loading map area data\n");
             fclose(in);
             return false;
         }
         // loadup height data
         if (header.heightMapOffset && !loadHeihgtData(in, header.heightMapOffset, header.heightMapSize))
         {
+            sLog.outError("Error loading map height data\n");
             fclose(in);
             return false;
         }
         // loadup liquid data
         if (header.liquidMapOffset && !loadLiquidData(in, header.liquidMapOffset, header.liquidMapSize))
         {
+            sLog.outError("Error loading map liquids data\n");
             fclose(in);
             return false;
         }
+        fclose(in);
         return true;
     }
     sLog.outError("Map file '%s' is non-compatible version (outdated?). Please, create new using ad.exe program.", filename);
@@ -1160,11 +1165,13 @@ bool  GridMap::loadHeihgtData(FILE *in, uint32 offset, uint32 size)
     m_gridHeight = header.gridHeight;
     if (!(header.flags&MAP_HEIGHT_NO_HIGHT))
     {
-        if (header.flags&(MAP_HEIGHT_AS_INT16|MAP_HEIGHT_AS_INT8) && m_height_step == 0)
-            return false;
-
-        if ((header.flags&MAP_HEIGHT_AS_INT16))
+        if (header.flags&(MAP_HEIGHT_AS_INT16|MAP_HEIGHT_AS_INT8) && header.int_store_mode == 0)
          {
+            sLog.outError("Error wrong map height multiplier\n");
+            return false;
+        }
+        if ((header.flags&MAP_HEIGHT_AS_INT16))
+        {
             m_uint16_V9 = new uint16 [129*129];
             m_uint16_V8 = new uint16 [128*128];
             fread(m_uint16_V9, sizeof(uint16), 129*129, in);
@@ -1485,7 +1492,6 @@ uint8  GridMap::getTerrainType(float x, float y)
     int ly = (int)y & 15;
     return m_liquid_type[lx*16 + ly];
 }
-
 // Get water state on map
 inline ZLiquidStatus GridMap::getLiquidStatus(float x, float y, float z, uint8 ReqLiquidType, LiquidData *data)
 {
@@ -1494,11 +1500,11 @@ inline ZLiquidStatus GridMap::getLiquidStatus(float x, float y, float z, uint8 R
         return LIQUID_MAP_NO_WATER;
 
     // Get cell
-    x = MAP_RESOLUTION * (32 - x/SIZE_OF_GRIDS);
-    y = MAP_RESOLUTION * (32 - y/SIZE_OF_GRIDS);
+    float cx = MAP_RESOLUTION * (32 - x/SIZE_OF_GRIDS);
+    float cy = MAP_RESOLUTION * (32 - y/SIZE_OF_GRIDS);
 
-    int x_int = (int)x & (MAP_RESOLUTION-1);
-    int y_int = (int)y & (MAP_RESOLUTION-1);
+    int x_int = (int)cx & (MAP_RESOLUTION-1);
+    int y_int = (int)cy & (MAP_RESOLUTION-1);
 
     // Check water type in cell
     uint8 type = m_liquid_type ? m_liquid_type[(x_int>>3)*16 + (y_int>>3)] : m_liquidType;
@@ -1511,20 +1517,20 @@ inline ZLiquidStatus GridMap::getLiquidStatus(float x, float y, float z, uint8 R
 
     // Check water level:
     // Check water height map
-    int cx_int = x_int - m_liquid_offY;
-    int cy_int = y_int - m_liquid_offX;
-    if (cx_int < 0 || cx_int >=m_liquid_height)
+    int lx_int = x_int - m_liquid_offY;
+    int ly_int = y_int - m_liquid_offX;
+    if (lx_int < 0 || lx_int >=m_liquid_height)
         return LIQUID_MAP_NO_WATER;
-    if (cy_int < 0 || cy_int >=m_liquid_width )
+    if (ly_int < 0 || ly_int >=m_liquid_width )
         return LIQUID_MAP_NO_WATER;
 
     // Get water level
-    float liquid_level = m_liquid_map ? m_liquid_map[cx_int*m_liquid_width + cy_int] : m_liquidLevel;
-    // Get ground level (need just know under ground or not)
-    float ground_level = m_V8 ? m_V8[x_int*128 + y_int] : m_gridHeight;
+    float liquid_level = m_liquid_map ? m_liquid_map[lx_int*m_liquid_width + ly_int] : m_liquidLevel;
+    // Get ground level (sub 0.2 for fix some errors)
+    float ground_level = getHeight(x, y);
 
     // Check water level and ground level
-    if (liquid_level < ground_level || z + 2 < ground_level)
+    if (liquid_level < ground_level || z < ground_level - 2)
         return LIQUID_MAP_NO_WATER;
 
     // All ok in water -> store data

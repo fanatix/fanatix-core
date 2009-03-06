@@ -318,9 +318,11 @@ bool ChatHandler::HandleGPSCommand(const char* args)
     LiquidData liquid_status;
     ZLiquidStatus res = map->getLiquidStatus(obj->GetPositionX(), obj->GetPositionY(), obj->GetPositionZ(), 0, &liquid_status);
 
+    PSendSysMessage("Delta z - ground = %f", obj->GetPositionZ() - ground_z);
+
     if (res)
     {
-        PSendSysMessage("Liquid level = %f (depth %f), type = %d, ZStatus = %X", 
+        PSendSysMessage("Liquid level = %f (depth %f), type = %d, ZStatus = %X",
             liquid_status.level,
             liquid_status.depth_level,
             liquid_status.type, res);

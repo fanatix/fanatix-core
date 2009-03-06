@@ -856,6 +856,9 @@ void Player::StopMirrorTimer(MirrorTimerType Type)
 
 void Player::EnvironmentalDamage(uint64 guid, EnviromentalDamage type, uint32 damage)
 {
+    if(!isAlive() || isGameMaster())
+        return;
+
     WorldPacket data(SMSG_ENVIRONMENTALDAMAGELOG, (21));
     data << (uint64)guid;
     data << (uint8)(type!=DAMAGE_FALL_TO_VOID ? type : DAMAGE_FALL);
@@ -866,13 +869,18 @@ void Player::EnvironmentalDamage(uint64 guid, EnviromentalDamage type, uint32 da
 
     DealDamage(this, damage, NULL, SELF_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, NULL, false);
 
-    if(type==DAMAGE_FALL && !isAlive())                     // DealDamage not apply item durability loss at self damage
+    if(!isAlive())
     {
-        DEBUG_LOG("We are fall to death, loosing 10 percents durability");
-        DurabilityLossAll(0.10f,false);
-        // durability lost message
-        WorldPacket data(SMSG_DURABILITY_DAMAGE_DEATH, 0);
-        GetSession()->SendPacket(&data);
+        if(type==DAMAGE_FALL)                               // DealDamage not apply item durability loss at self damage
+        {
+            DEBUG_LOG("We are fall to death, loosing 10 percents durability");
+            DurabilityLossAll(0.10f,false);
+            // durability lost message
+            WorldPacket data(SMSG_DURABILITY_DAMAGE_DEATH, 0);
+            GetSession()->SendPacket(&data);
+        }
+
+        GetAchievementMgr().UpdateAchievementCriteria(ACHIEVEMENT_CRITERIA_TYPE_DEATHS_FROM, 1, type);
     }
 }
 
@@ -939,37 +947,33 @@ void Player::HandleDrowning()
 
 void Player::HandleLava()
 {
-	if(!UNDERWATER_INWATER){
-	if ((m_isunderwater & UNDERWATER_INLAVA) && isAlive())
-		{
-/*
-* arrai: how is this supposed to work? UNDERWATER_INLAVA is always set in this scope!
-// Single trigger Set BreathTimer
-if (!(m_isunderwater & UNDERWATER_INLAVA))
-{
-m_isunderwater|= UNDERWATER_WATER_BREATHB;
-m_breathTimer = 1000;
-}
-*/
-// Reset BreathTimer and still in the lava
-			if (!m_breathTimer)
-				{
-					uint64 guid = GetGUID();
-					uint32 damage = urand(600, 700); // TODO: Get more detailed information about lava damage
+    if ((m_isunderwater & UNDERWATER_INLAVA) && isAlive())
+    {
+        /*
+         * arrai: how is this supposed to work? UNDERWATER_INLAVA is always set in this scope!
+        // Single trigger Set BreathTimer
+        if (!(m_isunderwater & UNDERWATER_INLAVA))
+        {
+            m_isunderwater|= UNDERWATER_WATER_BREATHB;
+            m_breathTimer = 1*IN_MILISECONDS;
+        }
+        */
+        // Reset BreathTimer and still in the lava
+        if (!m_breathTimer)
+        {
+            uint64 guid = GetGUID();
+            uint32 damage = urand(600, 700);                // TODO: Get more detailed information about lava damage
 
-// if not gamemaster then deal damage
-					if ( !isGameMaster() )
-					EnvironmentalDamage(guid, DAMAGE_LAVA, damage);
+            EnvironmentalDamage(guid, DAMAGE_LAVA, damage);
 
-					m_breathTimer = 1000;
-				}
-			}
-		else if (!isAlive()) // Disable breath timer and reset underwater flags
-		{
-			m_breathTimer = 0;
-			m_isunderwater = UNDERWATER_NONE;
-		}
-	}
+            m_breathTimer = 1*IN_MILISECONDS;
+        }
+    }
+    else if (!isAlive())                                    // Disable breath timer and reset underwater flags
+    {
+        m_breathTimer = 0;
+        m_isunderwater = UNDERWATER_NONE;
+    }
 }
 ///The player sobers by 256 every 10 seconds
 void Player::HandleSobering()
@@ -1344,6 +1348,8 @@ void Player::setDeathState(DeathState s)
         if(!ressSpellId)
             ressSpellId = GetResurrectionSpellId();
         GetAchievementMgr().UpdateAchievementCriteria(ACHIEVEMENT_CRITERIA_TYPE_DEATH_AT_MAP, 1);
+        GetAchievementMgr().UpdateAchievementCriteria(ACHIEVEMENT_CRITERIA_TYPE_DEATH, 1);
+        GetAchievementMgr().UpdateAchievementCriteria(ACHIEVEMENT_CRITERIA_TYPE_DEATH_IN_DUNGEON, 1);
     }
     Unit::setDeathState(s);
 
@@ -3352,6 +3358,7 @@ bool Player::resetTalents(bool no_cost)
     if(!no_cost)
     {
         ModifyMoney(-(int32)cost);
+        GetAchievementMgr().UpdateAchievementCriteria(ACHIEVEMENT_CRITERIA_TYPE_GOLD_SPENT_FOR_TALENTS, cost);
 
         m_resetTalentsCost = cost;
         m_resetTalentsTime = time(NULL);
@@ -12974,10 +12981,18 @@ void Player::RewardQuest( Quest const *pQuest, uint32 reward, Object* questGiver
     if ( getLevel() < sWorld.getConfig(CONFIG_MAX_PLAYER_LEVEL) )
         GiveXP( XP , NULL );
     else
-        ModifyMoney( int32(pQuest->GetRewMoneyMaxLevel() * sWorld.getRate(RATE_DROP_MONEY)) );
+    {
+        int32 money = int32(pQuest->GetRewMoneyMaxLevel() * sWorld.getRate(RATE_DROP_MONEY));
+        ModifyMoney( money );
+        GetAchievementMgr().UpdateAchievementCriteria(ACHIEVEMENT_CRITERIA_TYPE_MONEY_FROM_QUEST_REWARD, money);
+    }
 
     // Give player extra money if GetRewOrReqMoney > 0 and get ReqMoney if negative
-    ModifyMoney( pQuest->GetRewOrReqMoney() );
+    if(pQuest->GetRewOrReqMoney())
+    {
+        ModifyMoney( pQuest->GetRewOrReqMoney() );
+        GetAchievementMgr().UpdateAchievementCriteria(ACHIEVEMENT_CRITERIA_TYPE_MONEY_FROM_QUEST_REWARD, pQuest->GetRewOrReqMoney());
+    }
 
     // honor reward
     if(pQuest->GetRewHonorableKills())
@@ -17445,6 +17460,7 @@ bool Player::ActivateTaxiPathTo(std::vector<uint32> const& nodes, uint32 mount_i
 
     //Checks and preparations done, DO FLIGHT
     ModifyMoney(-(int32)totalcost);
+    GetAchievementMgr().UpdateAchievementCriteria(ACHIEVEMENT_CRITERIA_TYPE_GOLD_SPENT_FOR_TRAVELLING, totalcost);
 
     // prevent stealth flight
     RemoveSpellsCausingAura(SPELL_AURA_MOD_STEALTH);
