@@ -58,7 +58,7 @@ public:
   Map& m_map;
   MapUpdater& m_updater;
   ACE_UINT32 m_diff;
-  MapUpdateRequest (Map& m,MapUpdater& u,ACE_UINT32 d) : m_map(m),m_updater(u),m_diff(d) { }
+  MapUpdateRequest (Map& m, MapUpdater& u, ACE_UINT32 d) : m_map(m), m_updater(u), m_diff(d) { }
   virtual int
   call (void)
   {
@@ -101,7 +101,7 @@ MapUpdater::deactivate (void)
 int
 MapUpdater::wait ()
 {
-  ACE_GUARD_RETURN(ACE_Thread_Mutex,guard,this->m_mutex,-1);
+  ACE_GUARD_RETURN(ACE_Thread_Mutex, guard, this->m_mutex,-1);
 
   while(this->pending_requests > 0)
     this->m_condition.wait ();
@@ -112,11 +112,11 @@ MapUpdater::wait ()
 int
 MapUpdater::schedule_update(Map& map, ACE_UINT32 diff)
 {
-  ACE_GUARD_RETURN(ACE_Thread_Mutex,guard,this->m_mutex,-1);
+  ACE_GUARD_RETURN(ACE_Thread_Mutex, guard, this->m_mutex,-1);
 
   ++this->pending_requests;
 
-  if( this->m_executor.execute (new MapUpdateRequest(map,*this,diff)) == -1)
+  if( this->m_executor.execute (new MapUpdateRequest(map, *this, diff)) == -1)
     {
       ACE_DEBUG ((LM_ERROR,
                   ACE_TEXT ("(%t) \n"),
