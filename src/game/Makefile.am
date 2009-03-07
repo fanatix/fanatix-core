@@ -109,8 +109,8 @@ libmangosgame_a_SOURCES = \
 	FleeingMovementGenerator.cpp \
 	FleeingMovementGenerator.h \
 	Formulas.h \
-	GameEvent.cpp \
-	GameEvent.h \
+	GameEventMgr.cpp \
+	GameEventMgr.h \
 	GameObject.cpp \
 	GameObject.h \
 	GlobalEvents.cpp \
@@ -302,7 +302,9 @@ libmangosgame_a_SOURCES = \
 	FollowerRefManager.h \
 	GroupReference.cpp \
 	GroupReference.h \
-	GroupRefManager.h
+	GroupRefManager.h \
+	MapUpdater.cpp \
+	MapUpdater.h
 
 ## Link against shared library
 libmangosgame_a_LIBADD = ../shared/libmangosshared.a ../shared/Auth/libmangosauth.a ../shared/Config/libmangosconfig.a ../shared/Database/libmangosdatabase.a ../shared/vmap/libmangosvmaps.a
