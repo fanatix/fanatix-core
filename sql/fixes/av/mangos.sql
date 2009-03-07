@@ -41,302 +41,137 @@ VALUES ('1', '17306', '33', '0', '5', '15',  '6', '67', '0'),
 -- TODO: write own loottable
 
 
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11603,30,-917.648,-46.8922,77.0872,5.27089);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11603,30,-912.689,-45.4494,76.2277,4.60767);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11603,30,-905.455,-84.5179,75.3642,3.29867);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11603,30,-904.332,-111.509,75.5925,2.47837);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11603,30,-904.27,-160.419,61.9876,3.61192);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11603,30,-904.023,-90.4558,75.3706,3.40339);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11603,30,-978.678,-37.3136,75.8364,2.84489);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11603,30,-973.076,-36.5013,77.5047,1.0821);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11603,30,-963.951,-87.734,81.5555,0.575959);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11603,30,-961.941,-90.7252,81.6629,0.820305);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11603,30,-957.623,-186.582,66.6021,1.95477);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11603,30,-952.476,-179.778,78.6771,4.5204);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11603,30,-950.427,-115.007,79.6127,3.68264);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11603,30,-950.25,-151.95,79.4598,-1.81423);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11603,30,-950.169,-188.099,66.6184,5.55015);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11603,30,-949.944,-142.977,80.5382,2.70526);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11603,30,-947.854,-170.5,79.7618,0.942478);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11603,30,-946.738,-139.567,80.0904,2.3911);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11603,30,-945.503,-65.0654,79.7907,5.02655);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11603,30,-943.678,-110.986,80.2557,0.959931);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11603,30,-942.993,-56.9881,79.8915,5.65487);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11603,30,-938.197,-155.838,61.3111,1.65806);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11603,30,-930.488,-214.524,72.1431,2.1236);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11603,30,-929.947,-154.449,61.5084,1.67552);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11603,30,-927.412,-135.313,61.1987,3.29867);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11603,30,-920.677,-156.859,62.8033,3.15306);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11603,30,-916.75,-136.094,62.2357,0.0698132);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11603,30,-915.319,-132.718,62.562,1.16984);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11603,30,-913.589,-146.794,76.9366,1.8675);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11603,30,-907.572,-148.937,76.6898,4.76475);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11603,30,-902.02,-64.6174,73.9707,1.19169);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11603,30,-899.489,-61.7252,73.2498,5.09636);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11603,30,-894.792,-127.141,75.3834,6.14356);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11603,30,-892.408,-162.525,64.1212,2.69884);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11603,30,-892.326,-123.158,76.0318,5.5676);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11603,30,-888.468,-148.462,61.8012,1.65806);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11603,30,-883.268,-159.738,63.5311,5.20108);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11603,30,-877.76,-118.07,65.215,2.94961);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11603,30,-876.792,-128.646,64.1045,3.40339);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11603,30,-874.901,-36.6579,69.4246,2.00713);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11603,30,-874.856,-151.351,62.7537,3.57875);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11603,30,-872.135,-150.08,62.7513,3.57201);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11603,30,-870.288,-149.217,62.5413,3.56624);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11603,30,-870.03,-6.27443,70.3867,2.3911);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11603,30,-869.023,-82.2118,69.5848,3.22886);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11603,30,-866.354,-40.2455,70.842,0.0698132);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11603,30,-865.305,-152.302,63.5044,4.86947);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11603,30,-861.926,-79.0519,71.4178,0.20944);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11603,30,-857.292,-152.277,63.2114,4.18879);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11603,30,-853.357,-0.696194,72.0655,0.994838);
+REPLACE INTO creature_template
+   (`entry`, `heroic_entry`, `modelid_A`, `modelid_A2`, `modelid_H`, `modelid_H2`, `name`, `subname`, `IconName`, `minlevel`, `maxlevel`, `minhealth`, `maxhealth`, `minmana`, `maxmana`, `armor`, `faction_A`, `faction_H`, `npcflag`, `speed`, `scale`, `rank`, `mindmg`, `maxdmg`, `dmgschool`, `attackpower`, `baseattacktime`, `rangeattacktime`, `unit_flags`, `dynamicflags`, `family`, `trainer_type`, `trainer_spell`, `class`, `race`, `minrangedmg`, `maxrangedmg`, `rangedattackpower`, `type`, `type_flags`, `lootid`, `pickpocketloot`, `skinloot`, `resistance1`, `resistance2`, `resistance3`, `resistance4`, `resistance5`, `resistance6`, `spell1`, `spell2`, `spell3`, `spell4`, `PetSpellDataId`, `mingold`, `maxgold`, `AIName`, `MovementType`, `InhabitType`, `RacialLeader`, `RegenHealth`, `equipment_id`, `mechanic_immune_mask`, `flags_extra`, `ScriptName`)
+VALUES
+   (11946, 0, 11894, 0, 11894, 0, 'Drek\'Thar', 'Frostwolf General', '', 72, 72, 220000, 250000, 0, 0, 0, 1214, 1214, 1, 2, 1, 3, 5000, 8000, 0, 15000, 2000, 0, 4096, 0, 0, 0, 0, 0, 0, 203.77, 289.86, 100, 7, 4, 0, 11946, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '', 1, 3, 0, 1, 994, 80428891, 1, 'mob_eventai');
 
--- 
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13317,30,-917.648,-46.8922,77.0872,5.27089);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13317,30,-912.689,-45.4494,76.2277,4.60767);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13317,30,-905.455,-84.5179,75.3642,3.29867);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13317,30,-904.332,-111.509,75.5925,2.47837);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13317,30,-904.27,-160.419,61.9876,3.61192);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13317,30,-904.023,-90.4558,75.3706,3.40339);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13317,30,-978.678,-37.3136,75.8364,2.84489);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13317,30,-973.076,-36.5013,77.5047,1.0821);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13317,30,-963.951,-87.734,81.5555,0.575959);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13317,30,-961.941,-90.7252,81.6629,0.820305);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13317,30,-957.623,-186.582,66.6021,1.95477);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13317,30,-952.476,-179.778,78.6771,4.5204);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13317,30,-950.427,-115.007,79.6127,3.68264);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13317,30,-950.25,-151.95,79.4598,-1.81423);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13317,30,-950.169,-188.099,66.6184,5.55015);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13317,30,-949.944,-142.977,80.5382,2.70526);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13317,30,-947.854,-170.5,79.7618,0.942478);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13317,30,-946.738,-139.567,80.0904,2.3911);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13317,30,-945.503,-65.0654,79.7907,5.02655);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13317,30,-943.678,-110.986,80.2557,0.959931);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13317,30,-942.993,-56.9881,79.8915,5.65487);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13317,30,-938.197,-155.838,61.3111,1.65806);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13317,30,-930.488,-214.524,72.1431,2.1236);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13317,30,-929.947,-154.449,61.5084,1.67552);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13317,30,-927.412,-135.313,61.1987,3.29867);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13317,30,-920.677,-156.859,62.8033,3.15306);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13317,30,-916.75,-136.094,62.2357,0.0698132);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13317,30,-915.319,-132.718,62.562,1.16984);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13317,30,-913.589,-146.794,76.9366,1.8675);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13317,30,-907.572,-148.937,76.6898,4.76475);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13317,30,-902.02,-64.6174,73.9707,1.19169);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13317,30,-899.489,-61.7252,73.2498,5.09636);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13317,30,-894.792,-127.141,75.3834,6.14356);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13317,30,-892.408,-162.525,64.1212,2.69884);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13317,30,-892.326,-123.158,76.0318,5.5676);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13317,30,-888.468,-148.462,61.8012,1.65806);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13317,30,-883.268,-159.738,63.5311,5.20108);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13317,30,-877.76,-118.07,65.215,2.94961);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13317,30,-876.792,-128.646,64.1045,3.40339);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13317,30,-874.901,-36.6579,69.4246,2.00713);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13317,30,-874.856,-151.351,62.7537,3.57875);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13317,30,-872.135,-150.08,62.7513,3.57201);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13317,30,-870.288,-149.217,62.5413,3.56624);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13317,30,-870.03,-6.27443,70.3867,2.3911);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13317,30,-869.023,-82.2118,69.5848,3.22886);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13317,30,-866.354,-40.2455,70.842,0.0698132);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13317,30,-865.305,-152.302,63.5044,4.86947);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13317,30,-861.926,-79.0519,71.4178,0.20944);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13317,30,-857.292,-152.277,63.2114,4.18879);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13317,30,-853.357,-0.696194,72.0655,0.994838);
+REPLACE INTO creature_template
+   (`entry`, `heroic_entry`, `modelid_A`, `modelid_A2`, `modelid_H`, `modelid_H2`, `name`, `subname`, `IconName`, `minlevel`, `maxlevel`, `minhealth`, `maxhealth`, `minmana`, `maxmana`, `armor`, `faction_A`, `faction_H`, `npcflag`, `speed`, `scale`, `rank`, `mindmg`, `maxdmg`, `dmgschool`, `attackpower`, `baseattacktime`, `rangeattacktime`, `unit_flags`, `dynamicflags`, `family`, `trainer_type`, `trainer_spell`, `class`, `race`, `minrangedmg`, `maxrangedmg`, `rangedattackpower`, `type`, `type_flags`, `lootid`, `pickpocketloot`, `skinloot`, `resistance1`, `resistance2`, `resistance3`, `resistance4`, `resistance5`, `resistance6`, `spell1`, `spell2`, `spell3`, `spell4`, `PetSpellDataId`, `mingold`, `maxgold`, `AIName`, `MovementType`, `InhabitType`, `RacialLeader`, `RegenHealth`, `equipment_id`, `mechanic_immune_mask`, `flags_extra`, `ScriptName`)
+VALUES
+   (11947, 0, 11895, 0, 11895, 0, 'Captain Galvangar', 'Frostwolf Captain', '', 71, 71, 180000, 200000, 0, 0, 0, 1214, 1214, 0, 2, 1, 3, 4000, 4000, 0, 8000, 2000, 0, 4160, 0, 0, 0, 0, 0, 0, 172.1, 240.07, 100, 7, 4, 11947, 11947, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 24055, 31418, '', 1, 3, 0, 1, 1389, 80428891, 1, 'mob_eventai');
+
+REPLACE INTO creature_template
+   (`entry`, `heroic_entry`, `modelid_A`, `modelid_A2`, `modelid_H`, `modelid_H2`, `name`, `subname`, `IconName`, `minlevel`, `maxlevel`, `minhealth`, `maxhealth`, `minmana`, `maxmana`, `armor`, `faction_A`, `faction_H`, `npcflag`, `speed`, `scale`, `rank`, `mindmg`, `maxdmg`, `dmgschool`, `attackpower`, `baseattacktime`, `rangeattacktime`, `unit_flags`, `dynamicflags`, `family`, `trainer_type`, `trainer_spell`, `class`, `race`, `minrangedmg`, `maxrangedmg`, `rangedattackpower`, `type`, `type_flags`, `lootid`, `pickpocketloot`, `skinloot`, `resistance1`, `resistance2`, `resistance3`, `resistance4`, `resistance5`, `resistance6`, `spell1`, `spell2`, `spell3`, `spell4`, `PetSpellDataId`, `mingold`, `maxgold`, `AIName`, `MovementType`, `InhabitType`, `RacialLeader`, `RegenHealth`, `equipment_id`, `mechanic_immune_mask`, `flags_extra`, `ScriptName`)
+VALUES
+   (11948, 0, 11896, 0, 11896, 0, 'Vanndar Stormpike', 'Stormpike General', '', 73, 73, 220000, 250000, 0, 0, 0, 1216, 1216, 0, 2, 1, 3, 5000, 8000, 0, 15000, 1158, 1274, 0, 0, 0, 0, 0, 0, 0, 203.77, 289.86, 100, 7, 4, 11948, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '', 1, 3, 0, 1, 0, 80428891, 1, 'mob_eventai');
+
+REPLACE INTO creature_template
+   (`entry`, `heroic_entry`, `modelid_A`, `modelid_A2`, `modelid_H`, `modelid_H2`, `name`, `subname`, `IconName`, `minlevel`, `maxlevel`, `minhealth`, `maxhealth`, `minmana`, `maxmana`, `armor`, `faction_A`, `faction_H`, `npcflag`, `speed`, `scale`, `rank`, `mindmg`, `maxdmg`, `dmgschool`, `attackpower`, `baseattacktime`, `rangeattacktime`, `unit_flags`, `dynamicflags`, `family`, `trainer_type`, `trainer_spell`, `class`, `race`, `minrangedmg`, `maxrangedmg`, `rangedattackpower`, `type`, `type_flags`, `lootid`, `pickpocketloot`, `skinloot`, `resistance1`, `resistance2`, `resistance3`, `resistance4`, `resistance5`, `resistance6`, `spell1`, `spell2`, `spell3`, `spell4`, `PetSpellDataId`, `mingold`, `maxgold`, `AIName`, `MovementType`, `InhabitType`, `RacialLeader`, `RegenHealth`, `equipment_id`, `mechanic_immune_mask`, `flags_extra`, `ScriptName`)
+VALUES
+   (11949, 0, 12823, 0, 12823, 0, 'Captain Balinda Stonehearth', 'Stormpike Captain', '', 71, 71, 180000, 200000, 38772, 38772, 0, 1216, 1216, 0, 2, 1, 3, 1000, 2000, 0, 2000, 2000, 0, 4096, 0, 0, 0, 0, 0, 0, 172.1, 240.07, 100, 7, 4, 11949, 11949, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 19805, 25868, '', 1, 3, 0, 1, 1364, 80428891, 1, 'mob_eventai');
+
+REPLACE INTO creature_template
+   (`entry`, `heroic_entry`, `modelid_A`, `modelid_A2`, `modelid_H`, `modelid_H2`, `name`, `subname`, `IconName`, `minlevel`, `maxlevel`, `minhealth`, `maxhealth`, `minmana`, `maxmana`, `armor`, `faction_A`, `faction_H`, `npcflag`, `speed`, `scale`, `rank`, `mindmg`, `maxdmg`, `dmgschool`, `attackpower`, `baseattacktime`, `rangeattacktime`, `unit_flags`, `dynamicflags`, `family`, `trainer_type`, `trainer_spell`, `class`, `race`, `minrangedmg`, `maxrangedmg`, `rangedattackpower`, `type`, `type_flags`, `lootid`, `pickpocketloot`, `skinloot`, `resistance1`, `resistance2`, `resistance3`, `resistance4`, `resistance5`, `resistance6`, `spell1`, `spell2`, `spell3`, `spell4`, `PetSpellDataId`, `mingold`, `maxgold`, `AIName`, `MovementType`, `InhabitType`, `RacialLeader`, `RegenHealth`, `equipment_id`, `mechanic_immune_mask`, `flags_extra`, `ScriptName`)
+VALUES
+   (13358, 0, 13390, 0, 13393, 0, 'Stormpike Bowman', '', '', 69, 70, 4500, 10000, 0, 0, 0, 1216, 1216, 0, 1.27, 1, 0, 65, 135, 0, 696, 2000, 0, 4608, 0, 0, 0, 0, 0, 0, 200, 600, 1000, 7, 0, 13358, 13358, 0, 0, 0, 0, 0, 0, 0, 22121, 0, 0, 0, 0, 260, 344, '', 0, 3, 0, 1, 8, 0, 0, 'mob_eventai');
+
+REPLACE INTO creature_template
+   (`entry`, `heroic_entry`, `modelid_A`, `modelid_A2`, `modelid_H`, `modelid_H2`, `name`, `subname`, `IconName`, `minlevel`, `maxlevel`, `minhealth`, `maxhealth`, `minmana`, `maxmana`, `armor`, `faction_A`, `faction_H`, `npcflag`, `speed`, `scale`, `rank`, `mindmg`, `maxdmg`, `dmgschool`, `attackpower`, `baseattacktime`, `rangeattacktime`, `unit_flags`, `dynamicflags`, `family`, `trainer_type`, `trainer_spell`, `class`, `race`, `minrangedmg`, `maxrangedmg`, `rangedattackpower`, `type`, `type_flags`, `lootid`, `pickpocketloot`, `skinloot`, `resistance1`, `resistance2`, `resistance3`, `resistance4`, `resistance5`, `resistance6`, `spell1`, `spell2`, `spell3`, `spell4`, `PetSpellDataId`, `mingold`, `maxgold`, `AIName`, `MovementType`, `InhabitType`, `RacialLeader`, `RegenHealth`, `equipment_id`, `mechanic_immune_mask`, `flags_extra`, `ScriptName`)
+VALUES
+   (13359, 0, 13398, 0, 13401, 0, 'Frostwolf Bowman', '', '', 69, 70, 4500, 10000, 0, 0, 0, 1214, 1214, 0, 1.27, 1, 0, 66, 137, 0, 712, 2000, 0, 4608, 0, 0, 0, 0, 0, 0, 200, 600, 1000, 7, 0, 13359, 13359, 0, 0, 0, 0, 0, 0, 0, 22121, 0, 0, 0, 0, 262, 347, '', 0, 3, 0, 1, 6, 0, 0, 'mob_eventai');
+
+REPLACE INTO creature_template
+   (`entry`, `heroic_entry`, `modelid_A`, `modelid_A2`, `modelid_H`, `modelid_H2`, `name`, `subname`, `IconName`, `minlevel`, `maxlevel`, `minhealth`, `maxhealth`, `minmana`, `maxmana`, `armor`, `faction_A`, `faction_H`, `npcflag`, `speed`, `scale`, `rank`, `mindmg`, `maxdmg`, `dmgschool`, `attackpower`, `baseattacktime`, `rangeattacktime`, `unit_flags`, `dynamicflags`, `family`, `trainer_type`, `trainer_spell`, `class`, `race`, `minrangedmg`, `maxrangedmg`, `rangedattackpower`, `type`, `type_flags`, `lootid`, `pickpocketloot`, `skinloot`, `resistance1`, `resistance2`, `resistance3`, `resistance4`, `resistance5`, `resistance6`, `spell1`, `spell2`, `spell3`, `spell4`, `PetSpellDataId`, `mingold`, `maxgold`, `AIName`, `MovementType`, `InhabitType`, `RacialLeader`, `RegenHealth`, `equipment_id`, `mechanic_immune_mask`, `flags_extra`, `ScriptName`)
+VALUES
+   (14770, 0, 14797, 0, 14798, 0, 'Dun Baldar North Warmaster', '', '', 70, 70, 139780, 139780, 0, 0, 0, 1214, 1214, 0, 2, 1, 3, 3000, 5000, 0, 2175, 2000, 0, 4096, 0, 0, 0, 0, 0, 0, 62.016, 85.272, 100, 7, 0, 14770, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '', 0, 3, 0, 1, 1416, 0, 0, 'mob_eventai');
+
+REPLACE INTO creature_template
+   (`entry`, `heroic_entry`, `modelid_A`, `modelid_A2`, `modelid_H`, `modelid_H2`, `name`, `subname`, `IconName`, `minlevel`, `maxlevel`, `minhealth`, `maxhealth`, `minmana`, `maxmana`, `armor`, `faction_A`, `faction_H`, `npcflag`, `speed`, `scale`, `rank`, `mindmg`, `maxdmg`, `dmgschool`, `attackpower`, `baseattacktime`, `rangeattacktime`, `unit_flags`, `dynamicflags`, `family`, `trainer_type`, `trainer_spell`, `class`, `race`, `minrangedmg`, `maxrangedmg`, `rangedattackpower`, `type`, `type_flags`, `lootid`, `pickpocketloot`, `skinloot`, `resistance1`, `resistance2`, `resistance3`, `resistance4`, `resistance5`, `resistance6`, `spell1`, `spell2`, `spell3`, `spell4`, `PetSpellDataId`, `mingold`, `maxgold`, `AIName`, `MovementType`, `InhabitType`, `RacialLeader`, `RegenHealth`, `equipment_id`, `mechanic_immune_mask`, `flags_extra`, `ScriptName`)
+VALUES
+   (14771, 0, 14798, 0, 14799, 0, 'Dun Baldar South Warmaster', '', '', 70, 70, 36600, 36600, 0, 0, 0, 1214, 1214, 0, 2, 1, 3, 3000, 6000, 0, 10000, 2000, 0, 4096, 0, 0, 0, 0, 0, 0, 62.016, 85.272, 100, 7, 0, 14771, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '', 0, 3, 0, 1, 1416, 0, 0, 'mob_eventai');
+
+REPLACE INTO creature_template
+   (`entry`, `heroic_entry`, `modelid_A`, `modelid_A2`, `modelid_H`, `modelid_H2`, `name`, `subname`, `IconName`, `minlevel`, `maxlevel`, `minhealth`, `maxhealth`, `minmana`, `maxmana`, `armor`, `faction_A`, `faction_H`, `npcflag`, `speed`, `scale`, `rank`, `mindmg`, `maxdmg`, `dmgschool`, `attackpower`, `baseattacktime`, `rangeattacktime`, `unit_flags`, `dynamicflags`, `family`, `trainer_type`, `trainer_spell`, `class`, `race`, `minrangedmg`, `maxrangedmg`, `rangedattackpower`, `type`, `type_flags`, `lootid`, `pickpocketloot`, `skinloot`, `resistance1`, `resistance2`, `resistance3`, `resistance4`, `resistance5`, `resistance6`, `spell1`, `spell2`, `spell3`, `spell4`, `PetSpellDataId`, `mingold`, `maxgold`, `AIName`, `MovementType`, `InhabitType`, `RacialLeader`, `RegenHealth`, `equipment_id`, `mechanic_immune_mask`, `flags_extra`, `ScriptName`)
+VALUES
+   (14772, 0, 14798, 0, 14800, 0, 'East Frostwolf Warmaster', '', '', 70, 70, 139362, 139362, 0, 0, 0, 1214, 1214, 0, 2, 1, 3, 3000, 6000, 0, 10000, 2000, 0, 4096, 0, 0, 0, 0, 0, 0, 59.9488, 82.4296, 100, 7, 0, 14772, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6049, 7904, '', 1, 3, 0, 1, 1416, 0, 0, 'mob_eventai');
+
+REPLACE INTO creature_template
+   (`entry`, `heroic_entry`, `modelid_A`, `modelid_A2`, `modelid_H`, `modelid_H2`, `name`, `subname`, `IconName`, `minlevel`, `maxlevel`, `minhealth`, `maxhealth`, `minmana`, `maxmana`, `armor`, `faction_A`, `faction_H`, `npcflag`, `speed`, `scale`, `rank`, `mindmg`, `maxdmg`, `dmgschool`, `attackpower`, `baseattacktime`, `rangeattacktime`, `unit_flags`, `dynamicflags`, `family`, `trainer_type`, `trainer_spell`, `class`, `race`, `minrangedmg`, `maxrangedmg`, `rangedattackpower`, `type`, `type_flags`, `lootid`, `pickpocketloot`, `skinloot`, `resistance1`, `resistance2`, `resistance3`, `resistance4`, `resistance5`, `resistance6`, `spell1`, `spell2`, `spell3`, `spell4`, `PetSpellDataId`, `mingold`, `maxgold`, `AIName`, `MovementType`, `InhabitType`, `RacialLeader`, `RegenHealth`, `equipment_id`, `mechanic_immune_mask`, `flags_extra`, `ScriptName`)
+VALUES
+   (14773, 0, 14797, 0, 14797, 0, 'Iceblood Warmaster', '', '', 70, 70, 141144, 141144, 0, 0, 0, 1214, 1214, 0, 2, 1, 3, 3000, 6000, 0, 10000, 2000, 0, 4096, 0, 0, 0, 0, 0, 0, 62.016, 85.272, 100, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '', 1, 3, 0, 1, 1416, 0, 0, 'mob_eventai');
+
+REPLACE INTO creature_template
+   (`entry`, `heroic_entry`, `modelid_A`, `modelid_A2`, `modelid_H`, `modelid_H2`, `name`, `subname`, `IconName`, `minlevel`, `maxlevel`, `minhealth`, `maxhealth`, `minmana`, `maxmana`, `armor`, `faction_A`, `faction_H`, `npcflag`, `speed`, `scale`, `rank`, `mindmg`, `maxdmg`, `dmgschool`, `attackpower`, `baseattacktime`, `rangeattacktime`, `unit_flags`, `dynamicflags`, `family`, `trainer_type`, `trainer_spell`, `class`, `race`, `minrangedmg`, `maxrangedmg`, `rangedattackpower`, `type`, `type_flags`, `lootid`, `pickpocketloot`, `skinloot`, `resistance1`, `resistance2`, `resistance3`, `resistance4`, `resistance5`, `resistance6`, `spell1`, `spell2`, `spell3`, `spell4`, `PetSpellDataId`, `mingold`, `maxgold`, `AIName`, `MovementType`, `InhabitType`, `RacialLeader`, `RegenHealth`, `equipment_id`, `mechanic_immune_mask`, `flags_extra`, `ScriptName`)
+VALUES
+   (14774, 0, 14800, 0, 14800, 0, 'Icewing Warmaster', '', '', 70, 70, 122300, 122300, 0, 0, 0, 1214, 1214, 0, 2, 1, 3, 3000, 6000, 0, 10000, 2000, 0, 4096, 0, 0, 0, 0, 0, 0, 62.016, 85.272, 100, 7, 0, 14774, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6049, 7904, '', 1, 3, 0, 1, 1416, 0, 0, 'mob_eventai');
+
+REPLACE INTO creature_template
+   (`entry`, `heroic_entry`, `modelid_A`, `modelid_A2`, `modelid_H`, `modelid_H2`, `name`, `subname`, `IconName`, `minlevel`, `maxlevel`, `minhealth`, `maxhealth`, `minmana`, `maxmana`, `armor`, `faction_A`, `faction_H`, `npcflag`, `speed`, `scale`, `rank`, `mindmg`, `maxdmg`, `dmgschool`, `attackpower`, `baseattacktime`, `rangeattacktime`, `unit_flags`, `dynamicflags`, `family`, `trainer_type`, `trainer_spell`, `class`, `race`, `minrangedmg`, `maxrangedmg`, `rangedattackpower`, `type`, `type_flags`, `lootid`, `pickpocketloot`, `skinloot`, `resistance1`, `resistance2`, `resistance3`, `resistance4`, `resistance5`, `resistance6`, `spell1`, `spell2`, `spell3`, `spell4`, `PetSpellDataId`, `mingold`, `maxgold`, `AIName`, `MovementType`, `InhabitType`, `RacialLeader`, `RegenHealth`, `equipment_id`, `mechanic_immune_mask`, `flags_extra`, `ScriptName`)
+VALUES
+   (14775, 0, 14798, 0, 14800, 0, 'Stonehearth Warmaster', '', '', 70, 70, 140204, 140204, 0, 0, 0, 1214, 1214, 0, 2, 1, 3, 3000, 6000, 0, 10000, 2000, 0, 4096, 0, 0, 0, 0, 0, 0, 62.016, 85.272, 100, 7, 0, 14775, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6049, 7904, '', 1, 3, 0, 1, 1416, 0, 0, 'mob_eventai');
+
+REPLACE INTO creature_template
+   (`entry`, `heroic_entry`, `modelid_A`, `modelid_A2`, `modelid_H`, `modelid_H2`, `name`, `subname`, `IconName`, `minlevel`, `maxlevel`, `minhealth`, `maxhealth`, `minmana`, `maxmana`, `armor`, `faction_A`, `faction_H`, `npcflag`, `speed`, `scale`, `rank`, `mindmg`, `maxdmg`, `dmgschool`, `attackpower`, `baseattacktime`, `rangeattacktime`, `unit_flags`, `dynamicflags`, `family`, `trainer_type`, `trainer_spell`, `class`, `race`, `minrangedmg`, `maxrangedmg`, `rangedattackpower`, `type`, `type_flags`, `lootid`, `pickpocketloot`, `skinloot`, `resistance1`, `resistance2`, `resistance3`, `resistance4`, `resistance5`, `resistance6`, `spell1`, `spell2`, `spell3`, `spell4`, `PetSpellDataId`, `mingold`, `maxgold`, `AIName`, `MovementType`, `InhabitType`, `RacialLeader`, `RegenHealth`, `equipment_id`, `mechanic_immune_mask`, `flags_extra`, `ScriptName`)
+VALUES
+   (14776, 0, 14798, 0, 14800, 0, 'Tower Point Warmaster', '', '', 70, 70, 131536, 131536, 0, 0, 0, 1214, 1214, 0, 2, 1, 3, 3000, 6000, 0, 10000, 2000, 0, 4096, 0, 0, 0, 0, 0, 0, 62.016, 85.272, 100, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '', 1, 3, 0, 1, 1416, 0, 0, 'mob_eventai');
+
+REPLACE INTO creature_template
+   (`entry`, `heroic_entry`, `modelid_A`, `modelid_A2`, `modelid_H`, `modelid_H2`, `name`, `subname`, `IconName`, `minlevel`, `maxlevel`, `minhealth`, `maxhealth`, `minmana`, `maxmana`, `armor`, `faction_A`, `faction_H`, `npcflag`, `speed`, `scale`, `rank`, `mindmg`, `maxdmg`, `dmgschool`, `attackpower`, `baseattacktime`, `rangeattacktime`, `unit_flags`, `dynamicflags`, `family`, `trainer_type`, `trainer_spell`, `class`, `race`, `minrangedmg`, `maxrangedmg`, `rangedattackpower`, `type`, `type_flags`, `lootid`, `pickpocketloot`, `skinloot`, `resistance1`, `resistance2`, `resistance3`, `resistance4`, `resistance5`, `resistance6`, `spell1`, `spell2`, `spell3`, `spell4`, `PetSpellDataId`, `mingold`, `maxgold`, `AIName`, `MovementType`, `InhabitType`, `RacialLeader`, `RegenHealth`, `equipment_id`, `mechanic_immune_mask`, `flags_extra`, `ScriptName`)
+VALUES
+   (14777, 0, 14797, 0, 14798, 0, 'West Frostwolf Warmaster', '', '', 70, 70, 138920, 138920, 0, 0, 0, 1214, 1214, 0, 2, 1, 3, 3000, 6000, 0, 10000, 2000, 0, 4096, 0, 0, 0, 0, 0, 0, 59.9488, 82.4296, 100, 7, 0, 14777, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '', 1, 3, 0, 1, 1416, 0, 0, 'mob_eventai');
+
+REPLACE INTO creature_template
+   (`entry`, `heroic_entry`, `modelid_A`, `modelid_A2`, `modelid_H`, `modelid_H2`, `name`, `subname`, `IconName`, `minlevel`, `maxlevel`, `minhealth`, `maxhealth`, `minmana`, `maxmana`, `armor`, `faction_A`, `faction_H`, `npcflag`, `speed`, `scale`, `rank`, `mindmg`, `maxdmg`, `dmgschool`, `attackpower`, `baseattacktime`, `rangeattacktime`, `unit_flags`, `dynamicflags`, `family`, `trainer_type`, `trainer_spell`, `class`, `race`, `minrangedmg`, `maxrangedmg`, `rangedattackpower`, `type`, `type_flags`, `lootid`, `pickpocketloot`, `skinloot`, `resistance1`, `resistance2`, `resistance3`, `resistance4`, `resistance5`, `resistance6`, `spell1`, `spell2`, `spell3`, `spell4`, `PetSpellDataId`, `mingold`, `maxgold`, `AIName`, `MovementType`, `InhabitType`, `RacialLeader`, `RegenHealth`, `equipment_id`, `mechanic_immune_mask`, `flags_extra`, `ScriptName`)
+VALUES
+   (25040, 0, 4606, 0, 4606, 0, 'Greater Water Elemental', '', '', 1, 1, 1, 1, 0, 0, 0, 35, 35, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '', 0, 3, 0, 1, 0, 0, 0, 'mob_eventai');
 
 
---
---
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13316,30,-917.648,-46.8922,77.0872,5.27089);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13316,30,-912.689,-45.4494,76.2277,4.60767);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13316,30,-905.455,-84.5179,75.3642,3.29867);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13316,30,-904.332,-111.509,75.5925,2.47837);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13316,30,-904.27,-160.419,61.9876,3.61192);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13316,30,-904.023,-90.4558,75.3706,3.40339);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13316,30,-978.678,-37.3136,75.8364,2.84489);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13316,30,-973.076,-36.5013,77.5047,1.0821);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13316,30,-963.951,-87.734,81.5555,0.575959);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13316,30,-961.941,-90.7252,81.6629,0.820305);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13316,30,-957.623,-186.582,66.6021,1.95477);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13316,30,-952.476,-179.778,78.6771,4.5204);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13316,30,-950.427,-115.007,79.6127,3.68264);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13316,30,-950.25,-151.95,79.4598,-1.81423);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13316,30,-950.169,-188.099,66.6184,5.55015);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13316,30,-949.944,-142.977,80.5382,2.70526);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13316,30,-947.854,-170.5,79.7618,0.942478);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13316,30,-946.738,-139.567,80.0904,2.3911);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13316,30,-945.503,-65.0654,79.7907,5.02655);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13316,30,-943.678,-110.986,80.2557,0.959931);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13316,30,-942.993,-56.9881,79.8915,5.65487);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13316,30,-938.197,-155.838,61.3111,1.65806);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13316,30,-930.488,-214.524,72.1431,2.1236);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13316,30,-929.947,-154.449,61.5084,1.67552);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13316,30,-927.412,-135.313,61.1987,3.29867);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13316,30,-920.677,-156.859,62.8033,3.15306);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13316,30,-916.75,-136.094,62.2357,0.0698132);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13316,30,-915.319,-132.718,62.562,1.16984);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13316,30,-913.589,-146.794,76.9366,1.8675);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13316,30,-907.572,-148.937,76.6898,4.76475);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13316,30,-902.02,-64.6174,73.9707,1.19169);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13316,30,-899.489,-61.7252,73.2498,5.09636);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13316,30,-894.792,-127.141,75.3834,6.14356);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13316,30,-892.408,-162.525,64.1212,2.69884);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13316,30,-892.326,-123.158,76.0318,5.5676);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13316,30,-888.468,-148.462,61.8012,1.65806);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13316,30,-883.268,-159.738,63.5311,5.20108);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13316,30,-877.76,-118.07,65.215,2.94961);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13316,30,-876.792,-128.646,64.1045,3.40339);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13316,30,-874.901,-36.6579,69.4246,2.00713);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13316,30,-874.856,-151.351,62.7537,3.57875);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13316,30,-872.135,-150.08,62.7513,3.57201);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13316,30,-870.288,-149.217,62.5413,3.56624);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13316,30,-870.03,-6.27443,70.3867,2.3911);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13316,30,-869.023,-82.2118,69.5848,3.22886);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13316,30,-866.354,-40.2455,70.842,0.0698132);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13316,30,-865.305,-152.302,63.5044,4.86947);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13316,30,-861.926,-79.0519,71.4178,0.20944);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13316,30,-857.292,-152.277,63.2114,4.18879);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13316,30,-853.357,-0.696194,72.0655,0.994838);
+UPDATE creature_template SET minlevel=50 , maxlevel=51 WHERE entry=10981;
+UPDATE creature_template SET minlevel=50 , maxlevel=51 WHERE entry=10990;
+UPDATE creature_template SET minlevel=52 , maxlevel=53 WHERE entry=10986;
+UPDATE creature_template SET minlevel=52 , maxlevel=53 WHERE entry=11678;
+UPDATE creature_template SET minlevel=53 , maxlevel=53 WHERE entry=11675;
+UPDATE creature_template SET minlevel=53 , maxlevel=54 WHERE entry=14282;
+UPDATE creature_template SET minlevel=53 , maxlevel=54 WHERE entry=14283;
+UPDATE creature_template SET minlevel=55 , maxlevel=55 WHERE entry=10364;
+UPDATE creature_template SET minlevel=55 , maxlevel=55 WHERE entry=10367;
+UPDATE creature_template SET minlevel=55 , maxlevel=55 WHERE entry=12096;
+UPDATE creature_template SET minlevel=55 , maxlevel=55 WHERE entry=12097;
+UPDATE creature_template SET minlevel=55 , maxlevel=55 WHERE entry=2225;
+UPDATE creature_template SET minlevel=55 , maxlevel=55 WHERE entry=3343;
+UPDATE creature_template SET minlevel=55 , maxlevel=55 WHERE entry=3625;
+UPDATE creature_template SET minlevel=55 , maxlevel=55 WHERE entry=4255;
+UPDATE creature_template SET minlevel=55 , maxlevel=55 WHERE entry=4257;
+UPDATE creature_template SET minlevel=55 , maxlevel=55 WHERE entry=5134;
+UPDATE creature_template SET minlevel=55 , maxlevel=55 WHERE entry=5135;
+UPDATE creature_template SET minlevel=55 , maxlevel=55 WHERE entry=5139;
+UPDATE creature_template SET minlevel=56 , maxlevel=56 WHERE entry=11839;
+UPDATE creature_template SET minlevel=57 , maxlevel=57 WHERE entry=12051;
+UPDATE creature_template SET minlevel=57 , maxlevel=57 WHERE entry=12127;
+UPDATE creature_template SET minlevel=58 , maxlevel=58 WHERE entry=13216;
+UPDATE creature_template SET minlevel=58 , maxlevel=58 WHERE entry=13218;
+UPDATE creature_template SET minlevel=58 , maxlevel=58 WHERE entry=13284;
+UPDATE creature_template SET minlevel=58 , maxlevel=58 WHERE entry=13438;
+UPDATE creature_template SET minlevel=58 , maxlevel=58 WHERE entry=13447;
+UPDATE creature_template SET minlevel=59 , maxlevel=59 WHERE entry=13179;
+UPDATE creature_template SET minlevel=59 , maxlevel=59 WHERE entry=14185;
+UPDATE creature_template SET minlevel=59 , maxlevel=59 WHERE entry=14188;
+UPDATE creature_template SET minlevel=60 , maxlevel=60 WHERE entry=11997;
+UPDATE creature_template SET minlevel=60 , maxlevel=60 WHERE entry=13176;
+UPDATE creature_template SET minlevel=60 , maxlevel=60 WHERE entry=13236;
+UPDATE creature_template SET minlevel=60 , maxlevel=60 WHERE entry=13257;
+UPDATE creature_template SET minlevel=60 , maxlevel=60 WHERE entry=13442;
+UPDATE creature_template SET minlevel=60 , maxlevel=60 WHERE entry=13443;
+UPDATE creature_template SET minlevel=60 , maxlevel=60 WHERE entry=13577;
+UPDATE creature_template SET minlevel=60 , maxlevel=60 WHERE entry=13617;
+UPDATE creature_template SET minlevel=60 , maxlevel=60 WHERE entry=14186;
+UPDATE creature_template SET minlevel=60 , maxlevel=60 WHERE entry=14187;
+UPDATE creature_template SET minlevel=60 , maxlevel=61 WHERE entry=13797;
+UPDATE creature_template SET minlevel=60 , maxlevel=61 WHERE entry=13798;
+UPDATE creature_template SET minlevel=61 , maxlevel=61 WHERE entry=11947;
+UPDATE creature_template SET minlevel=61 , maxlevel=61 WHERE entry=11949;
+UPDATE creature_template SET minlevel=61 , maxlevel=61 WHERE entry=13816;
+UPDATE creature_template SET minlevel=61 , maxlevel=61 WHERE entry=14284;
+UPDATE creature_template SET minlevel=63 , maxlevel=63 WHERE entry=11946;
+UPDATE creature_template SET minlevel=63 , maxlevel=63 WHERE entry=11948;
 
--- special
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11604,30,-954.622,-110.958,80.7911,6.24828);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11604,30,-951.477,-53.9647,80.0235,5.32325);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11604,30,-946.812,-126.04,78.8601,5.15265);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11604,30,-940.689,-140.707,79.9225,2.79253);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11604,30,-933.954,-159.632,60.778,2.56563);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11604,30,-922.537,-130.291,61.3756,4.95674);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11604,30,-915.862,-151.74,76.9427,0.942478);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11604,30,-888.321,-159.831,62.5303,1.20428);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11604,30,-874.361,-42.4751,69.4316,0.785398);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11604,30,-873.19,-50.4899,70.0568,-2.41288);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11604,30,-868.511,-148.386,62.3547,3.57875);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11604,30,-868.44,-121.649,64.5056,3.33358);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11604,30,-868.324,-77.7196,71.4768,5.41052);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11604,30,-859.846,-19.6549,70.7304,1.97222);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11604,30,-828.05,-150.508,62.2019,2.14675);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11604,30,-826.254,-58.6911,72.0041,3.68264);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11604,30,-976.086,-44.1775,76.029,1.46608);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11604,30,-971.864,-87.4223,81.4954,5.8294);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11604,30,-966.551,-74.1111,80.0243,4.2129);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11604,30,-958.509,-173.652,77.9013,6.24828);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11604,30,-951.511,-181.242,65.529,4.39823);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11604,30,-940.967,-186.243,77.698,1.28164);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11604,30,-930.004,-65.0898,79.077,0.0581657);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11604,30,-920.864,-40.2009,78.256,5.16617);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11604,30,-919.089,-148.021,62.0317,2.59327);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11604,30,-901.516,-116.329,75.6876,0.471239);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11604,30,-897.864,-84.4348,74.083,3.00197);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11604,30,-897.617,-52.0457,71.9503,4.36332);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11604,30,-894.891,-153.951,61.6827,3.23569);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11604,30,-893.933,-111.625,75.6591,4.22536);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11604,30,-883.265,-152.854,61.8384,0.0941087);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11604,30,-868.293,-147.243,62.1097,3.2056);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11604,30,-867.501,-11.8709,70.018,6.14356);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11604,30,-866.699,-147.54,62.1646,3.57878);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11604,30,-866.566,-91.1916,67.4414,4.56707);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11604,30,-857.272,-141.142,61.7356,4.17134);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11604,30,-847.446,-98.0061,68.5131,3.24631);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11604,30,-837.026,-140.729,62.5141,5.51524);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11604,30,-824.204,-65.053,72.3381,3.01942);
- 
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13096,30,-954.622,-110.958,80.7911,6.24828);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13096,30,-951.477,-53.9647,80.0235,5.32325);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13096,30,-946.812,-126.04,78.8601,5.15265);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13096,30,-940.689,-140.707,79.9225,2.79253);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13096,30,-933.954,-159.632,60.778,2.56563);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13096,30,-922.537,-130.291,61.3756,4.95674);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13096,30,-915.862,-151.74,76.9427,0.942478);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13096,30,-888.321,-159.831,62.5303,1.20428);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13096,30,-874.361,-42.4751,69.4316,0.785398);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13096,30,-873.19,-50.4899,70.0568,-2.41288);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13096,30,-868.511,-148.386,62.3547,3.57875);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13096,30,-868.44,-121.649,64.5056,3.33358);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13096,30,-868.324,-77.7196,71.4768,5.41052);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13096,30,-859.846,-19.6549,70.7304,1.97222);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13096,30,-828.05,-150.508,62.2019,2.14675);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13096,30,-826.254,-58.6911,72.0041,3.68264);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13096,30,-976.086,-44.1775,76.029,1.46608);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13096,30,-971.864,-87.4223,81.4954,5.8294);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13096,30,-966.551,-74.1111,80.0243,4.2129);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13096,30,-958.509,-173.652,77.9013,6.24828);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13096,30,-951.511,-181.242,65.529,4.39823);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13096,30,-940.967,-186.243,77.698,1.28164);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13096,30,-930.004,-65.0898,79.077,0.0581657);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13096,30,-920.864,-40.2009,78.256,5.16617);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13096,30,-919.089,-148.021,62.0317,2.59327);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13096,30,-901.516,-116.329,75.6876,0.471239);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13096,30,-897.864,-84.4348,74.083,3.00197);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13096,30,-897.617,-52.0457,71.9503,4.36332);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13096,30,-894.891,-153.951,61.6827,3.23569);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13096,30,-893.933,-111.625,75.6591,4.22536);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13096,30,-883.265,-152.854,61.8384,0.0941087);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13096,30,-868.293,-147.243,62.1097,3.2056);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13096,30,-867.501,-11.8709,70.018,6.14356);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13096,30,-866.699,-147.54,62.1646,3.57878);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13096,30,-866.566,-91.1916,67.4414,4.56707);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13096,30,-857.272,-141.142,61.7356,4.17134);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13096,30,-847.446,-98.0061,68.5131,3.24631);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13096,30,-837.026,-140.729,62.5141,5.51524);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13096,30,-824.204,-65.053,72.3381,3.01942);
- 
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13097,30,-954.622,-110.958,80.7911,6.24828);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13097,30,-951.477,-53.9647,80.0235,5.32325);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13097,30,-946.812,-126.04,78.8601,5.15265);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13097,30,-940.689,-140.707,79.9225,2.79253);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13097,30,-933.954,-159.632,60.778,2.56563);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13097,30,-922.537,-130.291,61.3756,4.95674);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13097,30,-915.862,-151.74,76.9427,0.942478);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13097,30,-888.321,-159.831,62.5303,1.20428);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13097,30,-874.361,-42.4751,69.4316,0.785398);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13097,30,-873.19,-50.4899,70.0568,-2.41288);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13097,30,-868.511,-148.386,62.3547,3.57875);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13097,30,-868.44,-121.649,64.5056,3.33358);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13097,30,-868.324,-77.7196,71.4768,5.41052);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13097,30,-859.846,-19.6549,70.7304,1.97222);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13097,30,-828.05,-150.508,62.2019,2.14675);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13097,30,-826.254,-58.6911,72.0041,3.68264);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13097,30,-976.086,-44.1775,76.029,1.46608);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13097,30,-971.864,-87.4223,81.4954,5.8294);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13097,30,-966.551,-74.1111,80.0243,4.2129);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13097,30,-958.509,-173.652,77.9013,6.24828);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13097,30,-951.511,-181.242,65.529,4.39823);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13097,30,-940.967,-186.243,77.698,1.28164);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13097,30,-930.004,-65.0898,79.077,0.0581657);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13097,30,-920.864,-40.2009,78.256,5.16617);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13097,30,-919.089,-148.021,62.0317,2.59327);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13097,30,-901.516,-116.329,75.6876,0.471239);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13097,30,-897.864,-84.4348,74.083,3.00197);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13097,30,-897.617,-52.0457,71.9503,4.36332);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13097,30,-894.891,-153.951,61.6827,3.23569);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13097,30,-893.933,-111.625,75.6591,4.22536);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13097,30,-883.265,-152.854,61.8384,0.0941087);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13097,30,-868.293,-147.243,62.1097,3.2056);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13097,30,-867.501,-11.8709,70.018,6.14356);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13097,30,-866.699,-147.54,62.1646,3.57878);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13097,30,-866.566,-91.1916,67.4414,4.56707);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13097,30,-857.272,-141.142,61.7356,4.17134);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13097,30,-847.446,-98.0061,68.5131,3.24631);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13097,30,-837.026,-140.729,62.5141,5.51524);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13097,30,-824.204,-65.053,72.3381,3.01942);
+UPDATE creature_template SET minlevel=54 , maxlevel=54 WHERE entry IN (10987,11603,13317,13396,13397,13316);
+UPDATE creature_template SET minlevel=54 , maxlevel=55 WHERE entry IN (11600,13080,13099,11604,13096,13097);
+UPDATE creature_template SET minlevel=54 , maxlevel=55 WHERE entry IN (11602,13098,13081,11605,13087,13089);
+UPDATE creature_template SET minlevel=58 , maxlevel=58 WHERE entry IN (11657,13078,13079,11677,13086,13088);
+UPDATE creature_template SET minlevel=54 , maxlevel=55 WHERE entry=10982;
 
--- vermins
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(10982,30,-951.955,-197.5,77.212,5.63741);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(10982,30,-944.837,-199.608,77.0737,4.97419);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(10982,30,-933.494,-209.063,73.7803,5.88176);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(10982,30,-929.666,-201.308,73.7032,5.02655);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(10982,30,-978.997,-249.356,65.4345,5.05464);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(10982,30,-974.565,-224.828,69.5858,4.88846);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(10982,30,-946.514,-259.239,66.0874,3.78132);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(10982,30,-918.402,-250.439,69.5271,2.21352);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(10982,30,-910.14,-229.959,72.9279,0.27677);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(10982,30,-851.563,-88.6527,68.5983,3.61896);
-
--- bosses
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13088,30,-848.902,-92.931,68.6325,3.33350);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13086,30,-848.902,-92.931,68.6325,3.33350);
-INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11677,30,-848.902,-92.931,68.6325,3.33350);
-UPDATE creature c, creature_template t SET c.curhealth=t.minhealth WHERE c.map=30 AND c.id=t.entry;
-UPDATE creature SET spawndist=0 WHERE MovementType=0 AND map=30;
 DELETE FROM creature WHERE map=30;
 INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(2225,30,-1235.31, -340.777, 60.5088, 3.31613);
 INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(3343,30,-1244.02, -323.795, 61.0485, 5.21853);
@@ -482,276 +317,300 @@ INSERT INTO creature(id,map,position_x,position_y,position_z,orientation)
 VALUES(14772,30,-1378.37, -228.614, 99.3546, 5.38565);
 INSERT INTO creature(id,map,position_x,position_y,position_z,orientation)
 VALUES(14777,30,-1358.02, -228.998, 98.868, 3.87768);
-
-UPDATE creature c, creature_template t SET c.curhealth=t.minhealth WHERE c.map=30 AND c.id=t.entry;
-UPDATE creature SET spawndist=0 WHERE MovementType=0 AND map=30;
-REPLACE INTO creature_template
-   (`entry`, `heroic_entry`, `modelid_A`, `modelid_A2`, `modelid_H`, `modelid_H2`, `name`, `subname`, `IconName`, `minlevel`, `maxlevel`, `minhealth`, `maxhealth`, `minmana`, `maxmana`, `armor`, `faction_A`, `faction_H`, `npcflag`, `speed`, `scale`, `rank`, `mindmg`, `maxdmg`, `dmgschool`, `attackpower`, `baseattacktime`, `rangeattacktime`, `unit_flags`, `dynamicflags`, `family`, `trainer_type`, `trainer_spell`, `class`, `race`, `minrangedmg`, `maxrangedmg`, `rangedattackpower`, `type`, `type_flags`, `lootid`, `pickpocketloot`, `skinloot`, `resistance1`, `resistance2`, `resistance3`, `resistance4`, `resistance5`, `resistance6`, `spell1`, `spell2`, `spell3`, `spell4`, `PetSpellDataId`, `mingold`, `maxgold`, `AIName`, `MovementType`, `InhabitType`, `RacialLeader`, `RegenHealth`, `equipment_id`, `mechanic_immune_mask`, `flags_extra`, `ScriptName`)
-VALUES
-   (11946, 0, 11894, 0, 11894, 0, 'Drek\'Thar', 'Frostwolf General', '', 72, 72, 220000, 250000, 0, 0, 0, 1214, 1214, 1, 2, 1, 3, 5000, 8000, 0, 15000, 2000, 0, 4096, 0, 0, 0, 0, 0, 0, 203.77, 289.86, 100, 7, 4, 0, 11946, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '', 1, 3, 0, 1, 994, 80428891, 1, 'mob_eventai');
-
-REPLACE INTO creature_template
-   (`entry`, `heroic_entry`, `modelid_A`, `modelid_A2`, `modelid_H`, `modelid_H2`, `name`, `subname`, `IconName`, `minlevel`, `maxlevel`, `minhealth`, `maxhealth`, `minmana`, `maxmana`, `armor`, `faction_A`, `faction_H`, `npcflag`, `speed`, `scale`, `rank`, `mindmg`, `maxdmg`, `dmgschool`, `attackpower`, `baseattacktime`, `rangeattacktime`, `unit_flags`, `dynamicflags`, `family`, `trainer_type`, `trainer_spell`, `class`, `race`, `minrangedmg`, `maxrangedmg`, `rangedattackpower`, `type`, `type_flags`, `lootid`, `pickpocketloot`, `skinloot`, `resistance1`, `resistance2`, `resistance3`, `resistance4`, `resistance5`, `resistance6`, `spell1`, `spell2`, `spell3`, `spell4`, `PetSpellDataId`, `mingold`, `maxgold`, `AIName`, `MovementType`, `InhabitType`, `RacialLeader`, `RegenHealth`, `equipment_id`, `mechanic_immune_mask`, `flags_extra`, `ScriptName`)
-VALUES
-   (11947, 0, 11895, 0, 11895, 0, 'Captain Galvangar', 'Frostwolf Captain', '', 71, 71, 180000, 200000, 0, 0, 0, 1214, 1214, 0, 2, 1, 3, 4000, 4000, 0, 8000, 2000, 0, 4160, 0, 0, 0, 0, 0, 0, 172.1, 240.07, 100, 7, 4, 11947, 11947, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 24055, 31418, '', 1, 3, 0, 1, 1389, 80428891, 1, 'mob_eventai');
-
-REPLACE INTO creature_template
-   (`entry`, `heroic_entry`, `modelid_A`, `modelid_A2`, `modelid_H`, `modelid_H2`, `name`, `subname`, `IconName`, `minlevel`, `maxlevel`, `minhealth`, `maxhealth`, `minmana`, `maxmana`, `armor`, `faction_A`, `faction_H`, `npcflag`, `speed`, `scale`, `rank`, `mindmg`, `maxdmg`, `dmgschool`, `attackpower`, `baseattacktime`, `rangeattacktime`, `unit_flags`, `dynamicflags`, `family`, `trainer_type`, `trainer_spell`, `class`, `race`, `minrangedmg`, `maxrangedmg`, `rangedattackpower`, `type`, `type_flags`, `lootid`, `pickpocketloot`, `skinloot`, `resistance1`, `resistance2`, `resistance3`, `resistance4`, `resistance5`, `resistance6`, `spell1`, `spell2`, `spell3`, `spell4`, `PetSpellDataId`, `mingold`, `maxgold`, `AIName`, `MovementType`, `InhabitType`, `RacialLeader`, `RegenHealth`, `equipment_id`, `mechanic_immune_mask`, `flags_extra`, `ScriptName`)
-VALUES
-   (11948, 0, 11896, 0, 11896, 0, 'Vanndar Stormpike', 'Stormpike General', '', 73, 73, 220000, 250000, 0, 0, 0, 1216, 1216, 0, 2, 1, 3, 5000, 8000, 0, 15000, 1158, 1274, 0, 0, 0, 0, 0, 0, 0, 203.77, 289.86, 100, 7, 4, 11948, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '', 1, 3, 0, 1, 0, 80428891, 1, 'mob_eventai');
-
-REPLACE INTO creature_template
-   (`entry`, `heroic_entry`, `modelid_A`, `modelid_A2`, `modelid_H`, `modelid_H2`, `name`, `subname`, `IconName`, `minlevel`, `maxlevel`, `minhealth`, `maxhealth`, `minmana`, `maxmana`, `armor`, `faction_A`, `faction_H`, `npcflag`, `speed`, `scale`, `rank`, `mindmg`, `maxdmg`, `dmgschool`, `attackpower`, `baseattacktime`, `rangeattacktime`, `unit_flags`, `dynamicflags`, `family`, `trainer_type`, `trainer_spell`, `class`, `race`, `minrangedmg`, `maxrangedmg`, `rangedattackpower`, `type`, `type_flags`, `lootid`, `pickpocketloot`, `skinloot`, `resistance1`, `resistance2`, `resistance3`, `resistance4`, `resistance5`, `resistance6`, `spell1`, `spell2`, `spell3`, `spell4`, `PetSpellDataId`, `mingold`, `maxgold`, `AIName`, `MovementType`, `InhabitType`, `RacialLeader`, `RegenHealth`, `equipment_id`, `mechanic_immune_mask`, `flags_extra`, `ScriptName`)
-VALUES
-   (11949, 0, 12823, 0, 12823, 0, 'Captain Balinda Stonehearth', 'Stormpike Captain', '', 71, 71, 180000, 200000, 38772, 38772, 0, 1216, 1216, 0, 2, 1, 3, 1000, 2000, 0, 2000, 2000, 0, 4096, 0, 0, 0, 0, 0, 0, 172.1, 240.07, 100, 7, 4, 11949, 11949, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 19805, 25868, '', 1, 3, 0, 1, 1364, 80428891, 1, 'mob_eventai');
-
-REPLACE INTO creature_template
-   (`entry`, `heroic_entry`, `modelid_A`, `modelid_A2`, `modelid_H`, `modelid_H2`, `name`, `subname`, `IconName`, `minlevel`, `maxlevel`, `minhealth`, `maxhealth`, `minmana`, `maxmana`, `armor`, `faction_A`, `faction_H`, `npcflag`, `speed`, `scale`, `rank`, `mindmg`, `maxdmg`, `dmgschool`, `attackpower`, `baseattacktime`, `rangeattacktime`, `unit_flags`, `dynamicflags`, `family`, `trainer_type`, `trainer_spell`, `class`, `race`, `minrangedmg`, `maxrangedmg`, `rangedattackpower`, `type`, `type_flags`, `lootid`, `pickpocketloot`, `skinloot`, `resistance1`, `resistance2`, `resistance3`, `resistance4`, `resistance5`, `resistance6`, `spell1`, `spell2`, `spell3`, `spell4`, `PetSpellDataId`, `mingold`, `maxgold`, `AIName`, `MovementType`, `InhabitType`, `RacialLeader`, `RegenHealth`, `equipment_id`, `mechanic_immune_mask`, `flags_extra`, `ScriptName`)
-VALUES
-   (13358, 0, 13390, 0, 13393, 0, 'Stormpike Bowman', '', '', 69, 70, 4500, 10000, 0, 0, 0, 1216, 1216, 0, 1.27, 1, 0, 65, 135, 0, 696, 2000, 0, 4608, 0, 0, 0, 0, 0, 0, 200, 600, 1000, 7, 0, 13358, 13358, 0, 0, 0, 0, 0, 0, 0, 22121, 0, 0, 0, 0, 260, 344, '', 0, 3, 0, 1, 8, 0, 0, 'mob_eventai');
-
-REPLACE INTO creature_template
-   (`entry`, `heroic_entry`, `modelid_A`, `modelid_A2`, `modelid_H`, `modelid_H2`, `name`, `subname`, `IconName`, `minlevel`, `maxlevel`, `minhealth`, `maxhealth`, `minmana`, `maxmana`, `armor`, `faction_A`, `faction_H`, `npcflag`, `speed`, `scale`, `rank`, `mindmg`, `maxdmg`, `dmgschool`, `attackpower`, `baseattacktime`, `rangeattacktime`, `unit_flags`, `dynamicflags`, `family`, `trainer_type`, `trainer_spell`, `class`, `race`, `minrangedmg`, `maxrangedmg`, `rangedattackpower`, `type`, `type_flags`, `lootid`, `pickpocketloot`, `skinloot`, `resistance1`, `resistance2`, `resistance3`, `resistance4`, `resistance5`, `resistance6`, `spell1`, `spell2`, `spell3`, `spell4`, `PetSpellDataId`, `mingold`, `maxgold`, `AIName`, `MovementType`, `InhabitType`, `RacialLeader`, `RegenHealth`, `equipment_id`, `mechanic_immune_mask`, `flags_extra`, `ScriptName`)
-VALUES
-   (13359, 0, 13398, 0, 13401, 0, 'Frostwolf Bowman', '', '', 69, 70, 4500, 10000, 0, 0, 0, 1214, 1214, 0, 1.27, 1, 0, 66, 137, 0, 712, 2000, 0, 4608, 0, 0, 0, 0, 0, 0, 200, 600, 1000, 7, 0, 13359, 13359, 0, 0, 0, 0, 0, 0, 0, 22121, 0, 0, 0, 0, 262, 347, '', 0, 3, 0, 1, 6, 0, 0, 'mob_eventai');
-
-REPLACE INTO creature_template
-   (`entry`, `heroic_entry`, `modelid_A`, `modelid_A2`, `modelid_H`, `modelid_H2`, `name`, `subname`, `IconName`, `minlevel`, `maxlevel`, `minhealth`, `maxhealth`, `minmana`, `maxmana`, `armor`, `faction_A`, `faction_H`, `npcflag`, `speed`, `scale`, `rank`, `mindmg`, `maxdmg`, `dmgschool`, `attackpower`, `baseattacktime`, `rangeattacktime`, `unit_flags`, `dynamicflags`, `family`, `trainer_type`, `trainer_spell`, `class`, `race`, `minrangedmg`, `maxrangedmg`, `rangedattackpower`, `type`, `type_flags`, `lootid`, `pickpocketloot`, `skinloot`, `resistance1`, `resistance2`, `resistance3`, `resistance4`, `resistance5`, `resistance6`, `spell1`, `spell2`, `spell3`, `spell4`, `PetSpellDataId`, `mingold`, `maxgold`, `AIName`, `MovementType`, `InhabitType`, `RacialLeader`, `RegenHealth`, `equipment_id`, `mechanic_immune_mask`, `flags_extra`, `ScriptName`)
-VALUES
-   (14770, 0, 14797, 0, 14798, 0, 'Dun Baldar North Warmaster', '', '', 70, 70, 139780, 139780, 0, 0, 0, 1214, 1214, 0, 2, 1, 3, 3000, 5000, 0, 2175, 2000, 0, 4096, 0, 0, 0, 0, 0, 0, 62.016, 85.272, 100, 7, 0, 14770, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '', 0, 3, 0, 1, 1416, 0, 0, 'mob_eventai');
-
-REPLACE INTO creature_template
-   (`entry`, `heroic_entry`, `modelid_A`, `modelid_A2`, `modelid_H`, `modelid_H2`, `name`, `subname`, `IconName`, `minlevel`, `maxlevel`, `minhealth`, `maxhealth`, `minmana`, `maxmana`, `armor`, `faction_A`, `faction_H`, `npcflag`, `speed`, `scale`, `rank`, `mindmg`, `maxdmg`, `dmgschool`, `attackpower`, `baseattacktime`, `rangeattacktime`, `unit_flags`, `dynamicflags`, `family`, `trainer_type`, `trainer_spell`, `class`, `race`, `minrangedmg`, `maxrangedmg`, `rangedattackpower`, `type`, `type_flags`, `lootid`, `pickpocketloot`, `skinloot`, `resistance1`, `resistance2`, `resistance3`, `resistance4`, `resistance5`, `resistance6`, `spell1`, `spell2`, `spell3`, `spell4`, `PetSpellDataId`, `mingold`, `maxgold`, `AIName`, `MovementType`, `InhabitType`, `RacialLeader`, `RegenHealth`, `equipment_id`, `mechanic_immune_mask`, `flags_extra`, `ScriptName`)
-VALUES
-   (14771, 0, 14798, 0, 14799, 0, 'Dun Baldar South Warmaster', '', '', 70, 70, 36600, 36600, 0, 0, 0, 1214, 1214, 0, 2, 1, 3, 3000, 6000, 0, 10000, 2000, 0, 4096, 0, 0, 0, 0, 0, 0, 62.016, 85.272, 100, 7, 0, 14771, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '', 0, 3, 0, 1, 1416, 0, 0, 'mob_eventai');
-
-REPLACE INTO creature_template
-   (`entry`, `heroic_entry`, `modelid_A`, `modelid_A2`, `modelid_H`, `modelid_H2`, `name`, `subname`, `IconName`, `minlevel`, `maxlevel`, `minhealth`, `maxhealth`, `minmana`, `maxmana`, `armor`, `faction_A`, `faction_H`, `npcflag`, `speed`, `scale`, `rank`, `mindmg`, `maxdmg`, `dmgschool`, `attackpower`, `baseattacktime`, `rangeattacktime`, `unit_flags`, `dynamicflags`, `family`, `trainer_type`, `trainer_spell`, `class`, `race`, `minrangedmg`, `maxrangedmg`, `rangedattackpower`, `type`, `type_flags`, `lootid`, `pickpocketloot`, `skinloot`, `resistance1`, `resistance2`, `resistance3`, `resistance4`, `resistance5`, `resistance6`, `spell1`, `spell2`, `spell3`, `spell4`, `PetSpellDataId`, `mingold`, `maxgold`, `AIName`, `MovementType`, `InhabitType`, `RacialLeader`, `RegenHealth`, `equipment_id`, `mechanic_immune_mask`, `flags_extra`, `ScriptName`)
-VALUES
-   (14772, 0, 14798, 0, 14800, 0, 'East Frostwolf Warmaster', '', '', 70, 70, 139362, 139362, 0, 0, 0, 1214, 1214, 0, 2, 1, 3, 3000, 6000, 0, 10000, 2000, 0, 4096, 0, 0, 0, 0, 0, 0, 59.9488, 82.4296, 100, 7, 0, 14772, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6049, 7904, '', 1, 3, 0, 1, 1416, 0, 0, 'mob_eventai');
-
-REPLACE INTO creature_template
-   (`entry`, `heroic_entry`, `modelid_A`, `modelid_A2`, `modelid_H`, `modelid_H2`, `name`, `subname`, `IconName`, `minlevel`, `maxlevel`, `minhealth`, `maxhealth`, `minmana`, `maxmana`, `armor`, `faction_A`, `faction_H`, `npcflag`, `speed`, `scale`, `rank`, `mindmg`, `maxdmg`, `dmgschool`, `attackpower`, `baseattacktime`, `rangeattacktime`, `unit_flags`, `dynamicflags`, `family`, `trainer_type`, `trainer_spell`, `class`, `race`, `minrangedmg`, `maxrangedmg`, `rangedattackpower`, `type`, `type_flags`, `lootid`, `pickpocketloot`, `skinloot`, `resistance1`, `resistance2`, `resistance3`, `resistance4`, `resistance5`, `resistance6`, `spell1`, `spell2`, `spell3`, `spell4`, `PetSpellDataId`, `mingold`, `maxgold`, `AIName`, `MovementType`, `InhabitType`, `RacialLeader`, `RegenHealth`, `equipment_id`, `mechanic_immune_mask`, `flags_extra`, `ScriptName`)
-VALUES
-   (14773, 0, 14797, 0, 14797, 0, 'Iceblood Warmaster', '', '', 70, 70, 141144, 141144, 0, 0, 0, 1214, 1214, 0, 2, 1, 3, 3000, 6000, 0, 10000, 2000, 0, 4096, 0, 0, 0, 0, 0, 0, 62.016, 85.272, 100, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '', 1, 3, 0, 1, 1416, 0, 0, 'mob_eventai');
-
-REPLACE INTO creature_template
-   (`entry`, `heroic_entry`, `modelid_A`, `modelid_A2`, `modelid_H`, `modelid_H2`, `name`, `subname`, `IconName`, `minlevel`, `maxlevel`, `minhealth`, `maxhealth`, `minmana`, `maxmana`, `armor`, `faction_A`, `faction_H`, `npcflag`, `speed`, `scale`, `rank`, `mindmg`, `maxdmg`, `dmgschool`, `attackpower`, `baseattacktime`, `rangeattacktime`, `unit_flags`, `dynamicflags`, `family`, `trainer_type`, `trainer_spell`, `class`, `race`, `minrangedmg`, `maxrangedmg`, `rangedattackpower`, `type`, `type_flags`, `lootid`, `pickpocketloot`, `skinloot`, `resistance1`, `resistance2`, `resistance3`, `resistance4`, `resistance5`, `resistance6`, `spell1`, `spell2`, `spell3`, `spell4`, `PetSpellDataId`, `mingold`, `maxgold`, `AIName`, `MovementType`, `InhabitType`, `RacialLeader`, `RegenHealth`, `equipment_id`, `mechanic_immune_mask`, `flags_extra`, `ScriptName`)
-VALUES
-   (14774, 0, 14800, 0, 14800, 0, 'Icewing Warmaster', '', '', 70, 70, 122300, 122300, 0, 0, 0, 1214, 1214, 0, 2, 1, 3, 3000, 6000, 0, 10000, 2000, 0, 4096, 0, 0, 0, 0, 0, 0, 62.016, 85.272, 100, 7, 0, 14774, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6049, 7904, '', 1, 3, 0, 1, 1416, 0, 0, 'mob_eventai');
-
-REPLACE INTO creature_template
-   (`entry`, `heroic_entry`, `modelid_A`, `modelid_A2`, `modelid_H`, `modelid_H2`, `name`, `subname`, `IconName`, `minlevel`, `maxlevel`, `minhealth`, `maxhealth`, `minmana`, `maxmana`, `armor`, `faction_A`, `faction_H`, `npcflag`, `speed`, `scale`, `rank`, `mindmg`, `maxdmg`, `dmgschool`, `attackpower`, `baseattacktime`, `rangeattacktime`, `unit_flags`, `dynamicflags`, `family`, `trainer_type`, `trainer_spell`, `class`, `race`, `minrangedmg`, `maxrangedmg`, `rangedattackpower`, `type`, `type_flags`, `lootid`, `pickpocketloot`, `skinloot`, `resistance1`, `resistance2`, `resistance3`, `resistance4`, `resistance5`, `resistance6`, `spell1`, `spell2`, `spell3`, `spell4`, `PetSpellDataId`, `mingold`, `maxgold`, `AIName`, `MovementType`, `InhabitType`, `RacialLeader`, `RegenHealth`, `equipment_id`, `mechanic_immune_mask`, `flags_extra`, `ScriptName`)
-VALUES
-   (14775, 0, 14798, 0, 14800, 0, 'Stonehearth Warmaster', '', '', 70, 70, 140204, 140204, 0, 0, 0, 1214, 1214, 0, 2, 1, 3, 3000, 6000, 0, 10000, 2000, 0, 4096, 0, 0, 0, 0, 0, 0, 62.016, 85.272, 100, 7, 0, 14775, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6049, 7904, '', 1, 3, 0, 1, 1416, 0, 0, 'mob_eventai');
-
-REPLACE INTO creature_template
-   (`entry`, `heroic_entry`, `modelid_A`, `modelid_A2`, `modelid_H`, `modelid_H2`, `name`, `subname`, `IconName`, `minlevel`, `maxlevel`, `minhealth`, `maxhealth`, `minmana`, `maxmana`, `armor`, `faction_A`, `faction_H`, `npcflag`, `speed`, `scale`, `rank`, `mindmg`, `maxdmg`, `dmgschool`, `attackpower`, `baseattacktime`, `rangeattacktime`, `unit_flags`, `dynamicflags`, `family`, `trainer_type`, `trainer_spell`, `class`, `race`, `minrangedmg`, `maxrangedmg`, `rangedattackpower`, `type`, `type_flags`, `lootid`, `pickpocketloot`, `skinloot`, `resistance1`, `resistance2`, `resistance3`, `resistance4`, `resistance5`, `resistance6`, `spell1`, `spell2`, `spell3`, `spell4`, `PetSpellDataId`, `mingold`, `maxgold`, `AIName`, `MovementType`, `InhabitType`, `RacialLeader`, `RegenHealth`, `equipment_id`, `mechanic_immune_mask`, `flags_extra`, `ScriptName`)
-VALUES
-   (14776, 0, 14798, 0, 14800, 0, 'Tower Point Warmaster', '', '', 70, 70, 131536, 131536, 0, 0, 0, 1214, 1214, 0, 2, 1, 3, 3000, 6000, 0, 10000, 2000, 0, 4096, 0, 0, 0, 0, 0, 0, 62.016, 85.272, 100, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '', 1, 3, 0, 1, 1416, 0, 0, 'mob_eventai');
-
-REPLACE INTO creature_template
-   (`entry`, `heroic_entry`, `modelid_A`, `modelid_A2`, `modelid_H`, `modelid_H2`, `name`, `subname`, `IconName`, `minlevel`, `maxlevel`, `minhealth`, `maxhealth`, `minmana`, `maxmana`, `armor`, `faction_A`, `faction_H`, `npcflag`, `speed`, `scale`, `rank`, `mindmg`, `maxdmg`, `dmgschool`, `attackpower`, `baseattacktime`, `rangeattacktime`, `unit_flags`, `dynamicflags`, `family`, `trainer_type`, `trainer_spell`, `class`, `race`, `minrangedmg`, `maxrangedmg`, `rangedattackpower`, `type`, `type_flags`, `lootid`, `pickpocketloot`, `skinloot`, `resistance1`, `resistance2`, `resistance3`, `resistance4`, `resistance5`, `resistance6`, `spell1`, `spell2`, `spell3`, `spell4`, `PetSpellDataId`, `mingold`, `maxgold`, `AIName`, `MovementType`, `InhabitType`, `RacialLeader`, `RegenHealth`, `equipment_id`, `mechanic_immune_mask`, `flags_extra`, `ScriptName`)
-VALUES
-   (14777, 0, 14797, 0, 14798, 0, 'West Frostwolf Warmaster', '', '', 70, 70, 138920, 138920, 0, 0, 0, 1214, 1214, 0, 2, 1, 3, 3000, 6000, 0, 10000, 2000, 0, 4096, 0, 0, 0, 0, 0, 0, 59.9488, 82.4296, 100, 7, 0, 14777, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '', 1, 3, 0, 1, 1416, 0, 0, 'mob_eventai');
-
-REPLACE INTO creature_template
-   (`entry`, `heroic_entry`, `modelid_A`, `modelid_A2`, `modelid_H`, `modelid_H2`, `name`, `subname`, `IconName`, `minlevel`, `maxlevel`, `minhealth`, `maxhealth`, `minmana`, `maxmana`, `armor`, `faction_A`, `faction_H`, `npcflag`, `speed`, `scale`, `rank`, `mindmg`, `maxdmg`, `dmgschool`, `attackpower`, `baseattacktime`, `rangeattacktime`, `unit_flags`, `dynamicflags`, `family`, `trainer_type`, `trainer_spell`, `class`, `race`, `minrangedmg`, `maxrangedmg`, `rangedattackpower`, `type`, `type_flags`, `lootid`, `pickpocketloot`, `skinloot`, `resistance1`, `resistance2`, `resistance3`, `resistance4`, `resistance5`, `resistance6`, `spell1`, `spell2`, `spell3`, `spell4`, `PetSpellDataId`, `mingold`, `maxgold`, `AIName`, `MovementType`, `InhabitType`, `RacialLeader`, `RegenHealth`, `equipment_id`, `mechanic_immune_mask`, `flags_extra`, `ScriptName`)
-VALUES
-   (25040, 0, 4606, 0, 4606, 0, 'Greater Water Elemental', '', '', 1, 1, 1, 1, 0, 0, 0, 35, 35, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '', 0, 3, 0, 1, 0, 0, 0, 'mob_eventai');
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11603,30,-917.648,-46.8922,77.0872,5.27089);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11603,30,-912.689,-45.4494,76.2277,4.60767);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11603,30,-905.455,-84.5179,75.3642,3.29867);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11603,30,-904.332,-111.509,75.5925,2.47837);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11603,30,-904.27,-160.419,61.9876,3.61192);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11603,30,-904.023,-90.4558,75.3706,3.40339);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11603,30,-978.678,-37.3136,75.8364,2.84489);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11603,30,-973.076,-36.5013,77.5047,1.0821);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11603,30,-963.951,-87.734,81.5555,0.575959);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11603,30,-961.941,-90.7252,81.6629,0.820305);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11603,30,-957.623,-186.582,66.6021,1.95477);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11603,30,-952.476,-179.778,78.6771,4.5204);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11603,30,-950.427,-115.007,79.6127,3.68264);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11603,30,-950.25,-151.95,79.4598,-1.81423);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11603,30,-950.169,-188.099,66.6184,5.55015);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11603,30,-949.944,-142.977,80.5382,2.70526);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11603,30,-947.854,-170.5,79.7618,0.942478);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11603,30,-946.738,-139.567,80.0904,2.3911);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11603,30,-945.503,-65.0654,79.7907,5.02655);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11603,30,-943.678,-110.986,80.2557,0.959931);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11603,30,-942.993,-56.9881,79.8915,5.65487);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11603,30,-938.197,-155.838,61.3111,1.65806);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11603,30,-930.488,-214.524,72.1431,2.1236);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11603,30,-929.947,-154.449,61.5084,1.67552);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11603,30,-927.412,-135.313,61.1987,3.29867);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11603,30,-920.677,-156.859,62.8033,3.15306);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11603,30,-916.75,-136.094,62.2357,0.0698132);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11603,30,-915.319,-132.718,62.562,1.16984);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11603,30,-913.589,-146.794,76.9366,1.8675);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11603,30,-907.572,-148.937,76.6898,4.76475);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11603,30,-902.02,-64.6174,73.9707,1.19169);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11603,30,-899.489,-61.7252,73.2498,5.09636);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11603,30,-894.792,-127.141,75.3834,6.14356);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11603,30,-892.408,-162.525,64.1212,2.69884);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11603,30,-892.326,-123.158,76.0318,5.5676);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11603,30,-888.468,-148.462,61.8012,1.65806);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11603,30,-883.268,-159.738,63.5311,5.20108);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11603,30,-877.76,-118.07,65.215,2.94961);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11603,30,-876.792,-128.646,64.1045,3.40339);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11603,30,-874.901,-36.6579,69.4246,2.00713);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11603,30,-874.856,-151.351,62.7537,3.57875);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11603,30,-872.135,-150.08,62.7513,3.57201);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11603,30,-870.288,-149.217,62.5413,3.56624);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11603,30,-870.03,-6.27443,70.3867,2.3911);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11603,30,-869.023,-82.2118,69.5848,3.22886);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11603,30,-866.354,-40.2455,70.842,0.0698132);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11603,30,-865.305,-152.302,63.5044,4.86947);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11603,30,-861.926,-79.0519,71.4178,0.20944);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11603,30,-857.292,-152.277,63.2114,4.18879);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11603,30,-853.357,-0.696194,72.0655,0.994838);
 
 
-UPDATE creature_template SET minlevel=50 , maxlevel=51 WHERE entry=10981;
-UPDATE creature_template SET minlevel=50 , maxlevel=51 WHERE entry=10990;
-UPDATE creature_template SET minlevel=52 , maxlevel=53 WHERE entry=10986;
-UPDATE creature_template SET minlevel=52 , maxlevel=53 WHERE entry=11678;
-UPDATE creature_template SET minlevel=53 , maxlevel=53 WHERE entry=11675;
-UPDATE creature_template SET minlevel=53 , maxlevel=54 WHERE entry=14282;
-UPDATE creature_template SET minlevel=53 , maxlevel=54 WHERE entry=14283;
-UPDATE creature_template SET minlevel=55 , maxlevel=55 WHERE entry=10364;
-UPDATE creature_template SET minlevel=55 , maxlevel=55 WHERE entry=10367;
-UPDATE creature_template SET minlevel=55 , maxlevel=55 WHERE entry=12096;
-UPDATE creature_template SET minlevel=55 , maxlevel=55 WHERE entry=12097;
-UPDATE creature_template SET minlevel=55 , maxlevel=55 WHERE entry=2225;
-UPDATE creature_template SET minlevel=55 , maxlevel=55 WHERE entry=3343;
-UPDATE creature_template SET minlevel=55 , maxlevel=55 WHERE entry=3625;
-UPDATE creature_template SET minlevel=55 , maxlevel=55 WHERE entry=4255;
-UPDATE creature_template SET minlevel=55 , maxlevel=55 WHERE entry=4257;
-UPDATE creature_template SET minlevel=55 , maxlevel=55 WHERE entry=5134;
-UPDATE creature_template SET minlevel=55 , maxlevel=55 WHERE entry=5135;
-UPDATE creature_template SET minlevel=55 , maxlevel=55 WHERE entry=5139;
-UPDATE creature_template SET minlevel=56 , maxlevel=56 WHERE entry=11839;
-UPDATE creature_template SET minlevel=57 , maxlevel=57 WHERE entry=12051;
-UPDATE creature_template SET minlevel=57 , maxlevel=57 WHERE entry=12127;
-UPDATE creature_template SET minlevel=58 , maxlevel=58 WHERE entry=13216;
-UPDATE creature_template SET minlevel=58 , maxlevel=58 WHERE entry=13218;
-UPDATE creature_template SET minlevel=58 , maxlevel=58 WHERE entry=13284;
-UPDATE creature_template SET minlevel=58 , maxlevel=58 WHERE entry=13438;
-UPDATE creature_template SET minlevel=58 , maxlevel=58 WHERE entry=13447;
-UPDATE creature_template SET minlevel=59 , maxlevel=59 WHERE entry=13179;
-UPDATE creature_template SET minlevel=59 , maxlevel=59 WHERE entry=14185;
-UPDATE creature_template SET minlevel=59 , maxlevel=59 WHERE entry=14188;
-UPDATE creature_template SET minlevel=60 , maxlevel=60 WHERE entry=11997;
-UPDATE creature_template SET minlevel=60 , maxlevel=60 WHERE entry=13176;
-UPDATE creature_template SET minlevel=60 , maxlevel=60 WHERE entry=13236;
-UPDATE creature_template SET minlevel=60 , maxlevel=60 WHERE entry=13257;
-UPDATE creature_template SET minlevel=60 , maxlevel=60 WHERE entry=13442;
-UPDATE creature_template SET minlevel=60 , maxlevel=60 WHERE entry=13443;
-UPDATE creature_template SET minlevel=60 , maxlevel=60 WHERE entry=13577;
-UPDATE creature_template SET minlevel=60 , maxlevel=60 WHERE entry=13617;
-UPDATE creature_template SET minlevel=60 , maxlevel=60 WHERE entry=14186;
-UPDATE creature_template SET minlevel=60 , maxlevel=60 WHERE entry=14187;
-UPDATE creature_template SET minlevel=60 , maxlevel=61 WHERE entry=13797;
-UPDATE creature_template SET minlevel=60 , maxlevel=61 WHERE entry=13798;
-UPDATE creature_template SET minlevel=61 , maxlevel=61 WHERE entry=11947;
-UPDATE creature_template SET minlevel=61 , maxlevel=61 WHERE entry=11949;
-UPDATE creature_template SET minlevel=61 , maxlevel=61 WHERE entry=13816;
-UPDATE creature_template SET minlevel=61 , maxlevel=61 WHERE entry=14284;
-UPDATE creature_template SET minlevel=63 , maxlevel=63 WHERE entry=11946;
-UPDATE creature_template SET minlevel=63 , maxlevel=63 WHERE entry=11948;
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13317,30,-917.648,-46.8922,77.0872,5.27089);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13317,30,-912.689,-45.4494,76.2277,4.60767);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13317,30,-905.455,-84.5179,75.3642,3.29867);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13317,30,-904.332,-111.509,75.5925,2.47837);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13317,30,-904.27,-160.419,61.9876,3.61192);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13317,30,-904.023,-90.4558,75.3706,3.40339);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13317,30,-978.678,-37.3136,75.8364,2.84489);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13317,30,-973.076,-36.5013,77.5047,1.0821);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13317,30,-963.951,-87.734,81.5555,0.575959);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13317,30,-961.941,-90.7252,81.6629,0.820305);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13317,30,-957.623,-186.582,66.6021,1.95477);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13317,30,-952.476,-179.778,78.6771,4.5204);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13317,30,-950.427,-115.007,79.6127,3.68264);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13317,30,-950.25,-151.95,79.4598,-1.81423);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13317,30,-950.169,-188.099,66.6184,5.55015);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13317,30,-949.944,-142.977,80.5382,2.70526);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13317,30,-947.854,-170.5,79.7618,0.942478);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13317,30,-946.738,-139.567,80.0904,2.3911);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13317,30,-945.503,-65.0654,79.7907,5.02655);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13317,30,-943.678,-110.986,80.2557,0.959931);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13317,30,-942.993,-56.9881,79.8915,5.65487);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13317,30,-938.197,-155.838,61.3111,1.65806);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13317,30,-930.488,-214.524,72.1431,2.1236);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13317,30,-929.947,-154.449,61.5084,1.67552);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13317,30,-927.412,-135.313,61.1987,3.29867);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13317,30,-920.677,-156.859,62.8033,3.15306);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13317,30,-916.75,-136.094,62.2357,0.0698132);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13317,30,-915.319,-132.718,62.562,1.16984);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13317,30,-913.589,-146.794,76.9366,1.8675);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13317,30,-907.572,-148.937,76.6898,4.76475);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13317,30,-902.02,-64.6174,73.9707,1.19169);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13317,30,-899.489,-61.7252,73.2498,5.09636);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13317,30,-894.792,-127.141,75.3834,6.14356);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13317,30,-892.408,-162.525,64.1212,2.69884);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13317,30,-892.326,-123.158,76.0318,5.5676);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13317,30,-888.468,-148.462,61.8012,1.65806);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13317,30,-883.268,-159.738,63.5311,5.20108);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13317,30,-877.76,-118.07,65.215,2.94961);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13317,30,-876.792,-128.646,64.1045,3.40339);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13317,30,-874.901,-36.6579,69.4246,2.00713);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13317,30,-874.856,-151.351,62.7537,3.57875);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13317,30,-872.135,-150.08,62.7513,3.57201);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13317,30,-870.288,-149.217,62.5413,3.56624);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13317,30,-870.03,-6.27443,70.3867,2.3911);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13317,30,-869.023,-82.2118,69.5848,3.22886);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13317,30,-866.354,-40.2455,70.842,0.0698132);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13317,30,-865.305,-152.302,63.5044,4.86947);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13317,30,-861.926,-79.0519,71.4178,0.20944);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13317,30,-857.292,-152.277,63.2114,4.18879);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13317,30,-853.357,-0.696194,72.0655,0.994838);
 
-UPDATE creature_template SET minlevel=54 , maxlevel=54 WHERE entry IN (10987,11603,13317,13396,13397,13316);
-UPDATE creature_template SET minlevel=54 , maxlevel=55 WHERE entry IN (11600,13080,13099,11604,13096,13097);
-UPDATE creature_template SET minlevel=54 , maxlevel=55 WHERE entry IN (11602,13098,13081,11605,13087,13089);
-UPDATE creature_template SET minlevel=58 , maxlevel=58 WHERE entry IN (11657,13078,13079,11677,13086,13088);
-UPDATE creature_template SET minlevel=54 , maxlevel=55 WHERE entry=10982;
 
--- following gameobjects are static
-DELETE FROM gameobject WHERE map=30;
-INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (2061,30,-1423.16,-318.436,89.1136,2.35619,60);
-INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (2061,30,-1290.27,-172.471,72.1853,3.06305,60);
-INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (2061,30,-1286.25,-184.48,71.8334,-2.05076,60);
-INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (2061,30,-1282.21,-284.083,87.256,-0.0610855,60);
-INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (2061,30,-1280.17,-220.537,72.2686,1.62316,60);
-INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (2061,30,-1256.55,-280.278,73.9473,-0.0610855,60);
-INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (2061,30,-1241.25,-345.115,59.6867,0.357794,60);
-INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (2061,30,-1215.59,-371.946,56.5293,0.357794,60);
-INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (2061,30,-1202.8,-271.599,72.5805,0.357794,60);
-INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (2061,30,-1140.82,-343.392,50.9077,-2.7838,60);
-INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (2061,30,-1139.68,-356.288,51.264,-0.706858,60);
-INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (2061,30,-1099.21,-266.231,57.8849,-2.28638,60);
-INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (2061,30,-1082.6,-266.681,57.8575,2.40855,60);
-INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (2061,30,30.4168,-428.853,41.528,-2.59181,60);
-INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (2061,30,31.2216,-428.08,41.528,0.549779,60);
-INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (2061,30,50.6401,-421.166,44.7325,-0.00875192,60);
-INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (2066,30,-743.427,-398.242,76.4266,0.872664,60);
-INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (3832,30,-1235.57,-241.478,73.4377,1.48353,60);
-INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (3833,30,-1248.85,-254.06,73.4377,1.48353,60);
-INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (3834,30,-1248.15,-245.599,73.4377,-0.0523605,60);
-INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (3835,30,-1237.21,-260.168,73.4377,1.48353,60);
-INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (3836,30,-1260.37,-248.767,77.9454,1.48353,60);
-INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (3837,30,-1249.32,-244.907,92.3372,0.401426,60);
-INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (3838,30,-1250.09,-254.604,92.3015,0.148352,60);
-INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (22205,30,50.6401,-421.166,44.7325,-0.00875192,60);
-INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (22207,30,30.4168,-428.853,41.528,-2.59181,60);
-INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (22208,30,31.2216,-428.08,41.528,0.549779,60);
-INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (28048,30,41.1672,-426.866,44.6828,2.7838,60);
-INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (28049,30,39.0988,-425.746,44.688,-0.619592,60);
-INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (28605,30,25.2482,-433.104,47.6369,2.38237,60);
-INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (28606,30,25.758,-425.837,47.6369,-1.98095,60);
-INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (28607,30,27.6786,-427.69,47.6369,-2.67908,60);
-INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (29784,30,-1338.28,-297.628,91.4867,0.248971,60);
-INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (31442,30,-1338.28,-297.628,91.4867,0.248971,60);
-INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (50984,30,-1250.39,-310.191,61.185,-1.10828,60);
-INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (51704,30,-1245.2,-307.059,63.3199,3.07959,60);
-INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (51705,30,-1258.23,-310.977,63.2015,0.862906,60);
-INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (177261,30,-1290.27,-172.471,72.1853,3.06305,60);
-INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (177262,30,-1286.25,-184.48,71.8334,-2.05076,60);
-INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (177263,30,-1280.17,-220.537,72.2686,1.62316,60);
-INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (177292,30,-1099.21,-266.231,57.8849,-2.28638,60);
-INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (177293,30,-1082.6,-266.681,57.8575,2.40855,60);
-INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (177405,30,-1140.82,-343.392,50.9077,-2.7838,60);
-INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (177406,30,-1139.68,-356.288,51.264,-0.706858,60);
-INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (177408,30,-743.427,-398.242,76.4266,0.872664,60);
-INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (177409,30,-1215.59,-371.946,56.5293,0.357794,60);
-INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (177410,30,-1241.25,-345.115,59.6867,0.357794,60);
-INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (177411,30,-1202.8,-271.599,72.5805,0.357794,60);
-INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (177412,30,-1282.21,-284.083,87.256,-0.0610855,60);
-INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (177413,30,-1256.55,-280.278,73.9473,-0.0610855,60);
-INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (178684,30,649.265,-59.1102,41.5476,-2.68781,60);
-INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (178685,30,646.207,-57.2428,41.6587,-0.157079,60);
-INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (179384,30,-145.341,-444.846,26.4163,-0.0523596,60);
-INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (179384,30,560.834,-75.4266,37.9558,0.785398,60);
-INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (179385,30,-155.405,-440.24,33.2862,2.34747,60);
-INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (179385,30,550.678,-79.8234,44.8257,-3.09796,60);
-INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (179386,30,-150.787,-459.829,26.4163,0.558507,60);
-INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (179386,30,568.326,-89.4992,37.9558,1.39626,60);
-INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (179387,30,-153.748,-438.639,33.2862,-2.88852,60);
-INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (179387,30,550.597,-77.5213,44.8257,-2.05076,60);
-INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (179388,30,-149.057,-461.089,26.4163,1.38754,60);
-INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (179388,30,570.419,-89.0567,37.9558,2.2253,60);
-INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (179389,30,-168.342,-458.4,33.2862,-0.445059,60);
-INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (179389,30,555.517,-101.589,44.8257,0.392699,60);
-INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (179390,30,-142.968,-444.076,26.4163,-2.23402,60);
-INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (179390,30,561.851,-73.1481,37.9558,-1.39626,60);
-INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (179391,30,-172.363,-452.824,33.2796,0.62832,60);
-INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (179391,30,548.682,-100.846,44.8191,1.46608,60);
-INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (179392,30,-171.282,-456.892,33.2796,1.63188,60);
-INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (179392,30,552.429,-102.764,44.8191,2.46964,60);
-INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (179393,30,-172.356,-453.88,33.2796,0.322886,60);
-INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (179393,30,549.472,-101.547,44.8191,1.16064,60);
-INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (179394,30,-171.882,-454.632,33.2796,0.759218,60);
-INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (179394,30,550.347,-101.698,44.8191,1.59698,60);
-INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (179395,30,-171.656,-455.671,33.2796,0.0610861,60);
-INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (179395,30,551.271,-102.226,44.8191,0.898843,60);
-INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (179396,30,-170.699,-458.41,33.2796,-1.02974,60);
-INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (179396,30,553.947,-103.347,44.8191,-0.191986,60);
-INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (179397,30,-170.14,-457.609,33.2796,-0.680678,60);
-INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (179397,30,553.725,-102.396,44.8191,0.15708,60);
-INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (179419,30,-1423.16,-318.436,89.1136,2.35619,60);
-INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (179437,30,618.748,-52.1126,42.1122,-0.0698131,60);
-INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (179438,30,-1181.1,-370.747,53.6246,2.68781,60);
+--
+--
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13316,30,-917.648,-46.8922,77.0872,5.27089);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13316,30,-912.689,-45.4494,76.2277,4.60767);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13316,30,-905.455,-84.5179,75.3642,3.29867);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13316,30,-904.332,-111.509,75.5925,2.47837);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13316,30,-904.27,-160.419,61.9876,3.61192);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13316,30,-904.023,-90.4558,75.3706,3.40339);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13316,30,-978.678,-37.3136,75.8364,2.84489);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13316,30,-973.076,-36.5013,77.5047,1.0821);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13316,30,-963.951,-87.734,81.5555,0.575959);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13316,30,-961.941,-90.7252,81.6629,0.820305);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13316,30,-957.623,-186.582,66.6021,1.95477);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13316,30,-952.476,-179.778,78.6771,4.5204);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13316,30,-950.427,-115.007,79.6127,3.68264);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13316,30,-950.25,-151.95,79.4598,-1.81423);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13316,30,-950.169,-188.099,66.6184,5.55015);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13316,30,-949.944,-142.977,80.5382,2.70526);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13316,30,-947.854,-170.5,79.7618,0.942478);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13316,30,-946.738,-139.567,80.0904,2.3911);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13316,30,-945.503,-65.0654,79.7907,5.02655);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13316,30,-943.678,-110.986,80.2557,0.959931);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13316,30,-942.993,-56.9881,79.8915,5.65487);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13316,30,-938.197,-155.838,61.3111,1.65806);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13316,30,-930.488,-214.524,72.1431,2.1236);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13316,30,-929.947,-154.449,61.5084,1.67552);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13316,30,-927.412,-135.313,61.1987,3.29867);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13316,30,-920.677,-156.859,62.8033,3.15306);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13316,30,-916.75,-136.094,62.2357,0.0698132);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13316,30,-915.319,-132.718,62.562,1.16984);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13316,30,-913.589,-146.794,76.9366,1.8675);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13316,30,-907.572,-148.937,76.6898,4.76475);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13316,30,-902.02,-64.6174,73.9707,1.19169);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13316,30,-899.489,-61.7252,73.2498,5.09636);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13316,30,-894.792,-127.141,75.3834,6.14356);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13316,30,-892.408,-162.525,64.1212,2.69884);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13316,30,-892.326,-123.158,76.0318,5.5676);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13316,30,-888.468,-148.462,61.8012,1.65806);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13316,30,-883.268,-159.738,63.5311,5.20108);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13316,30,-877.76,-118.07,65.215,2.94961);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13316,30,-876.792,-128.646,64.1045,3.40339);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13316,30,-874.901,-36.6579,69.4246,2.00713);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13316,30,-874.856,-151.351,62.7537,3.57875);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13316,30,-872.135,-150.08,62.7513,3.57201);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13316,30,-870.288,-149.217,62.5413,3.56624);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13316,30,-870.03,-6.27443,70.3867,2.3911);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13316,30,-869.023,-82.2118,69.5848,3.22886);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13316,30,-866.354,-40.2455,70.842,0.0698132);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13316,30,-865.305,-152.302,63.5044,4.86947);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13316,30,-861.926,-79.0519,71.4178,0.20944);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13316,30,-857.292,-152.277,63.2114,4.18879);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13316,30,-853.357,-0.696194,72.0655,0.994838);
 
--- nest 2 gos were inserted by hand..
-INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (179024,30,40.0913,0.0153897,-4.0962,0.96131,120);
-INSERT INTO gameobject (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (179025,30,-1552.55, -359.738, 66.948,2.8875,120);
+-- special
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11604,30,-954.622,-110.958,80.7911,6.24828);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11604,30,-951.477,-53.9647,80.0235,5.32325);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11604,30,-946.812,-126.04,78.8601,5.15265);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11604,30,-940.689,-140.707,79.9225,2.79253);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11604,30,-933.954,-159.632,60.778,2.56563);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11604,30,-922.537,-130.291,61.3756,4.95674);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11604,30,-915.862,-151.74,76.9427,0.942478);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11604,30,-888.321,-159.831,62.5303,1.20428);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11604,30,-874.361,-42.4751,69.4316,0.785398);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11604,30,-873.19,-50.4899,70.0568,-2.41288);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11604,30,-868.511,-148.386,62.3547,3.57875);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11604,30,-868.44,-121.649,64.5056,3.33358);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11604,30,-868.324,-77.7196,71.4768,5.41052);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11604,30,-859.846,-19.6549,70.7304,1.97222);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11604,30,-828.05,-150.508,62.2019,2.14675);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11604,30,-826.254,-58.6911,72.0041,3.68264);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11604,30,-976.086,-44.1775,76.029,1.46608);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11604,30,-971.864,-87.4223,81.4954,5.8294);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11604,30,-966.551,-74.1111,80.0243,4.2129);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11604,30,-958.509,-173.652,77.9013,6.24828);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11604,30,-951.511,-181.242,65.529,4.39823);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11604,30,-940.967,-186.243,77.698,1.28164);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11604,30,-930.004,-65.0898,79.077,0.0581657);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11604,30,-920.864,-40.2009,78.256,5.16617);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11604,30,-919.089,-148.021,62.0317,2.59327);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11604,30,-901.516,-116.329,75.6876,0.471239);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11604,30,-897.864,-84.4348,74.083,3.00197);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11604,30,-897.617,-52.0457,71.9503,4.36332);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11604,30,-894.891,-153.951,61.6827,3.23569);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11604,30,-893.933,-111.625,75.6591,4.22536);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11604,30,-883.265,-152.854,61.8384,0.0941087);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11604,30,-868.293,-147.243,62.1097,3.2056);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11604,30,-867.501,-11.8709,70.018,6.14356);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11604,30,-866.699,-147.54,62.1646,3.57878);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11604,30,-866.566,-91.1916,67.4414,4.56707);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11604,30,-857.272,-141.142,61.7356,4.17134);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11604,30,-847.446,-98.0061,68.5131,3.24631);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11604,30,-837.026,-140.729,62.5141,5.51524);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11604,30,-824.204,-65.053,72.3381,3.01942);
 
--- irondeep supplies
-INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (178785,30,870.899,-388.434,61.6406,-1.22173,60);
-INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (178785,30,825.214,-320.174,63.712,-2.82743,60);
-INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (178785,30,837.117,-452.556,47.2331,-3.12414,60);
-INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (178785,30,869.755,-448.867,52.5448,-0.855212,60);
-INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (178785,30,949.877,-458.198,56.4874,0.314159,60);
-INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (178785,30,900.35,-479.024,58.3553,0.122173,60);
-INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (178785,30,854.449,-442.255,50.6589,0.401426,60);
-INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (178785,30,886.685,-442.358,54.6962,-1.22173,60);
-INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (178785,30,817.509,-457.331,48.4666,2.07694,60);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13096,30,-954.622,-110.958,80.7911,6.24828);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13096,30,-951.477,-53.9647,80.0235,5.32325);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13096,30,-946.812,-126.04,78.8601,5.15265);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13096,30,-940.689,-140.707,79.9225,2.79253);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13096,30,-933.954,-159.632,60.778,2.56563);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13096,30,-922.537,-130.291,61.3756,4.95674);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13096,30,-915.862,-151.74,76.9427,0.942478);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13096,30,-888.321,-159.831,62.5303,1.20428);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13096,30,-874.361,-42.4751,69.4316,0.785398);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13096,30,-873.19,-50.4899,70.0568,-2.41288);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13096,30,-868.511,-148.386,62.3547,3.57875);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13096,30,-868.44,-121.649,64.5056,3.33358);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13096,30,-868.324,-77.7196,71.4768,5.41052);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13096,30,-859.846,-19.6549,70.7304,1.97222);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13096,30,-828.05,-150.508,62.2019,2.14675);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13096,30,-826.254,-58.6911,72.0041,3.68264);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13096,30,-976.086,-44.1775,76.029,1.46608);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13096,30,-971.864,-87.4223,81.4954,5.8294);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13096,30,-966.551,-74.1111,80.0243,4.2129);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13096,30,-958.509,-173.652,77.9013,6.24828);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13096,30,-951.511,-181.242,65.529,4.39823);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13096,30,-940.967,-186.243,77.698,1.28164);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13096,30,-930.004,-65.0898,79.077,0.0581657);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13096,30,-920.864,-40.2009,78.256,5.16617);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13096,30,-919.089,-148.021,62.0317,2.59327);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13096,30,-901.516,-116.329,75.6876,0.471239);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13096,30,-897.864,-84.4348,74.083,3.00197);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13096,30,-897.617,-52.0457,71.9503,4.36332);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13096,30,-894.891,-153.951,61.6827,3.23569);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13096,30,-893.933,-111.625,75.6591,4.22536);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13096,30,-883.265,-152.854,61.8384,0.0941087);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13096,30,-868.293,-147.243,62.1097,3.2056);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13096,30,-867.501,-11.8709,70.018,6.14356);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13096,30,-866.699,-147.54,62.1646,3.57878);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13096,30,-866.566,-91.1916,67.4414,4.56707);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13096,30,-857.272,-141.142,61.7356,4.17134);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13096,30,-847.446,-98.0061,68.5131,3.24631);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13096,30,-837.026,-140.729,62.5141,5.51524);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13096,30,-824.204,-65.053,72.3381,3.01942);
 
--- coldtooth supplies
-INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (178784,30,-934.212,-57.3517,80.277,-0.0174535,60);
-INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (178784,30,-916.281,-36.8579,77.0227,0.122173,60);
-INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (178784,30,-902.73,-103.868,75.4378,-1.58825,60);
-INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (178784,30,-900.514,-143.527,75.9686,1.8675,60);
-INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (178784,30,-862.882,-0.353299,72.1526,-2.51327,60);
-INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (178784,30,-854.932,-85.9184,68.6056,-2.04204,60);
-INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (178784,30,-851.833,-118.959,63.8672,-0.0698131,60);
-INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (178784,30,-849.832,-20.8421,70.4672,-1.81514,60);
-INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (178784,30,-844.25,-60.0374,72.1031,-2.19912,60);
-INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (178784,30,-820.644,-136.043,63.1977,2.40855,60);
-INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (178784,30,-947.642,-208.807,77.0101,1.36136,60);
-INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (178784,30,-951.394,-193.695,67.634,0.802851,60);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13097,30,-954.622,-110.958,80.7911,6.24828);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13097,30,-951.477,-53.9647,80.0235,5.32325);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13097,30,-946.812,-126.04,78.8601,5.15265);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13097,30,-940.689,-140.707,79.9225,2.79253);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13097,30,-933.954,-159.632,60.778,2.56563);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13097,30,-922.537,-130.291,61.3756,4.95674);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13097,30,-915.862,-151.74,76.9427,0.942478);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13097,30,-888.321,-159.831,62.5303,1.20428);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13097,30,-874.361,-42.4751,69.4316,0.785398);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13097,30,-873.19,-50.4899,70.0568,-2.41288);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13097,30,-868.511,-148.386,62.3547,3.57875);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13097,30,-868.44,-121.649,64.5056,3.33358);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13097,30,-868.324,-77.7196,71.4768,5.41052);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13097,30,-859.846,-19.6549,70.7304,1.97222);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13097,30,-828.05,-150.508,62.2019,2.14675);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13097,30,-826.254,-58.6911,72.0041,3.68264);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13097,30,-976.086,-44.1775,76.029,1.46608);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13097,30,-971.864,-87.4223,81.4954,5.8294);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13097,30,-966.551,-74.1111,80.0243,4.2129);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13097,30,-958.509,-173.652,77.9013,6.24828);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13097,30,-951.511,-181.242,65.529,4.39823);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13097,30,-940.967,-186.243,77.698,1.28164);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13097,30,-930.004,-65.0898,79.077,0.0581657);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13097,30,-920.864,-40.2009,78.256,5.16617);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13097,30,-919.089,-148.021,62.0317,2.59327);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13097,30,-901.516,-116.329,75.6876,0.471239);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13097,30,-897.864,-84.4348,74.083,3.00197);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13097,30,-897.617,-52.0457,71.9503,4.36332);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13097,30,-894.891,-153.951,61.6827,3.23569);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13097,30,-893.933,-111.625,75.6591,4.22536);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13097,30,-883.265,-152.854,61.8384,0.0941087);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13097,30,-868.293,-147.243,62.1097,3.2056);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13097,30,-867.501,-11.8709,70.018,6.14356);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13097,30,-866.699,-147.54,62.1646,3.57878);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13097,30,-866.566,-91.1916,67.4414,4.56707);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13097,30,-857.272,-141.142,61.7356,4.17134);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13097,30,-847.446,-98.0061,68.5131,3.24631);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13097,30,-837.026,-140.729,62.5141,5.51524);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13097,30,-824.204,-65.053,72.3381,3.01942);
 
--- snowfall eyecandy:
--- alliance
-INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (179044,30,-191.153,-129.868,78.5595,-1.25664,60);
-INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (179044,30,-201.282,-134.319,78.6753,-0.942478,60);
-INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (179044,30,-215.981,-91.4101,80.8702,-1.74533,60);
-INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (179044,30,-200.465,-96.418,79.7587,1.36136,60);
--- alliance assault
-INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (179424,30,-191.153,-129.868,78.5595,-1.25664,60);
-INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (179424,30,-201.282,-134.319,78.6753,-0.942478,60);
-INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (179424,30,-215.981,-91.4101,80.8702,-1.74533,60);
-INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (179424,30,-200.465,-96.418,79.7587,1.36136,60);
--- horde
-INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (179064,30,-191.153,-129.868,78.5595,-1.25664,60);
-INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (179064,30,-201.282,-134.319,78.6753,-0.942478,60);
-INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (179064,30,-215.981,-91.4101,80.8702,-1.74533,60);
-INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (179064,30,-200.465,-96.418,79.7587,1.36136,60);
--- horde assault
-INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (179425,30,-191.153,-129.868,78.5595,-1.25664,60);
-INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (179425,30,-201.282,-134.319,78.6753,-0.942478,60);
-INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (179425,30,-215.981,-91.4101,80.8702,-1.74533,60);
-INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (179425,30,-200.465,-96.418,79.7587,1.36136,60);
+-- vermins
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(10982,30,-951.955,-197.5,77.212,5.63741);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(10982,30,-944.837,-199.608,77.0737,4.97419);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(10982,30,-933.494,-209.063,73.7803,5.88176);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(10982,30,-929.666,-201.308,73.7032,5.02655);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(10982,30,-978.997,-249.356,65.4345,5.05464);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(10982,30,-974.565,-224.828,69.5858,4.88846);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(10982,30,-946.514,-259.239,66.0874,3.78132);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(10982,30,-918.402,-250.439,69.5271,2.21352);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(10982,30,-910.14,-229.959,72.9279,0.27677);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(10982,30,-851.563,-88.6527,68.5983,3.61896);
+
+-- bosses
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13088,30,-848.902,-92.931,68.6325,3.33350);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13086,30,-848.902,-92.931,68.6325,3.33350);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11677,30,-848.902,-92.931,68.6325,3.33350);
 INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(10987,30,971.671, -442.657, 57.6951, 3.1765);
 INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(10987,30,969.979, -457.148, 58.1119, 4.5204);
 INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(10987,30,958.692, -333.477, 63.2276, 5.77704);
@@ -1083,85 +942,223 @@ INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES
 INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11657,30,865.554, -438.735, 50.7333, 2.12431);
 INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13078,30,865.554, -438.735, 50.7333, 2.12431);
 INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13079,30,865.554, -438.735, 50.7333, 2.12431);
-
 UPDATE creature c, creature_template t SET c.curhealth=t.minhealth WHERE c.map=30 AND c.id=t.entry;
+UPDATE creature c, creature_template t SET c.curmana=t.minmana WHERE c.map=30 AND c.id=t.entry;
 UPDATE creature SET spawndist=0 WHERE MovementType=0 AND map=30;
-delete from mangos_string where entry>736 and entry<770;
+-- following gameobjects are static
+DELETE FROM gameobject WHERE map=30;
+INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (2061,30,-1423.16,-318.436,89.1136,2.35619,60);
+INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (2061,30,-1290.27,-172.471,72.1853,3.06305,60);
+INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (2061,30,-1286.25,-184.48,71.8334,-2.05076,60);
+INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (2061,30,-1282.21,-284.083,87.256,-0.0610855,60);
+INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (2061,30,-1280.17,-220.537,72.2686,1.62316,60);
+INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (2061,30,-1256.55,-280.278,73.9473,-0.0610855,60);
+INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (2061,30,-1241.25,-345.115,59.6867,0.357794,60);
+INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (2061,30,-1215.59,-371.946,56.5293,0.357794,60);
+INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (2061,30,-1202.8,-271.599,72.5805,0.357794,60);
+INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (2061,30,-1140.82,-343.392,50.9077,-2.7838,60);
+INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (2061,30,-1139.68,-356.288,51.264,-0.706858,60);
+INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (2061,30,-1099.21,-266.231,57.8849,-2.28638,60);
+INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (2061,30,-1082.6,-266.681,57.8575,2.40855,60);
+INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (2061,30,30.4168,-428.853,41.528,-2.59181,60);
+INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (2061,30,31.2216,-428.08,41.528,0.549779,60);
+INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (2061,30,50.6401,-421.166,44.7325,-0.00875192,60);
+INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (2066,30,-743.427,-398.242,76.4266,0.872664,60);
+INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (3832,30,-1235.57,-241.478,73.4377,1.48353,60);
+INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (3833,30,-1248.85,-254.06,73.4377,1.48353,60);
+INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (3834,30,-1248.15,-245.599,73.4377,-0.0523605,60);
+INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (3835,30,-1237.21,-260.168,73.4377,1.48353,60);
+INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (3836,30,-1260.37,-248.767,77.9454,1.48353,60);
+INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (3837,30,-1249.32,-244.907,92.3372,0.401426,60);
+INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (3838,30,-1250.09,-254.604,92.3015,0.148352,60);
+INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (22205,30,50.6401,-421.166,44.7325,-0.00875192,60);
+INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (22207,30,30.4168,-428.853,41.528,-2.59181,60);
+INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (22208,30,31.2216,-428.08,41.528,0.549779,60);
+INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (28048,30,41.1672,-426.866,44.6828,2.7838,60);
+INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (28049,30,39.0988,-425.746,44.688,-0.619592,60);
+INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (28605,30,25.2482,-433.104,47.6369,2.38237,60);
+INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (28606,30,25.758,-425.837,47.6369,-1.98095,60);
+INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (28607,30,27.6786,-427.69,47.6369,-2.67908,60);
+INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (29784,30,-1338.28,-297.628,91.4867,0.248971,60);
+INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (31442,30,-1338.28,-297.628,91.4867,0.248971,60);
+INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (50984,30,-1250.39,-310.191,61.185,-1.10828,60);
+INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (51704,30,-1245.2,-307.059,63.3199,3.07959,60);
+INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (51705,30,-1258.23,-310.977,63.2015,0.862906,60);
+INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (177261,30,-1290.27,-172.471,72.1853,3.06305,60);
+INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (177262,30,-1286.25,-184.48,71.8334,-2.05076,60);
+INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (177263,30,-1280.17,-220.537,72.2686,1.62316,60);
+INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (177292,30,-1099.21,-266.231,57.8849,-2.28638,60);
+INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (177293,30,-1082.6,-266.681,57.8575,2.40855,60);
+INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (177405,30,-1140.82,-343.392,50.9077,-2.7838,60);
+INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (177406,30,-1139.68,-356.288,51.264,-0.706858,60);
+INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (177408,30,-743.427,-398.242,76.4266,0.872664,60);
+INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (177409,30,-1215.59,-371.946,56.5293,0.357794,60);
+INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (177410,30,-1241.25,-345.115,59.6867,0.357794,60);
+INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (177411,30,-1202.8,-271.599,72.5805,0.357794,60);
+INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (177412,30,-1282.21,-284.083,87.256,-0.0610855,60);
+INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (177413,30,-1256.55,-280.278,73.9473,-0.0610855,60);
+INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (178684,30,649.265,-59.1102,41.5476,-2.68781,60);
+INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (178685,30,646.207,-57.2428,41.6587,-0.157079,60);
+INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (179384,30,-145.341,-444.846,26.4163,-0.0523596,60);
+INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (179384,30,560.834,-75.4266,37.9558,0.785398,60);
+INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (179385,30,-155.405,-440.24,33.2862,2.34747,60);
+INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (179385,30,550.678,-79.8234,44.8257,-3.09796,60);
+INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (179386,30,-150.787,-459.829,26.4163,0.558507,60);
+INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (179386,30,568.326,-89.4992,37.9558,1.39626,60);
+INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (179387,30,-153.748,-438.639,33.2862,-2.88852,60);
+INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (179387,30,550.597,-77.5213,44.8257,-2.05076,60);
+INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (179388,30,-149.057,-461.089,26.4163,1.38754,60);
+INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (179388,30,570.419,-89.0567,37.9558,2.2253,60);
+INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (179389,30,-168.342,-458.4,33.2862,-0.445059,60);
+INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (179389,30,555.517,-101.589,44.8257,0.392699,60);
+INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (179390,30,-142.968,-444.076,26.4163,-2.23402,60);
+INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (179390,30,561.851,-73.1481,37.9558,-1.39626,60);
+INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (179391,30,-172.363,-452.824,33.2796,0.62832,60);
+INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (179391,30,548.682,-100.846,44.8191,1.46608,60);
+INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (179392,30,-171.282,-456.892,33.2796,1.63188,60);
+INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (179392,30,552.429,-102.764,44.8191,2.46964,60);
+INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (179393,30,-172.356,-453.88,33.2796,0.322886,60);
+INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (179393,30,549.472,-101.547,44.8191,1.16064,60);
+INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (179394,30,-171.882,-454.632,33.2796,0.759218,60);
+INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (179394,30,550.347,-101.698,44.8191,1.59698,60);
+INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (179395,30,-171.656,-455.671,33.2796,0.0610861,60);
+INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (179395,30,551.271,-102.226,44.8191,0.898843,60);
+INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (179396,30,-170.699,-458.41,33.2796,-1.02974,60);
+INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (179396,30,553.947,-103.347,44.8191,-0.191986,60);
+INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (179397,30,-170.14,-457.609,33.2796,-0.680678,60);
+INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (179397,30,553.725,-102.396,44.8191,0.15708,60);
+INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (179419,30,-1423.16,-318.436,89.1136,2.35619,60);
+INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (179437,30,618.748,-52.1126,42.1122,-0.0698131,60);
+INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (179438,30,-1181.1,-370.747,53.6246,2.68781,60);
+
+-- nest 2 gos were inserted by hand..
+INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (179024,30,40.0913,0.0153897,-4.0962,0.96131,120);
+INSERT INTO gameobject (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (179025,30,-1552.55, -359.738, 66.948,2.8875,120);
+
+-- irondeep supplies
+INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (178785,30,870.899,-388.434,61.6406,-1.22173,60);
+INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (178785,30,825.214,-320.174,63.712,-2.82743,60);
+INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (178785,30,837.117,-452.556,47.2331,-3.12414,60);
+INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (178785,30,869.755,-448.867,52.5448,-0.855212,60);
+INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (178785,30,949.877,-458.198,56.4874,0.314159,60);
+INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (178785,30,900.35,-479.024,58.3553,0.122173,60);
+INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (178785,30,854.449,-442.255,50.6589,0.401426,60);
+INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (178785,30,886.685,-442.358,54.6962,-1.22173,60);
+INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (178785,30,817.509,-457.331,48.4666,2.07694,60);
+
+-- coldtooth supplies
+INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (178784,30,-934.212,-57.3517,80.277,-0.0174535,60);
+INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (178784,30,-916.281,-36.8579,77.0227,0.122173,60);
+INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (178784,30,-902.73,-103.868,75.4378,-1.58825,60);
+INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (178784,30,-900.514,-143.527,75.9686,1.8675,60);
+INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (178784,30,-862.882,-0.353299,72.1526,-2.51327,60);
+INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (178784,30,-854.932,-85.9184,68.6056,-2.04204,60);
+INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (178784,30,-851.833,-118.959,63.8672,-0.0698131,60);
+INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (178784,30,-849.832,-20.8421,70.4672,-1.81514,60);
+INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (178784,30,-844.25,-60.0374,72.1031,-2.19912,60);
+INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (178784,30,-820.644,-136.043,63.1977,2.40855,60);
+INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (178784,30,-947.642,-208.807,77.0101,1.36136,60);
+INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (178784,30,-951.394,-193.695,67.634,0.802851,60);
+
+-- snowfall eyecandy:
+-- alliance
+INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (179044,30,-191.153,-129.868,78.5595,-1.25664,60);
+INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (179044,30,-201.282,-134.319,78.6753,-0.942478,60);
+INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (179044,30,-215.981,-91.4101,80.8702,-1.74533,60);
+INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (179044,30,-200.465,-96.418,79.7587,1.36136,60);
+-- alliance assault
+INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (179424,30,-191.153,-129.868,78.5595,-1.25664,60);
+INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (179424,30,-201.282,-134.319,78.6753,-0.942478,60);
+INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (179424,30,-215.981,-91.4101,80.8702,-1.74533,60);
+INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (179424,30,-200.465,-96.418,79.7587,1.36136,60);
+-- horde
+INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (179064,30,-191.153,-129.868,78.5595,-1.25664,60);
+INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (179064,30,-201.282,-134.319,78.6753,-0.942478,60);
+INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (179064,30,-215.981,-91.4101,80.8702,-1.74533,60);
+INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (179064,30,-200.465,-96.418,79.7587,1.36136,60);
+-- horde assault
+INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (179425,30,-191.153,-129.868,78.5595,-1.25664,60);
+INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (179425,30,-201.282,-134.319,78.6753,-0.942478,60);
+INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (179425,30,-215.981,-91.4101,80.8702,-1.74533,60);
+INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (179425,30,-200.465,-96.418,79.7587,1.36136,60);
+delete from mangos_string where entry>10746 and entry<10781;
 INSERT INTO mangos_string VALUES
-(747,'Alliance',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(748,'Horde',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(749,'%s was destroyed by the %s!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(750,'The %s is under attack! If left unchecked, the %s will destroy it!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(751,'The %s was taken by the %s!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(752,'The %s was taken by the %s!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(753,'The %s was taken by the %s!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(754,'The %s is under attack! If left unchecked, the %s will capture it!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(755,'The %s has taken the %s! Its supplies will now be used for reinforcements!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(756,'Irondeep Mine',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(757,'Coldtooth Mine',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(758,'Stormpike Aid Station',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(759,'Dun Baldar South Bunker',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(760,'Dun Baldar North Bunker',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(761,'Stormpike Graveyard',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(762,'Icewing Bunker',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(763,'Stonehearth Graveyard',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(764,'Stonehearth Bunker',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(765,'Snowfall Graveyard',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(766,'Iceblood Tower',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(767,'Iceblood Graveyard',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(768,'Tower Point',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(769,'Frostwolf Graveyard',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(770,'East Frostwolf Tower',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(771,'West Frostwolf Tower',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(772,'Frostwolf Relief Hut',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(773,'The Battle for Alterac Valley begins in 1 minute.',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(774,'The Battle for Alterac Valley begins in 30 seconds. Prepare yourselves!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(775,'The Battle for Alterac Valley has begun!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(776,'The Alliance Team is running out of reinforcements!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(777,'The Horde Team is running out of reinforcements!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(778,'The Frostwolf General is Dead!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(779,'The Stormpike General is Dead!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL)
+(10747,'Alliance',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(10748,'Horde',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(10749,'%s was destroyed by the %s!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(10750,'The %s is under attack! If left unchecked, the %s will destroy it!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(10751,'The %s was taken by the %s!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(10752,'The %s was taken by the %s!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(10753,'The %s was taken by the %s!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(10754,'The %s is under attack! If left unchecked, the %s will capture it!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(10755,'The %s has taken the %s! Its supplies will now be used for reinforcements!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(10756,'Irondeep Mine',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(10757,'Coldtooth Mine',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(10758,'Stormpike Aid Station',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(10759,'Dun Baldar South Bunker',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(10760,'Dun Baldar North Bunker',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(10761,'Stormpike Graveyard',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(10762,'Icewing Bunker',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(10763,'Stonehearth Graveyard',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(10764,'Stonehearth Bunker',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(10765,'Snowfall Graveyard',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(10766,'Iceblood Tower',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(10767,'Iceblood Graveyard',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(10768,'Tower Point',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(10769,'Frostwolf Graveyard',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(10770,'East Frostwolf Tower',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(10771,'West Frostwolf Tower',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(10772,'Frostwolf Relief Hut',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(10773,'2 minute until the battle for Alterac Valley begins.',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(10774,'1 minute until the battle for Alterac Valley begins.',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(10775,'30 seconds until the battle for Alterac Valley begins. Prepare yourselves!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(10776,'The battle for Alterac Valley has begun!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(10777,'The Alliance Team is running out of reinforcements!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(10778,'The Horde Team is running out of reinforcements!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(10779,'The Frostwolf General is Dead!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(10780,'The Stormpike General is Dead!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL)
 ;
 
-UPDATE mangos_string SET content_loc3='Allianz' WHERE entry=747;
-UPDATE mangos_string SET content_loc3='Horde' WHERE entry=748;
-UPDATE mangos_string SET content_loc3='%s wurde von der %s zerstört!' WHERE entry=749;
-UPDATE mangos_string SET content_loc3='%s wird angegriffen! Wenn er unbewacht bleibt, wird die %s ihn zerstören!' WHERE entry=750;
+UPDATE mangos_string SET content_loc3='Allianz' WHERE entry=10747;
+UPDATE mangos_string SET content_loc3='Horde' WHERE entry=10748;
+UPDATE mangos_string SET content_loc3='%s wurde von der %s zerstört!' WHERE entry=10749;
+UPDATE mangos_string SET content_loc3='%s wird angegriffen! Wenn er unbewacht bleibt, wird die %s ihn zerstören!' WHERE entry=10750;
 -- Wenn _sie_ unbewacht bleibt wird allianz _sie_ TODO: don't store towers and gravenames, store complete strings with the names inside it, else i don't know how to implement this feature
 
-UPDATE mangos_string SET content_loc3='%s wurde von der %s erobert!' WHERE entry=751;
-UPDATE mangos_string SET content_loc3='%s wurde von der %s erobert!' WHERE entry=752;
-UPDATE mangos_string SET content_loc3='%s wurde von der %s erobert!' WHERE entry=753;
+UPDATE mangos_string SET content_loc3='%s wurde von der %s erobert!' WHERE entry=10751;
+UPDATE mangos_string SET content_loc3='%s wurde von der %s erobert!' WHERE entry=10752;
+UPDATE mangos_string SET content_loc3='%s wurde von der %s erobert!' WHERE entry=10753;
 
-UPDATE mangos_string SET content_loc3='%s wird angegriffen! Wenn er unbewacht bleibt, wird die %s ihn erobern!' WHERE entry=754;
+UPDATE mangos_string SET content_loc3='%s wird angegriffen! Wenn er unbewacht bleibt, wird die %s ihn erobern!' WHERE entry=10754;
 -- Wenn _sie_ unbewacht bleibt ... TODO...
 
-UPDATE mangos_string SET content_loc3='Die %s hat die %s eingenommen! Die dort befindlichen Vorräte werden zur Verstärkung eingesetzt!' WHERE entry=755;
+UPDATE mangos_string SET content_loc3='Die %s hat die %s eingenommen! Die dort befindlichen Vorräte werden zur Verstärkung eingesetzt!' WHERE entry=10755;
 
-UPDATE mangos_string SET content_loc3='Eisenschachtmine' WHERE entry=756;
-UPDATE mangos_string SET content_loc3='Eisbeißermine' WHERE entry=757;
-UPDATE mangos_string SET content_loc3='Das Lazarett der Sturmlanzen' WHERE entry=758;
-UPDATE mangos_string SET content_loc3='Der Südbunker von Dun Baldar' WHERE entry=759;
-UPDATE mangos_string SET content_loc3='Der Nordbunker von Dun Baldar' WHERE entry=760;
-UPDATE mangos_string SET content_loc3='Der Friedhof der Sturmlanzen' WHERE entry=761;
-UPDATE mangos_string SET content_loc3='Der Eisschwingenbunker' WHERE entry=762;
-UPDATE mangos_string SET content_loc3='Der Steinbruchfriedhof' WHERE entry=763;
-UPDATE mangos_string SET content_loc3='Der Steinbruchbunker' WHERE entry=764;
-UPDATE mangos_string SET content_loc3='Der Schneewehenfriedhof' WHERE entry=765;
-UPDATE mangos_string SET content_loc3='Der Eisblutturm' WHERE entry=766;
-UPDATE mangos_string SET content_loc3='Der Eisblutfriedhof' WHERE entry=767;
-UPDATE mangos_string SET content_loc3='Die Turmstellung' WHERE entry=768;
-UPDATE mangos_string SET content_loc3='Der Friedhof der Frostwölfe' WHERE entry=769;
-UPDATE mangos_string SET content_loc3='Der östliche Frostwolfturm' WHERE entry=770;
-UPDATE mangos_string SET content_loc3='Der westliche Frostwolfturm' WHERE entry=771;
-UPDATE mangos_string SET content_loc3='Die Heilerhütte der Frostwölfe' WHERE entry=772;
-UPDATE mangos_string SET content_loc3='Der Kampf um das Alteractal beginnt in 1 Minute.' WHERE entry=773;
-UPDATE mangos_string SET content_loc3='Der Kampf um das Alteractal beginnt in 30 Sekunden.' WHERE entry=774;
-UPDATE mangos_string SET content_loc3='Der Kampf um das Alteractal hat begonnen!' WHERE entry=775;
-UPDATE mangos_string SET content_loc3='Die Allianz hat nurnoch wenige Verstärkungspunkte' WHERE entry=776; -- TODO find right msg
-UPDATE mangos_string SET content_loc3='Die Horde hat nurnoch wenige Verstärkungspunkte' WHERE entry=777; -- TODO same here
-UPDATE mangos_string SET content_loc3='Der General der Allianz ist tot!' WHERE entry=778;
-UPDATE mangos_string SET content_loc3='Der General der Horde ist tot!' WHERE entry=779;
+UPDATE mangos_string SET content_loc3='Eisenschachtmine' WHERE entry=10756;
+UPDATE mangos_string SET content_loc3='Eisbeißermine' WHERE entry=10757;
+UPDATE mangos_string SET content_loc3='Das Lazarett der Sturmlanzen' WHERE entry=10758;
+UPDATE mangos_string SET content_loc3='Der Südbunker von Dun Baldar' WHERE entry=10759;
+UPDATE mangos_string SET content_loc3='Der Nordbunker von Dun Baldar' WHERE entry=10760;
+UPDATE mangos_string SET content_loc3='Der Friedhof der Sturmlanzen' WHERE entry=10761;
+UPDATE mangos_string SET content_loc3='Der Eisschwingenbunker' WHERE entry=10762;
+UPDATE mangos_string SET content_loc3='Der Steinbruchfriedhof' WHERE entry=10763;
+UPDATE mangos_string SET content_loc3='Der Steinbruchbunker' WHERE entry=10764;
+UPDATE mangos_string SET content_loc3='Der Schneewehenfriedhof' WHERE entry=10765;
+UPDATE mangos_string SET content_loc3='Der Eisblutturm' WHERE entry=10766;
+UPDATE mangos_string SET content_loc3='Der Eisblutfriedhof' WHERE entry=10767;
+UPDATE mangos_string SET content_loc3='Die Turmstellung' WHERE entry=10768;
+UPDATE mangos_string SET content_loc3='Der Friedhof der Frostwölfe' WHERE entry=10769;
+UPDATE mangos_string SET content_loc3='Der östliche Frostwolfturm' WHERE entry=10770;
+UPDATE mangos_string SET content_loc3='Der westliche Frostwolfturm' WHERE entry=10771;
+UPDATE mangos_string SET content_loc3='Die Heilerhütte der Frostwölfe' WHERE entry=10772;
+UPDATE mangos_string SET content_loc3='Der Kampf um das Alteractal beginnt in 2 Minuten.' WHERE entry=10773;
+UPDATE mangos_string SET content_loc3='Der Kampf um das Alteractal beginnt in 1 Minute.' WHERE entry=10774;
+UPDATE mangos_string SET content_loc3='Der Kampf um das Alteractal beginnt in 30 Sekunden.' WHERE entry=10775;
+UPDATE mangos_string SET content_loc3='Der Kampf um das Alteractal hat begonnen!' WHERE entry=10776;
+UPDATE mangos_string SET content_loc3='Die Allianz hat nurnoch wenige Verstärkungspunkte' WHERE entry=10777; -- TODO find right msg
+UPDATE mangos_string SET content_loc3='Die Horde hat nurnoch wenige Verstärkungspunkte' WHERE entry=10778; -- TODO same here
+UPDATE mangos_string SET content_loc3='Der General der Allianz ist tot!' WHERE entry=10779;
+UPDATE mangos_string SET content_loc3='Der General der Horde ist tot!' WHERE entry=10780;
 
 
 -- CHAT_MSG_BG_SYSTEM_ALLIANCE', 'txt': '$N hat den Schneewehenfriedhof besetzt! Wenn niemand eingreift, erlangt die Allianz die Kontrolle \xc3\xbcber ihn
