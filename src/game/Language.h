@@ -569,9 +569,11 @@ enum MangosStrings
     // Battleground
     LANG_BG_A_WINS                      = 600,
     LANG_BG_H_WINS                      = 601,
-    LANG_BG_WS_ONE_MINUTE               = 602,
-    LANG_BG_WS_HALF_MINUTE              = 603,
-    LANG_BG_WS_BEGIN                    = 604,
+
+    LANG_BG_WS_START_TWO_MINUTES        = 753,
+    LANG_BG_WS_START_ONE_MINUTE         = 602,
+    LANG_BG_WS_START_HALF_MINUTE        = 603,
+    LANG_BG_WS_HAS_BEGUN                = 604,
 
     LANG_BG_WS_CAPTURED_HF              = 605,
     LANG_BG_WS_CAPTURED_AF              = 606,
@@ -585,9 +587,10 @@ enum MangosStrings
     LANG_BG_WS_ALLIANCE_FLAG_RESPAWNED  = 614,
     LANG_BG_WS_HORDE_FLAG_RESPAWNED     = 615,
 
-    LANG_BG_EY_ONE_MINUTE               = 636,
-    LANG_BG_EY_HALF_MINUTE              = 637,
-    LANG_BG_EY_BEGIN                    = 638,
+    LANG_BG_EY_START_TWO_MINUTES        = 755,
+    LANG_BG_EY_START_ONE_MINUTE         = 636,
+    LANG_BG_EY_START_HALF_MINUTE        = 637,
+    LANG_BG_EY_HAS_BEGUN                = 638,
 
     LANG_BG_AB_ALLY                     = 650,
     LANG_BG_AB_HORDE                    = 651,
@@ -600,9 +603,11 @@ enum MangosStrings
     LANG_BG_AB_NODE_DEFENDED            = 658,
     LANG_BG_AB_NODE_ASSAULTED           = 659,
     LANG_BG_AB_NODE_CLAIMED             = 660,
-    LANG_BG_AB_ONEMINTOSTART            = 661,
-    LANG_BG_AB_HALFMINTOSTART           = 662,
-    LANG_BG_AB_STARTED                  = 663,
+
+    LANG_BG_AB_START_TWO_MINUTES        = 754,
+    LANG_BG_AB_START_ONE_MINUTE         = 661,
+    LANG_BG_AB_START_HALF_MINUTE        = 662,
+    LANG_BG_AB_HAS_BEGUN                = 663,
     LANG_BG_AB_A_NEAR_VICTORY           = 664,
     LANG_BG_AB_H_NEAR_VICTORY           = 665,
     LANG_BG_MARK_BY_MAIL                = 666,
@@ -633,7 +638,118 @@ enum MangosStrings
     LANG_ARENA_ONE_MINUTE               = 701,
     LANG_ARENA_THIRTY_SECONDS           = 702,
     LANG_ARENA_FIFTEEN_SECONDS          = 703,
-    LANG_ARENA_BEGUN                    = 704,
+    LANG_ARENA_HAS_BEGUN                = 704,
+
+    LANG_WAIT_BEFORE_SPEAKING           = 705,
+    LANG_NOT_EQUIPPED_ITEM              = 706,
+    LANG_PLAYER_DND                     = 707,
+    LANG_PLAYER_AFK                     = 708,
+    LANG_PLAYER_DND_DEFAULT             = 709,
+    LANG_PLAYER_AFK_DEFAULT             = 710,
+
+    LANG_BG_QUEUE_ANNOUNCE_SELF         = 711,
+    LANG_BG_QUEUE_ANNOUNCE_WORLD        = 712,
+    LANG_YOUR_ARENA_LEVEL_REQ_ERROR     = 713,
+//                                      = 714, not used
+    LANG_YOUR_BG_LEVEL_REQ_ERROR        = 715,
+//                                      = 716, not used
+    LANG_BG_STARTED_ANNOUNCE_WORLD      = 717,
+    LANG_ARENA_QUEUE_ANNOUNCE_WORLD_JOIN= 718,
+    LANG_ARENA_QUEUE_ANNOUNCE_WORLD_EXIT= 719,
+
+    LANG_BG_GROUP_TOO_LARGE             = 720,              // "Your group is too large for this battleground. Please regroup to join."
+    LANG_ARENA_GROUP_TOO_LARGE          = 721,              // "Your group is too large for this arena. Please regroup to join."
+    LANG_ARENA_YOUR_TEAM_ONLY           = 722,              // "Your group has members not in your arena team. Please regroup to join."
+    LANG_ARENA_NOT_ENOUGH_PLAYERS       = 723,              // "Your group does not have enough players to join this match."
+    LANG_ARENA_GOLD_WINS                = 724,              // "The Gold Team wins!"
+    LANG_ARENA_GREEN_WINS               = 725,              // "The Green Team wins!"
+//                                      = 726, not used
+    LANG_BG_GROUP_OFFLINE_MEMBER        = 727,              // "Your group has an offline member. Please remove him before joining."
+    LANG_BG_GROUP_MIXED_FACTION         = 728,              // "Your group has players from the opposing faction. You can't join the battleground as a group."
+    LANG_BG_GROUP_MIXED_LEVELS          = 729,              // "Your group has players from different battleground brakets. You can't join as group."
+    LANG_BG_GROUP_MEMBER_ALREADY_IN_QUEUE = 730,            // "Someone in your party is already in this battleground queue. (S)he must leave it before joining as group."
+    LANG_BG_GROUP_MEMBER_DESERTER       = 731,              // "Someone in your party is Deserter. You can't join as group."
+    LANG_BG_GROUP_MEMBER_NO_FREE_QUEUE_SLOTS = 732,         // "Someone in your party is already in three battleground queues. You cannot join as group."
+
+    LANG_CANNOT_TELE_TO_BG              = 733,              // "You cannot teleport to a battleground or arena map."
+    LANG_CANNOT_SUMMON_TO_BG            = 734,              // "You cannot summon players to a battleground or arena map."
+    LANG_CANNOT_GO_TO_BG_GM             = 735,              // "You must be in GM mode to teleport to a player in a battleground."
+    LANG_CANNOT_GO_TO_BG_FROM_BG        = 736,              // "You cannot teleport to a battleground from another battleground. Please leave the current battleground first."
+    LANG_DEBUG_ARENA_ON                 = 737,
+    LANG_DEBUG_ARENA_OFF                = 738,
+    LANG_DEBUG_BG_ON                    = 739,
+    LANG_DEBUG_BG_OFF                   = 740,
+    LANG_DIST_ARENA_POINTS_START        = 741,
+    LANG_DIST_ARENA_POINTS_ONLINE_START = 742,
+    LANG_DIST_ARENA_POINTS_ONLINE_END   = 743,
+    LANG_DIST_ARENA_POINTS_TEAM_START   = 744,
+    LANG_DIST_ARENA_POINTS_TEAM_END     = 745,
+    LANG_DIST_ARENA_POINTS_END          = 746,
+//                                      = 747, not used
+//                                      = 748, not used
+//                                      = 749, not used
+    LANG_BATTLEGROUND_PREMATURE_FINISH_WARNING = 750,       // "Not enough players. This game will close in %u mins."
+    LANG_BATTLEGROUND_PREMATURE_FINISH_WARNING_SECS = 751,  // "Not enough players. This game will close in %u seconds."
+//                                      = 752, not used
+//  LANG_BG_WS_START_TWO_MINUTES        = 753,
+//  LANG_BG_AB_START_TWO_MINUTES        = 754,
+//  LANG_BG_EY_START_TWO_MINUTES        = 755,
+    // Room for batleground/arena strings 756-799 not used
+
+    // in game strings
+    //                                  = 800, not used
+    LANG_NOT_ENOUGH_GOLD                = 801,
+    LANG_NOT_FREE_TRADE_SLOTS           = 802,
+    LANG_NOT_PARTNER_FREE_TRADE_SLOTS   = 803,
+    LANG_YOU_NOT_HAVE_PERMISSION        = 804,
+    LANG_UNKNOWN_LANGUAGE               = 805,
+    LANG_NOT_LEARNED_LANGUAGE           = 806,
+    LANG_NEED_CHARACTER_NAME            = 807,
+    LANG_PLAYER_NOT_EXIST_OR_OFFLINE    = 808,
+    LANG_ACCOUNT_FOR_PLAYER_NOT_FOUND   = 809,
+    LANG_ACHIEVEMENT_EARNED             = 810,
+    // Room for in-game strings           811-999 not used
+
+    // Level 4 (CLI only commands)
+    LANG_COMMAND_EXIT                   = 1000,
+    LANG_ACCOUNT_DELETED                = 1001,
+    LANG_ACCOUNT_NOT_DELETED_SQL_ERROR  = 1002,
+    LANG_ACCOUNT_NOT_DELETED            = 1003,
+    LANG_ACCOUNT_CREATED                = 1004,
+    LANG_ACCOUNT_TOO_LONG               = 1005,
+    LANG_ACCOUNT_ALREADY_EXIST          = 1006,
+    LANG_ACCOUNT_NOT_CREATED_SQL_ERROR  = 1007,
+    LANG_ACCOUNT_NOT_CREATED            = 1008,
+    LANG_CHARACTER_DELETED              = 1009,
+    LANG_ACCOUNT_LIST_HEADER            = 1010,
+    LANG_ACCOUNT_LIST_ERROR             = 1011,
+    // Room for more level 4              1012-1099 not used
+
+    // Level 3 (continue)
+    LANG_ACCOUNT_SETADDON               = 1100,
+    LANG_MOTD_NEW                       = 1101,
+    LANG_SENDMESSAGE                    = 1102,
+    LANG_EVENT_ENTRY_LIST_CONSOLE       = 1103,
+    LANG_CREATURE_ENTRY_LIST_CONSOLE    = 1104,
+    LANG_ITEM_LIST_CONSOLE              = 1105,
+    LANG_ITEMSET_LIST_CONSOLE           = 1106,
+    LANG_GO_ENTRY_LIST_CONSOLE          = 1107,
+    LANG_QUEST_LIST_CONSOLE             = 1108,
+    LANG_SKILL_LIST_CONSOLE             = 1109,
+    LANG_CREATURE_LIST_CONSOLE          = 1110,
+    LANG_GO_LIST_CONSOLE                = 1111,
+    LANG_FILE_OPEN_FAIL                 = 1112,
+    LANG_ACCOUNT_CHARACTER_LIST_FULL    = 1113,
+    LANG_DUMP_BROKEN                    = 1114,
+    LANG_INVALID_CHARACTER_NAME         = 1115,
+    LANG_INVALID_CHARACTER_GUID         = 1116,
+    LANG_CHARACTER_GUID_IN_USE          = 1117,
+    LANG_ITEMLIST_GUILD                 = 1118,
+    LANG_MUST_MALE_OR_FEMALE            = 1119,
+    LANG_YOU_CHANGE_GENDER              = 1120,
+    LANG_YOUR_GENDER_CHANGED            = 1121,
+    LANG_SKILL_VALUES                   = 1122,
+    // Room for more level 3              1123-1199 not used
 
     // opvp hp
     LANG_OPVP_HP_CAPTURE_OVERLOOK_H     = 9001,
@@ -691,151 +807,46 @@ enum MangosStrings
     // opvp si
     LANG_OPVP_SI_CAPTURE_H              = 9049,
     LANG_OPVP_SI_CAPTURE_A              = 9050,
-
-    LANG_WAIT_BEFORE_SPEAKING           = 705,
-    LANG_NOT_EQUIPPED_ITEM              = 706,
-    LANG_PLAYER_DND                     = 707,
-    LANG_PLAYER_AFK                     = 708,
-    LANG_PLAYER_DND_DEFAULT             = 709,
-    LANG_PLAYER_AFK_DEFAULT             = 710,
-
-    LANG_BG_QUEUE_ANNOUNCE_SELF         = 711,
-    LANG_BG_QUEUE_ANNOUNCE_WORLD        = 712,
-    LANG_YOUR_ARENA_LEVEL_REQ_ERROR     = 713,
-//                                      = 714, not used
-    LANG_YOUR_BG_LEVEL_REQ_ERROR        = 715,
-//                                      = 716, not used
-    LANG_BG_STARTED_ANNOUNCE_WORLD      = 717,
-    LANG_ARENA_QUEUE_ANNOUNCE_WORLD_JOIN= 718,
-    LANG_ARENA_QUEUE_ANNOUNCE_WORLD_EXIT= 719,
-
-    LANG_BG_GROUP_TOO_LARGE             = 720,              // "Your group is too large for this battleground. Please regroup to join."
-    LANG_ARENA_GROUP_TOO_LARGE          = 721,              // "Your group is too large for this arena. Please regroup to join."
-    LANG_ARENA_YOUR_TEAM_ONLY           = 722,              // "Your group has members not in your arena team. Please regroup to join."
-    LANG_ARENA_NOT_ENOUGH_PLAYERS       = 723,              // "Your group does not have enough players to join this match."
-    LANG_ARENA_GOLD_WINS                = 724,              // "The Gold Team wins!"
-    LANG_ARENA_GREEN_WINS               = 725,              // "The Green Team wins!"
-//                                      = 726, not used
-    LANG_BG_GROUP_OFFLINE_MEMBER        = 727,              // "Your group has an offline member. Please remove him before joining."
-    LANG_BG_GROUP_MIXED_FACTION         = 728,              // "Your group has players from the opposing faction. You can't join the battleground as a group."
-    LANG_BG_GROUP_MIXED_LEVELS          = 729,              // "Your group has players from different battleground brakets. You can't join as group."
-    LANG_BG_GROUP_MEMBER_ALREADY_IN_QUEUE = 730,            // "Someone in your party is already in this battleground queue. (S)he must leave it before joining as group."
-    LANG_BG_GROUP_MEMBER_DESERTER       = 731,              // "Someone in your party is Deserter. You can't join as group."
-    LANG_BG_GROUP_MEMBER_NO_FREE_QUEUE_SLOTS = 732,         // "Someone in your party is already in three battleground queues. You cannot join as group."
-
-    LANG_CANNOT_TELE_TO_BG              = 733,              // "You cannot teleport to a battleground or arena map."
-    LANG_CANNOT_SUMMON_TO_BG            = 734,              // "You cannot summon players to a battleground or arena map."
-    LANG_CANNOT_GO_TO_BG_GM             = 735,              // "You must be in GM mode to teleport to a player in a battleground."
-    LANG_CANNOT_GO_TO_BG_FROM_BG        = 736,              // "You cannot teleport to a battleground from another battleground. Please leave the current battleground first."
-    LANG_DEBUG_ARENA_ON                 = 737,
-    LANG_DEBUG_ARENA_OFF                = 738,
-    LANG_DEBUG_BG_ON                    = 739,
-    LANG_DEBUG_BG_OFF                   = 740,
-    LANG_DIST_ARENA_POINTS_START        = 741,
-    LANG_DIST_ARENA_POINTS_ONLINE_START = 742,
-    LANG_DIST_ARENA_POINTS_ONLINE_END   = 743,
-    LANG_DIST_ARENA_POINTS_TEAM_START   = 744,
-    LANG_DIST_ARENA_POINTS_TEAM_END     = 745,
-    LANG_DIST_ARENA_POINTS_END          = 746,
-    LANG_BG_AV_ALLY                     = 747,
-    LANG_BG_AV_HORDE                    = 748,
-    LANG_BG_AV_TOWER_TAKEN              = 749,
-    LANG_BG_AV_TOWER_ASSAULTED          = 750,
-    LANG_BG_AV_TOWER_DEFENDED           = 751,
-    LANG_BG_AV_GRAVE_TAKEN              = 752,
-    LANG_BG_AV_GRAVE_DEFENDED           = 753,
-    LANG_BG_AV_GRAVE_ASSAULTED          = 754,
-    LANG_BG_AV_MINE_TAKEN               = 755,
-    LANG_BG_AV_MINE_NORTH               = 756,
-    LANG_BG_AV_MINE_SOUTH               = 757,
-    LANG_BG_AV_NODE_GRAVE_STORM_AID     = 758,
-    LANG_BG_AV_NODE_TOWER_DUN_S         = 759,
-    LANG_BG_AV_NODE_TOWER_DUN_N         = 760,
-    LANG_BG_AV_NODE_GRAVE_STORMPIKE     = 761,
-    LANG_BG_AV_NODE_TOWER_ICEWING       = 762,
-    LANG_BG_AV_NODE_GRAVE_STONE         = 763,
-    LANG_BG_AV_NODE_TOWER_STONE         = 764,
-    LANG_BG_AV_NODE_GRAVE_SNOW          = 765,
-    LANG_BG_AV_NODE_TOWER_ICE           = 766,
-    LANG_BG_AV_NODE_GRAVE_ICE           = 767,
-    LANG_BG_AV_NODE_TOWER_POINT         = 768,
-    LANG_BG_AV_NODE_GRAVE_FROST         = 769,
-    LANG_BG_AV_NODE_TOWER_FROST_E       = 770,
-    LANG_BG_AV_NODE_TOWER_FROST_W       = 771,
-    LANG_BG_AV_NODE_GRAVE_FROST_HUT     = 772,
-    LANG_BG_AV_ONEMINTOSTART            = 773,
-    LANG_BG_AV_HALFMINTOSTART           = 774,
-    LANG_BG_AV_STARTED                  = 775,
-    LANG_BG_AV_A_NEAR_LOSE              = 776,
-    LANG_BG_AV_H_NEAR_LOSE              = 777,
-    LANG_BG_AV_H_CAPTAIN_DEAD           = 778,
-    LANG_BG_AV_A_CAPTAIN_DEAD           = 779,
-//                                      = 747, not used
-//                                      = 748, not used
-//                                      = 749, not used
-    LANG_BATTLEGROUND_PREMATURE_FINISH_WARNING = 750,       // "Not enough players. This game will close in %u mins."
-    LANG_BATTLEGROUND_PREMATURE_FINISH_WARNING_SECS = 751,  // "Not enough players. This game will close in %u seconds."
-    // Room for batleground/arena strings 752-799 not used
-
-    // in game strings
-    //                                  = 800, not used
-    LANG_NOT_ENOUGH_GOLD                = 801,
-    LANG_NOT_FREE_TRADE_SLOTS           = 802,
-    LANG_NOT_PARTNER_FREE_TRADE_SLOTS   = 803,
-    LANG_YOU_NOT_HAVE_PERMISSION        = 804,
-    LANG_UNKNOWN_LANGUAGE               = 805,
-    LANG_NOT_LEARNED_LANGUAGE           = 806,
-    LANG_NEED_CHARACTER_NAME            = 807,
-    LANG_PLAYER_NOT_EXIST_OR_OFFLINE    = 808,
-    LANG_ACCOUNT_FOR_PLAYER_NOT_FOUND   = 809,
-    LANG_ACHIEVEMENT_EARNED             = 810,
-    // Room for in-game strings           811-999 not used
-
-    // Level 4 (CLI only commands)
-    LANG_COMMAND_EXIT                   = 1000,
-    LANG_ACCOUNT_DELETED                = 1001,
-    LANG_ACCOUNT_NOT_DELETED_SQL_ERROR  = 1002,
-    LANG_ACCOUNT_NOT_DELETED            = 1003,
-    LANG_ACCOUNT_CREATED                = 1004,
-    LANG_ACCOUNT_TOO_LONG               = 1005,
-    LANG_ACCOUNT_ALREADY_EXIST          = 1006,
-    LANG_ACCOUNT_NOT_CREATED_SQL_ERROR  = 1007,
-    LANG_ACCOUNT_NOT_CREATED            = 1008,
-    LANG_CHARACTER_DELETED              = 1009,
-    LANG_ACCOUNT_LIST_HEADER            = 1010,
-    LANG_ACCOUNT_LIST_ERROR             = 1011,
-    // Room for more level 4              1012-1099 not used
-
-    // Level 3 (continue)
-    LANG_ACCOUNT_SETADDON               = 1100,
-    LANG_MOTD_NEW                       = 1101,
-    LANG_SENDMESSAGE                    = 1102,
-    LANG_EVENT_ENTRY_LIST_CONSOLE       = 1103,
-    LANG_CREATURE_ENTRY_LIST_CONSOLE    = 1104,
-    LANG_ITEM_LIST_CONSOLE              = 1105,
-    LANG_ITEMSET_LIST_CONSOLE           = 1106,
-    LANG_GO_ENTRY_LIST_CONSOLE          = 1107,
-    LANG_QUEST_LIST_CONSOLE             = 1108,
-    LANG_SKILL_LIST_CONSOLE             = 1109,
-    LANG_CREATURE_LIST_CONSOLE          = 1110,
-    LANG_GO_LIST_CONSOLE                = 1111,
-    LANG_FILE_OPEN_FAIL                 = 1112,
-    LANG_ACCOUNT_CHARACTER_LIST_FULL    = 1113,
-    LANG_DUMP_BROKEN                    = 1114,
-    LANG_INVALID_CHARACTER_NAME         = 1115,
-    LANG_INVALID_CHARACTER_GUID         = 1116,
-    LANG_CHARACTER_GUID_IN_USE          = 1117,
-    LANG_ITEMLIST_GUILD                 = 1118,
-    LANG_MUST_MALE_OR_FEMALE            = 1119,
-    LANG_YOU_CHANGE_GENDER              = 1120,
-    LANG_YOUR_GENDER_CHANGED            = 1121,
-    LANG_SKILL_VALUES                   = 1122,
-    // Room for more level 3              1123-1199 not used
-
     // FREE IDS                           1200-9999
 
     // Use for not-in-offcial-sources patches
     //                                    10000-10999
+    LANG_BG_AV_ALLY                     = 10747,
+    LANG_BG_AV_HORDE                    = 10748,
+    LANG_BG_AV_TOWER_TAKEN              = 10749,
+    LANG_BG_AV_TOWER_ASSAULTED          = 10750,
+    LANG_BG_AV_TOWER_DEFENDED           = 10751,
+    LANG_BG_AV_GRAVE_TAKEN              = 10752,
+    LANG_BG_AV_GRAVE_DEFENDED           = 10753,
+    LANG_BG_AV_GRAVE_ASSAULTED          = 10754,
+    LANG_BG_AV_MINE_TAKEN               = 10755,
+    LANG_BG_AV_MINE_NORTH               = 10756,
+    LANG_BG_AV_MINE_SOUTH               = 10757,
+
+    LANG_BG_AV_NODE_GRAVE_STORM_AID     = 10758,
+    LANG_BG_AV_NODE_TOWER_DUN_S         = 10759,
+    LANG_BG_AV_NODE_TOWER_DUN_N         = 10760,
+    LANG_BG_AV_NODE_GRAVE_STORMPIKE     = 10761,
+    LANG_BG_AV_NODE_TOWER_ICEWING       = 10762,
+    LANG_BG_AV_NODE_GRAVE_STONE         = 10763,
+    LANG_BG_AV_NODE_TOWER_STONE         = 10764,
+    LANG_BG_AV_NODE_GRAVE_SNOW          = 10765,
+    LANG_BG_AV_NODE_TOWER_ICE           = 10766,
+    LANG_BG_AV_NODE_GRAVE_ICE           = 10767,
+    LANG_BG_AV_NODE_TOWER_POINT         = 10768,
+    LANG_BG_AV_NODE_GRAVE_FROST         = 10769,
+    LANG_BG_AV_NODE_TOWER_FROST_E       = 10770,
+    LANG_BG_AV_NODE_TOWER_FROST_W       = 10771,
+    LANG_BG_AV_NODE_GRAVE_FROST_HUT     = 10772,
+
+    LANG_BG_AV_START_TWO_MINUTES        = 10773,
+    LANG_BG_AV_START_ONE_MINUTE         = 10774,
+    LANG_BG_AV_START_HALF_MINUTE        = 10775,
+    LANG_BG_AV_HAS_BEGUN                = 10776,
+    LANG_BG_AV_A_NEAR_LOSE              = 10777,
+    LANG_BG_AV_H_NEAR_LOSE              = 10778,
+    LANG_BG_AV_H_CAPTAIN_DEAD           = 10779,
+    LANG_BG_AV_A_CAPTAIN_DEAD           = 10780,
 
     // Use for custom patches             11000-11999
 
