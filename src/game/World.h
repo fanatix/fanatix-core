@@ -488,13 +488,12 @@ class World
         inline bool GetMvAnticheatKill()               {return m_MvAnticheatKill;}
         inline float GetMvAnticheatMaxXYT()            {return m_MvAnticheatMaxXYT;}
         inline uint16 GetMvAnticheatIgnoreAfterTeleport()   {return m_MvAnticheatIgnoreAfterTeleport;}
-        
+
         void ProcessCliCommands();
         void QueueCliCommand( CliCommandHolder::Print* zprintf, char const* input ) { cliCmdQueue.add(new CliCommandHolder(input, zprintf)); }
 
         void UpdateResultQueue();
         void InitResultQueue();
-
         void ForceGameEventUpdate();
 
         void UpdateRealmCharCount(uint32 accid);

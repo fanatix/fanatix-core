@@ -590,27 +590,16 @@ void Map::Update(const uint32 &t_diff)
                 {
                     markCell(cell_id);
                     CellPair pair(x,y);
-
-                    if (!MapManager::Instance ().HasUpdateAllMaps ())
-                    {
-                        Cell cell (pair);
-                        cell.data.Part.reserved = CENTER_DISTRICT;
-                        cell.SetNoCreate ();
-                        CellLock<NullGuard> cell_lock (cell, pair);
-                        cell_lock->Visit (cell_lock, grid_object_update, *this);
-                        cell_lock->Visit (cell_lock, world_object_update, *this);
-                    }
-                    else
-                    {
-                        AddCellForUpdate (pair);
-                    }
-                 }
-             }
-            if (MapManager::Instance ().HasUpdateAllMaps ())
-                MapManager::Instance ().UpdateAllMaps (t_diff);
-
-         }
-     }
+                    Cell cell(pair);
+                    cell.data.Part.reserved = CENTER_DISTRICT;
+                    cell.SetNoCreate();
+                    CellLock<NullGuard> cell_lock(cell, pair);
+                    cell_lock->Visit(cell_lock, grid_object_update,  *this);
+                    cell_lock->Visit(cell_lock, world_object_update, *this);
+                }
+            }
+        }
+    }
 
     // non-player active objects
     if(!m_activeNonPlayers.empty())
@@ -1930,33 +1919,6 @@ void Map::AddObjectToRemoveList(WorldObject *obj)
 
     i_objectsToRemove.insert(obj);
     //sLog.outDebug("Object (GUID: %u TypeId: %u ) added to removing list.",obj->GetGUIDLow(),obj->GetTypeId());
-}
-
-void Map::UpdateCells (uint32 diff)
-{
-  MaNGOS::ObjectUpdater updater (diff);
-  // for creature
-  TypeContainerVisitor<MaNGOS::ObjectUpdater, GridTypeMapContainer > grid_object_update (updater);
-  // for pets
-  TypeContainerVisitor<MaNGOS::ObjectUpdater, WorldTypeMapContainer > world_object_update (updater);
-
-  while(!update_cells.empty ())
- {
-   CellPair& cell_pair = update_cells.front ();
-
-   Cell cell (cell_pair);
-   cell.data.Part.reserved = CENTER_DISTRICT;
-   cell.SetNoCreate ();
-   CellLock<NullGuard> cell_lock (cell, cell_pair);
-   cell_lock->Visit (cell_lock, grid_object_update, *this);
-   cell_lock->Visit (cell_lock, world_object_update, *this);
-
-   update_cells.pop ();
- }
-
-  //ensure cells are unmarked ,note there is one call in ObjectAccessor
-  //it needs to be removed when the old method for updating is removed
-  this->resetMarkedCells ();
 }
 
 void Map::RemoveAllObjectsInRemoveList()
