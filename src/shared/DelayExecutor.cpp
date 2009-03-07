@@ -1,4 +1,3 @@
-
 #include <ace/Singleton.h>
 #include <ace/Thread_Mutex.h>
 
