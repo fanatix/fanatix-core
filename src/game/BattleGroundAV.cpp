@@ -45,7 +45,7 @@ BattleGroundAV::~BattleGroundAV()
 {
 }
 
-const uint16 BattleGroundAV::GetBonusHonor(uint8 kills) //TODO: move this function to Battleground.cpp - but this is another patch
+const uint32 BattleGroundAV::GetBonusHonor(uint8 kills) //TODO: move this function to Battleground.cpp - but this is another patch
 {
     return MaNGOS::Honor::hk_honor_at_level(GetMaxLevel(), kills);
 }
@@ -85,7 +85,7 @@ void BattleGroundAV::HandleKillUnit(Creature *unit, Player *killer)
             //spawn destroyed aura
             for(uint8 i=0; i<=9; i++)
                 SpawnBGObject(BG_AV_OBJECT_BURN_BUILDING_ALLIANCE+i,RESPAWN_IMMEDIATELY);
-            YellToAll(m_DB_Creature[AV_CREATURE_HERALD],GetMangosString(LANG_BG_AV_A_CAPTAIN_DEAD),LANG_UNIVERSAL);
+            SendYellToAll(LANG_BG_AV_H_CAPTAIN_DEAD, LANG_UNIVERSAL, m_DB_Creature[AV_CREATURE_HERALD]);
             break;
         case AV_CREATURE_ENTRY_H_CAPTAIN:
             RewardReputationToTeam(730,BG_AV_REP_CAPTAIN,ALLIANCE);
@@ -94,7 +94,7 @@ void BattleGroundAV::HandleKillUnit(Creature *unit, Player *killer)
             //spawn destroyed aura
             for(uint8 i=0; i<=9; i++)
                 SpawnBGObject(BG_AV_OBJECT_BURN_BUILDING_HORDE+i,RESPAWN_IMMEDIATELY);
-            YellToAll(m_DB_Creature[AV_CREATURE_HERALD],GetMangosString(LANG_BG_AV_H_CAPTAIN_DEAD),LANG_UNIVERSAL);
+            SendYellToAll(LANG_BG_AV_H_CAPTAIN_DEAD, LANG_UNIVERSAL, m_DB_Creature[AV_CREATURE_HERALD]);
             break;
         case AV_CREATURE_ENTRY_NM_N_B:
         case AV_CREATURE_ENTRY_NM_A_B:
@@ -240,7 +240,7 @@ void BattleGroundAV::UpdateScore(uint16 team, int16 points )
         }
         else if(!m_IsInformedNearVictory[teamindex] && m_Team_Scores[teamindex] < SEND_MSG_NEAR_LOSE)
         {
-            SendMessageToAll(GetMangosString((teamindex==BG_TEAM_HORDE)?LANG_BG_AV_H_NEAR_LOSE:LANG_BG_AV_A_NEAR_LOSE),CHAT_MSG_BG_SYSTEM_NEUTRAL);
+            SendMessageToAll((teamindex==BG_TEAM_HORDE)?LANG_BG_AV_H_NEAR_LOSE:LANG_BG_AV_A_NEAR_LOSE, CHAT_MSG_BG_SYSTEM_NEUTRAL);
             PlaySoundToAll(AV_SOUND_NEAR_VICTORY);
             m_IsInformedNearVictory[teamindex] = true;
         }
@@ -370,7 +370,7 @@ void BattleGroundAV::OnCreatureCreate(Creature* creature)
     creature->SetLevel(level);
 }
 
-Creature* BattleGroundAV::AddAVCreature(uint16 cinfoid, uint16 type )
+Creature* BattleGroundAV::AddAVCreature(uint32 cinfoid, uint32 type )
 {
     uint32 level;
     Creature* creature = NULL;
@@ -407,10 +407,12 @@ void BattleGroundAV::Update(uint32 diff)
 
     for(uint8 i=0; i<=1;i++)//0=alliance, 1=horde
     {
-        if(i==1 && (!m_DB_Creature[AV_CREATURE_H_CAPTAIN] || !m_DB_Creature[AV_CREATURE_H_CAPTAIN]->isAlive()))
+        //if the creature isn't spawned or dead, we don't need to reduce the
+        //timer or look if we should buff
+        if((!m_DB_Creature[AV_CREATURE_A_CAPTAIN+i] || !m_DB_Creature[AV_CREATURE_A_CAPTAIN+i]->isAlive()))
             continue;
-        if(i==0 && (!m_DB_Creature[AV_CREATURE_A_CAPTAIN] || !m_DB_Creature[AV_CREATURE_A_CAPTAIN]->isAlive()))
-            continue;
+
+        //captain is alive, reduce the timer
         if(m_CaptainBuffTimer[i] > diff)
             m_CaptainBuffTimer[i] -= diff;
         else
@@ -418,12 +420,16 @@ void BattleGroundAV::Update(uint32 diff)
             if(i==0)
             {
                 CastSpellOnTeam(AV_BUFF_A_CAPTAIN,ALLIANCE);
-                YellToAll(m_DB_Creature[AV_CREATURE_A_CAPTAIN],LANG_BG_AV_A_CAPTAIN_BUFF,LANG_COMMON);
+                //TODO implement it as script - the timer is autonom from this
+                //bg - and all players on map should also be accessible throug
+                //script
+                //SendYellToAll(LANG_BG_AV_A_CAPTAIN_BUFF, LANG_COMMON, m_DB_Creature[AV_CREATURE_A_CAPTAIN]);
             }
             else if(i==1)
             {
                 CastSpellOnTeam(AV_BUFF_H_CAPTAIN,HORDE);
-                YellToAll(m_DB_Creature[AV_CREATURE_H_CAPTAIN],LANG_BG_AV_H_CAPTAIN_BUFF,LANG_ORCISH);
+                // see todo above
+                //SendYellToAll(LANG_BG_AV_H_CAPTAIN_BUFF, LANG_ORCISH, m_DB_Creature[AV_CREATURE_H_CAPTAIN]);
             }
             m_CaptainBuffTimer[i] = 120000 + urand(0,4)* 60000; //as far as i could see, the buff is randomly so i make 2minutes (thats the duration of the buff itself) + 0-4minutes TODO get the right times
         }
@@ -462,7 +468,7 @@ void BattleGroundAV::Update(uint32 diff)
 
 void BattleGroundAV::StartingEventCloseDoors()
 {
-    uint16 i;
+    uint32 i;
     sLog.outDebug("Alterac Valley: entering state STATUS_WAIT_JOIN ...");
     // Initial Nodes
     for(i = 0; i < BG_AV_OBJECT_MAX; i++)
@@ -490,7 +496,7 @@ void BattleGroundAV::StartingEventOpenDoors()
     DoorOpen(BG_AV_OBJECT_DOOR_H);
     DoorOpen(BG_AV_OBJECT_DOOR_A);
 
-    uint16 i;
+    uint32 i;
     for(i = BG_AV_OBJECT_FLAG_A_FIRSTAID_STATION; i <= BG_AV_OBJECT_FLAG_A_STONEHEART_GRAVE ; i++){
         SpawnBGObject(BG_AV_OBJECT_AURA_A_FIRSTAID_STATION+3*i,RESPAWN_IMMEDIATELY);
         SpawnBGObject(i, RESPAWN_IMMEDIATELY);
@@ -711,13 +717,7 @@ void BattleGroundAV::EventPlayerDestroyedPoint(BG_AV_Nodes node)
         }
     }
     //send a nice message to all :)
-    char buf[256];
-    if(IsTower(node))
-        sprintf(buf, GetMangosString(LANG_BG_AV_TOWER_TAKEN) , GetNodeName(node),( owner == ALLIANCE ) ? GetMangosString(LANG_BG_AV_ALLY) : GetMangosString(LANG_BG_AV_HORDE)  );
-    else
-        sprintf(buf, GetMangosString(LANG_BG_AV_GRAVE_TAKEN) , GetNodeName(node),( owner == ALLIANCE ) ? GetMangosString(LANG_BG_AV_ALLY) :GetMangosString(LANG_BG_AV_HORDE)  );
-
-    YellToAll(m_DB_Creature[AV_CREATURE_HERALD],buf,LANG_UNIVERSAL);
+    SendYell2ToAll((IsTower(node))?LANG_BG_AV_TOWER_TAKEN:LANG_BG_AV_GRAVE_TAKEN, LANG_UNIVERSAL, m_DB_Creature[AV_CREATURE_HERALD], GetNodeName(node), ( owner == ALLIANCE ) ? LANG_BG_AV_ALLY:LANG_BG_AV_HORDE);
 }
 
 void BattleGroundAV::ChangeMineOwner(uint8 mine, uint32 team)
@@ -755,16 +755,15 @@ void BattleGroundAV::ChangeMineOwner(uint8 mine, uint32 team)
     {
         PlaySoundToAll((team==ALLIANCE)?AV_SOUND_ALLIANCE_GOOD:AV_SOUND_HORDE_GOOD);
         m_Mine_Reclaim_Timer[mine]=AV_MINE_RECLAIM_TIMER;
-        char buf[256];
-        sprintf(buf, GetMangosString(LANG_BG_AV_MINE_TAKEN), GetMangosString(( mine == AV_NORTH_MINE ) ? LANG_BG_AV_MINE_NORTH : LANG_BG_AV_MINE_SOUTH), ( team == ALLIANCE ) ?  GetMangosString(LANG_BG_AV_ALLY) : GetMangosString(LANG_BG_AV_HORDE));
-        YellToAll(m_DB_Creature[AV_CREATURE_HERALD],buf,LANG_UNIVERSAL);
+        SendYell2ToAll(LANG_BG_AV_MINE_TAKEN , LANG_UNIVERSAL, m_DB_Creature[AV_CREATURE_HERALD], (mine==AV_NORTH_MINE)?LANG_BG_AV_MINE_NORTH:LANG_BG_AV_MINE_SOUTH, (team == ALLIANCE ) ? LANG_BG_AV_ALLY:LANG_BG_AV_HORDE);
     }
     else
     {
         if(mine==AV_SOUTH_MINE) //i think this gets called all the time
         {
-            Creature* creature = m_DB_Creature[AV_CREATURE_SNIFFLE];
-            YellToAll(creature,LANG_BG_AV_S_MINE_BOSS_CLAIMS,LANG_UNIVERSAL);
+            //TODO this string must go to db - but i think this is a
+            //script-issue something like onspawn()
+            //SendYellToAll(LANG_BG_AV_S_MINE_BOSS_CLAIMS, LANG_UNIVERSAL, m_DB_Creature[AV_CREATURE_SNIFFLE]);
         }
     }
 }
@@ -805,7 +804,7 @@ void BattleGroundAV::PopulateNode(BG_AV_Nodes node)
             sLog.outError("AV: couldn't spawn spiritguide at node %i",node);
 
     }
-    for(uint8 i=0; i<4; i++)
+    for(uint32 i=0; i<4; i++)
     {
         Creature* cr = AddAVCreature(creatureid,c_place+i);
     }
@@ -973,9 +972,7 @@ void BattleGroundAV::EventPlayerDefendsPoint(Player* player, uint32 object)
                 SpawnBGObject(*itr,RESPAWN_IMMEDIATELY);
     }
     //send a nice message to all :)
-    char buf[256];
-    sprintf(buf, GetMangosString(( IsTower(node) ) ? LANG_BG_AV_TOWER_DEFENDED : LANG_BG_AV_GRAVE_DEFENDED), GetNodeName(node),( team == ALLIANCE ) ?  GetMangosString(LANG_BG_AV_ALLY) : GetMangosString(LANG_BG_AV_HORDE));
-    YellToAll(m_DB_Creature[AV_CREATURE_HERALD],buf,LANG_UNIVERSAL);
+    SendYell2ToAll(( IsTower(node) ) ? LANG_BG_AV_TOWER_DEFENDED : LANG_BG_AV_GRAVE_DEFENDED, LANG_UNIVERSAL, m_DB_Creature[AV_CREATURE_HERALD], GetNodeName(node), ( team == ALLIANCE ) ? LANG_BG_AV_ALLY:LANG_BG_AV_HORDE);
     //update the statistic for the defending player
     UpdatePlayerScore(player, ( IsTower(node) ) ? SCORE_TOWERS_DEFENDED : SCORE_GRAVEYARDS_DEFENDED, 1);
     if(IsTower(node))
@@ -1081,9 +1078,7 @@ void BattleGroundAV::EventPlayerAssaultsPoint(Player* player, uint32 object)
     UpdateNodeWorldState(node);
 
     //send a nice message to all :)
-    char buf[256];
-    sprintf(buf, ( IsTower(node) ) ? GetMangosString(LANG_BG_AV_TOWER_ASSAULTED) : GetMangosString(LANG_BG_AV_GRAVE_ASSAULTED), GetNodeName(node),  ( team == ALLIANCE ) ?  GetMangosString(LANG_BG_AV_ALLY) : GetMangosString(LANG_BG_AV_HORDE ));
-    YellToAll(m_DB_Creature[AV_CREATURE_HERALD],buf,LANG_UNIVERSAL);
+    SendYell2ToAll(( IsTower(node) ) ? LANG_BG_AV_TOWER_ASSAULTED: LANG_BG_AV_GRAVE_ASSAULTED, LANG_UNIVERSAL, m_DB_Creature[AV_CREATURE_HERALD], GetNodeName(node), ( team == ALLIANCE ) ? LANG_BG_AV_ALLY:LANG_BG_AV_HORDE);
     //update the statistic for the assaulting player
     UpdatePlayerScore(player, ( IsTower(node) ) ? SCORE_TOWERS_ASSAULTED : SCORE_GRAVEYARDS_ASSAULTED, 1);
     PlaySoundToAll((team==ALLIANCE)?AV_SOUND_ALLIANCE_ASSAULTS:AV_SOUND_HORDE_ASSAULTS);
@@ -1321,31 +1316,26 @@ bool BattleGroundAV::SetupBattleGround()
     return true;
 }
 
-const char* BattleGroundAV::GetNodeName(BG_AV_Nodes node)
+uint32 BattleGroundAV::GetNodeName(BG_AV_Nodes node)
 {
     switch (node)
     {
-        case BG_AV_NODES_FIRSTAID_STATION:  return GetMangosString(LANG_BG_AV_NODE_GRAVE_STORM_AID);
-        case BG_AV_NODES_DUNBALDAR_SOUTH:   return GetMangosString(LANG_BG_AV_NODE_TOWER_DUN_S);
-        case BG_AV_NODES_DUNBALDAR_NORTH:   return GetMangosString(LANG_BG_AV_NODE_TOWER_DUN_N);
-        case BG_AV_NODES_STORMPIKE_GRAVE:   return GetMangosString(LANG_BG_AV_NODE_GRAVE_STORMPIKE);
-        case BG_AV_NODES_ICEWING_BUNKER:    return GetMangosString(LANG_BG_AV_NODE_TOWER_ICEWING);
-        case BG_AV_NODES_STONEHEART_GRAVE:  return GetMangosString(LANG_BG_AV_NODE_GRAVE_STONE);
-        case BG_AV_NODES_STONEHEART_BUNKER: return GetMangosString(LANG_BG_AV_NODE_TOWER_STONE);
-        case BG_AV_NODES_SNOWFALL_GRAVE:    return GetMangosString(LANG_BG_AV_NODE_GRAVE_SNOW);
-        case BG_AV_NODES_ICEBLOOD_TOWER:    return GetMangosString(LANG_BG_AV_NODE_TOWER_ICE);
-        case BG_AV_NODES_ICEBLOOD_GRAVE:    return GetMangosString(LANG_BG_AV_NODE_GRAVE_ICE);
-        case BG_AV_NODES_TOWER_POINT:       return GetMangosString(LANG_BG_AV_NODE_TOWER_POINT);
-        case BG_AV_NODES_FROSTWOLF_GRAVE:   return GetMangosString(LANG_BG_AV_NODE_GRAVE_FROST);
-        case BG_AV_NODES_FROSTWOLF_ETOWER:  return GetMangosString(LANG_BG_AV_NODE_TOWER_FROST_E);
-        case BG_AV_NODES_FROSTWOLF_WTOWER:  return GetMangosString(LANG_BG_AV_NODE_TOWER_FROST_W);
-        case BG_AV_NODES_FROSTWOLF_HUT:     return GetMangosString(LANG_BG_AV_NODE_GRAVE_FROST_HUT);
-        default:
-            {
-            sLog.outError("tried to get name for node %u%",node);
-            return "Unknown";
-            break;
-            }
+        case BG_AV_NODES_FIRSTAID_STATION:  return LANG_BG_AV_NODE_GRAVE_STORM_AID;
+        case BG_AV_NODES_DUNBALDAR_SOUTH:   return LANG_BG_AV_NODE_TOWER_DUN_S;
+        case BG_AV_NODES_DUNBALDAR_NORTH:   return LANG_BG_AV_NODE_TOWER_DUN_N;
+        case BG_AV_NODES_STORMPIKE_GRAVE:   return LANG_BG_AV_NODE_GRAVE_STORMPIKE;
+        case BG_AV_NODES_ICEWING_BUNKER:    return LANG_BG_AV_NODE_TOWER_ICEWING;
+        case BG_AV_NODES_STONEHEART_GRAVE:  return LANG_BG_AV_NODE_GRAVE_STONE;
+        case BG_AV_NODES_STONEHEART_BUNKER: return LANG_BG_AV_NODE_TOWER_STONE;
+        case BG_AV_NODES_SNOWFALL_GRAVE:    return LANG_BG_AV_NODE_GRAVE_SNOW;
+        case BG_AV_NODES_ICEBLOOD_TOWER:    return LANG_BG_AV_NODE_TOWER_ICE;
+        case BG_AV_NODES_ICEBLOOD_GRAVE:    return LANG_BG_AV_NODE_GRAVE_ICE;
+        case BG_AV_NODES_TOWER_POINT:       return LANG_BG_AV_NODE_TOWER_POINT;
+        case BG_AV_NODES_FROSTWOLF_GRAVE:   return LANG_BG_AV_NODE_GRAVE_FROST;
+        case BG_AV_NODES_FROSTWOLF_ETOWER:  return LANG_BG_AV_NODE_TOWER_FROST_E;
+        case BG_AV_NODES_FROSTWOLF_WTOWER:  return LANG_BG_AV_NODE_TOWER_FROST_W;
+        case BG_AV_NODES_FROSTWOLF_HUT:     return LANG_BG_AV_NODE_GRAVE_FROST_HUT;
+        default: return 0; break;
     }
 }
 
@@ -1439,7 +1429,7 @@ void BattleGroundAV::Reset()
     InitNode(BG_AV_NODES_SNOWFALL_GRAVE,AV_NEUTRAL_TEAM,false); //give snowfall neutral owner
 
     m_Mine_Timer=AV_MINE_TICK_TIMER;
-    for(uint16 i = 0; i < AV_CPLACE_MAX; i++)
+    for(uint32 i = 0; i < AV_CPLACE_MAX; i++)
         if(m_BgCreatures[i])
             DelCreature(i);
 
