@@ -186,6 +186,7 @@ scripts/zone/coilfang_resevoir/serpent_shrine/boss_morogrim_tidewalker.cpp \
 scripts/zone/coilfang_resevoir/serpent_shrine/mob_underbog_colossus.cpp \
 scripts/zone/coilfang_resevoir/serpent_shrine/def_serpent_shrine.h \
 scripts/zone/coilfang_resevoir/serpent_shrine/instance_serpent_shrine.cpp \
+scripts/coilfang_resevoir/serpent_shrine/boss_lurker_below.cpp \
 scripts/zone/coilfang_resevoir/slave_pens/boss_rokmar.cpp \
 scripts/zone/coilfang_resevoir/steam_vault/boss_hydromancer_thespia.cpp \
 scripts/zone/coilfang_resevoir/steam_vault/boss_mekgineer_steamrigger.cpp \

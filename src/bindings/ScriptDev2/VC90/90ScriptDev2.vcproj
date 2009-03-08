@@ -1962,6 +1962,10 @@
 							>
 						</File>
 						<File
+							RelativePath="..\scripts\zone\coilfang_resevoir\serpent_shrine\boss_lurker_below.cpp"
+							>
+						</File>
+						<File
 							RelativePath="..\scripts\zone\coilfang_resevoir\serpent_shrine\boss_morogrim_tidewalker.cpp"
 							>
 						</File>

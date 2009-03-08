@@ -9,7 +9,8 @@
 #
 # Normal rules
 #
-*.ncb
-*.suo
+ScriptDev2__Win32_Release
+*.user
+*.obj
 
 

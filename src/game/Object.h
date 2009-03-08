@@ -300,7 +300,10 @@ class MANGOS_DLL_SPEC Object
 
         virtual bool hasQuest(uint32 /* quest_id */) const { return false; }
         virtual bool hasInvolvedQuest(uint32 /* quest_id */) const { return false; }
-    protected:
+
+        // FG: some hacky helpers
+        void ForceValuesUpdateAtIndex(uint32);
+     protected:
 
         Object ( );
 

@@ -304,6 +304,8 @@ bool Group::AddMember(const uint64 &guid, const char* name)
 
 uint32 Group::RemoveMember(const uint64 &guid, const uint8 &method)
 {
+    BroadcastGroupUpdate();
+
     // remove member and change leader (if need) only if strong more 2 members _before_ member remove
     if(GetMembersCount() > (isBGGroup() ? 1 : 2))           // in BG group case allow 1 members group
     {
@@ -1536,4 +1538,20 @@ void Group::_homebindIfInstance(Player *player)
         if(!playerBind || !playerBind->perm)
             player->m_InstanceValid = false;
     }
+}
+//Hacky
+void Group::BroadcastGroupUpdate(void)
+{
+ // FG: HACK: force flags update on group leave - for values update hack
+ // -- not very efficient but safe
+ for(member_citerator citr = m_memberSlots.begin(); citr != m_memberSlots.end(); ++citr)
+ {
+	 Player *pp = objmgr.GetPlayer(citr->guid);
+	 if(pp && pp->IsInWorld())
+	 {
+		 pp->ForceValuesUpdateAtIndex(UNIT_FIELD_BYTES_2);
+		 pp->ForceValuesUpdateAtIndex(UNIT_FIELD_FACTIONTEMPLATE);
+		 DEBUG_LOG("-- Forced group value update for '%s'", pp->GetName());
+	 }
+ }
 }
