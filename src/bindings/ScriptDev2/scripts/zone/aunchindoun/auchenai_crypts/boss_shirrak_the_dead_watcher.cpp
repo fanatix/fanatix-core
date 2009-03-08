@@ -1,5 +1,4 @@
-<div class='codetop'>CODE</div><div class='codemain' style='height:200px;white-
-spacere;overflow:auto'> /* Copyright © 2006 - 2008 ScriptDev2 
+/* Copyright © 2006 - 2008 ScriptDev2 
 <https://scriptdev2.svn.sourceforge.net/> * This program is free software; you 
 can redistribute it and/or modify * it under the terms of the GNU General Public 
 License as published by * the Free Software Foundation; either version 2 of the 
@@ -182,7 +181,7 @@ void AddSC_boss_shirrak_the_dead_watcher()
 Script *newscript;
 newscript = new Script;
 newscript->Name="boss_shirrak_the_dead_watcher";
-newscript->GetAI = GetAI_boss_shirrak_the_dead_watcherAI;
+newscript->GetAI = &GetAI_boss_shirrak_the_dead_watcherAI;
 newscript->RegisterSelf();
 }
 
@@ -196,6 +195,6 @@ void AddSC_mob_focusfire()
 Script *newscript;
 newscript = new Script;
 newscript->Name="mob_focusfire";
-newscript->GetAI = GetAI_mob_focusfireAI;
+newscript->GetAI = &GetAI_mob_focusfireAI;
 newscript->RegisterSelf();
 }

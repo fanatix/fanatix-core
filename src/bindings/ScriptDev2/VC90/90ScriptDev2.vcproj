@@ -2014,6 +2014,10 @@
 						Name="Underbog"
 						>
 						<File
+							RelativePath="..\scripts\zone\coilfang_resevoir\underbog\boss_ghazan.cpp"
+							>
+						</File>
+						<File
 							RelativePath="..\scripts\zone\coilfang_resevoir\underbog\boss_hungarfen.cpp"
 							>
 						</File>

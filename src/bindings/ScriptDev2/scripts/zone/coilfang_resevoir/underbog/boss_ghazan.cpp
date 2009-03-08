@@ -15,14 +15,14 @@
  */
 
 /* ScriptData
-SDName: Boss_Ghazan
+SDName: Boss_Ghaz'an
 SD%Complete: 100
 SDComment:
 SDCategory: Coilfang Resevoir, Underbog
 EndScriptData */
 
-#include "../../../creature/simple_ai.h"
 #include "precompiled.h"
+#include "../../../creature/simple_ai.h"
 
 /*
 --== Ghaz'an ==--
@@ -74,6 +74,6 @@ void AddSC_boss_ghazan()
     Script *newscript;
     newscript = new Script;
     newscript->Name="boss_ghazan";
-    newscript->GetAI = GetAI_boss_ghazan;
-    m_scripts[nrscripts++] = newscript;
+    newscript->GetAI = &GetAI_boss_ghazan;
+    newscript->RegisterSelf();
 }
