@@ -80,6 +80,7 @@ extern void AddSC_npc_wyrmresttempel_taxi();
 extern void AddSC_teleguy();
 extern void AddSC_npc_paymaster();
 extern void AddSC_npc_sickness();
+extern void AddSC_paradox();
 
 // -- Examples --
 extern void AddSC_example_creature();
@@ -254,6 +255,7 @@ extern void AddSC_boss_leotheras_the_blind();
 extern void AddSC_boss_morogrim_tidewalker();
 extern void AddSC_instance_serpentshrine_cavern();
 extern void AddSC_mob_underbog_colossus();
+extern void AddSC_boss_the_lurker_below();
 
 //--Slave Pens
 
@@ -1516,6 +1518,7 @@ void ScriptsInit()
     AddSC_teleguy();
 	AddSC_npc_paymaster();
 	AddSC_npc_sickness();
+    AddSC_paradox();
 
     // -- Examples --
     AddSC_example_creature();
@@ -1690,6 +1693,7 @@ void ScriptsInit()
     AddSC_boss_morogrim_tidewalker();
     AddSC_instance_serpentshrine_cavern();
     AddSC_mob_underbog_colossus();
+    AddSC_boss_the_lurker_below();
 
 
     //--Slave Pens
