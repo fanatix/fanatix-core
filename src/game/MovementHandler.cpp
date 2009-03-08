@@ -21,15 +21,16 @@
 #include "WorldSession.h"
 #include "Opcodes.h"
 #include "Log.h"
-#include "World.h"
 #include "Corpse.h"
 #include "Player.h"
+#include "Vehicle.h"
 #include "MapManager.h"
 #include "Transports.h"
 #include "BattleGround.h"
 #include "WaypointMovementGenerator.h"
 #include "InstanceSaveMgr.h"
 #include "ObjectMgr.h"
+#include "World.h"
  
 //#define __ANTI_DEBUG__
  
