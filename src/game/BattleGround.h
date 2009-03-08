@@ -89,7 +89,7 @@ enum BattleGroundTimeIntervals
     INVITATION_REMIND_TIME          = 60000,                // ms
     INVITE_ACCEPT_WAIT_TIME         = 80000,                // ms
     TIME_TO_AUTOREMOVE              = 120000,               // ms
-    MAX_OFFLINE_TIME                = 300000,               // ms
+    MAX_OFFLINE_TIME                = 300,                  // secs
     RESPAWN_ONE_DAY                 = 86400,                // secs
     RESPAWN_IMMEDIATELY             = 0,                    // secs
     BUFF_RESPAWN_TIME               = 180,                  // secs
@@ -125,7 +125,7 @@ enum BattleGroundStatus
 
 struct BattleGroundPlayer
 {
-    uint32  LastOnlineTime;                                 // for tracking and removing offline players from queue after 5 minutes
+    time_t  OfflineRemoveTime;                              // for tracking and removing offline players from queue after 5 minutes
     uint32  Team;                                           // Player's team
 };
 
@@ -398,7 +398,10 @@ class BattleGround
         virtual void FillInitialWorldStates(WorldPacket& /*data*/) {}
         void SendPacketToTeam(uint32 TeamID, WorldPacket *packet, Player *sender = NULL, bool self = true);
         void SendPacketToAll(WorldPacket *packet);
-        void YellToAll(Creature* creature, const char* text, uint32 language);
+
+        template<class Do>
+        void BroadcastWorker(Do& _do);
+
         void PlaySoundToTeam(uint32 SoundID, uint32 TeamID);
         void PlaySoundToAll(uint32 SoundID);
         void CastSpellOnTeam(uint32 SpellID, uint32 TeamID);
@@ -412,9 +415,13 @@ class BattleGround
         void EndBattleGround(uint32 winner);
         void BlockMovement(Player *plr);
 
-        void SendMessageToAll(char const* text, uint8 type);
-        void SendMessageToAll(int32 entry, uint8 type);
-        void PSendMessageToAll(int32 entry, uint8 type, ...  );
+        void SendMessageToAll(int32 entry, ChatMsg type, Player const* source = NULL);
+        void SendYellToAll(int32 entry, uint32 language, Creature const* source);
+        void PSendMessageToAll(int32 entry, ChatMsg type, Player const* source, ...  );
+
+        // specialized version with 2 string id args
+        void SendMessage2ToAll(int32 entry, ChatMsg type, Player const* source, int32 strId1 = 0, int32 strId2 = 0);
+        void SendYell2ToAll(int32 entry, uint32 language, Creature const* source, int32 arg1, int32 arg2);
 
         /* Raid Group */
         Group *GetBgRaid(uint32 TeamID) const { return TeamID == ALLIANCE ? m_BgRaids[BG_TEAM_ALLIANCE] : m_BgRaids[BG_TEAM_HORDE]; }
@@ -435,21 +442,24 @@ class BattleGround
 
         // used for rated arena battles
         void SetArenaTeamIdForTeam(uint32 Team, uint32 ArenaTeamId) { m_ArenaTeamIds[GetTeamIndexByTeamId(Team)] = ArenaTeamId; }
-        uint32 GetArenaTeamIdForTeam(uint32 Team) const { return m_ArenaTeamIds[GetTeamIndexByTeamId(Team)]; }
+        uint32 GetArenaTeamIdForTeam(uint32 Team) const             { return m_ArenaTeamIds[GetTeamIndexByTeamId(Team)]; }
         void SetArenaTeamRatingChangeForTeam(uint32 Team, int32 RatingChange) { m_ArenaTeamRatingChanges[GetTeamIndexByTeamId(Team)] = RatingChange; }
-        int32 GetArenaTeamRatingChangeForTeam(uint32 Team) const { return m_ArenaTeamRatingChanges[GetTeamIndexByTeamId(Team)]; }
+        int32 GetArenaTeamRatingChangeForTeam(uint32 Team) const    { return m_ArenaTeamRatingChanges[GetTeamIndexByTeamId(Team)]; }
+        void CheckArenaWinConditions();
 
         /* Triggers handle */
         // must be implemented in BG subclass
         virtual void HandleAreaTrigger(Player* /*Source*/, uint32 /*Trigger*/) {}
         // must be implemented in BG subclass if need AND call base class generic code
         virtual void HandleKillPlayer(Player *player, Player *killer);
-        virtual void HandleKillUnit(Creature* /*unit*/, Player* /*killer*/);
+        virtual void HandleKillUnit(Creature* /*unit*/, Player* /*killer*/) { return; };
 
         /* Battleground events */
         virtual void EventPlayerDroppedFlag(Player* /*player*/) {}
         virtual void EventPlayerClickedOnFlag(Player* /*player*/, GameObject* /*target_obj*/) {}
         virtual void EventPlayerCapturedFlag(Player* /*player*/) {}
+        void EventPlayerLoggedIn(Player* player, uint64 plr_guid);
+        void EventPlayerLoggedOut(Player* player);
 
         /* Death related */
         virtual WorldSafeLocsEntry const* GetClosestGraveYard(Player* player);
@@ -483,20 +493,19 @@ class BattleGround
 
         void DoorOpen(uint32 type);
         void DoorClose(uint32 type);
-        const char *GetMangosString(int32 entry);
 
         virtual bool HandlePlayerUnderMap(Player * /*plr*/) { return false; }
 
         // since arenas can be AvA or Hvh, we have to get the "temporary" team of a player
         uint32 GetPlayerTeam(uint64 guid);
         bool IsPlayerInBattleGround(uint64 guid);
-        void PlayerRelogin(Player* plr);
 
         void SetDeleteThis() {m_SetDeleteThis = true;}
 
     protected:
         //this method is called, when BG cannot spawn its own spirit guide, or something is wrong, It correctly ends BattleGround
         void EndNow();
+        void PlayerAddedToBGCheckIfBGIsRunning(Player* plr);
 
         /* Scorekeeping */
                                                             // Player scores
@@ -541,6 +550,7 @@ class BattleGround
 
         /* Player lists */
         std::vector<uint64> m_ResurrectQueue;               // Player GUID
+        std::deque<uint64> m_OfflineQueue;                  // Player GUID
         std::map<uint64, uint8> m_RemovedPlayers;           // uint8 is remove type (0 - bgqueue, 1 - bg, 2 - resurrect queue)
 
         /* Invited counters are useful for player invitation to BG - do not allow, if BG is started to one faction to have 2 more players than another faction */
