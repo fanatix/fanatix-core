@@ -73,7 +73,7 @@ typedef MaNGOS::SingleThreaded<GridRWLock>::Lock NullGuard;
 // Map file format defines
 //******************************************
 #define MAP_MAGIC             'SPAM'
-#define MAP_VERSION_MAGIC     '3.1v'
+#define MAP_VERSION_MAGIC     '4.1v'
 #define MAP_AREA_MAGIC        'AERA'
 #define MAP_HEIGTH_MAGIC      'TGHM'
 #define MAP_LIQUID_MAGIC      'QILM'
@@ -103,8 +103,8 @@ struct map_areaHeader{
 struct map_heightHeader{
     uint32 fourcc;
     uint32 flags;
-    uint16 int_store_mode;
     float  gridHeight;
+    float  gridMaxHeight;
 };
 
 #define MAP_LIQUID_NO_TYPE    0x0001
@@ -154,8 +154,8 @@ class GridMap
     uint16  m_gridArea;
     uint16 *m_area_map;
     // Height level data
-    uint16  m_height_step;
     float   m_gridHeight;
+    float   m_gridIntHeightMultiplier;
     union{
         float  *m_V9;
         uint16 *m_uint16_V9;

@@ -19,7 +19,6 @@
 #include "MapManager.h"
 #include "Player.h"
 #include "GridNotifiers.h"
-#include "WorldSession.h"
 #include "Log.h"
 #include "GridStates.h"
 #include "CellImpl.h"
@@ -1154,18 +1153,13 @@ bool  GridMap::loadHeihgtData(FILE *in, uint32 offset, uint32 size)
     m_gridHeight = header.gridHeight;
     if (!(header.flags&MAP_HEIGHT_NO_HIGHT))
     {
-        if (header.flags&(MAP_HEIGHT_AS_INT16|MAP_HEIGHT_AS_INT8) && header.int_store_mode == 0)
-         {
-            sLog.outError("Error wrong map height multiplier\n");
-            return false;
-        }
         if ((header.flags&MAP_HEIGHT_AS_INT16))
-        {
+         {
             m_uint16_V9 = new uint16 [129*129];
             m_uint16_V8 = new uint16 [128*128];
             fread(m_uint16_V9, sizeof(uint16), 129*129, in);
             fread(m_uint16_V8, sizeof(uint16), 128*128, in);
-            m_height_step = header.int_store_mode;
+            m_gridIntHeightMultiplier = (header.gridMaxHeight - header.gridHeight) / 65535;
             m_flags|=GRID_MAP_HEIGHT_AS_INT16;
         }
         else if ((header.flags&MAP_HEIGHT_AS_INT8))
@@ -1174,7 +1168,7 @@ bool  GridMap::loadHeihgtData(FILE *in, uint32 offset, uint32 size)
             m_uint8_V8 = new uint8 [128*128];
             fread(m_uint8_V9, sizeof(uint8), 129*129, in);
             fread(m_uint8_V8, sizeof(uint8), 128*128, in);
-            m_height_step = header.int_store_mode;
+            m_gridIntHeightMultiplier = (header.gridMaxHeight - header.gridHeight) / 255;
             m_flags|=GRID_MAP_HEIGHT_AS_INT8;
          }
          else
@@ -1291,7 +1285,7 @@ float  GridMap::getHeightFromUint8(float x, float y)
         }
     }
     // Calculate height
-    return (float)((a * x) + (b * y) + c)/m_height_step + m_gridHeight;
+    return (float)((a * x) + (b * y) + c)*m_gridIntHeightMultiplier + m_gridHeight;
 }
 
 float  GridMap::getHeightFromUint16(float x, float y)
@@ -1357,7 +1351,7 @@ float  GridMap::getHeightFromUint16(float x, float y)
         }
     }
     // Calculate height
-    return (float)((a * x) + (b * y) + c)/m_height_step + m_gridHeight;
+    return (float)((a * x) + (b * y) + c)*m_gridIntHeightMultiplier + m_gridHeight;
 }
 
 float  GridMap::getHeightFromFloat(float x, float y)
