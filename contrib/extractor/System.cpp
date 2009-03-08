@@ -39,6 +39,10 @@ enum Extract
 };
 int extract = EXTRACT_MAP | EXTRACT_DBC;
 
+bool  CONF_allow_height_limit = true;
+float CONF_use_minHeight = -230.0f;
+bool  CONF_allow_float_to_int = true;
+
 static char* const langs[] = {"enGB", "enUS", "deDE", "esES", "frFR", "koKR", "zhCN", "zhTW", "enCN", "enTW", "esMX", "ruRU" };
 #define LANG_COUNT 12
 
@@ -74,7 +78,6 @@ void HandleArgs(int argc, char * arg[])
     {
         // i - input path
         // o - output path
-        // r - resolution, array of (r * r) heights will be created
         // e - extract only MAP(1)/DBC(2) - standard both(3)
         if(arg[c][0] != '-')
             Usage(arg[0]);
@@ -165,7 +168,7 @@ void ReadLiquidTypeTableDBC()
 
 // Map file format data
 #define MAP_MAGIC             'SPAM'
-#define MAP_VERSION_MAGIC     '3.1v'
+#define MAP_VERSION_MAGIC     '4.1v'
 #define MAP_AREA_MAGIC        'AERA'
 #define MAP_HEIGTH_MAGIC      'TGHM'
 #define MAP_LIQUID_MAGIC      'QILM'
@@ -194,9 +197,9 @@ struct map_areaHeader{
 
 struct map_heightHeader{
     uint32 fourcc;
-    uint16 flags;
-    uint16 int_store_mode;
+    uint32 flags;
     float  gridHeight;
+    float  gridMaxHeight;
 };
 
 #define MAP_LIQUID_TYPE_NO_WATER    0x00
@@ -211,7 +214,6 @@ struct map_heightHeader{
 
 #define MAP_LIQUID_NO_TYPE    0x0001
 #define MAP_LIQUID_NO_HIGHT   0x0002
-#define MAP_LIQUID_AS_INT16   0x0004
 
 struct map_liquidHeader{
     uint32 fourcc;
@@ -224,51 +226,34 @@ struct map_liquidHeader{
     float  liquidLevel;
 };
 
-uint16 selectInt8StepStore(float maxDiff)
+float selectUInt8StepStore(float maxDiff)
 {
-    // Select store mode from max delta
-         if (maxDiff< 1) return 256;
-    else if (maxDiff< 2) return 256/2;
-    else if (maxDiff< 4) return 256/4;
-    else if (maxDiff< 8) return 256/8;
-    else if (maxDiff<16) return 256/16;
-    else if (maxDiff<32) return 256/32;
-    return 0;
+    return 255 / maxDiff;
 }
 
-uint16 selectInt16StepStore(float maxDiff)
+float selectUInt16StepStore(float maxDiff)
 {
-         if (maxDiff<   2) return 65536/2;
-    else if (maxDiff<   4) return 65536/4;
-    else if (maxDiff<   8) return 65536/8;
-    else if (maxDiff<  16) return 65536/16;
-    else if (maxDiff<  32) return 65536/32;
-    else if (maxDiff<  64) return 65536/64;
-    else if (maxDiff< 128) return 65536/128;
-    else if (maxDiff< 256) return 65536/256;
-    else if (maxDiff< 512) return 65536/512;
-    else if (maxDiff<1024) return 65536/1024;
-    else if (maxDiff<2048) return 65536/2048;
-    return 0;
+    return 65535 / maxDiff;
 }
 // Temporary data store
 int16 area_flags[ADT_CELLS_PER_GRID][ADT_CELLS_PER_GRID];
 
 float V8[ADT_GRID_SIZE][ADT_GRID_SIZE];
 float V9[ADT_GRID_SIZE+1][ADT_GRID_SIZE+1];
-uint16 int_V8[ADT_GRID_SIZE][ADT_GRID_SIZE];
-uint16 int_V9[ADT_GRID_SIZE+1][ADT_GRID_SIZE+1];
-uint8 byte_V8[ADT_GRID_SIZE][ADT_GRID_SIZE];
-uint8 byte_V9[ADT_GRID_SIZE+1][ADT_GRID_SIZE+1];
+uint16 uint16_V8[ADT_GRID_SIZE][ADT_GRID_SIZE];
+uint16 uint16_V9[ADT_GRID_SIZE+1][ADT_GRID_SIZE+1];
+uint8  uint8_V8[ADT_GRID_SIZE][ADT_GRID_SIZE];
+uint8  uint8_V9[ADT_GRID_SIZE+1][ADT_GRID_SIZE+1];
 
-int8  liquid_type[ADT_CELLS_PER_GRID][ADT_CELLS_PER_GRID];
+uint8 liquid_type[ADT_CELLS_PER_GRID][ADT_CELLS_PER_GRID];
 bool  liquid_show[ADT_GRID_SIZE][ADT_GRID_SIZE];
 float liquid_height[ADT_GRID_SIZE+1][ADT_GRID_SIZE+1];
+
 
 #define SIZE_EL 128
 uint16 m_data[64*SIZE_EL][64*SIZE_EL];
 
-bool ConvertADT(char *filename, char *filename2)
+bool ConvertADT(char *filename, char *filename2, int cell_y, int cell_x)
 {
     ADT_file adt;
 
@@ -439,78 +424,76 @@ bool ConvertADT(char *filename, char *filename2)
             if (minHeight > h) minHeight = h;
         }
     }
+
+    // Check for allow limit minimum height (not store height in deep ochean - allow save some memory)
+    if (CONF_allow_height_limit && minHeight < CONF_use_minHeight)
+    {
+        for (int y=0; y<ADT_GRID_SIZE; y++)
+            for(int x=0;x<ADT_GRID_SIZE;x++)
+                if (V8[y][x] < CONF_use_minHeight)
+                    V8[y][x] = CONF_use_minHeight;
+        for (int y=0; y<=ADT_GRID_SIZE; y++)
+            for(int x=0;x<=ADT_GRID_SIZE;x++)
+                if (V9[y][x] < CONF_use_minHeight)
+                    V9[y][x] = CONF_use_minHeight;
+        if (minHeight < CONF_use_minHeight)
+            minHeight = CONF_use_minHeight;
+        if (maxHeight < CONF_use_minHeight)
+            maxHeight = CONF_use_minHeight;
+    }
+
     map.heightMapOffset = map.areaMapOffset + map.areaMapSize;
     map.heightMapSize = sizeof(map_heightHeader);
 
     map_heightHeader heightHeader;
     heightHeader.fourcc = MAP_HEIGTH_MAGIC;
     heightHeader.flags = 0;
-    heightHeader.gridHeight = minHeight;
-    heightHeader.int_store_mode = 0;
+    heightHeader.gridHeight    = minHeight;
+    heightHeader.gridMaxHeight = maxHeight;
 
-    if (maxHeight!=minHeight)
-        map.heightMapSize+=sizeof(V9) + sizeof(V8);
-    else
+    if (maxHeight==minHeight)
         heightHeader.flags |=MAP_HEIGHT_NO_HIGHT;
 
     // Try store as packed in uint16 or uint8 values
-    if (!(heightHeader.flags&MAP_HEIGHT_NO_HIGHT))
+    if (CONF_allow_float_to_int && !(heightHeader.flags&MAP_HEIGHT_NO_HIGHT))
     {
-        // Calculate max height diff
-        float maxDiff = 0;
-        for (int y=0; y<ADT_GRID_SIZE; y++)
-            for(int x=0;x<ADT_GRID_SIZE;x++)
-            {
-                float diff = V8[y][x] - minHeight;
-                if(maxDiff<diff) maxDiff = diff;
-            }
-        for (int y=0; y<=ADT_GRID_SIZE; y++)
+        // Try Store as uint values
+        float diff = maxHeight - minHeight;
+        float step;
+        if (diff < 2)                // As uint8 if maxDiff < 2 (max accuracy = 2/256)
         {
-            for(int x=0;x<=ADT_GRID_SIZE;x++)
-            {
-                float diff = V9[y][x] - minHeight;
-                if(maxDiff<diff) maxDiff = diff;
-            }
+            heightHeader.flags|=MAP_HEIGHT_AS_INT8;
+            step = selectUInt8StepStore(diff);
+        }
+        else if (diff<2048)          // As uint16 if maxDiff < 1024 (max accuracy = 1024/65536)
+        {
+            heightHeader.flags|=MAP_HEIGHT_AS_INT16;
+            step = selectUInt16StepStore(diff);
         }
 
-        // Store as uint values if diff < 1024 (use float if accuracy > 1024/65536 (1/64))
-        if (maxDiff<1024)
+        // Pack it to int values if need
+        if (heightHeader.flags&MAP_HEIGHT_AS_INT8)
         {
-            // As uint8 if maxDiff < 2 (max accuracy = 2/256)
-            if (maxDiff<2)
-            {
-                heightHeader.flags|=MAP_HEIGHT_AS_INT8;
-                heightHeader.int_store_mode = selectInt8StepStore(maxDiff);
-            }
-            // As uint16 if maxDiff < 1024 (max accuracy = 1024/65536)
-            else
-            {
-                heightHeader.flags|=MAP_HEIGHT_AS_INT16;
-                heightHeader.int_store_mode = selectInt16StepStore(maxDiff);
-            }
-            // Pack it
-            float step = heightHeader.int_store_mode;
-            if (heightHeader.flags&MAP_HEIGHT_AS_INT8)
-            {
-                for (int y=0; y<ADT_GRID_SIZE; y++)
-                    for(int x=0;x<ADT_GRID_SIZE;x++)
-                        byte_V8[y][x] = uint8((V8[y][x] - minHeight) * step + 0.5f);
-                for (int y=0; y<=ADT_GRID_SIZE; y++)
-                    for(int x=0;x<=ADT_GRID_SIZE;x++)
-                        byte_V8[y][x] = uint8((V9[y][x] - minHeight) * step + 0.5f);
-                map.heightMapSize = sizeof(map_heightHeader) + sizeof(byte_V9) + sizeof(byte_V8);
-            }
-            else if (heightHeader.flags&MAP_HEIGHT_AS_INT16)
-            {
-                for (int y=0; y<ADT_GRID_SIZE; y++)
-                    for(int x=0;x<ADT_GRID_SIZE;x++)
-                        int_V8[y][x] = uint16((V8[y][x] - minHeight) * step + 0.5f);
-                for (int y=0; y<=ADT_GRID_SIZE; y++)
-                    for(int x=0;x<=ADT_GRID_SIZE;x++)
-                        int_V9[y][x] = uint16((V9[y][x] - minHeight) * step + 0.5f);
-                map.heightMapSize = sizeof(map_heightHeader) + sizeof(int_V9) + sizeof(int_V8);
-            }
+            for (int y=0; y<ADT_GRID_SIZE; y++)
+                for(int x=0;x<ADT_GRID_SIZE;x++)
+                    uint8_V8[y][x] = uint8((V8[y][x] - minHeight) * step + 0.5f);
+            for (int y=0; y<=ADT_GRID_SIZE; y++)
+                for(int x=0;x<=ADT_GRID_SIZE;x++)
+                    uint8_V9[y][x] = uint8((V9[y][x] - minHeight) * step + 0.5f);
+            map.heightMapSize+= sizeof(uint8_V9) + sizeof(uint8_V8);
         }
+        else if (heightHeader.flags&MAP_HEIGHT_AS_INT16)
+        {
+            for (int y=0; y<ADT_GRID_SIZE; y++)
+                for(int x=0;x<ADT_GRID_SIZE;x++)
+                    uint16_V8[y][x] = uint16((V8[y][x] - minHeight) * step + 0.5f);
+            for (int y=0; y<=ADT_GRID_SIZE; y++)
+                for(int x=0;x<=ADT_GRID_SIZE;x++)
+                    uint16_V9[y][x] = uint16((V9[y][x] - minHeight) * step + 0.5f);
+            map.heightMapSize+= sizeof(uint16_V9) + sizeof(uint16_V8);
+        }
+        else
+            map.heightMapSize+= sizeof(V9) + sizeof(V8);
     }
 
     // Get liquid map for grid (in WOTLK used MH2O chunk)
@@ -709,8 +692,12 @@ bool ConvertADT(char *filename, char *filename2)
         else
             liquidHeader.flags|=MAP_LIQUID_NO_HIGHT;
     }
+/*
+    for (int i = 0;i<SIZE_EL;i++)
+        for (int j = 0;j<SIZE_EL;j++)
+            m_data[cell_y*SIZE_EL+i][cell_x*SIZE_EL+j] = V8[i][j]-use_minHeight;
+return true;/**/
 
-//return true;
     // Ok all data prepared - store it
     FILE *output=fopen(filename2, "wb");
     if(!output)
@@ -730,13 +717,13 @@ bool ConvertADT(char *filename, char *filename2)
     {
         if (heightHeader.flags&MAP_HEIGHT_AS_INT16)
         {
-            fwrite(int_V9, sizeof(int_V9), 1, output);
-            fwrite(int_V8, sizeof(int_V8), 1, output);
+            fwrite(uint16_V9, sizeof(uint16_V9), 1, output);
+            fwrite(uint16_V8, sizeof(uint16_V8), 1, output);
         }
         else if (heightHeader.flags&MAP_HEIGHT_AS_INT8)
         {
-            fwrite(byte_V9, sizeof(byte_V9), 1, output);
-            fwrite(byte_V8, sizeof(byte_V8), 1, output);
+            fwrite(uint8_V9, sizeof(uint8_V9), 1, output);
+            fwrite(uint8_V8, sizeof(uint8_V8), 1, output);
         }
         else
         {
@@ -782,7 +769,7 @@ void ExtractMapsFromMpq()
     printf("Convert map files\n");
     for(uint32 z = 0; z < map_count; ++z)
     {
-//        if (strcmp(map_ids[z].name, "Azeroth"))
+//        if (map_ids[z].id!=1)
 //            continue;
         printf("Extract %s (%d/%d)                  \n", map_ids[z].name, z, map_count);
         // Loadup map grid data
@@ -802,19 +789,16 @@ void ExtractMapsFromMpq()
                     continue;
                 sprintf(mpq_filename, "World\\Maps\\%s\\%s_%u_%u.adt", map_ids[z].name, map_ids[z].name, x, y);
                 sprintf(output_filename, "%s/maps/%03u%02u%02u.map", output_path, map_ids[z].id, y, x);
-                ConvertADT(mpq_filename, output_filename);
-
-//                for (int i = 0;i<SIZE_EL;i++)
-//                    for (int j = 0;j<SIZE_EL;j++)
-//                        m_data[y*SIZE_EL+i][x*SIZE_EL+j] = V8[i][j];
+                ConvertADT(mpq_filename, output_filename, y, x);
             }
             // draw progress bar
             printf("Processing........................%d%%\r", (100 * (y+1)) / WDT_MAP_SIZE);
         }
     }
-//    FILE *out=fopen("c:\\res.raw","wb");
-//    fwrite(m_data, sizeof(m_data), 1, out);
-//    fclose(out);
+/*
+    FILE *out=fopen("c:\\res.raw","wb");
+    fwrite(m_data, sizeof(m_data), 1, out);
+    fclose(out);/**/
     delete [] areas;
     delete [] map_ids;
 }
