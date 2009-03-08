@@ -71,7 +71,7 @@ scripts/zone/alterac_mountains/alterac_mountains.cpp \
 scripts/zone/arathi_highlands/arathi_highlands.cpp \
 scripts/zone/ashenvale_forest/ashenvale.cpp \
 scripts/zone/aunchindoun/auchenai_crypts/boss_exarch_maladaar.cpp \
-scripts/zone/aunchindoun/auchenai_crypts/boss_shirrak_the_dead_watcher.cpp
+scripts/zone/aunchindoun/auchenai_crypts/boss_shirrak_the_dead_watcher.cpp \
 scripts/zone/aunchindoun/mana_tombs/boss_nexusprince_shaffar.cpp \
 scripts/zone/aunchindoun/mana_tombs/boss_pandemonius.cpp \
 scripts/zone/aunchindoun/sethekk_halls/boss_darkweaver_syth.cpp \
@@ -153,12 +153,12 @@ scripts/zone/blasted_lands/boss_kruul.cpp \
 scripts/zone/bloodmyst_isle/bloodmyst_isle.cpp \
 scripts/zone/borean_tundra/borean_tundra.cpp \
 scripts/zone/burning_steppes/burning_steppes.cpp \
-scripts/zone/caverns_of_time/culling_of_stratholmeboss_epoch.cpp \
-scripts/zone/caverns_of_time/culling_of_stratholmeboss_mal_ganis.cpp \
-scripts/zone/caverns_of_time/culling_of_stratholmeboss_meathook.cpp \
-scripts/zone/caverns_of_time/culling_of_stratholmeboss_salramm.cpp \
-scripts/zone/caverns_of_time/culling_of_stratholmedef_culling_of_stratholme.h \
-scripts/zone/caverns_of_time/instance_culling_of_stratholme.cpp \
+scripts/zone/caverns_of_time/culling_of_stratholme/boss_epoch.cpp \
+scripts/zone/caverns_of_time/culling_of_stratholme/boss_mal_ganis.cpp \
+scripts/zone/caverns_of_time/culling_of_stratholme/boss_meathook.cpp \
+scripts/zone/caverns_of_time/culling_of_stratholme/boss_salramm.cpp \
+scripts/zone/caverns_of_time/culling_of_stratholme/def_culling_of_stratholme.h \
+scripts/zone/caverns_of_time/culling_of_stratholme/instance_culling_of_stratholme.cpp \
 scripts/zone/caverns_of_time/dark_portal/boss_aeonus.cpp \
 scripts/zone/caverns_of_time/dark_portal/boss_chrono_lord_deja.cpp \
 scripts/zone/caverns_of_time/dark_portal/boss_temporus.cpp \
@@ -166,6 +166,7 @@ scripts/zone/caverns_of_time/dark_portal/dark_portal.cpp \
 scripts/zone/caverns_of_time/dark_portal/def_dark_portal.h \
 scripts/zone/caverns_of_time/dark_portal/instance_dark_portal.cpp \
 scripts/zone/caverns_of_time/hyjal/boss_archimonde.cpp \
+scripts/zone/caverns_of_time/hyjal/boss_rage_winterchill.cpp \
 scripts/zone/caverns_of_time/hyjal/def_hyjal.h \
 scripts/zone/caverns_of_time/hyjal/hyjal.cpp \
 scripts/zone/caverns_of_time/hyjal/hyjalAI.cpp \
@@ -424,7 +425,6 @@ scripts/zone/temple_of_ahnqiraj/mob_anubisath_sentinel.cpp \
 scripts/zone/terokkar_forest/terokkar_forest.cpp \
 scripts/zone/thunder_bluff/thunder_bluff.cpp \
 scripts/zone/tirisfal_glades/tirisfal_glades.cpp \
-scripts/zone/uldaman/boss_ironaya.cpp \
 scripts/zone/uldaman/boss_ironaya.cpp \
 scripts/zone/uldaman/uldaman.cpp \
 scripts/zone/ulduar/halls_of_lightning/boss_bjarngrim.cpp \
