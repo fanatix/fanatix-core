@@ -29,12 +29,9 @@
 #include "Player.h"
 #include "Unit.h"
 #include "Spell.h"
-#include "GameObject.h"
-#include "SpellAuras.h"
 #include "DynamicObject.h"
 #include "Group.h"
 #include "UpdateData.h"
-#include "MapManager.h"
 #include "ObjectAccessor.h"
 #include "Policies/SingletonImp.h"
 #include "Totem.h"
@@ -2566,15 +2563,7 @@ void Aura::HandleAuraHover(bool apply, bool Real)
 
 void Aura::HandleWaterBreathing(bool apply, bool Real)
 {
-    if(!apply && !m_target->HasAuraType(SPELL_AURA_WATER_BREATHING))
-    {
-        // update for enable timer in case not moving target
-        if(m_target->GetTypeId()==TYPEID_PLAYER && m_target->IsInWorld())
-        {
-            ((Player*)m_target)->UpdateUnderwaterState(m_target->GetMap(),m_target->GetPositionX(),m_target->GetPositionY(),m_target->GetPositionZ());
-            ((Player*)m_target)->HandleDrowning();
-        }
-    }
+    // Implemented in Player::getMaxTimer
 }
 
 void Aura::HandleAuraModShapeshift(bool apply, bool Real)
