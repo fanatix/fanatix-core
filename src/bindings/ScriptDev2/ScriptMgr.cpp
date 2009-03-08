@@ -224,6 +224,13 @@ extern void AddSC_boss_archimonde();
 extern void AddSC_instance_mount_hyjal();
 extern void AddSC_boss_rage_winterchill();
 
+//--Culling of Stratholme
+extern void AddSC_boss_epoch();
+extern void AddSC_boss_mal_ganis();
+extern void AddSC_boss_meathook();
+extern void AddSC_boss_salramm();
+extern void AddSC_instance_culling_of_stratholme();
+
 //--Old Hillsbrad
 extern void AddSC_boss_captain_skarloc();
 extern void AddSC_boss_epoch_hunter();
@@ -1651,7 +1658,14 @@ void ScriptsInit()
     AddSC_hyjal();
     AddSC_boss_archimonde();
     AddSC_instance_mount_hyjal();
-	AddSC_boss_rage_winterchill();
+    AddSC_boss_rage_winterchill();
+	  
+    //--Culling of Stratholme
+    AddSC_boss_epoch();
+    AddSC_boss_mal_ganis();
+    AddSC_boss_meathook();
+    AddSC_boss_salramm();
+    AddSC_instance_culling_of_stratholme();
 
     //--Old Hillsbrad
     AddSC_boss_captain_skarloc();
@@ -1675,11 +1689,13 @@ void ScriptsInit()
     AddSC_boss_leotheras_the_blind();
     AddSC_boss_morogrim_tidewalker();
     AddSC_instance_serpentshrine_cavern();
-	AddSC_mob_underbog_colossus();
+    AddSC_mob_underbog_colossus();
+
 
     //--Slave Pens
+
     //--Steam Vault
-	AddSC_mob_underbog_colossus();
+    AddSC_mob_underbog_colossus();
     AddSC_boss_hydromancer_thespia();
     AddSC_boss_mekgineer_steamrigger();
     AddSC_boss_warlord_kalithresh();
