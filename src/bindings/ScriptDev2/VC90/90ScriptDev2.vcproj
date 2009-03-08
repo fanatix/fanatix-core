@@ -1425,6 +1425,10 @@
 							RelativePath="..\scripts\zone\aunchindoun\auchenai_crypts\boss_exarch_maladaar.cpp"
 							>
 						</File>
+						<File
+							RelativePath="..\scripts\zone\aunchindoun\auchenai_crypts\boss_shirrak_the_dead_watcher.cpp"
+							>
+						</File>
 					</Filter>
 					<Filter
 						Name="Mana Tombs"
@@ -1977,6 +1981,10 @@
 					<Filter
 						Name="Slave Pens"
 						>
+						<File
+							RelativePath="..\scripts\zone\coilfang_resevoir\slave_pens\boss_rokmar.cpp"
+							>
+						</File>
 					</Filter>
 					<Filter
 						Name="Steam Vault"

@@ -119,6 +119,8 @@ extern void AddSC_ashenvale();
 //Aunchindoun
 //--Auchenai Crypts
 extern void AddSC_boss_exarch_maladaar();
+extern void AddSC_boss_shirrak_the_dead_watcher();
+
 //--Mana Tombs
 extern void AddSC_boss_nexusprince_shaffar();
 extern void AddSC_boss_pandemonius();
@@ -1546,6 +1548,7 @@ void ScriptsInit()
     //Aunchindoun
     //--Auchenai Crypts
     AddSC_boss_exarch_maladaar();
+    AddSC_boss_shirrak_the_dead_watcher();
 
     //--Mana Tombs
     AddSC_boss_nexusprince_shaffar();
