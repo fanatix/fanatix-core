@@ -70,10 +70,10 @@ enum PlayerUnderwaterState
 {
     UNDERWATER_NONE                     = 0x00,
     UNDERWATER_INWATER                  = 0x01,             // terrain type is water and player is afflicted by it
-    UNDERWATER_WATER_TRIGGER            = 0x02,             // m_breathTimer has been initialized
-    UNDERWATER_WATER_BREATHB            = 0x04,             // breathbar has been send to client
-    UNDERWATER_WATER_BREATHB_RETRACTING = 0x10,             // breathbar is currently refilling - the player is above water level
-    UNDERWATER_INLAVA                   = 0x80              // terrain type is lava and player is afflicted by it
+    UNDERWATER_INLAVA                   = 0x02,             // terrain type is lava and player is afflicted by it
+    UNDERWARER_INDARKWATER              = 0x04,             // terrain type is dark water and player is afflicted by it
+
+    UNDERWATER_EXIST_TIMERS             = 0x08
 };
 
 enum PlayerSpellState
@@ -501,6 +501,8 @@ enum MirrorTimerType
     BREATH_TIMER       = 1,
     FIRE_TIMER         = 2
 };
+#define MAX_TIMERS      3
+#define DISABLED_MIRROR_TIMER   -1
 
 // 2^n values
 enum PlayerExtraFlags
@@ -2033,8 +2035,6 @@ class MANGOS_DLL_SPEC Player : public Unit
         bool IsFlying() const { return HasUnitMovementFlag(MOVEMENTFLAG_FLYING); }
         bool IsAllowUseFlyMountsHere() const;
 
-        void HandleDrowning();
-
         void SetClientControl(Unit* target, uint8 allowMove);
 
         void EnterVehicle(Vehicle *vehicle);
@@ -2249,12 +2249,14 @@ class MANGOS_DLL_SPEC Player : public Unit
         /*********************************************************/
         /***              ENVIRONMENTAL SYSTEM                 ***/
         /*********************************************************/
-        void HandleLava();
         void HandleSobering();
         void StartMirrorTimer(MirrorTimerType Type, uint32 MaxValue);
         void ModifyMirrorTimer(MirrorTimerType Type, uint32 MaxValue, uint32 CurrentValue, uint32 Regen);
         void StopMirrorTimer(MirrorTimerType Type);
-        uint8 m_isunderwater;
+        void HandleDrowning(uint32 time_diff);
+        int32 getMaxTimer(MirrorTimerType timer);
+        int32 m_MirrorTimer[MAX_TIMERS];
+        uint8 m_MirrorTimerFlags;
         bool m_isInWater;
 
         /*********************************************************/
@@ -2338,7 +2340,6 @@ class MANGOS_DLL_SPEC Player : public Unit
         bool   m_DailyQuestChanged;
         time_t m_lastDailyQuestTime;
 
-        uint32 m_breathTimer;
         uint32 m_drunkTimer;
         uint16 m_drunk;
         uint32 m_weaponChangeTimer;
