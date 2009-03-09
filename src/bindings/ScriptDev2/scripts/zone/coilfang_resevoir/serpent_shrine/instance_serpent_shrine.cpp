@@ -1,4 +1,4 @@
-/* Copyright (C) 2006 - 2009 ScriptDev2 <https://scriptdev2.svn.sourceforge.net/>
+/* Copyright (C) 2006 - 2008 ScriptDev2 <https://scriptdev2.svn.sourceforge.net/>
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -37,7 +37,7 @@ EndScriptData */
 
 struct MANGOS_DLL_DECL instance_serpentshrine_cavern : public ScriptedInstance
 {
-    instance_serpentshrine_cavern(Map *map) : ScriptedInstance(map) {Initialize();};
+    instance_serpentshrine_cavern(Map *Map) : ScriptedInstance(Map) {Initialize();};
 
     uint64 Sharkkis;
     uint64 Tidalvess;
@@ -50,8 +50,27 @@ struct MANGOS_DLL_DECL instance_serpentshrine_cavern : public ScriptedInstance
 
     bool Encounters[ENCOUNTERS];
 
+	uint64 MinDmg;
+	uint64 MaxDmg;
+
+	uint32 Spellbinder_Count;
+	uint64 LeotherasTheBlind;
+	uint64 LeotherasEventStarter;
+	uint64 GreyheartSpellbinder[3];
+
     void Initialize()
     {
+		MinDmg = 0;
+		MaxDmg = 0;
+
+		LeotherasTheBlind = 0;
+		LeotherasEventStarter = 0;
+
+		Spellbinder_Count = 0;
+		GreyheartSpellbinder[0] = 0;
+		GreyheartSpellbinder[1] = 0;
+		GreyheartSpellbinder[2] = 0;
+
         Sharkkis = 0;
         Tidalvess = 0;
         Caribdis = 0;
@@ -78,13 +97,42 @@ struct MANGOS_DLL_DECL instance_serpentshrine_cavern : public ScriptedInstance
 
     void OnCreatureCreate(Creature *creature, uint32 creature_entry)
     {
-        switch(creature->GetEntry())
+        switch(creature_entry)
         {
-            case 21212: LadyVashj = creature->GetGUID(); break;
-            case 21214: Karathress = creature->GetGUID(); break;
-            case 21966: Sharkkis = creature->GetGUID(); break;
-            case 21965: Tidalvess = creature->GetGUID(); break;
-            case 21964: Caribdis = creature->GetGUID(); break;
+
+            case 21212:
+			{
+				const CreatureInfo *cinfo = creature->GetCreatureInfo();
+				MinDmg = cinfo->mindmg;
+				MaxDmg = cinfo->maxdmg;
+				LadyVashj = creature->GetGUID();
+				break;
+			}
+
+            case 21214:
+                Karathress = creature->GetGUID();
+                break;
+
+            case 21966:
+                Sharkkis = creature->GetGUID();
+                break;
+
+            case 21965:
+                Tidalvess = creature->GetGUID();
+                break;
+
+            case 21964:
+                Caribdis = creature->GetGUID();
+                break;
+
+			case 21215:
+				LeotherasTheBlind = creature->GetGUID();
+				break;
+
+			case 21806:
+                GreyheartSpellbinder[Spellbinder_Count] = creature->GetGUID();
+				Spellbinder_Count++;
+				break;
         }
     }
 
@@ -92,12 +140,35 @@ struct MANGOS_DLL_DECL instance_serpentshrine_cavern : public ScriptedInstance
     {
         if(type == DATA_KARATHRESSEVENT_STARTER)
             KarathressEvent_Starter = data;
+		if(type == DATA_MinDmg)
+            MinDmg = data;
+		if(type == DATA_MaxDmg)
+            MaxDmg = data;
+		if(type == DATA_KARATHRESSEVENT_STARTER)
+			KarathressEvent_Starter = data;
+		if(type == DATA_LEOTHERAS_EVENT_STARTER)
+			LeotherasEventStarter = data;
     }
 
     uint64 GetData64(uint32 identifier)
     {
         switch(identifier)
         {
+			case DATA_SPELLBINDER_1:
+				return GreyheartSpellbinder[0];
+
+			case DATA_SPELLBINDER_2:
+				return GreyheartSpellbinder[1];
+
+			case DATA_SPELLBINDER_3:
+				return GreyheartSpellbinder[2];
+
+			case DATA_LEOTHERAS:
+				 return LeotherasTheBlind;
+
+			case DATA_LEOTHERAS_EVENT_STARTER:
+				 return LeotherasEventStarter;
+
             case DATA_SHARKKIS:
                 return Sharkkis;
             case DATA_TIDALVESS:
@@ -110,6 +181,11 @@ struct MANGOS_DLL_DECL instance_serpentshrine_cavern : public ScriptedInstance
                 return Karathress;
             case DATA_KARATHRESSEVENT_STARTER:
                 return KarathressEvent_Starter;
+
+			case DATA_MinDmg:
+				return MinDmg;
+			case DATA_MaxDmg:
+				return MaxDmg;
         }
         return 0;
     }
@@ -222,6 +298,6 @@ void AddSC_instance_serpentshrine_cavern()
     Script *newscript;
     newscript = new Script;
     newscript->Name = "instance_serpent_shrine";
-    newscript->GetInstanceData = &GetInstanceData_instance_serpentshrine_cavern;
+    newscript->GetInstanceData = GetInstanceData_instance_serpentshrine_cavern;
     newscript->RegisterSelf();
 }

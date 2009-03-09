@@ -1,18 +1,18 @@
-/* Copyright (C) 2006 - 2009 ScriptDev2 <https://scriptdev2.svn.sourceforge.net/>
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- */
+/* Copyright (C) 2006 - 2008 ScriptDev2 <https://scriptdev2.svn.sourceforge.net/>
+* This program is free software; you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License, or
+* (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* GNU General Public License for more details.
+*
+* You should have received a copy of the GNU General Public License
+* along with this program; if not, write to the Free Software
+* Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+*/
 
 /* ScriptData
 SDName: Boss_Morogrim_Tidewalker
@@ -24,39 +24,50 @@ EndScriptData */
 #include "precompiled.h"
 #include "def_serpent_shrine.h"
 
-#define SAY_AGGRO                   -1548030
-#define SAY_SUMMON1                 -1548031
-#define SAY_SUMMON2                 -1548032
-#define SAY_SUMMON_BUBL1            -1548033
-#define SAY_SUMMON_BUBL2            -1548034
-#define SAY_SLAY1                   -1548035
-#define SAY_SLAY2                   -1548036
-#define SAY_SLAY3                   -1548037
-#define SAY_DEATH                   -1548038
-#define EMOTE_WATERY_GRAVE          -1548039
-#define EMOTE_EARTHQUAKE            -1548040
-#define EMOTE_WATERY_GLOBULES       -1548041
-
-#define SPELL_TIDAL_WAVE            37730
-#define SPELL_WATERY_GRAVE          38049
-#define SPELL_EARTHQUAKE            37764
+#define SPELL_TIDAL_WAVE             37730
+#define SPELL_WATERY_GRAVE           38049
+#define SPELL_EARTHQUAKE             37764
 #define SPELL_WATERY_GRAVE_EXPLOSION 37852
 
-#define WATERY_GRAVE_X1             334.64
-#define WATERY_GRAVE_Y1             -728.89
-#define WATERY_GRAVE_Z1             -14.42
-#define WATERY_GRAVE_X2             365.51
-#define WATERY_GRAVE_Y2             -737.14
-#define WATERY_GRAVE_Z2             -14.44
-#define WATERY_GRAVE_X3             366.19
-#define WATERY_GRAVE_Y3             -709.59
-#define WATERY_GRAVE_Z3             -14.36
-#define WATERY_GRAVE_X4             372.93
-#define WATERY_GRAVE_Y4             -690.96
-#define WATERY_GRAVE_Z4             -14.44
+#define SAY_AGGRO                    "Flood of the deep, take you!"
+#define SAY_SUMMON1                  "By the Tides, kill them at once!"
+#define SAY_SUMMON2                  "Destroy them my subjects!"
+#define SAY_SLAY1                    "It is done!"
+#define SAY_SLAY2                    "Strugging only makes it worse."
+#define SAY_SLAY3                    "Only the strong survive."
+#define SAY_SUMMON_BUBL1             "There is nowhere to hide!"
+#define SAY_SUMMON_BUBL2             "Soon it will be finished!"
+#define SAY_DEATH                    "Great... currents of... Ageon."
 
-#define WATER_GLOBULE               21913
-#define TIDEWALKER_LURKER           21920
+#define SOUND_AGGRO                  11321
+#define SOUND_SUMMON1                11322
+#define SOUND_SUMMON2                11323
+#define SOUND_SLAY1                  11326
+#define SOUND_SLAY2                  11327
+#define SOUND_SLAY3                  11328
+#define SOUND_SUMMON_BUBL1           11324
+#define SOUND_SUMMON_BUBL2           11325
+#define SOUND_DEATH                  11329
+
+#define WATERY_GRAVE_X1              334.64
+#define WATERY_GRAVE_Y1              -728.89
+#define WATERY_GRAVE_Z1              -14.42
+#define WATERY_GRAVE_X2              365.51
+#define WATERY_GRAVE_Y2              -737.14
+#define WATERY_GRAVE_Z2              -14.44
+#define WATERY_GRAVE_X3              366.19
+#define WATERY_GRAVE_Y3              -709.59
+#define WATERY_GRAVE_Z3              -14.36
+#define WATERY_GRAVE_X4              372.93
+#define WATERY_GRAVE_Y4              -690.96
+#define WATERY_GRAVE_Z4              -14.44
+
+#define EMOTE_WATERY_GRAVE         "sends his enemies to their watery graves!"
+#define EMOTE_EARTHQUAKE           "The violent earthquake has alerted nearby murlocs!"
+#define EMOTE_WATERY_GLOBULES      "summons Watery Globules!"
+
+#define WATER_GLOBULE              21913
+#define TIDEWALKER_LURKER          21920
 
 //Morogrim Tidewalker AI
 struct MANGOS_DLL_DECL boss_morogrim_tidewalkerAI : public ScriptedAI
@@ -87,33 +98,46 @@ struct MANGOS_DLL_DECL boss_morogrim_tidewalkerAI : public ScriptedAI
         Earthquake = false;
         Phase2 = false;
 
-        if (pInstance)
+        if(pInstance)
             pInstance->SetData(DATA_MOROGRIMTIDEWALKEREVENT, NOT_STARTED);
     }
 
     void StartEvent()
     {
-        DoScriptText(SAY_AGGRO, m_creature);
+        DoPlaySoundToSet(m_creature, SOUND_AGGRO);
+        DoYell(SAY_AGGRO, LANG_UNIVERSAL, NULL);
 
-        if (pInstance)
-            pInstance->SetData(DATA_MOROGRIMTIDEWALKEREVENT, IN_PROGRESS);
+        if(pInstance)
+            pInstance->SetData(DATA_MOROGRIMTIDEWALKEREVENT, IN_PROGRESS); 
     }
 
     void KilledUnit(Unit *victim)
     {
         switch(rand()%3)
         {
-            case 0: DoScriptText(SAY_SLAY1, m_creature); break;
-            case 1: DoScriptText(SAY_SLAY2, m_creature); break;
-            case 2: DoScriptText(SAY_SLAY3, m_creature); break;
+            case 0:
+                DoPlaySoundToSet(m_creature, SOUND_SLAY1);
+                DoYell(SAY_SLAY1, LANG_UNIVERSAL, NULL);
+                break;
+
+            case 1:
+                DoPlaySoundToSet(m_creature, SOUND_SLAY2);
+                DoYell(SAY_SLAY2, LANG_UNIVERSAL, NULL);
+                break;
+
+            case 2:
+                DoPlaySoundToSet(m_creature, SOUND_SLAY3);
+                DoYell(SAY_SLAY3, LANG_UNIVERSAL, NULL);
+                break;
         }
     }
 
     void JustDied(Unit *victim)
     {
-        DoScriptText(SAY_DEATH, m_creature);
+        DoPlaySoundToSet(m_creature, SOUND_DEATH);
+        DoYell(SAY_DEATH, LANG_UNIVERSAL, NULL);
 
-        if (pInstance)
+        if(pInstance)
             pInstance->SetData(DATA_MOROGRIMTIDEWALKEREVENT, NOT_STARTED);
     }
 
@@ -126,25 +150,28 @@ struct MANGOS_DLL_DECL boss_morogrim_tidewalkerAI : public ScriptedAI
         switch(pos)
         {
             case 0:
-                x = WATERY_GRAVE_X1;
-                y = WATERY_GRAVE_Y1;
-                z = WATERY_GRAVE_Z1;
-                break;
+            x = WATERY_GRAVE_X1;
+            y = WATERY_GRAVE_Y1;
+            z = WATERY_GRAVE_Z1;
+            break;
+
             case 1:
-                x = WATERY_GRAVE_X2;
-                y = WATERY_GRAVE_Y2;
-                z = WATERY_GRAVE_Z2;
-                break;
+            x = WATERY_GRAVE_X2;
+            y = WATERY_GRAVE_Y2;
+            z = WATERY_GRAVE_Z2;
+            break;
+            
             case 2:
-                x = WATERY_GRAVE_X3;
-                y = WATERY_GRAVE_Y3;
-                z = WATERY_GRAVE_Z3;
-                break;
+            x = WATERY_GRAVE_X3;
+            y = WATERY_GRAVE_Y3;
+            z = WATERY_GRAVE_Z3;
+            break;
+
             case 3:
-                x = WATERY_GRAVE_X4;
-                y = WATERY_GRAVE_Y4;
-                z = WATERY_GRAVE_Z4;
-                break;
+            x = WATERY_GRAVE_X4;
+            y = WATERY_GRAVE_Y4;
+            z = WATERY_GRAVE_Z4;
+            break;
         }
 
         DoTeleportPlayer(player, x, y, z+1, player->GetOrientation());
@@ -156,11 +183,13 @@ struct MANGOS_DLL_DECL boss_morogrim_tidewalkerAI : public ScriptedAI
         Creature *Summoned;
 
         Summoned = m_creature->SummonCreature(TIDEWALKER_LURKER, x, y, z, 0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 5000);
-        if (Summoned)
+        if(Summoned)
         {
+			Summoned->SetMaxHealth(17000);
+			Summoned->SetHealth(17000);
             Unit *target = NULL;
             target = SelectUnit(SELECT_TARGET_RANDOM, 0);
-            if (target)
+            if(target)
                 Summoned->AI()->AttackStart(target);
         }
     }
@@ -170,11 +199,11 @@ struct MANGOS_DLL_DECL boss_morogrim_tidewalkerAI : public ScriptedAI
         Creature *Globule;
 
         Globule = m_creature->SummonCreature(WATER_GLOBULE, x, y, z, 0, TEMPSUMMON_TIMED_DESPAWN, 30000); //they despawn after 30 seconds
-        if (Globule)
+        if(Globule)
         {
             Unit *target = NULL;
             target = SelectUnit(SELECT_TARGET_RANDOM, 0);
-            if (target)
+            if(target)
                 Globule->AI()->AttackStart(target);
         }
     }
@@ -186,9 +215,9 @@ struct MANGOS_DLL_DECL boss_morogrim_tidewalkerAI : public ScriptedAI
             return;
 
         //Earthquake_Timer
-        if (Earthquake_Timer < diff)
+        if(Earthquake_Timer < diff)
         {
-            if (!Earthquake)
+            if(!Earthquake)
             {
                 DoCast(m_creature->getVictim(), SPELL_EARTHQUAKE);
                 Earthquake = true;
@@ -198,8 +227,15 @@ struct MANGOS_DLL_DECL boss_morogrim_tidewalkerAI : public ScriptedAI
             {
                 switch(rand()%2)
                 {
-                    case 0: DoScriptText(SAY_SUMMON1, m_creature); break;
-                    case 1: DoScriptText(SAY_SUMMON2, m_creature); break;
+                    case 0:
+                    DoPlaySoundToSet(m_creature, SOUND_SUMMON1);
+                    DoYell(SAY_SUMMON1, LANG_UNIVERSAL, NULL);
+                    break;
+
+                    case 1:
+                    DoPlaySoundToSet(m_creature, SOUND_SUMMON2);
+                    DoYell(SAY_SUMMON2, LANG_UNIVERSAL, NULL);
+                    break;
                 }
 
                 //north
@@ -218,7 +254,7 @@ struct MANGOS_DLL_DECL boss_morogrim_tidewalkerAI : public ScriptedAI
                 SummonMurloc(296.82, -726.33, -10.82);
                 SummonMurloc(293.64, -726.64, -9.81);
 
-                DoScriptText(EMOTE_EARTHQUAKE, m_creature);
+                DoTextEmote(EMOTE_EARTHQUAKE, NULL);
 
                 Earthquake = false;
                 Earthquake_Timer = 40000+rand()%5000;
@@ -226,51 +262,62 @@ struct MANGOS_DLL_DECL boss_morogrim_tidewalkerAI : public ScriptedAI
         }else Earthquake_Timer -= diff;
 
         //TidalWave_Timer
-        if (TidalWave_Timer < diff)
+        if(TidalWave_Timer < diff)
         {
             DoCast(m_creature->getVictim(), SPELL_TIDAL_WAVE);
             TidalWave_Timer = 20000;
         }else TidalWave_Timer -= diff;
 
-        if (!Phase2)
+        if(!Phase2)
         {
             //WateryGrave_Timer
-            if (WateryGrave_Timer < diff)
+            if(WateryGrave_Timer < diff)
             {
                 //Teleport 4 players under the waterfalls
                 Unit *target;
                 for(uint8 i = 0; i < 4; i++)
                 {
                     target = SelectUnit(SELECT_TARGET_RANDOM, 1);
-                    if (target && (target->GetTypeId() == TYPEID_PLAYER) && !target->HasAura(SPELL_WATERY_GRAVE, 0) && target->IsWithinDistInMap(m_creature, 50))
+                    if(target && (target->GetTypeId() == TYPEID_PLAYER) && !target->HasAura(SPELL_WATERY_GRAVE, 0) && target->IsWithinDistInMap(m_creature, 50))
                         ApplyWateryGrave(target, i);
                 }
 
                 switch(rand()%2)
                 {
-                    case 0: DoScriptText(SAY_SUMMON_BUBL1, m_creature); break;
-                    case 1: DoScriptText(SAY_SUMMON_BUBL2, m_creature); break;
+                case 0:
+                    DoPlaySoundToSet(m_creature, SOUND_SUMMON_BUBL1);
+                    DoYell(SAY_SUMMON_BUBL1, LANG_UNIVERSAL, NULL);
+                    break;
+
+                case 1:
+                    DoPlaySoundToSet(m_creature, SOUND_SUMMON_BUBL2);
+                    DoYell(SAY_SUMMON_BUBL2, LANG_UNIVERSAL, NULL);
+                    break;
+
+                case 2:
+                    break;
                 }
 
-                DoScriptText(EMOTE_WATERY_GRAVE, m_creature);
+                DoTextEmote(EMOTE_WATERY_GRAVE, NULL);
+
                 WateryGrave_Timer = 30000;
             }else WateryGrave_Timer -= diff;
 
             //Start Phase2
-            if ((m_creature->GetHealth()*100 / m_creature->GetMaxHealth()) < 25)
+            if((m_creature->GetHealth()*100 / m_creature->GetMaxHealth()) < 25)
                 Phase2 = true;
         }
         else
         {
             //WateryGlobules_Timer
-            if (WateryGlobules_Timer < diff)
+            if(WateryGlobules_Timer < diff)
             {
                 SummonWaterGlobule(WATERY_GRAVE_X1, WATERY_GRAVE_Y1, WATERY_GRAVE_Z1);
                 SummonWaterGlobule(WATERY_GRAVE_X2, WATERY_GRAVE_Y2, WATERY_GRAVE_Z2);
                 SummonWaterGlobule(WATERY_GRAVE_X3, WATERY_GRAVE_Y3, WATERY_GRAVE_Z3);
                 SummonWaterGlobule(WATERY_GRAVE_X4, WATERY_GRAVE_Y4, WATERY_GRAVE_Z4);
 
-                DoScriptText(EMOTE_WATERY_GLOBULES, m_creature);
+                DoTextEmote(EMOTE_WATERY_GLOBULES, NULL);
 
                 WateryGlobules_Timer = 25000;
             }else WateryGlobules_Timer -= diff;
@@ -306,6 +353,7 @@ struct MANGOS_DLL_DECL mob_water_globuleAI : public ScriptedAI
         if (who->isTargetableForAttack() && who->isInAccessablePlaceFor(m_creature) && m_creature->IsHostileTo(who))
         {
             //no attack radius check - it attacks the first target that moves in his los
+            if(who->HasStealthAura())
             who->RemoveSpellsCausingAura(SPELL_AURA_MOD_STEALTH);
             AttackStart(who);
         }
@@ -317,9 +365,9 @@ struct MANGOS_DLL_DECL mob_water_globuleAI : public ScriptedAI
         if (!m_creature->SelectHostilTarget() || !m_creature->getVictim() )
             return;
 
-        if (Check_Timer < diff)
+        if(Check_Timer < diff)
         {
-            if (m_creature->IsWithinDistInMap(m_creature->getVictim(), 5))
+            if(m_creature->IsWithinDistInMap(m_creature->getVictim(), 5))
             {
                 uint32 damage = 4000+rand()%2000;
                 m_creature->DealDamage(m_creature->getVictim(), damage, NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_FROST, NULL, false);
@@ -348,12 +396,12 @@ void AddSC_boss_morogrim_tidewalker()
     Script *newscript;
 
     newscript = new Script;
-    newscript->Name = "boss_morogrim_tidewalker";
+    newscript->Name="boss_morogrim_tidewalker";
     newscript->GetAI = &GetAI_boss_morogrim_tidewalker;
     newscript->RegisterSelf();
 
     newscript = new Script;
-    newscript->Name = "mob_water_globule";
+    newscript->Name="mob_water_globule";
     newscript->GetAI = &GetAI_mob_water_globule;
     newscript->RegisterSelf();
 }

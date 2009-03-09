@@ -1,6 +1,5 @@
 src/bindings/ScriptDev2/scripts/zone/ashenvale_forest/ashenvale.cpp 70%
 src/bindings/ScriptDev2/scripts/zone/aunchindoun/auchenai_crypts/boss_exarch_maladaar.cpp 95%
-src/bindings/ScriptDev2/scripts/zone/aunchindoun/auchenai_crypts/boss_shirrak_the_dead_watcher.cpp 100% Complete
 src/bindings/ScriptDev2/scripts/zone/aunchindoun/mana_tombs/boss_nexusprince_shaffar.cpp 80%  
 src/bindings/ScriptDev2/scripts/zone/aunchindoun/mana_tombs/boss_pandemonius.cpp 75%
 src/bindings/ScriptDev2/scripts/zone/aunchindoun/sethekk_halls/boss_darkweaver_syth.cpp 85%
@@ -93,8 +92,6 @@ src/bindings/ScriptDev2/scripts/zone/hellfire_citadel/shattered_halls/instance_s
 src/bindings/ScriptDev2/scripts/zone/hellfire_peninsula/boss_doomlord_kazzak.cpp 70%
 src/bindings/ScriptDev2/scripts/zone/karazhan/boss_midnight.cpp 98%
 src/bindings/ScriptDev2/scripts/zone/karazhan/boss_moroes.cpp 95%
-src/bindings/ScriptDev2/scripts/zone/karazhan/boss_netherspite.cpp 0%
-src/bindings/ScriptDev2/scripts/zone/karazhan/boss_nightbane.cpp 0%
 src/bindings/ScriptDev2/scripts/zone/karazhan/boss_shade_of_aran.cpp 95%
 src/bindings/ScriptDev2/scripts/zone/karazhan/boss_terestian_illhoof.cpp 95%
 src/bindings/ScriptDev2/scripts/zone/karazhan/bosses_opera.cpp 90%

@@ -212,11 +212,11 @@ void AddSC_mob_underbog_colossus()
     Script *newscript;
     newscript = new Script;
     newscript->Name="mob_underbog_colossus";
-    newscript->GetAI = GetAI_mob_underbog_colossus;
+    newscript->GetAI = &GetAI_mob_underbog_colossus;
     newscript->RegisterSelf();
 
 	newscript = new Script;
     newscript->Name="mob_refreshing_mist";
-    newscript->GetAI = GetAI_mob_refreshing_mist;
+    newscript->GetAI = &GetAI_mob_refreshing_mist;
     newscript->RegisterSelf();
 }
