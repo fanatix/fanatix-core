@@ -7606,6 +7606,8 @@ void Player::SendLoot(uint64 guid, LootType loot_type)
             bones->lootForBody = true;
             uint32 pLevel = bones->loot.gold;
             bones->loot.clear();
+            if(GetBattleGround()->GetTypeID() == BATTLEGROUND_AV)
+                loot->FillLoot(1, LootTemplates_Creature, this, false);
             // It may need a better formula
             // Now it works like this: lvl10: ~6copper, lvl70: ~9silver
             bones->loot.gold = (uint32)( urand(50, 150) * 0.016f * pow( ((float)pLevel)/5.76f, 2.5f) * sWorld.getRate(RATE_DROP_MONEY) );
@@ -7951,6 +7953,10 @@ void Player::SendInitWorldStates(bool forceZone, uint32 forceZoneId)
             }
             break;
         case 2597:                                          // AV
+            if (bg && bg->GetTypeID() == BATTLEGROUND_AV)
+                bg->FillInitialWorldStates(data);
+            else
+            {
             data << uint32(0x7ae) << uint32(0x1);           // 7
             data << uint32(0x532) << uint32(0x1);           // 8
             data << uint32(0x531) << uint32(0x0);           // 9
@@ -8026,6 +8032,7 @@ void Player::SendInitWorldStates(bool forceZone, uint32 forceZoneId)
             data << uint32(0x530) << uint32(0x0);           // 79
             data << uint32(0x52f) << uint32(0x0);           // 80
             data << uint32(0x52d) << uint32(0x1);           // 81
+            }
             break;
         case 3277:                                          // WS
             if (bg && bg->GetTypeID() == BATTLEGROUND_WS)
@@ -14047,6 +14054,7 @@ bool Player::HasQuestForItem( uint32 itemid ) const
 
             // hide quest if player is in raid-group and quest is no raid quest
             if(GetGroup() && GetGroup()->isRaidGroup() && qinfo->GetType() != QUEST_TYPE_RAID)
+                if(!InBattleGround()) //there are two ways.. we can make every bg-quest a raidquest, or add this code here.. i don't know if this can be exploited by other quests, but i think all other quests depend on a specific area.. but keep this in mind, if something strange happens later
                 continue;
 
             // There should be no mixed ReqItem/ReqSource drop
