@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright (C) 2005-2009 MaNGOS <http://getmangos.com/>
  *
  * This program is free software; you can redistribute it and/or modify
@@ -73,7 +73,7 @@ typedef MaNGOS::SingleThreaded<GridRWLock>::Lock NullGuard;
 // Map file format defines
 //******************************************
 #define MAP_MAGIC             'SPAM'
-#define MAP_VERSION_MAGIC     '4.1v'
+#define MAP_VERSION_MAGIC     '0.1v'
 #define MAP_AREA_MAGIC        'AERA'
 #define MAP_HEIGTH_MAGIC      'TGHM'
 #define MAP_LIQUID_MAGIC      'QILM'
@@ -145,8 +145,6 @@ struct LiquidData{
     float  depth_level;
 };
 
-#define GRID_MAP_HEIGHT_AS_INT16   0x01
-#define GRID_MAP_HEIGHT_AS_INT8    0x02
 class GridMap
 {
     uint32  m_flags;
@@ -175,21 +173,27 @@ class GridMap
     float   m_liquidLevel;
     uint8  *m_liquid_type;
     float  *m_liquid_map;
+
+    bool  loadAreaData(FILE *in, uint32 offset, uint32 size);
+    bool  loadHeihgtData(FILE *in, uint32 offset, uint32 size);
+    bool  loadLiquidData(FILE *in, uint32 offset, uint32 size);
+
+    // Get height functions and pointers
+    typedef float (GridMap::*pGetHeightPtr) (float x, float y) const; 
+    pGetHeightPtr m_gridGetHeight;
+    float  getHeightFromFloat(float x, float y) const;
+    float  getHeightFromUint16(float x, float y) const;
+    float  getHeightFromUint8(float x, float y) const;
+    float  getHeightFromFlat(float x, float y) const;
+
 public:
     GridMap();
     ~GridMap();
     bool  loadData(char *filaname);
-    bool  loadAreaData(FILE *in, uint32 offset, uint32 size);
-    bool  loadHeihgtData(FILE *in, uint32 offset, uint32 size);
-    bool  loadLiquidData(FILE *in, uint32 offset, uint32 size);
     void  unloadData();
 
     uint16 getArea(float x, float y);
-    float  getHeightFromFloat(float x, float y);
-    float  getHeightFromUint16(float x, float y);
-    float  getHeightFromUint8(float x, float y);
-
-    float  getHeight(float x, float y);
+    inline float getHeight(float x, float y) {return (this->*m_gridGetHeight)(x, y);}
     float  getLiquidLevel(float x, float y);
     uint8  getTerrainType(float x, float y);
     ZLiquidStatus getLiquidStatus(float x, float y, float z, uint8 ReqLiquidType, LiquidData *data = 0);
