@@ -202,6 +202,18 @@ bool Pet::LoadPetFromDB( Player* owner, uint32 petentry, uint32 petnumber, bool 
             sLog.outError("Pet have incorrect type (%u) for pet loading.", getPetType());
     }
 
+    switch(owner->getClass())
+    {
+        case CLASS_WARLOCK:
+        {
+            _LoadSpells();
+            _LoadSpellCooldowns();
+            break;
+        }
+        default:
+            break;
+    }
+
     InitStatsForLevel(petlevel);
     SetUInt32Value(UNIT_FIELD_PET_NAME_TIMESTAMP, time(NULL));
     SetUInt32Value(UNIT_FIELD_PETEXPERIENCE, fields[5].GetUInt32());
@@ -295,8 +307,20 @@ bool Pet::LoadPetFromDB( Player* owner, uint32 petentry, uint32 petnumber, bool 
     map->Add((Creature*)this);
 
     // Spells should be loaded after pet is added to map, because in CanCast is check on it
-    _LoadSpells();
-    _LoadSpellCooldowns();
+
+	switch(owner->getClass())
+    {
+        case CLASS_WARLOCK:
+        {
+            break;
+        }
+        default:
+        {
+            _LoadSpells();
+            _LoadSpellCooldowns();
+            break;
+        }
+    }
 
     owner->SetPet(this);                                    // in DB stored only full controlled creature
     sLog.outDebug("New Pet has guid %u", GetGUIDLow());
@@ -833,7 +857,7 @@ bool Pet::InitStatsForLevel(uint32 petlevel)
                         uint32 val  = (fire > shadow) ? fire : shadow;
                         
 						// learn spells per level
-						learnWarlockLevelupSpells();
+						learnLevelupSpellsWarlock();
 
                         SetBonusDamage(int32 (val * 0.15f));
                         //bonusAP += val * 0.57;
@@ -1054,7 +1078,7 @@ void Pet::_SaveSpellCooldowns()
             m_CreatureSpellCooldowns.erase(itr++);
         else
         {
-            CharacterDatabase.PExecute("INSERT INTO pet_spell_cooldown (guid,spell,time) VALUES ('%u', '%u', '" I64FMTD "')", m_charmInfo->GetPetNumber(), itr->first, uint64(itr->second));
+            CharacterDatabase.PExecute("INSERT IGNORE INTO pet_spell_cooldown (guid,spell,time) VALUES ('%u', '%u', '" I64FMTD "')", m_charmInfo->GetPetNumber(), itr->first, uint64(itr->second));
             ++itr;
         }
     }
@@ -1087,7 +1111,7 @@ void Pet::_SaveSpells()
         if (itr->second->state == PETSPELL_REMOVED || itr->second->state == PETSPELL_CHANGED)
             CharacterDatabase.PExecute("DELETE FROM pet_spell WHERE guid = '%u' and spell = '%u'", m_charmInfo->GetPetNumber(), itr->first);
         if (itr->second->state == PETSPELL_NEW || itr->second->state == PETSPELL_CHANGED)
-            CharacterDatabase.PExecute("INSERT INTO pet_spell (guid,spell,active) VALUES ('%u', '%u', '%u')", m_charmInfo->GetPetNumber(), itr->first, itr->second->active);
+            CharacterDatabase.PExecute("INSERT IGNORE INTO pet_spell (guid,spell,active) VALUES ('%u', '%u', '%u')", m_charmInfo->GetPetNumber(), itr->first, itr->second->active);
 
         if (itr->second->state == PETSPELL_REMOVED)
             _removeSpell(itr->first);
@@ -1373,21 +1397,115 @@ void Pet::learnLevelupSpells()
     }
 }
 
-void Pet::learnWarlockLevelupSpells()
+void Pet::learnLevelupSpellsWarlock()
 {
-    PetLevelupSpellSet const *levelupSpells = spellmgr.GetWarlockPetLevelupSpellList(GetCreatureInfo()->family);
+
+    PetLevelupSpellSet const *levelupSpells = spellmgr.GetPetLevelupSpellList(GetCreatureInfo()->family);
     if(!levelupSpells)
         return;
 
     uint32 level = getLevel();
+    uint32 levelspelladd = 0;
+    uint32 levelspelldel = 0;
 
     for(PetLevelupSpellSet::const_iterator itr = levelupSpells->begin(); itr != levelupSpells->end(); ++itr)
     {
-        if(itr->first <= level)
-            learnSpell(itr->second);
-        else
-            unlearnSpell(itr->second);
+        if((itr->first & 0xffff) <= level) {
+            if (existAddSpell(itr->second) == true) {
+                // add spell
+
+                if(existLowRankOfSpell(itr->second) == false)
+                {
+                	levelspelladd++;
+                }
+            }
+        }
+        else {
+            if(existDeleteSpell(itr->second) == true)
+            {
+                // delete spell
+
+                levelspelldel++;
+            }
+        }
     }
+
+    if(levelspelladd == 0 && levelspelldel == 0) {
+        return;
+    }
+
+    for(PetLevelupSpellSet::const_iterator itr = levelupSpells->begin(); itr != levelupSpells->end(); ++itr)
+    {
+        if((itr->first & 0xffff) <= level) {
+
+            if(existLowRankOfSpell(itr->second) == false)
+            {
+                learnSpell(itr->second);
+            }
+        }
+        else {
+                unlearnSpell(itr->second);
+        }
+    }
+
+}
+
+bool Pet::existLowRankOfSpell(uint32 spell_id)
+{
+    uint32 levelspelllow = 0;
+
+    for (PetSpellMap::const_iterator sitr = m_spells.begin(), next = m_spells.begin(); sitr != m_spells.end(); sitr = next) {
+        ++next;
+        if(sitr->first == spell_id) {
+            levelspelllow = 1;
+            break;
+        }
+        else if(spellmgr.IsHighRankOfSpell(sitr->first,spell_id)) {
+            levelspelllow = 1;
+            break;
+        }
+    }
+
+    if(levelspelllow)
+    {
+        return(true);
+    }
+
+    return(false);
+}
+
+bool Pet::existAddSpell(uint32 spell_id)
+{
+    SpellEntry const *spellInfo = sSpellStore.LookupEntry(spell_id);
+    if (!spellInfo)
+    {
+        sLog.outError("Pet::existAddSpell: Non-existed in SpellStore spell #%u request.",spell_id);
+        return false;
+    }
+
+    PetSpellMap::iterator itr = m_spells.find(spell_id);
+    if (itr != m_spells.end())
+    {
+        if (itr->second->state == PETSPELL_REMOVED)
+        {
+        }
+        else
+            return false;
+    }
+
+    return true;
+}
+
+bool Pet::existDeleteSpell(uint32 spell_id)
+{
+    PetSpellMap::iterator itr = m_spells.find(spell_id);
+    if (itr == m_spells.end())
+        return false;
+
+    if(itr->second->state == PETSPELL_REMOVED)
+        return false;
+
+    return true;
 }
 
 bool Pet::unlearnSpell(uint32 spell_id)

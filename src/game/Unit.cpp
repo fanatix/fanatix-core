@@ -5174,6 +5174,19 @@ bool Unit::HandleDummyAuraProc(Unit *pVictim, uint32 damage, Aura* triggeredByAu
         {
             switch(dummySpell->Id)
             {
+                // Leader of the Pack
+                case 24932:
+                {
+                    if (triggerAmount == 0)
+                        break;
+                    basepoints0 = triggerAmount * GetMaxHealth() / 100;
+                    triggered_spell_id = 34299;
+                    if (triggeredByAura->GetCaster() != this || ((Player*)this)->HasSpellCooldown(triggered_spell_id))
+                        break;
+                    int32 basepoints1 = 2*triggerAmount;
+                    CastCustomSpell(this,60889,&basepoints1,0,0,true,0,triggeredByAura);
+                    break;
+                }
                 // Healing Touch (Dreamwalker Raiment set)
                 case 28719:
                 {
@@ -5432,7 +5445,10 @@ bool Unit::HandleDummyAuraProc(Unit *pVictim, uint32 damage, Aura* triggeredByAu
                 case 20186:
                 {
                     if (pVictim->getPowerType() == POWER_MANA)
-                        pVictim->CastSpell(pVictim, 20268, true, 0, triggeredByAura);
+                    {
+                        int32 gainMana = pVictim->GetCreateMana() * triggeredByAura->GetBasePoints() / 100;
+                        pVictim->CastCustomSpell(pVictim, 20268, &gainMana, 0, 0, true, 0, triggeredByAura);
+                    }
                     return true;
                 }
                 // Holy Power (Redemption Armor set)
@@ -6288,17 +6304,6 @@ bool Unit::HandleProcTriggerSpell(Unit *pVictim, uint32 damage, Aura* triggeredB
                             return false;
                     }
                 }
-                //else if (auraSpellInfo->Id==40363)// Entangling Roots ()
-                //    trigger_spell_id = ????;
-                // Leader of the Pack
-                else if (auraSpellInfo->Id == 24932)
-                {
-                    if (triggerAmount == 0)
-                        return false;
-                    basepoints0 = triggerAmount * GetMaxHealth() / 100;
-                    trigger_spell_id = 34299;
-                }
-                break;
             }
             case SPELLFAMILY_HUNTER:
                 break;

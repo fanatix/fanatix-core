@@ -2306,8 +2306,10 @@ void Spell::cast(bool skipCheck)
         }
         case SPELLFAMILY_PALADIN:
         {
-            if (m_spellInfo->SpellFamilyFlags&0x0000000000400080LL)    // Divine Shield, Divine Protection or Hand of Protection
-                m_preCastSpell = 25771;                                // Forbearance
+            if (m_spellInfo->SpellFamilyFlags&0x0000000000400080LL)    // Divine Shield, Divine Protection or Hand of Protection //Avenging Wrath
+                m_preCastSpell = 25771; // Forbearance 
+            if (m_spellInfo->Id == 25771 || m_spellInfo->Id == 31884) 
+                m_preCastSpell = 61987;  //Avenging Wrath Marker
             break;
         }
         case SPELLFAMILY_SHAMAN:
@@ -3581,6 +3583,12 @@ uint8 Spell::CanCast(bool strict)
         if(BattleGround * bg = ((Player*)m_caster)->GetBattleGround())
             if(bg->GetStatus() == STATUS_WAIT_LEAVE)
                 return SPELL_FAILED_DONT_REPORT;
+
+       if((m_spellInfo->Id == 642 || m_spellInfo->Id == 498 || m_spellInfo->Id ==   1022 || m_spellInfo->Id ==  5599 || m_spellInfo->Id ==  10278) && (m_caster->HasAura(25771) || m_caster->HasAura(61987)))
+               return SPELL_FAILED_CANT_DO_THAT_RIGHT_NOW;
+
+       if(m_spellInfo->Id == 31884 && m_caster->HasAura(61987))
+               return SPELL_FAILED_CANT_DO_THAT_RIGHT_NOW;
 
     // only check at first call, Stealth auras are already removed at second call
     // for now, ignore triggered spells

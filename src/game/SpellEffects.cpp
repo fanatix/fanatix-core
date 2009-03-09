@@ -2339,6 +2339,7 @@ void Spell::EffectPowerDrain(uint32 i)
         return;
 
     Powers drain_power = Powers(m_spellInfo->EffectMiscValue[i]);
+	Powers powertype = Powers(m_spellInfo->EffectMiscValue[i]);
 
     if(!unitTarget)
         return;
@@ -2354,8 +2355,18 @@ void Spell::EffectPowerDrain(uint32 i)
     //add spell damage bonus
     damage=m_caster->SpellDamageBonus(unitTarget,m_spellInfo,uint32(damage),SPELL_DIRECT_DAMAGE);
 
-    // resilience reduce mana draining effect at spell crit damage reduction (added in 2.4)
     uint32 power = damage;
+
+    SkillLineAbilityMap::const_iterator const skillLine = spellmgr.GetBeginSkillLineAbilityMap(m_spellInfo->Id);
+    if(skillLine->second->skillId == SKILL_DISCIPLINE)
+    {
+       power = unitTarget->GetMaxPower(powertype) * damage /100;
+
+       if(power > GetCaster()->GetMaxPower(powertype) * damage / 50)
+          power = GetCaster()->GetMaxPower(powertype) * damage / 50;
+    }
+
+    // resilience reduce mana draining effect at spell crit damage reduction (added in 2.4)
     if ( drain_power == POWER_MANA && unitTarget->GetTypeId() == TYPEID_PLAYER )
         power -= ((Player*)unitTarget)->GetSpellCritDamageReduction(power);
 
@@ -4444,7 +4455,7 @@ void Spell::EffectWeaponDmg(uint32 i)
             if(m_spellInfo->SpellFamilyFlags & 0x00000200LL)
             {
                 customBonusDamagePercentMod = true;
-                bonusDamagePercentMod = 2.5f;               // 250%
+                bonusDamagePercentMod = 2.75f;               // 275%
             }
             // Mutilate (for each hand)
             else if(m_spellInfo->SpellFamilyFlags & 0x600000000LL)
