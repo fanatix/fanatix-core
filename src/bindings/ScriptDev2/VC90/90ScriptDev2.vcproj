@@ -2718,11 +2718,7 @@
 						Name="Utgarde Keep"
 						>
 						<File
-							RelativePath="..\scripts\zone\utgarde_keep\utgarde_keep\boss_dalronn.cpp"
-							>
-						</File>
-						<File
-							RelativePath="..\scripts\zone\utgarde_keep\utgarde_keep\boss_ingvar.cpp"
+							RelativePath="..\scripts\zone\utgarde_keep\utgarde_keep\boss_ingvar_the_plunderer.cpp"
 							>
 						</File>
 						<File
@@ -2730,15 +2726,15 @@
 							>
 						</File>
 						<File
-							RelativePath="..\scripts\zone\utgarde_keep\utgarde_keep\boss_skarvald.cpp"
+							RelativePath="..\scripts\zone\utgarde_keep\utgarde_keep\boss_skarvald_dalronn.cpp"
 							>
 						</File>
 						<File
-							RelativePath="..\scripts\zone\utgarde_keep\utgarde_keep\def_keep.h"
+							RelativePath="..\scripts\zone\utgarde_keep\utgarde_keep\def_utgarde_keep.h"
 							>
 						</File>
 						<File
-							RelativePath="..\scripts\zone\utgarde_keep\utgarde_keep\instance_keep.cpp"
+							RelativePath="..\scripts\zone\utgarde_keep\utgarde_keep\instance_utgarde_keep.cpp"
 							>
 						</File>
 					</Filter>

@@ -440,12 +440,11 @@ scripts/zone/ulduar/halls_of_stone/boss_sjonnir.cpp \
 scripts/zone/ulduar/halls_of_stone/def_halls_of_stone.h \
 scripts/zone/ulduar/halls_of_stone/instance_halls_of_stone.cpp \
 scripts/zone/undercity/undercity.cpp \
-scripts/zone/utgarde_keep/utgarde_keep/boss_dalronn.cpp \
-scripts/zone/utgarde_keep/utgarde_keep/boss_ingvar.cpp \
+scripts/zone/utgarde_keep/utgarde_keep/boss_ingvar_the_plunderer.cpp \
 scripts/zone/utgarde_keep/utgarde_keep/boss_keleseth.cpp \
-scripts/zone/utgarde_keep/utgarde_keep/boss_skarvald.cpp \
-scripts/zone/utgarde_keep/utgarde_keep/def_keep.h \
-scripts/zone/utgarde_keep/utgarde_keep/instance_keep.cpp \
+scripts/zone/utgarde_keep/utgarde_keep/boss_skarvald_dalronn.cpp \
+scripts/zone/utgarde_keep/utgarde_keep/def_utgarde_keep.h \
+scripts/zone/utgarde_keep/utgarde_keep/instance_utgarde_keep.cpp \
 scripts/zone/utgarde_keep/utgarde_pinnacle/boss_palehoof.cpp \
 scripts/zone/utgarde_keep/utgarde_pinnacle/boss_skadi.cpp \
 scripts/zone/utgarde_keep/utgarde_pinnacle/boss_svala.cpp \

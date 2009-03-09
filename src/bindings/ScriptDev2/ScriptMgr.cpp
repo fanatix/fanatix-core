@@ -616,20 +616,19 @@ extern void AddSC_boss_hex_lord_malacrass();
 extern void AddSC_boss_zuljin();
 extern void AddSC_zulaman();
 
-//WOTLK BY NOTAGAIN
-//extern void AddSC_blank();
 //Utgarde: Utgarde Keep
-extern void AddSC_instance_keep();
+extern void AddSC_boss_ingvar_the_plunderer();
 extern void AddSC_boss_keleseth();
-extern void AddSC_boss_dalronn();
-extern void AddSC_boss_skarvald();
-extern void AddSC_boss_ingvar();
+extern void AddSC_boss_skarvald_dalronn();
+extern void AddSC_instance_utgarde_keep();
+
 //Utgarde: Utgarde Pinnacle
 extern void AddSC_instance_pinnacle();
 extern void AddSC_boss_skadi();
 extern void AddSC_boss_ymiron();
 extern void AddSC_boss_svala();
 extern void AddSC_boss_palehoof();
+
 //Nexus: The Nexus
 extern void AddSC_instance_nexus();
 extern void AddSC_boss_magus_telestra();
@@ -2055,21 +2054,20 @@ void ScriptsInit()
     AddSC_boss_hex_lord_malacrass();
     AddSC_boss_zuljin();
     AddSC_zulaman();
-    
-   //WOTLK BY NOTAGAIN
-//    AddSC_blank();
+
    //Utgarde: Utgarde Keep
-   AddSC_instance_keep();
+   AddSC_boss_ingvar_the_plunderer();
    AddSC_boss_keleseth();
-   AddSC_boss_dalronn();
-   AddSC_boss_skarvald();
-   AddSC_boss_ingvar();
+   AddSC_boss_skarvald_dalronn();
+   AddSC_instance_utgarde_keep();
+
    //Utgarde: Utgarde Pinnacle
    AddSC_instance_pinnacle();
    AddSC_boss_skadi();
    AddSC_boss_ymiron();
    AddSC_boss_svala();
    AddSC_boss_palehoof();
+
    //Nexus: The Nexus
    AddSC_instance_nexus();
    AddSC_boss_magus_telestra();
