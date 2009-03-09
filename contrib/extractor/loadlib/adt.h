@@ -33,7 +33,7 @@ class adt_MCVT
     };
     uint32 size;
 public:
-    float height_map[9*9+8*8];
+    float height_map[(ADT_CELL_SIZE+1)*(ADT_CELL_SIZE+1)+ADT_CELL_SIZE*ADT_CELL_SIZE];
 
     bool  prepareLoadedData();
 };
@@ -54,15 +54,15 @@ public:
     struct liquid_data{
         uint32 light;
         float  height;
-    } liquid[9][9];
+    } liquid[ADT_CELL_SIZE+1][ADT_CELL_SIZE+1];
     
     // 1<<0 - ochen
-    // 1<<1 - slime
+    // 1<<1 - lava/slime
     // 1<<2 - water
     // 1<<6 - all water
     // 1<<7 - dark water
     // == 0x0F - not show liquid
-    uint8 flags[8][8];
+    uint8 flags[ADT_CELL_SIZE][ADT_CELL_SIZE];
     uint8 data[84];
     bool  prepareLoadedData();
 };
@@ -102,7 +102,7 @@ public:
     uint32 nEffectDoodad;
     uint32 offsMCSE;
     uint32 nSndEmitters;
-    uint32 offsMCLQ;         // Liqid level (used in some mapsin outland? )
+    uint32 offsMCLQ;         // Liqid level (old)
     uint32 sizeMCLQ;         //
     float  zpos;
     float  xpos;

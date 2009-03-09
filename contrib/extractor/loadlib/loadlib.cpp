@@ -1,11 +1,7 @@
 #define _CRT_SECURE_NO_DEPRECATE
 
-#ifdef WIN32
-#include <windows.h>
-#endif
-
 #include "loadlib.h"
-#include "..\mpq_libmpq.h"
+#include "../mpq_libmpq.h"
 
 class MPQFile;
 
