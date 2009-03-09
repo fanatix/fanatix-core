@@ -2563,7 +2563,9 @@ void Aura::HandleAuraHover(bool apply, bool Real)
 
 void Aura::HandleWaterBreathing(bool apply, bool Real)
 {
-    // Implemented in Player::getMaxTimer
+    // update timers in client
+    if(m_target->GetTypeId()==TYPEID_PLAYER)
+        ((Player*)m_target)->UpdateMirrorTimers();
 }
 
 void Aura::HandleAuraModShapeshift(bool apply, bool Real)

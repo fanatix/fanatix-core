@@ -71,9 +71,10 @@ enum PlayerUnderwaterState
     UNDERWATER_NONE                     = 0x00,
     UNDERWATER_INWATER                  = 0x01,             // terrain type is water and player is afflicted by it
     UNDERWATER_INLAVA                   = 0x02,             // terrain type is lava and player is afflicted by it
-    UNDERWARER_INDARKWATER              = 0x04,             // terrain type is dark water and player is afflicted by it
+    UNDERWATER_INSLIME                  = 0x04,             // terrain type is lava and player is afflicted by it
+    UNDERWARER_INDARKWATER              = 0x08,             // terrain type is dark water and player is afflicted by it
 
-    UNDERWATER_EXIST_TIMERS             = 0x08
+    UNDERWATER_EXIST_TIMERS             = 0x10
 };
 
 enum PlayerSpellState
@@ -1713,6 +1714,7 @@ class MANGOS_DLL_SPEC Player : public Unit
         uint32 DurabilityRepairAll(bool cost, float discountMod, bool guildBank);
         uint32 DurabilityRepair(uint16 pos, bool cost, float discountMod, bool guildBank);
 
+        void UpdateMirrorTimers();
         void StopMirrorTimers()
         {
             StopMirrorTimer(FATIGUE_TIMER);
@@ -1977,7 +1979,8 @@ class MANGOS_DLL_SPEC Player : public Unit
         void ClearAfkReports() { m_bgAfkReporter.clear(); }
 
         bool GetBGAccessByLevel(BattleGroundTypeId bgTypeId) const;
-        bool isAllowUseBattleGroundObject();
+        bool CanUseBattleGroundObject();
+        bool CanCaptureTowerPoint();
 
         /*********************************************************/
         /***               OUTDOOR PVP SYSTEM                  ***/
@@ -2250,13 +2253,13 @@ class MANGOS_DLL_SPEC Player : public Unit
         /***              ENVIRONMENTAL SYSTEM                 ***/
         /*********************************************************/
         void HandleSobering();
-        void StartMirrorTimer(MirrorTimerType Type, uint32 MaxValue);
-        void ModifyMirrorTimer(MirrorTimerType Type, uint32 MaxValue, uint32 CurrentValue, uint32 Regen);
+        void SendMirrorTimer(MirrorTimerType Type, uint32 MaxValue, uint32 CurrentValue, int32 Regen);
         void StopMirrorTimer(MirrorTimerType Type);
         void HandleDrowning(uint32 time_diff);
         int32 getMaxTimer(MirrorTimerType timer);
         int32 m_MirrorTimer[MAX_TIMERS];
         uint8 m_MirrorTimerFlags;
+        uint8 m_MirrorTimerFlagsLast;
         bool m_isInWater;
 
         /*********************************************************/
@@ -2413,7 +2416,6 @@ class MANGOS_DLL_SPEC Player : public Unit
         float  m_summon_x;
         float  m_summon_y;
         float  m_summon_z;
-
 
         // Far Teleport
         WorldLocation m_teleport_dest;

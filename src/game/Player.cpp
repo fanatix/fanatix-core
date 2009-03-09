@@ -271,7 +271,7 @@ UpdateMask Player::updateVisualBits;
 
 Player::Player (WorldSession *session): Unit(), m_achievementMgr(this)
 {
-	death_pact = false;
+    death_pact = false;
     m_transport = 0;
 
     m_speakTime = 0;
@@ -360,6 +360,7 @@ Player::Player (WorldSession *session): Unit(), m_achievementMgr(this)
         m_MirrorTimer[i] = DISABLED_MIRROR_TIMER;
 
     m_MirrorTimerFlags = UNDERWATER_NONE;
+    m_MirrorTimerFlagsLast = UNDERWATER_NONE;
     m_isInWater = false;
     m_drunkTimer = 0;
     m_drunk = 0;
@@ -816,28 +817,14 @@ bool Player::StoreNewItemInBestSlots(uint32 titem_id, uint32 titem_amount)
     return false;
 }
 
-void Player::StartMirrorTimer(MirrorTimerType Type, uint32 MaxValue)
-{
-    uint32 BreathRegen = (uint32)-1;
-
-    WorldPacket data(SMSG_START_MIRROR_TIMER, (21));
-    data << (uint32)Type;
-    data << MaxValue;
-    data << MaxValue;
-    data << BreathRegen;
-    data << (uint8)0;
-    data << (uint32)0;                                      // spell id
-    GetSession()->SendPacket(&data);
-}
-
-void Player::ModifyMirrorTimer(MirrorTimerType Type, uint32 MaxValue, uint32 CurrentValue, uint32 Regen)
+void Player::SendMirrorTimer(MirrorTimerType Type, uint32 MaxValue, uint32 CurrentValue, int32 Regen)
 {
     if (MaxValue == DISABLED_MIRROR_TIMER)
     {
-        StopMirrorTimer(Type);
+        if (CurrentValue!=DISABLED_MIRROR_TIMER)
+            StopMirrorTimer(Type);
         return;
     }
-
     WorldPacket data(SMSG_START_MIRROR_TIMER, (21));
     data << (uint32)Type;
     data << CurrentValue;
@@ -861,12 +848,22 @@ void Player::EnvironmentalDamage(uint64 guid, EnviromentalDamage type, uint32 da
     if(!isAlive() || isGameMaster())
         return;
 
+    // Absorb, resist some environmental damage type
+    uint32 absorb = 0;
+    uint32 resist = 0;
+    if (type == DAMAGE_LAVA)
+        CalcAbsorbResist(this, SPELL_SCHOOL_MASK_FIRE, DIRECT_DAMAGE, damage, &absorb, &resist);
+    else if (type == DAMAGE_SLIME)
+        CalcAbsorbResist(this, SPELL_SCHOOL_MASK_NATURE, DIRECT_DAMAGE, damage, &absorb, &resist);
+
+    damage-=absorb+resist;
+
     WorldPacket data(SMSG_ENVIRONMENTALDAMAGELOG, (21));
     data << (uint64)guid;
     data << (uint8)(type!=DAMAGE_FALL_TO_VOID ? type : DAMAGE_FALL);
     data << (uint32)damage;
-    data << (uint32)0;
-    data << (uint32)0;
+    data << (uint32)absorb; // absorb
+    data << (uint32)resist; // resist
     SendMessageToSet(&data, true);
 
     DealDamage(this, damage, NULL, SELF_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, NULL, false);
@@ -914,6 +911,13 @@ int32 Player::getMaxTimer(MirrorTimerType timer)
     return 0;
 }
 
+void Player::UpdateMirrorTimers()
+{
+    // Desync flags for update on next HandleDrowning
+    if (m_MirrorTimerFlags)
+        m_MirrorTimerFlagsLast = ~m_MirrorTimerFlags;
+}
+
 void Player::HandleDrowning(uint32 time_diff)
 {
     if (!m_MirrorTimerFlags)
@@ -924,9 +928,11 @@ void Player::HandleDrowning(uint32 time_diff)
     {
         // Breath timer not activated - activate it
         if (m_MirrorTimer[BREATH_TIMER] == DISABLED_MIRROR_TIMER)
+        {
             m_MirrorTimer[BREATH_TIMER] = getMaxTimer(BREATH_TIMER);
-        // If activated - do tick
-        if (m_MirrorTimer[BREATH_TIMER] != DISABLED_MIRROR_TIMER)
+            SendMirrorTimer(BREATH_TIMER, m_MirrorTimer[BREATH_TIMER], m_MirrorTimer[BREATH_TIMER], -1);
+        }
+        else                                                              // If activated - do tick
         {
             m_MirrorTimer[BREATH_TIMER]-=time_diff;
             // Timer limit - need deal damage
@@ -938,61 +944,65 @@ void Player::HandleDrowning(uint32 time_diff)
                 uint32 damage = GetMaxHealth() / 5 + urand(0, getLevel()-1);
                 EnvironmentalDamage(GetGUID(), DAMAGE_DROWNING, damage);
             }
-            else  // Update time in client
-                ModifyMirrorTimer(BREATH_TIMER, getMaxTimer(BREATH_TIMER), m_MirrorTimer[BREATH_TIMER], -1);
+            else if (!(m_MirrorTimerFlagsLast & UNDERWATER_INWATER))      // Update time in client if need
+                SendMirrorTimer(BREATH_TIMER, getMaxTimer(BREATH_TIMER), m_MirrorTimer[BREATH_TIMER], -1);
         }
     }
-    else if (m_MirrorTimer[BREATH_TIMER] != DISABLED_MIRROR_TIMER)  // Regen timer
+    else if (m_MirrorTimer[BREATH_TIMER] != DISABLED_MIRROR_TIMER)        // Regen timer
     {
         int32 UnderWaterTime = getMaxTimer(BREATH_TIMER);
         // Need breath regen
         m_MirrorTimer[BREATH_TIMER]+=10*time_diff;
         if (m_MirrorTimer[BREATH_TIMER] >= UnderWaterTime || !isAlive())
             StopMirrorTimer(BREATH_TIMER);
-        else
-            ModifyMirrorTimer(BREATH_TIMER, UnderWaterTime, m_MirrorTimer[BREATH_TIMER], 10);
+        else if (m_MirrorTimerFlagsLast & UNDERWATER_INWATER)
+            SendMirrorTimer(BREATH_TIMER, UnderWaterTime, m_MirrorTimer[BREATH_TIMER], 10);
     }
 
+    // In dark water
     if (m_MirrorTimerFlags & UNDERWARER_INDARKWATER)
     {
         // Fatigue timer not activated - activate it
         if (m_MirrorTimer[FATIGUE_TIMER] == DISABLED_MIRROR_TIMER)
+        {
             m_MirrorTimer[FATIGUE_TIMER] = getMaxTimer(FATIGUE_TIMER);
-        if (m_MirrorTimer[FATIGUE_TIMER] != DISABLED_MIRROR_TIMER)
+            SendMirrorTimer(FATIGUE_TIMER, m_MirrorTimer[FATIGUE_TIMER], m_MirrorTimer[FATIGUE_TIMER], -1);
+        }
+        else
         {
             m_MirrorTimer[FATIGUE_TIMER]-=time_diff;
-            // Timer limit - need deal damage
+            // Timer limit - need deal damage or teleport ghost to graveyard
             if (m_MirrorTimer[FATIGUE_TIMER] < 0)
             {
                 m_MirrorTimer[FATIGUE_TIMER]+= 1*IN_MILISECONDS;
-                if (isAlive())                                              // Calculate and deal damage
+                if (isAlive())                                            // Calculate and deal damage
                 {
                     uint32 damage = GetMaxHealth() / 5 + urand(0, getLevel()-1);
                     EnvironmentalDamage(GetGUID(), DAMAGE_EXHAUSTED, damage);
                 }
-                else if (HasFlag(PLAYER_FLAGS, PLAYER_FLAGS_GHOST))         // Teleport ghost to graveyard
+                else if (HasFlag(PLAYER_FLAGS, PLAYER_FLAGS_GHOST))       // Teleport ghost to graveyard
                     RepopAtGraveyard();
             }
-            else
-                ModifyMirrorTimer(FATIGUE_TIMER, getMaxTimer(FATIGUE_TIMER), m_MirrorTimer[FATIGUE_TIMER], -1);
+            else if (!(m_MirrorTimerFlagsLast & UNDERWARER_INDARKWATER))
+                SendMirrorTimer(FATIGUE_TIMER, getMaxTimer(FATIGUE_TIMER), m_MirrorTimer[FATIGUE_TIMER], -1);
         }
     }
-    else if (m_MirrorTimer[FATIGUE_TIMER] != DISABLED_MIRROR_TIMER)
+    else if (m_MirrorTimer[FATIGUE_TIMER] != DISABLED_MIRROR_TIMER)       // Regen timer
     {
         int32 DarkWaterTime = getMaxTimer(FATIGUE_TIMER);
         m_MirrorTimer[FATIGUE_TIMER]+=10*time_diff;
         if (m_MirrorTimer[FATIGUE_TIMER] >= DarkWaterTime || !isAlive())
             StopMirrorTimer(FATIGUE_TIMER);
-        else
-            ModifyMirrorTimer(FATIGUE_TIMER, DarkWaterTime, m_MirrorTimer[FATIGUE_TIMER], 10);
+        else if (m_MirrorTimerFlagsLast & UNDERWARER_INDARKWATER)
+            SendMirrorTimer(FATIGUE_TIMER, DarkWaterTime, m_MirrorTimer[FATIGUE_TIMER], 10);
     }
 
-    if (m_MirrorTimerFlags & UNDERWATER_INLAVA)
+    if (m_MirrorTimerFlags & (UNDERWATER_INLAVA|UNDERWATER_INSLIME))
     {
         // Breath timer not activated - activate it
         if (m_MirrorTimer[FIRE_TIMER] == DISABLED_MIRROR_TIMER)
             m_MirrorTimer[FIRE_TIMER] = getMaxTimer(FIRE_TIMER);
-        if (m_MirrorTimer[FIRE_TIMER] != DISABLED_MIRROR_TIMER)
+        else
         {
             m_MirrorTimer[FIRE_TIMER]-=time_diff;
             if (m_MirrorTimer[FIRE_TIMER] < 0)
@@ -1001,24 +1011,27 @@ void Player::HandleDrowning(uint32 time_diff)
                 // Calculate and deal damage
                 // TODO: Check this formula
                 uint32 damage = urand(600, 700);
-                EnvironmentalDamage(GetGUID(), DAMAGE_FIRE, damage);
+                if (m_MirrorTimerFlags&UNDERWATER_INLAVA)
+                    EnvironmentalDamage(GetGUID(), DAMAGE_LAVA, damage);
+                else
+                    EnvironmentalDamage(GetGUID(), DAMAGE_SLIME, damage);
             }
         }
     }
-    else if (m_MirrorTimer[FIRE_TIMER] != DISABLED_MIRROR_TIMER)
+    else
         m_MirrorTimer[FIRE_TIMER] = DISABLED_MIRROR_TIMER;
 
     // Recheck timers flag
     m_MirrorTimerFlags&=~UNDERWATER_EXIST_TIMERS;
-    for (int i = 0; i< MAX_TIMERS;++i)
-    {
+    for (int i = 0; i< MAX_TIMERS; ++i)
         if (m_MirrorTimer[i]!=DISABLED_MIRROR_TIMER)
         {
             m_MirrorTimerFlags|=UNDERWATER_EXIST_TIMERS;
-            return;
+            break;
         }
-    }
+    m_MirrorTimerFlagsLast = m_MirrorTimerFlags;
 }
+
 ///The player sobers by 256 every 10 seconds
 void Player::HandleSobering()
 {
@@ -1551,6 +1564,7 @@ bool Player::TeleportTo(uint32 mapid, float x, float y, float z, float orientati
         sLog.outError("TeleportTo: invalid map %d or absent instance template.", mapid);
         return false;
     }
+
     // preparing unsummon pet if lost (we must get pet before teleportation or will not find it later)
     Pet* pet = GetPet();
 
@@ -7505,7 +7519,6 @@ void Player::SendLoot(uint64 guid, LootType loot_type)
                             SendLootRelease(guid);
                             return;
                         }
-
             if(lootid)
             {
                 sLog.outDebug("       if(lootid)");
@@ -7593,8 +7606,6 @@ void Player::SendLoot(uint64 guid, LootType loot_type)
             bones->lootForBody = true;
             uint32 pLevel = bones->loot.gold;
             bones->loot.clear();
-            if(GetBattleGround()->GetTypeID() == BATTLEGROUND_AV)
-                loot->FillLoot(1, LootTemplates_Creature, this, false);
             // It may need a better formula
             // Now it works like this: lvl10: ~6copper, lvl70: ~9silver
             bones->loot.gold = (uint32)( urand(50, 150) * 0.016f * pow( ((float)pLevel)/5.76f, 2.5f) * sWorld.getRate(RATE_DROP_MONEY) );
@@ -7940,86 +7951,81 @@ void Player::SendInitWorldStates(bool forceZone, uint32 forceZoneId)
             }
             break;
         case 2597:                                          // AV
-            if (bg && bg->GetTypeID() == BATTLEGROUND_AV)
-                bg->FillInitialWorldStates(data);
-            else
-            {
-                data << uint32(0x7ae) << uint32(0x1);           // 7 snowfall n
-                data << uint32(0x532) << uint32(0x1);           // 8 frostwolfhut hc
-                data << uint32(0x531) << uint32(0x0);           // 9 frostwolfhut ac
-                data << uint32(0x52e) << uint32(0x0);           // 10 stormpike firstaid a_a
-                data << uint32(0x571) << uint32(0x0);           // 11 east frostwolf tower horde assaulted -unused
-                data << uint32(0x570) << uint32(0x0);           // 12 west frostwolf tower horde assaulted - unused
-                data << uint32(0x567) << uint32(0x1);           // 13 frostwolfe c
-                data << uint32(0x566) << uint32(0x1);           // 14 frostwolfw c
-                data << uint32(0x550) << uint32(0x1);           // 15 irondeep (N) ally
-                data << uint32(0x544) << uint32(0x0);           // 16 ice grave a_a
-                data << uint32(0x536) << uint32(0x0);           // 17 stormpike grave h_c
-                data << uint32(0x535) << uint32(0x1);           // 18 stormpike grave a_c
-                data << uint32(0x518) << uint32(0x0);           // 19 stoneheart grave a_a
-                data << uint32(0x517) << uint32(0x0);           // 20 stoneheart grave h_a
-                data << uint32(0x574) << uint32(0x0);           // 21 1396 unk
-                data << uint32(0x573) << uint32(0x0);           // 22 iceblood tower horde assaulted -unused
-                data << uint32(0x572) << uint32(0x0);           // 23 towerpoint horde assaulted - unused
-                data << uint32(0x56f) << uint32(0x0);           // 24 1391 unk
-                data << uint32(0x56e) << uint32(0x0);           // 25 iceblood a
-                data << uint32(0x56d) << uint32(0x0);           // 26 towerp a
-                data << uint32(0x56c) << uint32(0x0);           // 27 frostwolfe a
-                data << uint32(0x56b) << uint32(0x0);           // 28 froswolfw a
-                data << uint32(0x56a) << uint32(0x1);           // 29 1386 unk
-                data << uint32(0x569) << uint32(0x1);           // 30 iceblood c
-                data << uint32(0x568) << uint32(0x1);           // 31 towerp c
-                data << uint32(0x565) << uint32(0x0);           // 32 stoneh tower a
-                data << uint32(0x564) << uint32(0x0);           // 33 icewing tower a
-                data << uint32(0x563) << uint32(0x0);           // 34 dunn a
-                data << uint32(0x562) << uint32(0x0);           // 35 duns a
-                data << uint32(0x561) << uint32(0x0);           // 36 stoneheart bunker alliance assaulted - unused
-                data << uint32(0x560) << uint32(0x0);           // 37 icewing bunker alliance assaulted - unused
-                data << uint32(0x55f) << uint32(0x0);           // 38 dunbaldar south alliance assaulted - unused
-                data << uint32(0x55e) << uint32(0x0);           // 39 dunbaldar north alliance assaulted - unused
-                data << uint32(0x55d) << uint32(0x0);           // 40 stone tower d
-                data << uint32(0x3c6) << uint32(0x0);           // 41 966 unk
-                data << uint32(0x3c4) << uint32(0x0);           // 42 964 unk
-                data << uint32(0x3c2) << uint32(0x0);           // 43 962 unk
-                data << uint32(0x516) << uint32(0x1);           // 44 stoneheart grave a_c
-                data << uint32(0x515) << uint32(0x0);           // 45 stonheart grave h_c
-                data << uint32(0x3b6) << uint32(0x0);           // 46 950 unk
-                data << uint32(0x55c) << uint32(0x0);           // 47 icewing tower d
-                data << uint32(0x55b) << uint32(0x0);           // 48 dunn d
-                data << uint32(0x55a) << uint32(0x0);           // 49 duns d
-                data << uint32(0x559) << uint32(0x0);           // 50 1369 unk
-                data << uint32(0x558) << uint32(0x0);           // 51 iceblood d
-                data << uint32(0x557) << uint32(0x0);           // 52 towerp d
-                data << uint32(0x556) << uint32(0x0);           // 53 frostwolfe d
-                data << uint32(0x555) << uint32(0x0);           // 54 frostwolfw d
-                data << uint32(0x554) << uint32(0x1);           // 55 stoneh tower c
-                data << uint32(0x553) << uint32(0x1);           // 56 icewing tower c
-                data << uint32(0x552) << uint32(0x1);           // 57 dunn c
-                data << uint32(0x551) << uint32(0x1);           // 58 duns c
-                data << uint32(0x54f) << uint32(0x0);           // 59 irondeep (N) horde
-                data << uint32(0x54e) << uint32(0x0);           // 60 irondeep (N) ally
-                data << uint32(0x54d) << uint32(0x1);           // 61 mine (S) neutral
-                data << uint32(0x54c) << uint32(0x0);           // 62 mine (S) horde
-                data << uint32(0x54b) << uint32(0x0);           // 63 mine (S) ally
-                data << uint32(0x545) << uint32(0x0);           // 64 iceblood h_a
-                data << uint32(0x543) << uint32(0x1);           // 65 iceblod h_c
-                data << uint32(0x542) << uint32(0x0);           // 66 iceblood a_c
-                data << uint32(0x540) << uint32(0x0);           // 67 snowfall h_a
-                data << uint32(0x53f) << uint32(0x0);           // 68 snowfall a_a
-                data << uint32(0x53e) << uint32(0x0);           // 69 snowfall h_c
-                data << uint32(0x53d) << uint32(0x0);           // 70 snowfall a_c
-                data << uint32(0x53c) << uint32(0x0);           // 71 frostwolf g h_a
-                data << uint32(0x53b) << uint32(0x0);           // 72 frostwolf g a_a
-                data << uint32(0x53a) << uint32(0x1);           // 73 frostwolf g h_c
-                data << uint32(0x539) << uint32(0x0);           // 74 frostwolf g a_c
-                data << uint32(0x538) << uint32(0x0);           // 75 stormpike grave h_a
-                data << uint32(0x537) << uint32(0x0);           // 76 stormpike grave a_a
-                data << uint32(0x534) << uint32(0x0);           // 77 frostwolf hut h_a
-                data << uint32(0x533) << uint32(0x0);           // 78 frostwolf hut a_a
-                data << uint32(0x530) << uint32(0x0);           // 79 stormpike first aid h_a
-                data << uint32(0x52f) << uint32(0x0);           // 80 stormpike first aid h_c
-                data << uint32(0x52d) << uint32(0x1);           // 81 stormpike first aid a_c
-            }
+            data << uint32(0x7ae) << uint32(0x1);           // 7
+            data << uint32(0x532) << uint32(0x1);           // 8
+            data << uint32(0x531) << uint32(0x0);           // 9
+            data << uint32(0x52e) << uint32(0x0);           // 10
+            data << uint32(0x571) << uint32(0x0);           // 11
+            data << uint32(0x570) << uint32(0x0);           // 12
+            data << uint32(0x567) << uint32(0x1);           // 13
+            data << uint32(0x566) << uint32(0x1);           // 14
+            data << uint32(0x550) << uint32(0x1);           // 15
+            data << uint32(0x544) << uint32(0x0);           // 16
+            data << uint32(0x536) << uint32(0x0);           // 17
+            data << uint32(0x535) << uint32(0x1);           // 18
+            data << uint32(0x518) << uint32(0x0);           // 19
+            data << uint32(0x517) << uint32(0x0);           // 20
+            data << uint32(0x574) << uint32(0x0);           // 21
+            data << uint32(0x573) << uint32(0x0);           // 22
+            data << uint32(0x572) << uint32(0x0);           // 23
+            data << uint32(0x56f) << uint32(0x0);           // 24
+            data << uint32(0x56e) << uint32(0x0);           // 25
+            data << uint32(0x56d) << uint32(0x0);           // 26
+            data << uint32(0x56c) << uint32(0x0);           // 27
+            data << uint32(0x56b) << uint32(0x0);           // 28
+            data << uint32(0x56a) << uint32(0x1);           // 29
+            data << uint32(0x569) << uint32(0x1);           // 30
+            data << uint32(0x568) << uint32(0x1);           // 13
+            data << uint32(0x565) << uint32(0x0);           // 32
+            data << uint32(0x564) << uint32(0x0);           // 33
+            data << uint32(0x563) << uint32(0x0);           // 34
+            data << uint32(0x562) << uint32(0x0);           // 35
+            data << uint32(0x561) << uint32(0x0);           // 36
+            data << uint32(0x560) << uint32(0x0);           // 37
+            data << uint32(0x55f) << uint32(0x0);           // 38
+            data << uint32(0x55e) << uint32(0x0);           // 39
+            data << uint32(0x55d) << uint32(0x0);           // 40
+            data << uint32(0x3c6) << uint32(0x4);           // 41
+            data << uint32(0x3c4) << uint32(0x6);           // 42
+            data << uint32(0x3c2) << uint32(0x4);           // 43
+            data << uint32(0x516) << uint32(0x1);           // 44
+            data << uint32(0x515) << uint32(0x0);           // 45
+            data << uint32(0x3b6) << uint32(0x6);           // 46
+            data << uint32(0x55c) << uint32(0x0);           // 47
+            data << uint32(0x55b) << uint32(0x0);           // 48
+            data << uint32(0x55a) << uint32(0x0);           // 49
+            data << uint32(0x559) << uint32(0x0);           // 50
+            data << uint32(0x558) << uint32(0x0);           // 51
+            data << uint32(0x557) << uint32(0x0);           // 52
+            data << uint32(0x556) << uint32(0x0);           // 53
+            data << uint32(0x555) << uint32(0x0);           // 54
+            data << uint32(0x554) << uint32(0x1);           // 55
+            data << uint32(0x553) << uint32(0x1);           // 56
+            data << uint32(0x552) << uint32(0x1);           // 57
+            data << uint32(0x551) << uint32(0x1);           // 58
+            data << uint32(0x54f) << uint32(0x0);           // 59
+            data << uint32(0x54e) << uint32(0x0);           // 60
+            data << uint32(0x54d) << uint32(0x1);           // 61
+            data << uint32(0x54c) << uint32(0x0);           // 62
+            data << uint32(0x54b) << uint32(0x0);           // 63
+            data << uint32(0x545) << uint32(0x0);           // 64
+            data << uint32(0x543) << uint32(0x1);           // 65
+            data << uint32(0x542) << uint32(0x0);           // 66
+            data << uint32(0x540) << uint32(0x0);           // 67
+            data << uint32(0x53f) << uint32(0x0);           // 68
+            data << uint32(0x53e) << uint32(0x0);           // 69
+            data << uint32(0x53d) << uint32(0x0);           // 70
+            data << uint32(0x53c) << uint32(0x0);           // 71
+            data << uint32(0x53b) << uint32(0x0);           // 72
+            data << uint32(0x53a) << uint32(0x1);           // 73
+            data << uint32(0x539) << uint32(0x0);           // 74
+            data << uint32(0x538) << uint32(0x0);           // 75
+            data << uint32(0x537) << uint32(0x0);           // 76
+            data << uint32(0x534) << uint32(0x0);           // 77
+            data << uint32(0x533) << uint32(0x0);           // 78
+            data << uint32(0x530) << uint32(0x0);           // 79
+            data << uint32(0x52f) << uint32(0x0);           // 80
+            data << uint32(0x52d) << uint32(0x1);           // 81
             break;
         case 3277:                                          // WS
             if (bg && bg->GetTypeID() == BATTLEGROUND_WS)
@@ -14041,8 +14047,7 @@ bool Player::HasQuestForItem( uint32 itemid ) const
 
             // hide quest if player is in raid-group and quest is no raid quest
             if(GetGroup() && GetGroup()->isRaidGroup() && qinfo->GetType() != QUEST_TYPE_RAID)
-                if(!InBattleGround()) //there are two ways.. we can make every bg-quest a raidquest, or add this code here.. i don't know if this can be exploited by other quests, but i think all other quests depend on a specific area.. but keep this in mind, if something strange happens later
-                    continue;
+                continue;
 
             // There should be no mixed ReqItem/ReqSource drop
             // This part for ReqItem drop
@@ -14092,11 +14097,10 @@ void Player::SendQuestReward( Quest const *pQuest, uint32 XP, Object * questGive
 {
     uint32 questid = pQuest->GetQuestId();
     sLog.outDebug( "WORLD: Sent SMSG_QUESTGIVER_QUEST_COMPLETE quest = %u", questid );
-
-	WorldPacket data( SMSG_QUESTGIVER_QUEST_COMPLETE, (4+4+4+4+4) );
+    WorldPacket data( SMSG_QUESTGIVER_QUEST_COMPLETE, (4+4+4+4+4) );
     data << uint32(questid);
 
-	gameeventmgr.HandleQuestComplete(questid);
+    gameeventmgr.HandleQuestComplete(questid);
 
     if ( getLevel() < sWorld.getConfig(CONFIG_MAX_PLAYER_LEVEL) )
     {
@@ -19579,15 +19583,15 @@ void Player::UpdateUnderwaterState( Map* m, float x, float y, float z )
     ZLiquidStatus res = m->getLiquidStatus(x, y, z, MAP_ALL_LIQUIDS, &liquid_status);
     if (!res)
     {
-        m_MirrorTimerFlags &= ~(UNDERWATER_INWATER|UNDERWATER_INLAVA|UNDERWARER_INDARKWATER);
+        m_MirrorTimerFlags &= ~(UNDERWATER_INWATER|UNDERWATER_INLAVA|UNDERWATER_INSLIME|UNDERWARER_INDARKWATER);
         // Small hack for enable breath in WMO
         if (IsInWater())
             m_MirrorTimerFlags|=UNDERWATER_INWATER;
         return;
     }
 
-    // Under water position
-    if (liquid_status.type&(MAP_LIQUID_TYPE_WATER|MAP_LIQUID_TYPE_OCEAN))
+    // All liquids type - check under water position
+    if (liquid_status.type&(MAP_LIQUID_TYPE_WATER|MAP_LIQUID_TYPE_OCEAN|MAP_LIQUID_TYPE_MAGMA|MAP_LIQUID_TYPE_SLIME))
     {
         if ( res & LIQUID_MAP_UNDER_WATER)
             m_MirrorTimerFlags |= UNDERWATER_INWATER;
@@ -19595,19 +19599,27 @@ void Player::UpdateUnderwaterState( Map* m, float x, float y, float z )
             m_MirrorTimerFlags &= ~UNDERWATER_INWATER;
     }
 
-    // Allow trawel in dark water on taxi or transport
+    // Allow travel in dark water on taxi or transport
     if (liquid_status.type & MAP_LIQUID_TYPE_DARK_WATER && !isInFlight() && !(GetUnitMovementFlags()&MOVEMENTFLAG_ONTRANSPORT))
         m_MirrorTimerFlags |= UNDERWARER_INDARKWATER;
-     else
+    else
         m_MirrorTimerFlags &= ~UNDERWARER_INDARKWATER;
 
-    // in lava check, anywhere under lava level
-    if (liquid_status.type&(MAP_LIQUID_TYPE_MAGMA|MAP_LIQUID_TYPE_SLIME))
+    // in lava check, anywhere in lava level
+    if (liquid_status.type&MAP_LIQUID_TYPE_MAGMA)
     {
         if (res & (LIQUID_MAP_UNDER_WATER|LIQUID_MAP_IN_WATER|LIQUID_MAP_WATER_WALK))
             m_MirrorTimerFlags |= UNDERWATER_INLAVA;
         else
             m_MirrorTimerFlags &= ~UNDERWATER_INLAVA;
+    }
+    // in slime check, anywhere in slime level
+    if (liquid_status.type&MAP_LIQUID_TYPE_SLIME)
+    {
+        if (res & (LIQUID_MAP_UNDER_WATER|LIQUID_MAP_IN_WATER|LIQUID_MAP_WATER_WALK))
+            m_MirrorTimerFlags |= UNDERWATER_INSLIME;
+        else
+            m_MirrorTimerFlags &= ~UNDERWATER_INSLIME;
     }
 }
 
@@ -19638,13 +19650,22 @@ bool ItemPosCount::isContainedIn(ItemPosCountVec const& vec) const
     return false;
 }
 
-bool Player::isAllowUseBattleGroundObject()
+bool Player::CanUseBattleGroundObject()
 {
     return ( //InBattleGround() &&                          // in battleground - not need, check in other cases
-             !IsMounted() &&                                // not mounted
+             //!IsMounted() && - not correct, player is dismounted when he clicks on flag
              !HasStealthAura() &&                           // not stealthed
              !HasInvisibilityAura() &&                      // not invisible
              !HasAura(SPELL_RECENTLY_DROPPED_FLAG, 0) &&    // can't pickup
+             //TODO player cannot use object when he is invulnerable (immune) - (ice block, divine shield, divine protection, divine intervention ...)
+             isAlive()                                      // live player
+           );
+}
+
+bool Player::CanCaptureTowerPoint()
+{
+    return ( !HasStealthAura() &&                           // not stealthed
+             !HasInvisibilityAura() &&                      // not invisible
              isAlive()                                      // live player
            );
 }
