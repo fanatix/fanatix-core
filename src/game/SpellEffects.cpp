@@ -1258,20 +1258,41 @@ void Spell::EffectDummy(uint32 i)
             // Execute
             if(m_spellInfo->SpellFamilyFlags & 0x20000000)
             {
-                if(!unitTarget)
-                    return;
+                 if(!unitTarget)
+                     return;
+        int lastrage=0;
+        uint32 rage2 = 30;
+        uint32 rage = m_caster->GetPower(POWER_RAGE);
 
-                uint32 rage = m_caster->GetPower(POWER_RAGE);
-                // Glyph of Execution bonus
-                if (Aura *aura = m_caster->GetDummyAura(58367))
-                    rage+=aura->GetModifier()->m_amount;
+        if(m_targets.getUnitTarget()->GetHealth() < m_targets.getUnitTarget()->GetMaxHealth()*0.2) rage2=rage; //Clean execute, ignore Sudden death
+        else if(m_caster->HasAura(29723)) lastrage=3;
+        else if (m_caster->HasAura(29725)) lastrage=7;
+        else if (m_caster->HasAura(29724)) lastrage=10;
+		
+                 // Glyph of Execution bonus
+                 if (Aura *aura = m_caster->GetDummyAura(58367))
+                 rage2+=aura->GetModifier()->m_amount;
+ 
+                int32 basePoints0 = damage+int32(rage2 * m_spellInfo->DmgMultiplier[i] +
+                                                  m_caster->GetTotalAttackPowerValue(BASE_ATTACK)*0.2f);
+                 m_caster->CastCustomSpell(unitTarget, 20647, &basePoints0, NULL, NULL, true, 0);
 
-                int32 basePoints0 = damage+int32(rage * m_spellInfo->DmgMultiplier[i] +
-                                                 m_caster->GetTotalAttackPowerValue(BASE_ATTACK)*0.2f);
-                m_caster->CastCustomSpell(unitTarget, 20647, &basePoints0, NULL, NULL, true, 0);
-                m_caster->SetPower(POWER_RAGE,0);
-                return;
-            }
+        if(m_caster->HasAura(52437)) m_caster->RemoveSingleSpellAurasFromStack(52437);
+        if(lastrage !=0  ) 
+        {
+        if(rage-30 < lastrage)
+            m_caster->SetPower(POWER_RAGE,lastrage);
+        else
+            m_caster->SetPower(POWER_RAGE,rage-30);
+
+        }
+        else
+        {
+               		m_caster->SetPower(POWER_RAGE,0);
+        }
+		
+                 return;
+             }
             // Slam
             if(m_spellInfo->SpellFamilyFlags & 0x0000000000200000LL)
             {
@@ -4900,15 +4921,6 @@ void Spell::EffectScriptEffect(uint32 effIndex)
                     m_caster->RemoveSpellsCausingAura(SPELL_AURA_MOD_ROOT);
                     m_caster->RemoveSpellsCausingAura(SPELL_AURA_MOD_DECREASE_SPEED);
                     return;
-                }
-                // Escape artist
-                case 20589:
-                {
-                    if(!m_caster)
-                        return;
-                    m_caster->RemoveSpellsCausingAura(SPELL_AURA_MOD_ROOT);
-                    m_caster->RemoveSpellsCausingAura(SPELL_AURA_MOD_DECREASE_SPEED);
-                    break;
                 }
                 // Mirren's Drinking Hat
                 case 29830:

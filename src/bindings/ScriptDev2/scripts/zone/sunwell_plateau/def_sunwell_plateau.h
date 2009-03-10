@@ -24,10 +24,11 @@ extern uint64 KalecWall;
 #define DATA_ALYTHESS               11
 #define DATA_SACROLASH              12
 #define DATA_MURU                   13
-#define DATA_ENTROPIUS		    32
+#define DATA_ENTROPIUS		        32
 #define DATA_KILJAEDEN              14
 #define DATA_KILJAEDEN_CONTROLLER   15
 #define DATA_ANVEENA                16
+#define DATA_MADRIGOSA              33
 
 /*** GameObjects ***/
 #define DATA_GO_FORCEFIELD          17

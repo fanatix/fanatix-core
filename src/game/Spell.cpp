@@ -3569,6 +3569,25 @@ void Spell::TriggerSpell()
 
 uint8 Spell::CanCast(bool strict)
 {
+      // Sudden death
+      bool ex=false;
+      switch(m_spellInfo->Id)
+      {
+      case 5308:
+      case 20658:
+      case 20660:
+      case 20661:
+      case 20662:
+      case 25234:
+      case 25236:
+      case 47470:
+      case 20647:
+      case 47471: ex= true;
+      }
+      
+      
+      if(ex && m_caster->HasAura(52437)) return 0; // Allow execute
+
     // check cooldowns to prevent cheating
     if(m_caster->GetTypeId()==TYPEID_PLAYER && ((Player*)m_caster)->HasSpellCooldown(m_spellInfo->Id))
     {

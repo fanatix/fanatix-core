@@ -424,7 +424,7 @@ struct MANGOS_DLL_DECL mob_ingvar_throw_dummyAI : public ScriptedAI
 
     void Reset()
     {
-        Unit* target = SummonCreature(ENTRY_THROW_TARGET,50,m_creature);
+        /*Unit* target = SummonCreature(ENTRY_THROW_TARGET,50,m_creature);
         if(target)
         {
             DoCast(m_creature, HeroicMode ? H_SPELL_SHADOW_AXE_DAMAGE : SPELL_SHADOW_AXE_DAMAGE);
@@ -432,7 +432,7 @@ struct MANGOS_DLL_DECL mob_ingvar_throw_dummyAI : public ScriptedAI
             target->GetPosition(x,y,z);
             m_creature->GetMotionMaster()->MovePoint(0,x,y,z);
         }
-        Despawn_Timer = 7000;
+        Despawn_Timer = 7000;*/
     }
     void AttackStart(Unit* who) {}
     void MoveInLineOfSight(Unit* who) {}
