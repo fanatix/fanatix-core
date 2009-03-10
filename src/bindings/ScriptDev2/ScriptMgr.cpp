@@ -506,7 +506,7 @@ extern void AddSC_stratholme();
 extern void AddSC_instance_sunwell_plateau();
 extern void AddSC_boss_kalecgos();
 extern void AddSC_boss_brutallus();
-extern void AddSC_boss_felmist();
+extern void AddSC_boss_felmyst();
 extern void AddSC_boss_eredar_twins();
 extern void AddSC_boss_muru_entropius();
 //extern void AddSC_boss_kiljaeden();
@@ -1945,7 +1945,7 @@ void ScriptsInit()
     AddSC_instance_sunwell_plateau();
     AddSC_boss_kalecgos();
     AddSC_boss_brutallus();
-    AddSC_boss_felmist();
+    AddSC_boss_felmyst();
     AddSC_boss_eredar_twins();
     AddSC_boss_muru_entropius();
     //AddSC_boss_kiljaeden();
