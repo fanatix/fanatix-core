@@ -396,7 +396,7 @@ void Spell::EffectSchoolDMG(uint32 effect_idx)
                     damage = uint32(damage * (m_caster->GetTotalAttackPowerValue(BASE_ATTACK)) / 100);
                 }
                 // Shield Slam
-                else if(m_spellInfo->SpellFamilyFlags & 0x100000000LL)
+                else if(m_spellInfo->SpellFamilyFlags & 0x0000020000000000LL)
                     damage += int32(m_caster->GetShieldBlockValue());
                 // Victory Rush
                 else if(m_spellInfo->SpellFamilyFlags & 0x10000000000LL)
@@ -615,6 +615,11 @@ void Spell::EffectSchoolDMG(uint32 effect_idx)
                     float averange = (m_caster->GetFloatValue(UNIT_FIELD_MINDAMAGE) + m_caster->GetFloatValue(UNIT_FIELD_MAXDAMAGE)) / 2;
                     int32 count = m_caster->CalculateSpellDamage(m_spellInfo, 2, m_spellInfo->EffectBasePoints[2], unitTarget);
                     damage += count * int32(averange * IN_MILISECONDS) / m_caster->GetAttackTime(BASE_ATTACK);
+                }
+                // Shield of Righteousness
+                else if(m_spellInfo->SpellFamilyFlags&0x0010000000000000LL)
+                {
+                    damage+=int32(m_caster->GetShieldBlockValue());
                 }
                 break;
             }
@@ -4879,7 +4884,7 @@ void Spell::EffectScriptEffect(uint32 effIndex)
                         unitTarget->CastSpell(unitTarget, 25863, false);
                     else
                         unitTarget->CastSpell(unitTarget, 26655, false);
-                    break;
+                    return;
                 }
                 // Piccolo of the Flaming Fire
                 case 17512:
@@ -4887,7 +4892,14 @@ void Spell::EffectScriptEffect(uint32 effIndex)
                     if(!unitTarget || unitTarget->GetTypeId() != TYPEID_PLAYER)
                         return;
                     unitTarget->HandleEmoteCommand(EMOTE_STATE_DANCE);
-                    break;
+                    return;
+                }
+                // Escape artist
+                case 20589:
+                {
+                    m_caster->RemoveSpellsCausingAura(SPELL_AURA_MOD_ROOT);
+                    m_caster->RemoveSpellsCausingAura(SPELL_AURA_MOD_DECREASE_SPEED);
+                    return;
                 }
                 // Escape artist
                 case 20589:

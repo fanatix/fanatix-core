@@ -354,7 +354,7 @@ struct MANGOS_DLL_DECL mob_annhylde_the_callerAI : public ScriptedAI
                 Resurect_Phase = 1;
                 break;
             case 2:
-                //m_creature->DealDamage(m_creature,m_creature->GetHealth());
+                m_creature->DealDamage(m_creature,m_creature->GetHealth(), NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, NULL, false);
                 m_creature->RemoveCorpse();
                 break;
             }
@@ -424,15 +424,15 @@ struct MANGOS_DLL_DECL mob_ingvar_throw_dummyAI : public ScriptedAI
 
     void Reset()
     {
-        /*Unit* target = FindCreature(ENTRY_THROW_TARGET,50,m_creature);
-        //if(target)
+        Unit* target = SummonCreature(ENTRY_THROW_TARGET,50,m_creature);
+        if(target)
         {
             DoCast(m_creature, HeroicMode ? H_SPELL_SHADOW_AXE_DAMAGE : SPELL_SHADOW_AXE_DAMAGE);
             float x,y,z;
             target->GetPosition(x,y,z);
             m_creature->GetMotionMaster()->MovePoint(0,x,y,z);
         }
-        Despawn_Timer = 7000;*/
+        Despawn_Timer = 7000;
     }
     void AttackStart(Unit* who) {}
     void MoveInLineOfSight(Unit* who) {}
@@ -441,7 +441,7 @@ struct MANGOS_DLL_DECL mob_ingvar_throw_dummyAI : public ScriptedAI
     {
         if(Despawn_Timer < diff)
         {
-            //m_creature->DealDamage(m_creature, m_creature->GetHealth());
+            m_creature->DealDamage(m_creature,m_creature->GetHealth(), NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, NULL, false);
             m_creature->RemoveCorpse();
             Despawn_Timer = 0;
         }else Despawn_Timer -= diff;

@@ -1,4 +1,4 @@
-delete from mangos_string where entry>10746 and entry<10781;
+﻿delete from mangos_string where entry>10746 and entry<10781;
 INSERT INTO mangos_string VALUES
 (10747,'Alliance',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
 (10748,'Horde',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
@@ -79,3 +79,6 @@ UPDATE mangos_string SET content_loc3='Der General der Horde ist tot!' WHERE ent
 
 
 -- CHAT_MSG_BG_SYSTEM_ALLIANCE', 'txt': '$N hat den Schneewehenfriedhof besetzt! Wenn niemand eingreift, erlangt die Allianz die Kontrolle \xc3\xbcber ihn
+
+
+
