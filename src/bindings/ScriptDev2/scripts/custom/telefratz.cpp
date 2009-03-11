@@ -137,7 +137,7 @@ void SendDefaultMenu_telefratz(Player *player, Creature *_Creature, uint32 actio
 		break;
 		// Shattrath City
 		case 1287:
-			if( player->getLevel() >= 0)
+			if( player->getLevel() >= 65)
 			{
 				player->CLOSE_GOSSIP_MENU();
 				player->TeleportTo(530, -1850.209961f, 5435.821777f, -10.961435f, 3.403913f);
