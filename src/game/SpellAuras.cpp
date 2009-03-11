@@ -2325,6 +2325,21 @@ void Aura::HandleAuraDummy(bool apply, bool Real)
                 ((Player*)m_target)->AddSpellMod(m_spellmod, apply);
                 return;
             }
+            //Druid, Survival Instincts
+            if(GetSpellProto()->SpellIconID == 3707 && GetSpellProto()->SpellVisual[0] == 2758)
+            {
+                if(!m_target)
+                    return;
+
+                if(apply)
+                {
+                   int32 bp0 = int32(m_target->GetMaxHealth() * m_modifier.m_amount / 100);
+                   m_target->CastCustomSpell(m_target, 50322, &bp0, NULL, NULL, true);
+                }
+                else if(!apply && m_removeMode != AURA_REMOVE_BY_DEFAULT)
+                  m_target-> RemoveAurasDueToSpell(50322);
+                return;
+            }
             break;
         }
         case SPELLFAMILY_DRUID:
@@ -4843,6 +4858,7 @@ void Aura::HandleAuraModIncreaseHealth(bool apply, bool Real)
         case 28726:                                         // Nightmare Seed ( Nightmare Seed )
         case 34511:                                         // Valor (Bulwark of Kings, Bulwark of the Ancient Kings)
         case 44055:                                         // Tremendous Fortitude (Battlemaster's Alacrity)
+        case 50322:                                         // Druid Survival Instincts
         {
             if(Real)
             {

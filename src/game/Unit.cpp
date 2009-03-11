@@ -1730,6 +1730,31 @@ void Unit::CalcAbsorbResist(Unit *pVictim,SpellSchoolMask schoolMask, DamageEffe
                         currentAbsorb = spellProto->EffectBasePoints[1];
                     break;
                 }
+                // Incanter's Absorption || Has no spellfamilyname for some reason
+                AuraList const& DummmyAuras = pVictim->GetAurasByType(SPELL_AURA_DUMMY);
+                for(AuraList::const_iterator i = DummmyAuras.begin(); i != DummmyAuras.end(); ++i)
+                {
+                    SpellEntry const* spellInfo = (*i)->GetSpellProto();
+                    if(spellInfo->SpellIconID == 2941 && spellInfo->EffectBasePoints[0] > 0)
+                    {
+                          int32 absorbed = int32(currentAbsorb - damage / 100);
+                          int32 spell_dmg = int32(absorbed * (spellInfo->EffectBasePoints[0] + 1) / 100);
+
+                          if(pVictim->HasAura(44413,0))
+                          {
+                              Aura* existing_ia =  pVictim->GetAura(44413,0);
+                              Modifier* existing_ia_mod = existing_ia->GetModifier();
+                              if(existing_ia_mod && !(existing_ia_mod->m_amount >= (pVictim->GetMaxHealth() * 5 / 100)))
+                                 spell_dmg += existing_ia_mod->m_amount;
+                              else
+                                  break;
+                          }
+                          if(spell_dmg > int32(pVictim->GetMaxHealth() * 5 / 100))  // "Total spell damage increase cannot exceed 5% of maximum health"
+                               spell_dmg = int32(pVictim->GetMaxHealth() * 5 / 100);
+                          pVictim->CastCustomSpell(pVictim, 44413, &spell_dmg, NULL, NULL, false);
+                          break;
+                     }
+                }
                 break;
             }
             case SPELLFAMILY_DRUID:
@@ -4857,6 +4882,19 @@ bool Unit::HandleDummyAuraProc(Unit *pVictim, uint32 damage, Aura* triggeredByAu
                 triggered_spell_id = 29077;
                 break;
             }
+	   //Arcane Potency
+           if (dummySpell->SpellIconID == 2120)
+           {
+               if(!procSpell)
+                    return false;
+
+               switch (dummySpell->Id)
+	          {
+		case 31571: triggered_spell_id = 57529; break;
+		case 31572: triggered_spell_id = 57531; break;
+		}
+	       break;
+           }
             // Hot Streak
             if (dummySpell->SpellIconID == 2999)
             {
@@ -5605,10 +5643,24 @@ bool Unit::HandleDummyAuraProc(Unit *pVictim, uint32 damage, Aura* triggeredByAu
                     basepoints0 = triggerAmount*damage/100;
                     break;
                 }
+				// Glyph of Spiritual Attunement
+				case 54924:
+				{
+					// if healed by another unit (pVictim)
+                    if(this == pVictim)
+                        return false;
+
+					target = this;
+					triggered_spell_id = 55111;
+					basepoints0 = triggerAmount*damage/100;
+					break;
+				}
                 // Glyph of Holy Light
                 case 54937:
                 {
-                    triggered_spell_id = 54968;
+                    if( procSpell->SpellFamilyFlags & 0x00000000C0000000LL)
+						return false;
+					triggered_spell_id = 54968;
                     basepoints0 = triggerAmount*damage/100;
                     break;
                 }
@@ -10359,6 +10411,7 @@ bool InitTriggerAuraData()
     isTriggerAura[SPELL_AURA_PRAYER_OF_MENDING] = true;
     isTriggerAura[SPELL_AURA_PROC_TRIGGER_SPELL_WITH_VALUE] = true;
     isTriggerAura[SPELL_AURA_MOD_DAMAGE_FROM_CASTER] = true;
+    isTriggerAura[SPELL_AURA_MOD_SPELL_CRIT_CHANCE] = true;
 
     isNonTriggerAura[SPELL_AURA_MOD_POWER_REGEN]=true;
     isNonTriggerAura[SPELL_AURA_REDUCE_PUSHBACK]=true;
@@ -10616,6 +10669,10 @@ void Unit::ProcDamageAndSpellFor( bool isVictim, Unit * pTarget, uint32 procFlag
             case SPELL_AURA_MOD_DAMAGE_FROM_CASTER:
                 // Compare casters
                 if (triggeredByAura->GetCasterGUID() != pTarget->GetGUID())
+                    continue;
+                break;
+            case SPELL_AURA_MOD_SPELL_CRIT_CHANCE:
+                if (!procSpell)
                     continue;
                 break;
             default:

@@ -19444,6 +19444,70 @@ void Player::UpdateZoneDependentAuras( uint32 newZone )
         if(itr->second->autocast && itr->second->IsFitToRequirements(this,newZone,0))
             if( !HasAura(itr->second->spellId,0) )
                 CastSpell(this,itr->second->spellId,true);
+    switch(newZone)
+    {
+        case 2367:                                          // Old Hillsbrad Foothills
+        {
+            // Human Illusion
+            // NOTE: these are removed by RemoveAurasWithInterruptFlags(AURA_INTERRUPT_FLAG_CHANGE_MAP);
+            uint32 spellid = 0;
+            // all horde races
+            if( GetTeam() == HORDE )
+                spellid = getGender() == GENDER_FEMALE ? 35481 : 35480;
+            // and some alliance races
+            else if( getRace() == RACE_NIGHTELF || getRace() == RACE_DRAENEI )
+                spellid = getGender() == GENDER_FEMALE ? 35483 : 35482;
+
+            if(spellid && !HasAura(spellid,0) )
+                CastSpell(this,spellid,true);
+            break;
+        }
+        case 4298:                                          // Plaguelands: The Scarlet Enclave
+        {
+            // Undying Resolve (All Chapters)
+            if(!HasAura(51915,0))
+                CastSpell(this,51915,true);
+            // Chapter IV (Epilogue) 
+            if( GetQuestRewardStatus (12779) )
+            {
+                // Chapter IV (Epilogue) (Chapter III must automatically removed)
+                if(!HasAura(53405,0))
+                    CastSpell(this,53405,true);
+            }
+            // Chapter III 
+            else if( GetQuestRewardStatus (12757) )
+            {
+                RemoveAurasDueToSpell(53081);               // Scarlet Crusade Disguise (Only during Chapter II)
+                // Chapter III (Chapter II must automatically removed)
+                if(!HasAura(53107,0))
+                    CastSpell(this,53107,true);
+            }
+            // Chapter II 
+            else if( GetQuestRewardStatus (12706) )
+            {
+                // Chapter II
+                if(!HasAura(52597,0))
+                    CastSpell(this,52597,true);
+                // Scarlet Crusade Disguise (Only during Chapter II)
+                if( !HasAura(53081,0) && (GetQuestStatus (12755) == QUEST_STATUS_COMPLETE || GetQuestStatus (12756) == QUEST_STATUS_COMPLETE ) )
+                    CastSpell(this,53081,true);
+            }
+            // Chapter II, Chapter III, Chapter IV (Epilogue) 
+            if( GetQuestRewardStatus (12706) || GetQuestRewardStatus (12757) || GetQuestRewardStatus (12779) )
+            {
+                // See Noth Invisibility
+                if( !HasAura(52707,0) && GetQuestRewardStatus (12716) )
+                    CastSpell(this,52707,true);
+                // See Chapel Invisibility
+                if( !HasAura(52950,0) && GetQuestRewardStatus (12727) )
+                    CastSpell(this,52950,true);
+                // Ebon Hold: Chapter II, Skybox
+                if(!HasAura(52598,0))
+                    CastSpell(this,52598,false);
+            }
+            break;
+        }
+    }
 }
 
 void Player::UpdateAreaDependentAuras( uint32 newArea )
@@ -19464,6 +19528,62 @@ void Player::UpdateAreaDependentAuras( uint32 newArea )
         if(itr->second->autocast && itr->second->IsFitToRequirements(this,m_zoneUpdateId,newArea))
             if( !HasAura(itr->second->spellId,0) )
                 CastSpell(this,itr->second->spellId,true);
+    switch(newArea)
+    {
+        // Dragonmaw Illusion
+        case 3759:                                          // Netherwing Ledge
+        case 3939:                                          // Dragonmaw Fortress
+        case 3966:                                          // Dragonmaw Base Camp
+            if( GetDummyAura(40214) )
+            {
+                if( !HasAura(40216,0) )
+                    CastSpell(this,40216,true);
+                if( !HasAura(42016,0) )
+                    CastSpell(this,42016,true);
+            }
+            break;
+        // Dominion Over Acherus (map 0 and map 609 have same areaid)
+        case 4281:                                          // Acherus: The Ebon Hold
+        case 4342:                                          // Acherus: The Ebon Hold
+            // Dominion Over Acherus
+            if( !HasAura(51721,0) && GetQuestRewardStatus (12657) )
+                CastSpell(this,51721,true);
+            // Chapter V
+            if( !HasAura(58354,0) && (( GetQuestStatus (13165) == QUEST_STATUS_COMPLETE || GetQuestRewardStatus (13165) )) )
+            {
+                if(GetTeam() == ALLIANCE)
+                {
+                    if(!GetQuestRewardStatus (13188))
+                        CastSpell(this,58354,true);
+                }
+                else
+                {
+                    if(!GetQuestRewardStatus (13189))
+                        CastSpell(this,58354,true);
+                }
+            }
+            break;
+        // Mist of the Kvaldir
+        case 4028:                                          //Riplash Strand
+        case 4029:                                          //Riplash Ruins
+        case 4106:                                          //Garrosh's Landing
+        case 4031:                                          //Pal'ea
+            CastSpell(this,54119,true);
+            break;
+        default:
+            //Not depend of zone, but depend of quest
+            if( GetTeam() == ALLIANCE )
+            {
+                if( !HasAura(58530,0)  && !GetQuestRewardStatus (13188) && GetQuestRewardStatus (13165))
+                    CastSpell(this,58530,true);                 //Return to Stormwind (Chapter V)
+            }
+            else
+            {
+                if( !HasAura(58551,0)  && !GetQuestRewardStatus (13189) && GetQuestRewardStatus (13165))
+                    CastSpell(this,58551,true);                 //Return to Orgrimmar (Chapter V)
+            }
+            break;
+    }
 }
 
 uint32 Player::GetCorpseReclaimDelay(bool pvp) const

@@ -698,8 +698,8 @@ void Spell::prepareDataForTriggerSystem()
     {
         switch (m_spellInfo->SpellFamilyName)
         {
-            case SPELLFAMILY_MAGE:    // Arcane Missles / Blizzard triggers need do it
-                if (m_spellInfo->SpellFamilyFlags & 0x0000000000200080LL) m_canTrigger = true;
+            case SPELLFAMILY_MAGE:    // Arcane Missles / Blizzard triggers / Clearcasting for Arcane Potency need do it
+                if (m_spellInfo->SpellFamilyFlags & 0x0000000000200080LL || m_spellInfo->SpellIconID == 212) m_canTrigger = true;
             break;
             case SPELLFAMILY_WARLOCK: // For Hellfire Effect / Rain of Fire / Seed of Corruption triggers need do it
                 if (m_spellInfo->SpellFamilyFlags & 0x0000800000000060LL) m_canTrigger = true;
@@ -3634,6 +3634,16 @@ uint8 Spell::CanCast(bool strict)
         }
     }
 
+    if(m_spellInfo->Id == 498 || m_spellInfo->Id == 1022 || m_spellInfo->Id == 5599 || m_spellInfo->Id == 10278)
+    {
+        Unit *target = m_targets.getUnitTarget();
+
+        if(target->HasAura(25771))
+            return SPELL_FAILED_CANT_DO_THAT_RIGHT_NOW;
+    }
+    if(m_spellInfo->Id == 642 && m_caster->HasAura(25771))
+        return SPELL_FAILED_CANT_DO_THAT_RIGHT_NOW;
+
     // caster state requirements
     if(m_spellInfo->CasterAuraState && !m_caster->HasAuraState(AuraState(m_spellInfo->CasterAuraState)))
         return SPELL_FAILED_CASTER_AURASTATE;
@@ -3766,8 +3776,8 @@ uint8 Spell::CanCast(bool strict)
         //Must be behind the target.
         if( m_spellInfo->AttributesEx2 == 0x100000 && (m_spellInfo->AttributesEx & 0x200) == 0x200 && target->HasInArc(M_PI, m_caster) )
         {
-            //Exclusion for Pounce and Mutilate: Facing Limitation was removed in 2.0.1 and 3.0.1, but they still use the same, old Ex-Flags
-            if( (m_spellInfo->SpellFamilyName != SPELLFAMILY_DRUID || m_spellInfo->SpellFamilyFlags != 0x0000000000020000LL) && m_spellInfo->AttributesEx3 != 0x01010400) 
+            //Exclusion for Pounce and Mutilate: Facing Limitation was removed in 2.0.1 and 3.0.3, but they still use the same, old Ex-Flags
+            if((m_spellInfo->SpellFamilyName != SPELLFAMILY_DRUID || m_spellInfo->SpellFamilyFlags != 0x0000000000020000LL) && !(m_spellInfo->SpellFamilyName == SPELLFAMILY_ROGUE && m_spellInfo->SpellFamilyFlags == 0x0020000000000000LL))
             {
                 SendInterrupted(2);
                 return SPELL_FAILED_NOT_BEHIND;

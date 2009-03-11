@@ -5243,6 +5243,35 @@ void Spell::EffectScriptEffect(uint32 effIndex)
                     default:
                         return;
                 }
+				//Judgement of the wise
+				int chance =0;
+				int32 aur =0;
+				if(m_caster->HasAura(31876)) {chance=33;aur=31876;}
+				else if (m_caster->HasAura(31877)) {chance=66;aur=31877;}
+				else if (m_caster->HasAura(31878)) {chance=100;aur=31878;}
+				if(chance != 0)
+				{
+					int32 mana15 = m_caster->GetCreateMana() * 0.15;
+					if(urand(1,100) <= chance) m_caster->CastCustomSpell(m_caster,31930,&mana15,false,false,true,NULL,m_caster->GetDummyAura(aur),m_caster->GetGUID());
+					int countera =0;
+					Group *pGroup = NULL;
+              		if (m_caster->GetTypeId() == TYPEID_PLAYER)
+						pGroup = ((Player*)m_caster)->GetGroup();
+					float radius=100.0f;
+					if( pGroup)
+					{
+						for(GroupReference *itr = pGroup->GetFirstMember(); itr != NULL; itr = itr->next())
+						{
+							Player* Target = itr->getSource();
+							if(Target && Target->isAlive() &&  m_caster->IsFriendlyTo(Target) && m_caster != Target && Target->getPowerType() == POWER_MANA && countera <=10)
+							{
+								countera++;
+								m_caster->CastSpell(Target,57669,true,NULL,m_caster->GetDummyAura(aur),m_caster->GetGUID());
+							}
+						}
+					}
+				}
+
                 // all seals have aura dummy in 2 effect
                 Unit::AuraList const& m_dummyAuras = m_caster->GetAurasByType(SPELL_AURA_DUMMY);
                 for(Unit::AuraList::const_iterator itr = m_dummyAuras.begin(); itr != m_dummyAuras.end(); ++itr)
