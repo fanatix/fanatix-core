@@ -56,7 +56,7 @@ scripts/custom/npc_wyrmresttempel_taxi.cpp \
 scripts/custom/npc_acherus_taxi.cpp \
 scripts/custom/npc_sickness.cpp \
 scripts/custom/paymaster.cpp \
-scripts/custom/teleguy.cpp \
+scripts/custom/telefratz.cpp \
 scripts/go/go_scripts.cpp \
 scripts/guard/guard_ai.cpp \
 scripts/guard/guard_ai.h \

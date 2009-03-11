@@ -77,7 +77,7 @@ extern void AddSC_generic_creature();
 // -- Custom --
 extern void AddSC_npc_acherus_taxi();
 extern void AddSC_npc_wyrmresttempel_taxi();
-extern void AddSC_teleguy();
+extern void AddSC_telefratz();
 extern void AddSC_npc_paymaster();
 extern void AddSC_npc_sickness();
 //extern void AddSC_paradox();
@@ -1514,7 +1514,7 @@ void ScriptsInit()
     // -- Custom --
     AddSC_npc_acherus_taxi();
     AddSC_npc_wyrmresttempel_taxi();
-    AddSC_teleguy();
+    AddSC_telefratz();
 	AddSC_npc_paymaster();
 	AddSC_npc_sickness();
     //AddSC_paradox();
