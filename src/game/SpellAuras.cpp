@@ -1201,6 +1201,11 @@ bool Aura::modStackAmount(int32 num)
         m_stackAmount = 0;
         return true; // need remove aura
     }
+       // reset charge when modding stack, update aura in SetStackamount
+       m_procCharges = m_spellProto->procCharges;
+    Player* modOwner = GetCaster() ? GetCaster()->GetSpellModOwner() : NULL;
+       if(modOwner)
+        modOwner->ApplySpellMod(GetId(), SPELLMOD_CHARGES, m_procCharges);
 
     // Update stack amount
     SetStackAmount(stackAmount);
@@ -2096,6 +2101,21 @@ void Aura::HandleAuraDummy(bool apply, bool Real)
                 if(caster)
                     caster->CastSpell(caster,13138,true,NULL,this);
                 return;
+                       case 34026:                                                                             // kill command
+                       {
+                               if(!caster || caster->GetTypeId() != TYPEID_PLAYER || !caster->GetPet() )
+                                       return;
+                               caster->CastSpell(caster,34027,true,NULL,this);
+
+                               // set 3 stacks
+                               Aura* owner_aura        = caster->GetAura(34027,0);
+                               Aura* pet_aura  = caster->GetPet()->GetAura(58914,0);
+                               if( owner_aura )
+                                       owner_aura->SetStackAmount(3);
+                               if( pet_aura )
+                                       pet_aura->SetStackAmount(3);
+                               return;
+                       }
             case 39850:                                     // Rocket Blast
                 if(roll_chance_i(20))                       // backfire stun
                     m_target->CastSpell(m_target, 51581, true, NULL, this);
@@ -2202,6 +2222,11 @@ void Aura::HandleAuraDummy(bool apply, bool Real)
                 m_target->CastSpell(m_target,47287,true,NULL,this);
                 return;
             }
+            // kill command pet aura, just eye candy:  remove the owners dummy aura
+            if(GetId()==59814 && caster)
+            {
+                    caster->RemoveAurasDueToSpell(34026);
+            }
         }
 
         // Living Bomb
@@ -2213,7 +2238,12 @@ void Aura::HandleAuraDummy(bool apply, bool Real)
             m_target->CastSpell(m_target, m_spellProto->EffectBasePoints[1], false);
             return;
         }
-
+        // kill command, remove focused fire bonus
+        if(GetId() == 34026)
+        {
+            caster->RemoveAurasDueToSpell(60110);
+            caster->RemoveAurasDueToSpell(60113);
+        }
         if (caster && m_removeMode == AURA_REMOVE_BY_DEATH)
         {
             // Stop caster Arcane Missle chanelling on death
@@ -3932,7 +3962,7 @@ void Aura::HandleModTaunt(bool apply, bool Real)
 
     Unit* caster = GetCaster();
 
-    if(!caster || !caster->isAlive() || caster->GetTypeId() != TYPEID_PLAYER)
+    if(!caster || !caster->isAlive())
         return;
 
     if(apply)
