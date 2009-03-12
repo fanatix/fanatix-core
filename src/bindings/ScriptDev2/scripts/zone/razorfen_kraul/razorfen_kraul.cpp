@@ -43,7 +43,7 @@ EndContentData */
 #define QUEST_WILLIX_THE_IMPORTER 1144
 #define ENTRY_BOAR 4514
 
-struct TRINITY_DLL_DECL npc_willixAI : public npc_escortAI
+struct MANGOS_DLL_DECL npc_willixAI : public npc_escortAI
 {
 npc_willixAI(Creature *c) : npc_escortAI(c) {Reset();}
 

@@ -428,6 +428,9 @@ extern void AddSC_orgrimmar();
 
 //Ragefire Chasm
 //Razorfen Downs
+extern void AddSC_razorfen_kraul();
+
+//Razorfen Downs
 extern void AddSC_boss_amnennar_the_coldbringer();
 
 //Redridge Mountains
@@ -1866,6 +1869,10 @@ void ScriptsInit()
     AddSC_orgrimmar();
 
     //Ragefire Chasm
+
+    //Razorfen Kraul
+	AddSC_razorfen_kraul();
+
     //Razorfen Downs
     AddSC_boss_amnennar_the_coldbringer();
 
