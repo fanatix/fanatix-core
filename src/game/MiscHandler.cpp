@@ -390,13 +390,10 @@ void WorldSession::HandleZoneUpdateOpcode( WorldPacket & recv_data )
 
     sLog.outDetail("WORLD: Recvd ZONE_UPDATE: %u", newZone);
 
-    // this check is definitely BAD, either we init for the old zone, or we doesn't init at all.
-    // Let's try with check commented out. Let the client decide when to re-init states.
-    // EDIT: and this works like a charm.
-//    if(newZone != _player->GetZoneId())
-    GetPlayer()->UpdateZone(newZone);
-
-    GetPlayer()->SendInitWorldStates(true,newZone);                 // only if really enters to new zone, not just area change, works strange...
+    // use server size data
+    uint32 newzone, newarea;
+    GetPlayer()->GetZoneAndAreaId(newzone,newarea);
+    GetPlayer()->UpdateZone(newzone,newarea);
 }
 
 void WorldSession::HandleSetTargetOpcode( WorldPacket & recv_data )

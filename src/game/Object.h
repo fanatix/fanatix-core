@@ -300,10 +300,8 @@ class MANGOS_DLL_SPEC Object
 
         virtual bool hasQuest(uint32 /* quest_id */) const { return false; }
         virtual bool hasInvolvedQuest(uint32 /* quest_id */) const { return false; }
-
-        // FG: some hacky helpers
         void ForceValuesUpdateAtIndex(uint32);
-     protected:
+    protected:
 
         Object ( );
 
@@ -417,6 +415,7 @@ class MANGOS_DLL_SPEC WorldObject : public Object
 
         uint32 GetZoneId() const;
         uint32 GetAreaId() const;
+        void GetZoneAndAreaId(uint32& zoneid, uint32& areaid) const;
 
         InstanceData* GetInstanceData();
 

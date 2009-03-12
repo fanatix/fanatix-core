@@ -52,14 +52,14 @@ EndContentData */
 # item_area_52_special
 #####*/
 
-bool ItemUse_item_area_52_special(Player *player, Item* _Item, SpellCastTargets const& targets)
+/*bool ItemUse_item_area_52_special(Player *player, Item* _Item, SpellCastTargets const& targets)
 {
-    if (player->GetAreaId() == 3803)
+    if (player->GetAreaEntryByAreaID() == 3803)
         return false;
 
     player->SendEquipError(EQUIP_ERR_OUT_OF_RANGE,_Item,NULL);
     return true;
-}
+}*/
 
 /*#####
 # item_arcane_charges
@@ -445,10 +445,10 @@ void AddSC_item_scripts()
 {
     Script *newscript;
 
-    newscript = new Script;
+    /*newscript = new Script; <- this fix it later
     newscript->Name = "item_area_52_special";
     newscript->pItemUse = &ItemUse_item_area_52_special;
-    newscript->RegisterSelf();
+    newscript->RegisterSelf();*/
 
     newscript = new Script;
     newscript->Name = "item_arcane_charges";
