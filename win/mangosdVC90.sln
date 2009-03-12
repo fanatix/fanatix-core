@@ -43,7 +43,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "genrevision", "VC90\genrevi
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ACE_Wrappers", "VC90\ACE_vc9.vcproj", "{BD537C9A-FECA-1BAD-6757-8A6348EA12C8}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TrinityScript", "..\src\bindings\ScriptDev2\VC90\90ScriptDev2.vcproj", "{4295C8A9-79B7-4354-8064-F05FB9CA0C96}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ScriptDev2", "..\src\bindings\ScriptDev2\VC90\90ScriptDev2.vcproj", "{4295C8A9-79B7-4354-8064-F05FB9CA0C96}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
