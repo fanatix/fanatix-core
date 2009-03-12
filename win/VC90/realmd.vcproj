@@ -114,6 +114,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
+				CommandLine="copy ..\..\src\realmd\realmd.conf.dist.in ..\..\bin\$(PlatformName)_$(ConfigurationName)\realmd.conf"
 			/>
 		</Configuration>
 		<Configuration
@@ -211,6 +212,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
+				CommandLine="copy ..\..\src\realmd\realmd.conf.dist.in ..\..\bin\$(PlatformName)_$(ConfigurationName)\realmd.conf"
 			/>
 		</Configuration>
 		<Configuration
@@ -309,6 +311,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
+				CommandLine="copy ..\..\src\realmd\realmd.conf.dist.in ..\..\bin\$(PlatformName)_$(ConfigurationName)\realmd.conf"
 			/>
 		</Configuration>
 		<Configuration
@@ -316,6 +319,7 @@
 			OutputDirectory=".\realmd__$(PlatformName)_$(ConfigurationName)"
 			IntermediateDirectory=".\realmd__$(PlatformName)_$(ConfigurationName)"
 			ConfigurationType="1"
+			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="false"
 			CharacterSet="2"
@@ -407,6 +411,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
+				CommandLine="copy ..\..\src\realmd\realmd.conf.dist.in ..\..\bin\$(PlatformName)_$(ConfigurationName)\realmd.conf"
 			/>
 		</Configuration>
 	</Configurations>
