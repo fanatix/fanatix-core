@@ -222,7 +222,7 @@ void ReadLiquidTypeTableDBC()
 
 // Map file format data
 #define MAP_MAGIC             'SPAM'
-#define MAP_VERSION_MAGIC     '0.1v'
+#define MAP_VERSION_MAGIC     '0.1w'
 #define MAP_AREA_MAGIC        'AERA'
 #define MAP_HEIGTH_MAGIC      'TGHM'
 #define MAP_LIQUID_MAGIC      'QILM'
@@ -319,7 +319,6 @@ bool ConvertADT(char *filename, char *filename2, int cell_y, int cell_x)
 
     memset(liquid_show, 0, sizeof(liquid_show));
     memset(liquid_type, 0, sizeof(liquid_type));
-    memset(liquid_height, 0, sizeof(liquid_height));
 
     // Prepare map header
     map_fileheader map;
@@ -724,6 +723,8 @@ bool ConvertADT(char *filename, char *filename2, int cell_y, int cell_x)
                     if (maxHeight < h) maxHeight = h;
                     if (minHeight > h) minHeight = h;
                 }
+                else
+                    liquid_height[y][x] = CONF_use_minHeight;
             }
         }
         map.liquidMapOffset = map.heightMapOffset + map.heightMapSize;
@@ -827,11 +828,11 @@ void ExtractMapsFromMpq()
     printf("Convert map files\n");
     for(uint32 z = 0; z < map_count; ++z)
     {
-        printf("Extract %s (%d/%d)                  \n", map_ids[z].name, z, map_count);
+        printf("Extract %s (%d/%d)                  \n", map_ids[z].name, z+1, map_count);
         // Loadup map grid data
         sprintf(mpq_map_name, "World\\Maps\\%s\\%s.wdt", map_ids[z].name, map_ids[z].name);
         WDT_file wdt;
-        if (!wdt.loadFile(mpq_map_name))
+        if (!wdt.loadFile(mpq_map_name, false))
         {
 //            printf("Error loading %s map wdt data\n", map_ids[z].name);
             continue;
