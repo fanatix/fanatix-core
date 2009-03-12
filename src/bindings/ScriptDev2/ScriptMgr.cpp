@@ -11,6 +11,12 @@
 #include "ProgressBar.h"
 #include "scripts/creature/mob_event_ai.h"
 
+#define _FULLVERSION "MaNGOSScript"
+
+#ifndef _MANGOS_SCRIPT_CONFIG
+# define _MANGOS_SCRIPT_CONFIG  "mangosd.conf"
+#endif _MANGOS_SCRIPT_CONFIG
+
 //*** Global data ***
 int num_sc_scripts;
 Script *m_scripts[MAX_SCRIPTS];

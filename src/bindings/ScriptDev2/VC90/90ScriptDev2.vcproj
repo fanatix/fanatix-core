@@ -2882,15 +2882,15 @@
 			>
 		</File>
 		<File
+			RelativePath="..\revision.h"
+			>
+		</File>
+		<File
 			RelativePath="..\ScriptMgr.cpp"
 			>
 		</File>
 		<File
 			RelativePath="..\ScriptMgr.h"
-			>
-		</File>
-		<File
-			RelativePath="..\svn_revision.h"
 			>
 		</File>
 		<File
