@@ -33,7 +33,7 @@ EndScriptData */
 
 #define ENTRY_SPORE_STRIDER        22299
 
-struct TRINITY_DLL_DECL boss_the_black_stalkerAI : public ScriptedAI
+struct MANGOS_DLL_DECL boss_the_black_stalkerAI : public ScriptedAI
 {
     boss_the_black_stalkerAI(Creature *c) : ScriptedAI(c)
     {
@@ -92,14 +92,14 @@ struct TRINITY_DLL_DECL boss_the_black_stalkerAI : public ScriptedAI
 
     void UpdateAI(const uint32 diff)
     {
-        if (!UpdateVictim())
+        if(!m_creature->SelectHostilTarget() || !m_creature->getVictim() )
             return;
 
         // Evade if too far
         if(check_Timer < diff)
         {
             float x,y,z,o;
-            m_creature->GetHomePosition(x,y,z,o);
+            m_creature->GetRespawnCoord(x,y,z,o);
             if(m_creature->GetDistance(x,y,z) > 60)
             {
                 EnterEvadeMode();
