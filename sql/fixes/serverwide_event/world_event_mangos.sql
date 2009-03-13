@@ -935,3 +935,33 @@ CREATE TABLE `event_scripts` (
   `o` float NOT NULL default '0'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+DROP TABLE IF EXISTS `game_event_battleground_holiday`;
+CREATE TABLE `game_event_battleground_holiday` (
+ `event` int(10) unsigned NOT NULL,
+ `bgflag` int(10) unsigned NOT NULL default '0',
+ PRIMARY KEY  (`event`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `game_event_condition`;
+CREATE TABLE `game_event_condition` (
+  `event_id` mediumint(8) unsigned NOT NULL default '0',
+  `condition_id` mediumint(8) unsigned NOT NULL default '0',
+  `req_num` float default '0',
+  `max_world_state_field` smallint(5) unsigned NOT NULL default '0',
+  `done_world_state_field` smallint(5) unsigned NOT NULL default '0',
+  `description` varchar(25) NOT NULL default '',
+  PRIMARY KEY  (`event_id`,`condition_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+
+DROP TABLE IF EXISTS `game_event_npc_vendor`;
+CREATE TABLE `game_event_npc_vendor` (
+  `event` mediumint(8) unsigned NOT NULL default '0',
+  `guid` mediumint(8) unsigned NOT NULL default '0',
+  `item` mediumint(8) unsigned NOT NULL default '0',
+  `maxcount` mediumint(8) unsigned NOT NULL default '0',
+  `incrtime` mediumint(8) unsigned NOT NULL default '0',
+  `ExtendedCost` mediumint(8) unsigned NOT NULL default '0',
+  PRIMARY KEY  (`guid`,`item`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
