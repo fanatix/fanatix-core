@@ -27,6 +27,7 @@
 #include "Policies/SingletonImp.h"
 #include "GossipDef.h"
 #include "Player.h"
+#include "BattleGroundMgr.h"
 
 INSTANTIATE_SINGLETON_1(GameEventMgr);
 
@@ -211,34 +212,34 @@ void GameEventMgr::LoadFromDB()
                 continue;
             }
 
+            GameEventData& pGameEvent = mGameEvent[event_id];
+            uint64 starttime        = fields[1].GetUInt64();
+            pGameEvent.start        = time_t(starttime);
+            uint64 endtime          = fields[2].GetUInt64();
+            pGameEvent.end          = time_t(endtime);
+            pGameEvent.occurence    = fields[3].GetUInt32();
+            pGameEvent.length       = fields[4].GetUInt32();
+            pGameEvent.holiday_id   = fields[5].GetUInt32();
 
-		GameEventData& pGameEvent = mGameEvent[event_id];
-        uint64 starttime        = fields[1].GetUInt64();
-        pGameEvent.start        = time_t(starttime);
-        uint64 endtime          = fields[2].GetUInt64();
-        pGameEvent.end          = time_t(endtime);
-        pGameEvent.occurence    = fields[3].GetUInt32();
-        pGameEvent.length       = fields[4].GetUInt32();
-		pGameEvent.holiday_id   = fields[5].GetUInt32();
-        pGameEvent.state        = (GameEventState)(fields[7].GetUInt8());
-        pGameEvent.nextstart    = 0;
+            pGameEvent.state        = (GameEventState)(fields[7].GetUInt8());
+            pGameEvent.nextstart    = 0;
 
-        if(pGameEvent.length==0 && !pGameEvent.state)                            // length>0 and not world_event is validity check
-        {
-            sLog.outErrorDb("`game_event` game event id (%i) have length 0 and can't be used.",event_id);
-            continue;
-        }
-
-	  if(pGameEvent.holiday_id)
-       {
-          if(!sHolidaysStore.LookupEntry(pGameEvent.holiday_id))
+            if(pGameEvent.length==0 && pGameEvent.state == GAMEEVENT_NORMAL)                            // length>0 is validity check
             {
-              sLog.outErrorDb("`game_event` game event id (%i) have not existed holiday id %u.",event_id,pGameEvent.holiday_id);
-              pGameEvent.holiday_id = 0;
+                sLog.outErrorDb("`game_event` game event id (%i) isn't a world event and has length = 0, thus it can't be used.",event_id);
+                continue;
             }
-       }
-       
-	   pGameEvent.description  = fields[5].GetCppString();
+
+            if(pGameEvent.holiday_id)
+            {
+                if(!sHolidaysStore.LookupEntry(pGameEvent.holiday_id))
+                {
+                    sLog.outErrorDb("`game_event` game event id (%i) have not existed holiday id %u.",event_id,pGameEvent.holiday_id);
+                    pGameEvent.holiday_id = 0;
+                }
+            }
+
+            pGameEvent.description  = fields[6].GetCppString();
 
         } while( result->NextRow() );
         delete result;
@@ -248,7 +249,7 @@ void GameEventMgr::LoadFromDB()
     }
 
     // load game event saves
-    //                                       0         1      2 
+    //                                       0         1      2
     result = CharacterDatabase.Query("SELECT event_id, state, UNIX_TIMESTAMP(next_start) FROM game_event_save");
 
     count = 0;
@@ -278,7 +279,7 @@ void GameEventMgr::LoadFromDB()
                 continue;
             }
 
-			if(mGameEvent[event_id].state != GAMEEVENT_NORMAL)
+            if(mGameEvent[event_id].state != GAMEEVENT_NORMAL)
             {
                 mGameEvent[event_id].state = (GameEventState)(fields[1].GetUInt8());
                 mGameEvent[event_id].nextstart    = time_t(fields[2].GetUInt64());
@@ -539,60 +540,9 @@ void GameEventMgr::LoadFromDB()
             questlist.push_back(QuestRelation(id, quest));
 
         } while( result->NextRow() );
-        delete result;
-
         sLog.outString();
         sLog.outString( ">> Loaded %u quests additions in game events", count );
-    }
 
-    mGameEventPoolIds.resize(mGameEvent.size()*2-1);
-    //                                   1                    2
-    result = WorldDatabase.Query("SELECT pool_template.entry, game_event_pool.event "
-        "FROM pool_template JOIN game_event_pool ON pool_template.entry = game_event_pool.pool_entry");
-
-    count = 0;
-    if( !result )
-    {
-        barGoLink bar2(1);
-        bar2.step();
-
-        sLog.outString();
-        sLog.outString(">> Loaded %u pools in game events", count );
-    }
-    else
-    {
-
-        barGoLink bar2( result->GetRowCount() );
-        do
-        {
-            Field *fields = result->Fetch();
-
-            bar2.step();
-
-            uint32 entry   = fields[0].GetUInt16();
-            int16 event_id = fields[1].GetInt16();
-
-            int32 internal_event_id = mGameEvent.size() + event_id - 1;
-
-            if(internal_event_id < 0 || internal_event_id >= mGameEventPoolIds.size())
-            {
-                sLog.outErrorDb("`game_event_pool` game event id (%i) is out of range compared to max event id in `game_event`",event_id);
-                continue;
-            }
-
-            if (!poolhandler.CheckPool(entry))
-            {
-                sLog.outErrorDb("Pool Id (%u) has all creatures or gameobjects with explicit chance sum <>100 and no equal chance defined. The pool system cannot pick one to spawn.", entry);
-                continue;
-            }
-
-            ++count;
-            IdList& poollist = mGameEventPoolIds[internal_event_id];
-            poollist.push_back(entry);
-
-        } while( result->NextRow() );
-        sLog.outString();
-        sLog.outString( ">> Loaded %u pools in game events", count );
         delete result;
     }
 
@@ -633,10 +583,10 @@ void GameEventMgr::LoadFromDB()
             questlist.push_back(QuestRelation(id, quest));
 
         } while( result->NextRow() );
+        delete result;
+
         sLog.outString();
         sLog.outString( ">> Loaded %u quests additions in game events", count );
-
-        delete result;
     }
 
     // Load quest to (event,condition) mapping
@@ -685,7 +635,7 @@ void GameEventMgr::LoadFromDB()
     }
 
     // load conditions of the events
-    //                                   0         1             2        3                      4         
+    //                                   0         1             2        3                      4
     result = WorldDatabase.Query("SELECT event_id, condition_id, req_num, max_world_state_field, done_world_state_field FROM game_event_condition");
 
     count = 0;
@@ -730,7 +680,7 @@ void GameEventMgr::LoadFromDB()
     }
 
     // load condition saves
-    //                                       0         1             2         
+    //                                       0         1             2
     result = CharacterDatabase.Query("SELECT event_id, condition_id, done FROM game_event_condition_save");
 
     count = 0;
@@ -824,6 +774,74 @@ void GameEventMgr::LoadFromDB()
         delete result;
     }
 
+    mGameEventVendors.resize(mGameEvent.size());
+    //                                   0      1      2     3         4         5
+    result = WorldDatabase.Query("SELECT event, guid, item, maxcount, incrtime, ExtendedCost FROM game_event_npc_vendor");
+
+    count = 0;
+    if( !result )
+    {
+        barGoLink bar3(1);
+        bar3.step();
+
+        sLog.outString();
+        sLog.outString(">> Loaded %u vendor additions in game events", count );
+    }
+    else
+    {
+
+        barGoLink bar3( result->GetRowCount() );
+        do
+        {
+            Field *fields = result->Fetch();
+
+            bar3.step();
+            uint16 event_id  = fields[0].GetUInt16();
+
+            if(event_id >= mGameEventVendors.size())
+            {
+                sLog.outErrorDb("`game_event_npc_vendor` game event id (%u) is out of range compared to max event id in `game_event`",event_id);
+                continue;
+            }
+
+            NPCVendorList& vendors = mGameEventVendors[event_id];
+            NPCVendorEntry newEntry;
+            uint32 guid = fields[1].GetUInt32();
+            newEntry.item = fields[2].GetUInt32();
+            newEntry.maxcount = fields[3].GetUInt32();
+            newEntry.incrtime = fields[4].GetUInt32();
+            newEntry.ExtendedCost = fields[5].GetUInt32();
+            // get the event npc flag for checking if the npc will be vendor during the event or not
+            uint32 event_npc_flag = 0;
+            NPCFlagList& flist = mGameEventNPCFlags[event_id];
+            for(NPCFlagList::const_iterator itr = flist.begin(); itr != flist.end(); ++itr)
+            {
+                if(itr->first == guid)
+                {
+                    event_npc_flag = itr->second;
+                    break;
+                }
+            }
+            // get creature entry
+            newEntry.entry = 0;
+
+            if( CreatureData const* data = objmgr.GetCreatureData(guid) )
+                newEntry.entry = data->id;
+
+            // check validity with event's npcflag
+            if(!objmgr.IsVendorItemValid(newEntry.entry, newEntry.item, newEntry.maxcount, newEntry.incrtime, newEntry.ExtendedCost, NULL, NULL, event_npc_flag))
+                continue;
+
+            ++count;
+            vendors.push_back(newEntry);
+
+        } while( result->NextRow() );
+        sLog.outString();
+        sLog.outString( ">> Loaded %u vendor additions in game events", count );
+
+        delete result;
+    }
+
     // load game event npc gossip ids
     //                                   0         1        2
     result = WorldDatabase.Query("SELECT guid, event_id, textid FROM game_event_npc_gossip");
@@ -864,6 +882,105 @@ void GameEventMgr::LoadFromDB()
         sLog.outString();
         sLog.outString( ">> Loaded %u npc gossip textids in game events", count );
 
+        delete result;
+    }
+
+    // set all flags to 0
+    mGameEventBattleGroundHolidays.resize(mGameEvent.size(),0);
+    // load game event battleground flags
+    //                                   0     1
+    result = WorldDatabase.Query("SELECT event, bgflag FROM game_event_battleground_holiday");
+
+    count = 0;
+    if( !result )
+    {
+        barGoLink bar3(1);
+        bar3.step();
+
+        sLog.outString();
+        sLog.outString(">> Loaded %u battleground holidays in game events", count );
+    }
+    else
+    {
+
+        barGoLink bar3( result->GetRowCount() );
+        do
+        {
+            Field *fields = result->Fetch();
+
+            bar3.step();
+
+            uint16 event_id = fields[0].GetUInt16();
+
+            if(event_id >= mGameEvent.size())
+            {
+                sLog.outErrorDb("`game_event_battleground_holiday` game event id (%u) is out of range compared to max event id in `game_event`",event_id);
+                continue;
+            }
+
+            ++count;
+
+            mGameEventBattleGroundHolidays[event_id] = fields[1].GetUInt32();
+
+        } while( result->NextRow() );
+        sLog.outString();
+        sLog.outString( ">> Loaded %u battleground holidays in game events", count );
+
+        delete result;
+    }
+
+    ////////////////////////
+    // GameEventPool
+    ////////////////////////
+
+    mGameEventPoolIds.resize(mGameEvent.size()*2-1);
+    //                                   1                    2
+    result = WorldDatabase.Query("SELECT pool_template.entry, game_event_pool.event "
+        "FROM pool_template JOIN game_event_pool ON pool_template.entry = game_event_pool.pool_entry");
+
+    count = 0;
+    if( !result )
+    {
+        barGoLink bar2(1);
+        bar2.step();
+
+        sLog.outString();
+        sLog.outString(">> Loaded %u pools in game events", count );
+    }
+    else
+    {
+
+        barGoLink bar2( result->GetRowCount() );
+        do
+        {
+            Field *fields = result->Fetch();
+
+            bar2.step();
+
+            uint32 entry   = fields[0].GetUInt16();
+            int16 event_id = fields[1].GetInt16();
+
+            int32 internal_event_id = mGameEvent.size() + event_id - 1;
+
+            if(internal_event_id < 0 || internal_event_id >= mGameEventPoolIds.size())
+            {
+                sLog.outErrorDb("`game_event_pool` game event id (%i) is out of range compared to max event id in `game_event`",event_id);
+                continue;
+            }
+
+            if (!poolhandler.CheckPool(entry))
+            {
+                sLog.outErrorDb("Pool Id (%u) has all creatures or gameobjects with explicit chance sum <>100 and no equal chance defined. The pool system cannot pick one to spawn.", entry);
+                continue;
+            }
+
+            ++count;
+            IdList& poollist = mGameEventPoolIds[internal_event_id];
+            poollist.push_back(entry);
+
+        } while( result->NextRow() );
+        sLog.outString();
+        sLog.outString( ">> Loaded %u pools in game events", count );
         delete result;
     }
 }
@@ -909,8 +1026,7 @@ uint32 GameEventMgr::Update()                               // return the next e
     uint32 nextEventDelay = max_ge_check_delay;             // 1 day
     uint32 calcDelay;
     std::set<uint16> activate, deactivate;
-
-	for (uint16 itr = 1; itr < mGameEvent.size(); ++itr)
+    for (uint16 itr = 1; itr < mGameEvent.size(); ++itr)
     {
         // must do the activating first, and after that the deactivating
         // so first queue it
@@ -970,7 +1086,7 @@ uint32 GameEventMgr::Update()                               // return the next e
             nextEventDelay = 0;
     for(std::set<uint16>::iterator itr = deactivate.begin(); itr != deactivate.end(); ++itr)
         StopEvent(*itr);
-    sLog.outBasic("Next game event check in %u seconds.", nextEventDelay + 1);
+    sLog.outDetail("Next game event check in %u seconds.", nextEventDelay + 1);
     return (nextEventDelay + 1) * IN_MILISECONDS;           // Add 1 second to be sure event has started/stopped at next call
 }
 
@@ -988,6 +1104,10 @@ void GameEventMgr::UnApplyEvent(uint16 event_id)
     UpdateEventQuests(event_id, false);
     // update npcflags in this event
     UpdateEventNPCFlags(event_id);
+    // remove vendor items
+    UpdateEventNPCVendor(event_id, false);
+    // update bg holiday
+    UpdateBattleGroundSettings();
 }
 
 void GameEventMgr::ApplyNewEvent(uint16 event_id)
@@ -1002,6 +1122,7 @@ void GameEventMgr::ApplyNewEvent(uint16 event_id)
     }
 
     sLog.outString("GameEvent %u \"%s\" started.", event_id, mGameEvent[event_id].description.c_str());
+
     // spawn positive event tagget objects
     GameEventSpawn(event_id);
     // un-spawn negative event tagged objects
@@ -1013,6 +1134,10 @@ void GameEventMgr::ApplyNewEvent(uint16 event_id)
     UpdateEventQuests(event_id, true);
     // update npcflags in this event
     UpdateEventNPCFlags(event_id);
+    // add vendor items
+    UpdateEventNPCVendor(event_id, true);
+    // update bg holiday
+    UpdateBattleGroundSettings();
 }
 
 void GameEventMgr::UpdateEventNPCFlags(uint16 event_id)
@@ -1038,6 +1163,25 @@ void GameEventMgr::UpdateEventNPCFlags(uint16 event_id)
             }
             // if we didn't find it, then the npcflag will be updated when the creature is loaded
         }
+    }
+}
+
+void GameEventMgr::UpdateBattleGroundSettings()
+{
+    uint32 mask = 0;
+    for(ActiveEvents::const_iterator itr = m_ActiveEvents.begin(); itr != m_ActiveEvents.end(); ++itr )
+        mask |= mGameEventBattleGroundHolidays[*itr];
+    sBattleGroundMgr.SetHolidayWeekends(mask);
+}
+
+void GameEventMgr::UpdateEventNPCVendor(uint16 event_id, bool activate)
+{
+    for(NPCVendorList::iterator itr = mGameEventVendors[event_id].begin(); itr != mGameEventVendors[event_id].end(); ++itr)
+    {
+        if(activate)
+            objmgr.AddVendorItem(itr->entry, itr->item, itr->maxcount, itr->incrtime, itr->ExtendedCost, false);
+        else
+            objmgr.RemoveVendorItem(itr->entry, itr->item, false);
     }
 }
 
@@ -1263,6 +1407,20 @@ void GameEventMgr::ChangeEquipOrModel(int16 event_id, bool activate)
     }
 }
 
+bool GameEventMgr::hasCreatureQuestActiveEventExcept(uint32 quest_id, uint16 event_id)
+{
+    for(ActiveEvents::iterator e_itr = m_ActiveEvents.begin(); e_itr != m_ActiveEvents.end(); ++e_itr)
+    {
+        if((*e_itr) != event_id)
+            for(QuestRelList::iterator itr = mGameEventCreatureQuests[*e_itr].begin();
+                itr != mGameEventCreatureQuests[*e_itr].end();
+                ++ itr)
+                if(itr->second == quest_id)
+                    return true;
+    }
+    return false;
+}
+
 bool GameEventMgr::hasGameObjectQuestActiveEventExcept(uint32 quest_id, uint16 event_id)
 {
     for(ActiveEvents::iterator e_itr = m_ActiveEvents.begin(); e_itr != m_ActiveEvents.end(); ++e_itr)
@@ -1318,7 +1476,7 @@ void GameEventMgr::UpdateEventQuests(uint16 event_id, bool Activate)
         if (Activate)                                       // Add the pair(id,quest) to the multimap
             CreatureQuestMap.insert(QuestRelations::value_type(itr->first, itr->second));
         else
-        {   
+        {
             if(!hasCreatureQuestActiveEventExcept(itr->second,event_id))
             {
                 // Remove the pair(id,quest) from the multimap
@@ -1343,7 +1501,7 @@ void GameEventMgr::UpdateEventQuests(uint16 event_id, bool Activate)
         if (Activate)                                       // Add the pair(id,quest) to the multimap
             GameObjectQuestMap.insert(QuestRelations::value_type(itr->first, itr->second));
         else
-        {   
+        {
             if(!hasGameObjectQuestActiveEventExcept(itr->second,event_id))
             {
                 // Remove the pair(id,quest) from the multimap
@@ -1366,18 +1524,6 @@ void GameEventMgr::UpdateEventQuests(uint16 event_id, bool Activate)
 GameEventMgr::GameEventMgr()
 {
     isSystemInit = false;
-}
-
-MANGOS_DLL_SPEC bool IsHolidayActive( HolidayIds id )
-{
-    GameEventMgr::GameEventDataMap const& events = gameeventmgr.GetEventMap();
-    GameEventMgr::ActiveEvents const& ae = gameeventmgr.GetActiveEventList();
-
-    for(GameEventMgr::ActiveEvents::const_iterator itr = ae.begin(); itr != ae.end(); ++itr)
-        if(events[id].holiday_id==id)
-            return true;
-
-    return false;
 }
 
 void GameEventMgr::HandleQuestComplete(uint32 quest_id)
@@ -1448,7 +1594,7 @@ void GameEventMgr::SaveWorldEventStateToDB(uint16 event_id)
     CharacterDatabase.BeginTransaction();
     CharacterDatabase.PExecute("DELETE FROM game_event_save WHERE event_id = '%u'",event_id);
     if(mGameEvent[event_id].nextstart)
-        CharacterDatabase.PExecute("INSERT INTO game_event_save (event_id, state, next_start) VALUES ('%u','%u',FROM_UNIXTIME('"I64FMTD"'))",event_id,mGameEvent[event_id].state,mGameEvent[event_id].nextstart);
+        CharacterDatabase.PExecute("INSERT INTO game_event_save (event_id, state, next_start) VALUES ('%u','%u',FROM_UNIXTIME("I64FMTD"))",event_id,mGameEvent[event_id].state,(uint64)(mGameEvent[event_id].nextstart));
     else
         CharacterDatabase.PExecute("INSERT INTO game_event_save (event_id, state, next_start) VALUES ('%u','%u','0000-00-00 00:00:00')",event_id,mGameEvent[event_id].state);
     CharacterDatabase.CommitTransaction();
@@ -1472,23 +1618,20 @@ void GameEventMgr::SendWorldStateUpdate(Player * plr, uint16 event_id)
     for(itr = mGameEvent[event_id].conditions.begin(); itr !=mGameEvent[event_id].conditions.end(); ++itr)
     {
         if(itr->second.done_world_state)
-            plr->SendUpdateWorldState(itr->second.done_world_state, itr->second.done);
+            plr->SendUpdateWorldState(itr->second.done_world_state, (uint32)(itr->second.done));
         if(itr->second.max_world_state)
-            plr->SendUpdateWorldState(itr->second.max_world_state, itr->second.reqNum);
+            plr->SendUpdateWorldState(itr->second.max_world_state, (uint32)(itr->second.reqNum));
     }
 }
 
-bool GameEventMgr::hasCreatureQuestActiveEventExcept(uint32 quest_id, uint16 event_id)
- {
-     for(ActiveEvents::iterator e_itr = m_ActiveEvents.begin(); e_itr != m_ActiveEvents.end(); ++e_itr)
-     {
-         if((*e_itr) != event_id)
-             for(QuestRelList::iterator itr = mGameEventCreatureQuests[*e_itr].begin();
-                 itr != mGameEventCreatureQuests[*e_itr].end();
-                 ++ itr)
-                 if(itr->second == quest_id)
-                     return true;
-     }
-     return false;
- }
+MANGOS_DLL_SPEC bool IsHolidayActive( HolidayIds id )
+{
+    GameEventMgr::GameEventDataMap const& events = gameeventmgr.GetEventMap();
+    GameEventMgr::ActiveEvents const& ae = gameeventmgr.GetActiveEventList();
 
+    for(GameEventMgr::ActiveEvents::const_iterator itr = ae.begin(); itr != ae.end(); ++itr)
+        if(events[id].holiday_id==id)
+            return true;
+
+    return false;
+}

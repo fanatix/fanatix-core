@@ -260,6 +260,12 @@ class BattleGroundScore
         uint32 HealingDone;
 };
 
+enum BGHonorMode
+{
+    BG_NORMAL = 0,
+    BG_HOLIDAY,
+    BG_HONOR_MODE_NUM
+};
 /*
 This class is used to:
 1. Add player to battleground
@@ -473,6 +479,7 @@ class BattleGround
         virtual void OnObjectCreate(GameObject* /*Creature*/) {}
 
         void HandleTriggerBuff(uint64 const& go_guid);
+        void SetHoliday(bool is_holiday);
 
         // TODO: make this protected:
         typedef std::vector<uint64> BGObjects;
@@ -527,6 +534,7 @@ class BattleGround
 
         bool   m_BuffChange;
 
+        BGHonorMode m_HonorMode;
     private:
         /* Battleground */
         BattleGroundTypeId m_TypeID;
@@ -534,7 +542,7 @@ class BattleGround
         BattleGroundStatus m_Status;
         uint32 m_ClientInstanceID;                          //the instance-id which is sent to the client and without any other internal use
         uint32 m_StartTime;
-        uint32 m_EndTime;
+        int32 m_EndTime;                                    // it is set to 120000 when bg is ending and it decreases itself
         uint32 m_LastResurrectTime;
         BGQueueIdBasedOnLevel m_QueueId;
         uint8  m_ArenaType;                                 // 2=2v2, 3=3v3, 5=5v5

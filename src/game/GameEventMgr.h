@@ -25,10 +25,6 @@
 
 #define max_ge_check_delay 86400                            // 1 day in seconds
 
-class Creature;
-class GameObject;
-class Player;
-
 enum GameEventState
 {
     GAMEEVENT_NORMAL = 0,   // standard game events
@@ -55,19 +51,19 @@ struct GameEventQuestToEventConditionNum
 
 struct GameEventData
 {
-    GameEventData() : start(1),end(0),occurence(0),length(0) {}
-    time_t start;
-    time_t end;
-    time_t nextstart; // after this time the follow-up events count this phase completed
-  	uint32 occurence;
-    uint32 length;
+    GameEventData() : start(1),end(0),nextstart(0),occurence(0),length(0),state(GAMEEVENT_NORMAL) {}
+    time_t start;           // occurs after this time
+    time_t end;             // occurs before this time
+    time_t nextstart;       // after this time the follow-up events count this phase completed
+    uint32 occurence;       // time between end and start
+    uint32 length;          // length of the event (minutes) after finishing all conditions
     uint32 holiday_id;
     GameEventState state;   // state of the game event, these are saved into the game_event table on change!
     std::map<uint32 /*condition id*/, GameEventFinishCondition> conditions;  // conditions to finish
     std::set<uint16 /*gameevent id*/> prerequisite_events;  // events that must be completed before starting this event
     std::string description;
 
-    bool isValid() const { return (length > 0 || state > 0); }
+    bool isValid() const { return ((length > 0) || (state > GAMEEVENT_NORMAL)); }
 };
 
 struct ModelEquip
@@ -77,6 +73,18 @@ struct ModelEquip
     uint32 modelid_prev;
     uint32 equipement_id_prev;
 };
+
+struct NPCVendorEntry
+{
+    uint32 entry;                                           // creature entry
+    uint32 item;                                            // item id
+    uint32 maxcount;                                        // 0 for infinite
+    uint32 incrtime;                                        // time for restore items amount if maxcount != 0
+    uint32 ExtendedCost;
+};
+
+class Player;
+class Creature;
 
 class GameEventMgr
 {
@@ -110,6 +118,8 @@ class GameEventMgr
         void ChangeEquipOrModel(int16 event_id, bool activate);
         void UpdateEventQuests(uint16 event_id, bool Activate);
         void UpdateEventNPCFlags(uint16 event_id);
+        void UpdateEventNPCVendor(uint16 event_id, bool activate);
+        void UpdateBattleGroundSettings();
         bool CheckOneGameEventConditions(uint16 event_id);
         void SaveWorldEventStateToDB(uint16 event_id);
         bool hasCreatureQuestActiveEventExcept(uint32 quest_id, uint16 event_id);
@@ -127,19 +137,24 @@ class GameEventMgr
         typedef std::pair<uint32, uint32> QuestRelation;
         typedef std::list<QuestRelation> QuestRelList;
         typedef std::vector<QuestRelList> GameEventQuestMap;
+        typedef std::list<NPCVendorEntry> NPCVendorList;
+        typedef std::vector<NPCVendorList> GameEventNPCVendorMap;
         typedef std::map<uint32 /*quest id*/, GameEventQuestToEventConditionNum> QuestIdToEventConditionMap;
         typedef std::pair<uint32 /*guid*/, uint32 /*npcflag*/> GuidNPCFlagPair;
         typedef std::list<GuidNPCFlagPair> NPCFlagList;
         typedef std::vector<NPCFlagList> GameEventNPCFlagMap;
         typedef std::pair<uint16 /*event id*/, uint32 /*gossip id*/> EventNPCGossipIdPair;
         typedef std::map<uint32 /*guid*/, EventNPCGossipIdPair> GuidEventNpcGossipIdMap;
+        typedef std::vector<uint32> GameEventBitmask;
         GameEventQuestMap mGameEventCreatureQuests;
         GameEventQuestMap mGameEventGameObjectQuests;
+        GameEventNPCVendorMap mGameEventVendors;
         GameEventModelEquipMap mGameEventModelEquip;
         GameEventGuidMap  mGameEventCreatureGuids;
         GameEventGuidMap  mGameEventGameobjectGuids;
         GameEventIdMap    mGameEventPoolIds;
         GameEventDataMap  mGameEvent;
+        GameEventBitmask  mGameEventBattleGroundHolidays;
         QuestIdToEventConditionMap mQuestToEventConditions;
         GameEventNPCFlagMap mGameEventNPCFlags;
         GuidEventNpcGossipIdMap mNPCGossipIds;
