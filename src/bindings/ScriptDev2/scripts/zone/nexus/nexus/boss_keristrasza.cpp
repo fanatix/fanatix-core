@@ -1,15 +1,13 @@
 /* Script Data Start
 SDName: Boss keristrasza
-SDAuthor: LordVanMartin
-SD%Complete: 
-SDComment: 
-SDCategory: 
+SDAuthor: FBPBM
+SD%Complete: 80%
+SDComment: Ready for Testing , Instance not Scripted Yet
+SDCategory: Nexus
 Script Data End */
 
-/*** SQL START *** 
-update creature_template set scriptname = 'boss_maiden_of_grief' where entry = '';
-*** SQL END ***/
 #include "precompiled.h"
+//#include "def_nexus_h"
 
 //Spells
 #define SPELL_TAIL_SWEEP                                50155
@@ -29,25 +27,101 @@ update creature_template set scriptname = 'boss_maiden_of_grief' where entry = '
 
 struct MANGOS_DLL_DECL boss_keristraszaAI : public ScriptedAI
 {
-    boss_keristraszaAI(Creature *c) : ScriptedAI(c) { Reset(); }
+    boss_keristraszaAI(Creature *c) : ScriptedAI(c)
+    {
+        //pInstance = ((ScriptedInstance*)c->GetInstanceData());
+        Reset();
+		HeroicMode = m_creature->GetMap()->IsHeroic();
 
-    void Reset() {}
+    }
+
+//ScriptedInstance* pInstance;
+
+ bool HeroicMode;
+
+    uint32 CRYSTALFIRE_BREATH_Timer;
+    uint32 CRYSTAL_CHAINS_Timer;
+    uint32 INTENSE_COLD_Timer;
+    uint32 TAIL_SWEEP_Timer;
+    uint32 CRYSTALIZE_Timer;
+	uint32 Enrage_Timer;
+
+    void Reset() 
+	{
+		//These times are probably wrong
+	   CRYSTALFIRE_BREATH_Timer = 8000;                         
+       CRYSTAL_CHAINS_Timer = 12000;
+       INTENSE_COLD_Timer = 7000;
+       TAIL_SWEEP_Timer = 10000;
+       CRYSTALIZE_Timer = 3000;          
+       Enrage_Timer = 600000;
+
+		//if(pInstance)
+          //  pInstance->SetData(data_keristrasza, NOT_STARTED);
+	}
     void Aggro(Unit* who) 
     {
+		//if(pInstance)
+        //pInstance->SetData(data_keristrasza, IN_PROGRESS);
         DoScriptText(SAY_AGGRO, m_creature);
+	//	DoZoneInCombat();
     }
-    void AttackStart(Unit* who) {}
-    void MoveInLineOfSight(Unit* who) {}
+    //void AttackStart(Unit* who) {}
+    //void MoveInLineOfSight(Unit* who) {}
     void UpdateAI(const uint32 diff) 
     {
         //Return since we have no target
         if (!m_creature->SelectHostilTarget() || !m_creature->getVictim())
             return;
-                
+          
+if (Enrage_Timer < diff)
+        {
+			DoScriptText(SAY_ENRAGE , m_creature);
+            m_creature->CastSpell(m_creature, SPELL_ENRAGE, true);
+		
+            Enrage_Timer = 600000;
+}else Enrage_Timer -=diff;
+
+if (CRYSTALIZE_Timer < diff)
+        {
+			m_creature->CastSpell(m_creature, SPELL_CRYSTALIZE, true);
+		
+            CRYSTALIZE_Timer = 3000;
+}else CRYSTALIZE_Timer -=diff;
+
+if (CRYSTALFIRE_BREATH_Timer < diff)
+            {
+                if (Unit* target = SelectUnit(SELECT_TARGET_RANDOM,0))
+                    DoCast(target,SPELL_CRYSTALFIRE_BREATH_1);
+				if (HeroicMode)
+                if (Unit* target = SelectUnit(SELECT_TARGET_RANDOM,0))
+                    DoCast(target,SPELL_CRYSTALFIRE_BREATH_2);
+                CRYSTALFIRE_BREATH_Timer = 8000;
+            }else CRYSTALFIRE_BREATH_Timer -=diff;
+
+ if (CRYSTAL_CHAINS_Timer < diff)
+            {
+                if (Unit* target = SelectUnit(SELECT_TARGET_RANDOM, 0))
+                    DoCast(target, SPELL_CRYSTAL_CHAINS);
+
+                CRYSTAL_CHAINS_Timer = 10000;
+            }else CRYSTAL_CHAINS_Timer -= diff;
+
+ if (INTENSE_COLD_Timer < diff)
+            {
+				DoScriptText(SAY_CRYSTAL_NOVA , m_creature);
+                if (Unit* target = SelectUnit(SELECT_TARGET_RANDOM, 0))
+                    DoCast(target, SPELL_INTENSE_COLD);
+
+                INTENSE_COLD_Timer = 7000;
+            }else INTENSE_COLD_Timer -= diff;
+
         DoMeleeAttackIfReady();    
     }
     void JustDied(Unit* killer)  
     {
+		//if(pInstance)
+          // pInstance->SetData(data_keristrasza, DONE);
         DoScriptText(SAY_DEATH, m_creature);
     }
     void KilledUnit(Unit *victim)

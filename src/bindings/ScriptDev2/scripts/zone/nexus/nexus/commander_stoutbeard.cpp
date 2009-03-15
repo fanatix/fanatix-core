@@ -24,13 +24,39 @@ update creature_template set scriptname = 'boss_commander_stoutbeard' where entr
 
 struct MANGOS_DLL_DECL boss_commander_stoutbeardAI : public ScriptedAI
 {
-    boss_commander_stoutbeardAI(Creature *c) : ScriptedAI(c) { Reset(); }
-    
-    void Reset() {}
-    void Aggro(Unit* who) 
+    boss_commander_stoutbeardAI(Creature *c) : ScriptedAI(c)
+    {
+        //pInstance = ((ScriptedInstance*)c->GetInstanceData());
+        Reset();
+		HeroicMode = m_creature->GetMap()->IsHeroic();
+    }
+    bool HeroicMode;
+
+    uint32 FRIGHTENING_Timer;
+	uint32 BATTLE_SHOUT_Timer; 
+    uint32 CHARGE_Timer;
+    uint32 WHIRLWIND_Timer; 
+
+    void Reset()
 	{
-		DoScriptText(SAY_AGGRO, m_creature);
+		//These times are probably wrong
+       FRIGHTENING_Timer = 6000;
+       BATTLE_SHOUT_Timer = 60000;
+	   CHARGE_Timer = 2000;
+       WHIRLWIND_Timer = 0000;
+
+		//if(pInstance)
+          //  pInstance->SetData(data_keristrasza, NOT_STARTED);
 	}
+
+    void Aggro(Unit* who)
+	{
+				//if(pInstance)
+        //pInstance->SetData(data_keristrasza, IN_PROGRESS);
+        DoScriptText(SAY_AGGRO, m_creature);
+	//	DoZoneInCombat();
+	}
+
     void AttackStart(Unit* who) {}
     void MoveInLineOfSight(Unit* who) {}
     void UpdateAI(const uint32 diff) 
@@ -38,13 +64,54 @@ struct MANGOS_DLL_DECL boss_commander_stoutbeardAI : public ScriptedAI
         //Return since we have no target
         if (!m_creature->SelectHostilTarget() || !m_creature->getVictim())
             return;
-                
-        DoMeleeAttackIfReady();    
+if (FRIGHTENING_Timer < diff)
+        {
+            m_creature->CastSpell(m_creature, SPELL_FRIGHTENING_SHOUT, true);
+		
+            FRIGHTENING_Timer = 6000;
+}else FRIGHTENING_Timer -=diff;
+
+if (BATTLE_SHOUT_Timer < diff)
+        {
+            m_creature->CastSpell(m_creature, SPELL_CHARGE, true);
+		
+            BATTLE_SHOUT_Timer = 60000;
+}else BATTLE_SHOUT_Timer -=diff;
+
+if (CHARGE_Timer < diff)
+        {
+            m_creature->CastSpell(m_creature, SPELL_CHARGE, true);
+		
+            CHARGE_Timer = 2000;
+}else CHARGE_Timer -=diff;
+
+if (WHIRLWIND_Timer < diff)
+            {
+                if (Unit* target = SelectUnit(SELECT_TARGET_RANDOM,0))
+                    DoCast(target,SPELL_WHIRLWIND_1);
+				if (HeroicMode)
+                if (Unit* target = SelectUnit(SELECT_TARGET_RANDOM,0))
+                    DoCast(target,SPELL_WHIRLWIND_2);
+
+                WHIRLWIND_Timer = 0000;
+            }else WHIRLWIND_Timer -=diff;
+
+        DoMeleeAttackIfReady();
+
     }
-    void JustDied(Unit* killer)  
+    void JustDied(Unit* killer)
 	{
-		DoScriptText(SAY_DEATH, m_creature);
+		//if(pInstance)
+          // pInstance->SetData(data_keristrasza, DONE);
+        DoScriptText(SAY_DEATH, m_creature);
 	}
+
+    void KilledUnit(Unit *victim)
+    {
+        if(victim == m_creature)
+            return;
+        DoScriptText(SAY_KILL, m_creature);
+    }
 };
 
 CreatureAI* GetAI_boss_commander_stoutbeard(Creature *_Creature)
@@ -58,6 +125,6 @@ void AddSC_boss_commander_stoutbeard()
 
     newscript = new Script;
     newscript->Name="boss_commander_stoutbeard";
-    newscript->GetAI = GetAI_boss_commander_stoutbeard;
+    newscript->GetAI = &GetAI_boss_commander_stoutbeard;
     newscript->RegisterSelf();
 }

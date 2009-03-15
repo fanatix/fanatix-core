@@ -1,25 +1,22 @@
 /* Script Data Start
 SDName: Boss magus_telestra
-SDAuthor: LordVanMartin
-SD%Complete: 
-SDComment: 
-SDCategory: 
+SDAuthor: FBPBM
+SD%Complete:  50%
+SDComment:  Testbereit ^^
+SDCategory:  Needs 2 Phase , Needs Scripted ini 
 Script Data End */
 
-/*** SQL START *** 
-update creature_template set scriptname = '' where entry = '';
-*** SQL END ***/
 #include "precompiled.h"
 
 
 //Spells
 
 //phase 1
-#define SPELL_ICE_NOVA          47772
-#define SPELL_ICE_NOVA          56935
-#define SPELL_FIREBOMB          47773
-#define SPELL_FIREBOMB          56934
-#define SPELL_GAVITY_WELL       47756
+#define SPELL_ICE_NOVA_N          47772
+#define SPELL_ICE_NOVA_H          56935
+#define SPELL_FIREBOMB_N          47773
+#define SPELL_FIREBOMB_H          56934
+#define SPELL_GAVITY_WELL         47756
 
 //Phase 2      -->50% HP (3 clones, Frost, Fire, Arcane)
 //Frost Magus (npc 26930)
@@ -51,21 +48,70 @@ update creature_template set scriptname = '' where entry = '';
 
 struct MANGOS_DLL_DECL boss_magus_telestraAI : public ScriptedAI
 {
-    boss_magus_telestraAI(Creature *c) : ScriptedAI(c) { Reset(); }
+    boss_magus_telestraAI(Creature *c) : ScriptedAI(c) 
+	{
+		Reset();
+		//pInstance = ((ScriptedInstance*)c->GetInstanceData());
+	      HeroicMode = m_creature->GetMap()->IsHeroic();
+	}
 
-    void Reset() {}
+	//ScriptedInstance* pInstance;
+bool HeroicMode;
+
+    uint32 SPELL_ICE_NOVA_Timer;                   
+    uint32 SPELL_FIREBOMB_Timer;                    
+    uint32 SPELL_GAVITY_WELL_Timer;
+
+    void Reset()
+{
+//These times are probably wrong
+SPELL_ICE_NOVA_Timer =  8000;                  
+SPELL_FIREBOMB_Timer =  10000;                
+SPELL_GAVITY_WELL_Timer = 7500;
+
+//if(pInstance)
+//  pInstance->SetData(data_keristrasza, NOT_STARTED);
+}
+
+
     void Aggro(Unit* who) 
     {
         DoScriptText(SAY_AGGRO, m_creature);
     }
-    void AttackStart(Unit* who) {}
-    void MoveInLineOfSight(Unit* who) {}
+    //void AttackStart(Unit* who) {}
+    //void MoveInLineOfSight(Unit* who) {}
     void UpdateAI(const uint32 diff) 
     {
         //Return since we have no target
         if (!m_creature->SelectHostilTarget() || !m_creature->getVictim())
             return;
-                
+            
+if (SPELL_ICE_NOVA_Timer < diff)
+            {
+                if (Unit* target = SelectUnit(SELECT_TARGET_RANDOM,0))
+                    DoCast(target,SPELL_ICE_NOVA_N);
+				if (HeroicMode)
+                if (Unit* target = SelectUnit(SELECT_TARGET_RANDOM,0))
+                    DoCast(target,SPELL_ICE_NOVA_H);
+                SPELL_ICE_NOVA_Timer = 8000;
+            }else SPELL_ICE_NOVA_Timer -=diff;
+
+if (SPELL_FIREBOMB_Timer < diff)
+            {
+                if (Unit* target = SelectUnit(SELECT_TARGET_RANDOM,0))
+                    DoCast(target,SPELL_FIREBOMB_Timer);
+				if (HeroicMode)
+                if (Unit* target = SelectUnit(SELECT_TARGET_RANDOM,0))
+                    DoCast(target,SPELL_FIREBOMB_Timer);
+                SPELL_FIREBOMB_Timer = 10000;
+            }else SPELL_FIREBOMB_Timer -=diff;
+
+if (SPELL_GAVITY_WELL_Timer < diff)
+            {
+            m_creature->CastSpell(m_creature, SPELL_GAVITY_WELL, true);
+				    SPELL_GAVITY_WELL_Timer = 7500;
+            }else SPELL_GAVITY_WELL_Timer -=diff;
+
         DoMeleeAttackIfReady();    
     }
     void JustDied(Unit* killer)  {}
