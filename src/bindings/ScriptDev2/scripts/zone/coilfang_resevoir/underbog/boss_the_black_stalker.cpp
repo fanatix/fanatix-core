@@ -98,9 +98,9 @@ struct MANGOS_DLL_DECL boss_the_black_stalkerAI : public ScriptedAI
         // Evade if too far
         if(check_Timer < diff)
         {
-            float x,y,z,o;
-            m_creature->GetRespawnCoord(x,y,z,o);
-            if(m_creature->GetDistance(x,y,z) > 60)
+            float SpawnX,SpawnY,SpawnZ;
+            m_creature->GetRespawnCoord(SpawnX,SpawnY,SpawnZ);
+            if(m_creature->GetDistance(SpawnX,SpawnY,SpawnZ) > 60)
             {
                 EnterEvadeMode();
                 return;
@@ -129,7 +129,7 @@ struct MANGOS_DLL_DECL boss_the_black_stalkerAI : public ScriptedAI
                     }
                     if(InAir)
                     {
-                        target->AddAura(SPELL_SUSPENSION, target);
+                        //target->CastSpell(SPELL_SUSPENSION, target, 0); it's not right, must fixed, i must fnd the right value
                         LevitatedTarget = 0;
                     }
                     else 
@@ -166,7 +166,7 @@ struct MANGOS_DLL_DECL boss_the_black_stalkerAI : public ScriptedAI
         // Static Charge
         if(StaticCharge_Timer < diff)
         {
-            if(Unit *target = SelectUnit(SELECT_TARGET_RANDOM,0,30,true))
+            if(Unit *target = SelectUnit(SELECT_TARGET_RANDOM,0))
                 DoCast(target, SPELL_STATIC_CHARGE);
             StaticCharge_Timer = 10000;
         }else StaticCharge_Timer -= diff;

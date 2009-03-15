@@ -71,6 +71,6 @@ void AddSC_boss_ormorok()
 
     newscript = new Script;
     newscript->Name="boss_ormorok";
-    newscript->GetAI = GetAI_boss_ormorok;
+    newscript->GetAI = &GetAI_boss_ormorok;
     newscript->RegisterSelf();
 }

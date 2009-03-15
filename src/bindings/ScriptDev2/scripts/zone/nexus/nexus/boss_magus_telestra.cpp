@@ -134,6 +134,6 @@ void AddSC_boss_magus_telestra()
 
     newscript = new Script;
     newscript->Name="boss_magus_telestra";
-    newscript->GetAI = GetAI_boss_magus_telestra;
+    newscript->GetAI = &GetAI_boss_magus_telestra;
     newscript->RegisterSelf();
 }
