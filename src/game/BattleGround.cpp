@@ -1235,7 +1235,12 @@ void BattleGround::AddOrSetPlayerToCorrectBgGroup(Player *plr, uint64 plr_guid, 
             plr->SetBattleGroundRaid(group, subgroup);
         }
         else
-            GetBgRaid(team)->AddMember(plr_guid, plr->GetName());
+        {
+            group->AddMember(plr_guid, plr->GetName());
+            if( Group* originalGroup = plr->GetOriginalGroup() )
+                if( originalGroup->IsLeader(plr_guid) )
+                    group->ChangeLeader(plr_guid);
+        }
     }
 }
 
@@ -1268,7 +1273,11 @@ void BattleGround::EventPlayerLoggedOut(Player* player)
         if( isBattleGround() )
             EventPlayerDroppedFlag(player);
         else
-            CheckArenaWinConditions();
+        {
+            //1 player is logging out, if it is the last, then end arena!
+            if( GetAlivePlayersCountByTeam(player->GetTeam()) <= 1 && GetPlayersCountByTeam(GetOtherTeam(player->GetTeam())) )
+                EndBattleGround(GetOtherTeam(player->GetTeam()));
+        }
     }
 }
 
@@ -1791,8 +1800,9 @@ void BattleGround::HandleKillPlayer( Player *player, Player *killer )
         }
     }
 
-    // to be able to remove insignia
-    player->SetFlag( UNIT_FIELD_FLAGS, UNIT_FLAG_SKINNABLE );
+    // to be able to remove insignia -- ONLY IN BattleGrounds
+    if( !isArena() )
+        player->SetFlag( UNIT_FIELD_FLAGS, UNIT_FLAG_SKINNABLE );
 }
 
 void BattleGround::SetHoliday(bool is_holiday)

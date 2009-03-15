@@ -3501,7 +3501,7 @@ void Spell::TakeRunePower()
     }
 
     // you can gain some runic power when use runes
-    float rp = src->runePowerGain;;
+    float rp = src->runePowerGain;
     rp *= sWorld.getRate(RATE_POWER_RUNICPOWER_INCOME);
     plr->ModifyPower(POWER_RUNIC_POWER, (int32)rp);
 }
@@ -4228,6 +4228,7 @@ uint8 Spell::CanCast(bool strict)
                 {
                     // check for lock - key pair (checked by client also, just prevent cheating
                     bool ok_key = false;
+                    bool req_key = false;
                     for(int it = 0; it < 8; ++it)
                     {
                         switch(lockInfo->Type[it])
@@ -4236,6 +4237,7 @@ uint8 Spell::CanCast(bool strict)
                                 break;
                             case LOCK_KEY_ITEM:
                             {
+                                req_key = true;
                                 if(lockInfo->Index[it])
                                 {
                                     if(m_CastItem && m_CastItem->GetEntry()==lockInfo->Index[it])
@@ -4245,30 +4247,22 @@ uint8 Spell::CanCast(bool strict)
                             }
                             case LOCK_KEY_SKILL:
                             {
+                                req_key = true;
                                 if(uint32(m_spellInfo->EffectMiscValue[i])!=lockInfo->Index[it])
                                     break;
 
-                                switch(lockInfo->Index[it])
-                                {
-                                    case LOCKTYPE_HERBALISM:
-                                        if(((Player*)m_caster)->HasSkill(SKILL_HERBALISM))
-                                            ok_key =true;
-                                        break;
-                                    case LOCKTYPE_MINING:
-                                        if(((Player*)m_caster)->HasSkill(SKILL_MINING))
-                                            ok_key =true;
-                                        break;
-                                    default:
-                                        ok_key =true;
-                                        break;
-                                }
+                                SkillType skill = SkillByLockType(LockType(lockInfo->Index[it]));
+                                if(skill==SKILL_NONE)
+                                    ok_key =true;
+                                else if(((Player*)m_caster)->HasSkill(skill))
+                                    ok_key =true;
                             }
                         }
                         if(ok_key)
                             break;
                     }
 
-                    if(!ok_key)
+                    if(!ok_key && req_key)
                         return SPELL_FAILED_BAD_TARGETS;
                 }
 
