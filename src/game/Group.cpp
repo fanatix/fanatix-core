@@ -46,6 +46,9 @@ Group::Group()
 
     for(int i=0; i<TARGETICONCOUNT; i++)
         m_targetIcons[i] = 0;
+
+    // FG: diplomacy related
+    m_isDiplomatic = false;
 }
 
 Group::~Group()
@@ -209,6 +212,8 @@ void Group::ConvertToRaid()
     for(member_citerator citr = m_memberSlots.begin(); citr != m_memberSlots.end(); ++citr)
         if(Player* player = objmgr.GetPlayer(citr->guid))
             player->UpdateForQuestsGO();
+    // FG: remove diplomatic state if necessary
+    UpdateDiplomacyStatus();
 }
 
 bool Group::AddInvite(Player *player)
@@ -304,13 +309,17 @@ bool Group::AddMember(const uint64 &guid, const char* name)
         if(isRaidGroup())
             player->UpdateForQuestsGO();
     }
-
+        // FG: diplomacy stuff
+        UpdateDiplomacyStatus();
     return true;
 }
 
 uint32 Group::RemoveMember(const uint64 &guid, const uint8 &method)
 {
     BroadcastGroupUpdate();
+
+    // FG: diplomacy stuff
+    UpdateDiplomacyStatus();
 
     // remove member and change leader (if need) only if strong more 2 members _before_ member remove
     if(GetMembersCount() > (isBGGroup() ? 1 : 2))           // in BG group case allow 1 members group
@@ -380,6 +389,9 @@ void Group::ChangeLeader(const uint64 &guid)
 void Group::Disband(bool hideDestroy)
 {
     Player *player;
+
+    // FG: diplomacy stuff
+    UpdateDiplomacyStatus();
 
     for(member_citerator citr = m_memberSlots.begin(); citr != m_memberSlots.end(); ++citr)
     {
@@ -1191,6 +1203,9 @@ void Group::_setLeader(const uint64 &guid)
 
     m_leaderGuid = slot->guid;
     m_leaderName = slot->name;
+
+    // FG: diplomacy stuff
+    UpdateDiplomacyStatus();
 }
 
 void Group::_removeRolls(const uint64 &guid)
@@ -1612,4 +1627,120 @@ void Group::BroadcastGroupUpdate(void)
 		 DEBUG_LOG("-- Forced group value update for '%s'", pp->GetName());
 	 }
  }
+}
+
+void Group::UpdateDiplomacyDistance(Player *p)
+{
+    if(!p || GetMembersCount() < 2)
+        return;
+
+    //FactionTemplateEntry const *pf = sFactionTemplateStore.LookupEntry(Player::getFactionForRace(p->getRace()));
+
+    uint32 lvlsum = 0; // sum of the levels all players usually HOSTILE to *p
+    for(member_citerator citr = m_memberSlots.begin(); citr != m_memberSlots.end(); ++citr)
+    {
+        Player *m = objmgr.GetPlayer(citr->guid);
+        if(m && m != p && m->IsInWorld() && m->isAlive() && Player::TeamForRace(m->getRace()) != m_guidedTeam) // get level sum for hostile/guiding team
+        {
+            //FactionTemplateEntry const *mf = sFactionTemplateStore.LookupEntry(Player::getFactionForRace(m->getRace()));
+            //if(pf->IsHostileTo(*mf))
+            //{
+                if(p->IsWithinDistInMap(m, sWorld.getConfig(CONFIG_DIPLOMACY_GROUP_MODE_MAXDIST), true))
+                {
+                    lvlsum += m->getLevel();
+                }
+            //}
+        }
+    }
+    if(IsDiplomatic() && IsLevelForDiplomacy(lvlsum))
+    {
+        Player *leader = objmgr.GetPlayer(GetLeaderGUID());
+        if(leader && leader->IsInWorld())
+            p->setFaction(leader->getFaction());
+        else
+            sLog.outError("-- GROUP: DIPL is set but leader is offline!");
+
+        return;
+    }
+    
+    p->setFaction(Player::getFactionForRace(p->getRace()));
+}
+
+void Group::UpdateDiplomacyStatus(void)
+{
+    if(!sWorld.getConfig(CONFIG_DIPLOMACY_GROUP_MODE_ENABLE))
+        return;
+
+    // rid groups can NEVER be diplomatic. reset all members if necessary, and return
+    if(isRaidGroup())
+    {
+        if(m_isDiplomatic)
+        {
+            for(member_citerator citr = m_memberSlots.begin(); citr != m_memberSlots.end(); ++citr)
+            {
+                Player *m = objmgr.GetPlayer(citr->guid);
+                if(m && m->IsInWorld())
+                    m->setFaction(Player::getFactionForRace(m->getRace()));
+            }
+            m_isDiplomatic = false;
+        }
+        return;
+    }
+
+    bool minlevel_good = false;
+    m_guidedTeamLevelSum = 0;
+    m_guidedTeam = 0;
+    m_isDiplomatic = false;
+    uint32 a = 0, h = 0; // levels sums for each side
+    uint32 hmin = 255, amin = 255;
+    uint32 t;
+
+    for(member_citerator citr = m_memberSlots.begin(); citr != m_memberSlots.end(); ++citr)
+    {
+        Player *m = objmgr.GetPlayer(citr->guid);
+        if(m && m->IsInWorld()) // player does not need to be alive
+        {
+            t = Player::TeamForRace(m->getRace());
+            if(t == HORDE)
+            {
+                h += m->getLevel();
+                hmin = std::min(hmin, m->getLevel());
+            }
+            else if(t == ALLIANCE)
+            {
+                a += m->getLevel();
+                amin = std::min(amin, m->getLevel());
+            }
+        }
+    }
+
+    m_guidedTeamLevelSum = std::min(a,h);
+    if(m_guidedTeamLevelSum == a)
+    {
+        m_guidedTeam = ALLIANCE;
+        if(amin > sWorld.getConfig(CONFIG_DIPLOMACY_GROUP_MODE_MINLEVEL))
+            minlevel_good = true;
+    }
+    else
+    {
+        m_guidedTeam = HORDE;
+        if(hmin > sWorld.getConfig(CONFIG_DIPLOMACY_GROUP_MODE_MINLEVEL))
+            minlevel_good = true;
+    }
+
+    if(minlevel_good && IsLevelForDiplomacy(std::max(a,h))) // the guided team's level sum must be lower then the leading team's sum * factor
+    {
+        m_isDiplomatic = true;
+    }
+
+    for(member_citerator citr = m_memberSlots.begin(); citr != m_memberSlots.end(); ++citr)
+    {
+        Player *m = objmgr.GetPlayer(citr->guid);
+        UpdateDiplomacyDistance(m); // maybe a little inefficient.... dunno
+    }
+}
+
+bool Group::IsLevelForDiplomacy(uint32 highlvl)
+{
+    return (m_guidedTeamLevelSum * sWorld.getConfig(CONFIG_DIPLOMACY_GROUP_MODE_LEVELMULTI) <= highlvl);
 }

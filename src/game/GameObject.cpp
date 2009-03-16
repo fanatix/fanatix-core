@@ -124,7 +124,7 @@ bool GameObject::Create(uint32 guidlow, uint32 name_id, Map *map, uint32 phaseMa
     SetFloatValue(GAMEOBJECT_POS_Y, y);
     SetFloatValue(GAMEOBJECT_POS_Z, z);
     SetFloatValue(GAMEOBJECT_FACING, ang);                  //this is not facing angle
-
+    if(ang > M_PI)ang*=-1;
     int64 rotation = 0;
 
     double f_rot1 = sin(ang / 2.0f);

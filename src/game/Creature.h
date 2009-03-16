@@ -222,6 +222,19 @@ struct CreatureInfo
     {
         return type == CREATURE_TYPE_BEAST && family != 0 && (type_flags & CREATURE_TYPEFLAGS_TAMEABLE);
     }
+
+    bool isExotic() const
+    {
+        if (family == CREATURE_FAMILY_DEVILSAUR ||
+            family == CREATURE_FAMILY_CORE_HOUND ||
+            family == CREATURE_FAMILY_CHIMAERA ||
+            family == CREATURE_FAMILY_RHINO ||
+            family == CREATURE_FAMILY_SPIRIT_BEAST ||
+            family == CREATURE_FAMILY_SILITHID ||
+            family == CREATURE_FAMILY_WORM)
+                return true;
+        return false;
+    }
 };
 
 struct CreatureLocale
