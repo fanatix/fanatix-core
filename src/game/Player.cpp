@@ -7054,7 +7054,7 @@ void Player::ApplyEquipSpell(SpellEntry const* spellInfo, Item* item, bool apply
     if(apply)
     {
         // Cannot be used in this stance/form
-        if(GetErrorAtShapeshiftedCast(spellInfo, m_form)!=0)
+        if(GetErrorAtShapeshiftedCast(spellInfo, m_form) != SPELL_CAST_OK)
             return;
 
         if(form_change)                                     // check aura active state from other form
@@ -7088,7 +7088,7 @@ void Player::ApplyEquipSpell(SpellEntry const* spellInfo, Item* item, bool apply
         if(form_change)                                     // check aura compatibility
         {
             // Cannot be used in this stance/form
-            if(GetErrorAtShapeshiftedCast(spellInfo, m_form)==0)
+            if(GetErrorAtShapeshiftedCast(spellInfo, m_form)==SPELL_CAST_OK)
                 return;                                     // and remove only not compatible at form change
         }
 
@@ -7500,6 +7500,9 @@ void Player::SendLootRelease( uint64 guid )
 
 void Player::SendLoot(uint64 guid, LootType loot_type)
 {
+    if (uint64 lguid = GetLootGUID())
+        m_session->DoLootRelease(lguid);
+
     Loot    *loot = 0;
     PermissionTypes permission = ALL_PERMISSION;
 
@@ -18477,7 +18480,20 @@ void Player::ClearComboPoints()
 void Player::SetGroup(Group *group, int8 subgroup)
 {
     if(group == NULL)
+    {
         m_group.unlink();
+
+        if(sWorld.getConfig(CONFIG_DIPLOMACY_GROUP_MODE_ENABLE))
+        {
+            // FG: if faction was changed, restore original faction
+            // i hope this wont conflict with any faction-changing buffs... if there are any...
+            setFactionForRace(getRace());
+
+            // FG: TODO: move to some func called 20 secs after no pvp-traitor action
+            // some code copied from UpdateArea() 
+        }
+
+    }
     else
     {
         // never use SetGroup without a subgroup unless you specify NULL for group
@@ -19508,7 +19524,7 @@ void Player::UpdateAreaDependentAuras( uint32 newArea )
     for(AuraMap::iterator iter = m_Auras.begin(); iter != m_Auras.end();)
     {
         // use m_zoneUpdateId for speed: UpdateArea called from UpdateZone or instead UpdateZone in both cases m_zoneUpdateId up-to-date
-        if(spellmgr.GetSpellAllowedInLocationError(iter->second->GetSpellProto(),GetMapId(),m_zoneUpdateId,newArea,this)!=0)
+        if(spellmgr.GetSpellAllowedInLocationError(iter->second->GetSpellProto(),GetMapId(),m_zoneUpdateId,newArea,this) != SPELL_CAST_OK)
             RemoveAura(iter);
         else
             ++iter;
@@ -19809,6 +19825,7 @@ bool Player::CanUseBattleGroundObject()
 {
     return ( //InBattleGround() &&                          // in battleground - not need, check in other cases
              //!IsMounted() && - not correct, player is dismounted when he clicks on flag
+             //i'm not sure if these two are correct, because invisible players should get visible when they click on flag
              !HasStealthAura() &&                           // not stealthed
              !HasInvisibilityAura() &&                      // not invisible
              !HasAura(SPELL_RECENTLY_DROPPED_FLAG, 0) &&    // can't pickup
@@ -20177,6 +20194,20 @@ uint32 Player::GetPhaseMaskForSpawn() const
         return n_phase;
 
     return PHASEMASK_NORMAL;
+}
+
+void Player::UpdateDiplomacyDistance(void)
+{
+    if(sWorld.getConfig(CONFIG_DIPLOMACY_GROUP_MODE_ENABLE))
+    {
+        if(Group *g = GetGroup())
+        {
+            if(g && g->IsDiplomatic())
+            {
+                g->UpdateDiplomacyDistance(this);
+            }
+        }
+    }
 }
 
 uint8 Player::CanEquipUniqueItem(Item* pItem, uint8 eslot, uint32 limit_count) const

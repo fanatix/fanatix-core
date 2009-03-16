@@ -165,6 +165,11 @@ bool Pet::LoadPetFromDB( Player* owner, uint32 petentry, uint32 petnumber, bool 
         return true;
     }
 
+    if (cinfo->isExotic () && !owner->HasAuraType(SPELL_AURA_ALLOW_TAME_PET_TYPE) ) {
+        delete result;
+        return false;
+    }
+
     if(getPetType() == HUNTER_PET || (getPetType() == SUMMON_PET && cinfo->type == CREATURE_TYPE_DEMON && owner->getClass() == CLASS_WARLOCK))
         m_charmInfo->SetPetNumber(pet_number, true);
     else
@@ -306,8 +311,7 @@ bool Pet::LoadPetFromDB( Player* owner, uint32 petentry, uint32 petnumber, bool 
     AIM_Initialize();
     map->Add((Creature*)this);
 
-    // Spells should be loaded after pet is added to map, because in CanCast is check on it
-
+    // Spells should be loaded after pet is added to map, because in CheckCast is check on it
 	switch(owner->getClass())
     {
         case CLASS_WARLOCK:
