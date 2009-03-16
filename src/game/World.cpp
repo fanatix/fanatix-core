@@ -556,6 +556,12 @@ void World::LoadConfigSettings(bool reload)
     m_MvAnticheatMaxXYT                     = sConfig.GetFloatDefault("Anticheat.Movement.MaxXYT",0.04f);
     m_MvAnticheatIgnoreAfterTeleport        = (uint16)sConfig.GetIntDefault("Anticheat.Movement.IgnoreSecAfterTeleport",10);
 
+    // FG: custom stuffs
+    m_configs[CONFIG_DIPLOMACY_GROUP_MODE_ENABLE] = sConfig.GetIntDefault("GroupMode.Diplomacy.Enable",0);
+    m_configs[CONFIG_DIPLOMACY_GROUP_MODE_LEVELMULTI] = sConfig.GetIntDefault("GroupMode.Diplomacy.Levelmulti",2);
+    m_configs[CONFIG_DIPLOMACY_GROUP_MODE_MINLEVEL] = sConfig.GetIntDefault("GroupMode.Diplomacy.Minlevel",2);
+    m_configs[CONFIG_DIPLOMACY_GROUP_MODE_MAXDIST] = sConfig.GetIntDefault("GroupMode.Diplomacy.Maxdist",60);
+
     m_configs[CONFIG_COMPRESSION] = sConfig.GetIntDefault("Compression", 1);
     if(m_configs[CONFIG_COMPRESSION] < 1 || m_configs[CONFIG_COMPRESSION] > 9)
     {
