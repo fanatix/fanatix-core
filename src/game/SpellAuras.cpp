@@ -41,6 +41,7 @@
 #include "OutdoorPvP.h"
 #include "OutdoorPvPMgr.h"
 #include "CreatureAI.h"
+#include "ScriptCalls.h"
 #include "Util.h"
 #include "GridNotifiers.h"
 #include "GridNotifiersImpl.h"
@@ -1444,7 +1445,7 @@ void Aura::TriggerSpell()
                             caster->ModifyPower( POWER_MANA, mana );
                             caster->SendEnergizeSpellLog(caster, 23493, mana, POWER_MANA);
                         }
-                        break;
+                        return;
                     }
 //                    // Stoneclaw Totem Passive TEST
 //                    case 23792: break;
@@ -1512,8 +1513,11 @@ void Aura::TriggerSpell()
 //                    case 28522: break;
 //                    // Silithyst
 //                    case 29519: break;
-//                    // Inoculate Nestlewood Owlkin
-                    case 29528: trigger_spell_id = 28713; break;
+                    // Inoculate Nestlewood Owlkin
+                    case 29528:
+                        if(target->GetTypeId()!=TYPEID_UNIT)// prevent error reports in case ignored player target
+                            return;
+                        break;
 //                    // Overload
 //                    case 29768: break;
 //                    // Return Fire
@@ -1555,7 +1559,6 @@ void Aura::TriggerSpell()
                             creature->SetHealth(0);         // just for nice GM-mode view
                         }
                         return;
-                        break;
                     }
                     // Quake
                     case 30576: trigger_spell_id = 30571; break;
@@ -1936,13 +1939,9 @@ void Aura::TriggerSpell()
             default:
                 break;
         }
+
         // Reget trigger spell proto
         triggeredSpellInfo = sSpellStore.LookupEntry(trigger_spell_id);
-        if(triggeredSpellInfo == NULL)
-        {
-            sLog.outError("Aura::TriggerSpell: Spell %u have 0 in EffectTriggered[%d], not handled custom case?",GetId(),GetEffIndex());
-            return;
-        }
     }
     else
     {
@@ -2055,8 +2054,12 @@ void Aura::TriggerSpell()
             }
         }
     }
+
     // All ok cast by default case
-    caster->CastSpell(target, triggeredSpellInfo, true, 0, this);
+    if(triggeredSpellInfo)
+        caster->CastSpell(target, triggeredSpellInfo, true, 0, this);
+    else if(target->GetTypeId()!=TYPEID_UNIT || !Script->EffectDummyCreature(caster, GetId(), GetEffIndex(), (Creature*)target))
+        sLog.outError("Aura::TriggerSpell: Spell %u have 0 in EffectTriggered[%d], not handled custom case?",GetId(),GetEffIndex());
 }
 
 void Aura::TriggerSpellWithValue()
@@ -4375,7 +4378,7 @@ void Aura::HandleAuraPeriodicDummy(bool apply, bool Real)
         {
             // Explosive Shot
             if (apply && !loading && caster)
-                m_modifier.m_amount += int32(caster->GetTotalAttackPowerValue(RANGED_ATTACK) * 8 / 100);
+                m_modifier.m_amount +=caster->GetTotalAttackPowerValue(RANGED_ATTACK) * 16 / 100;
             break;
         }
     }
@@ -6667,14 +6670,7 @@ void Aura::PeriodicDummyTick()
                 if (!caster)
                     return;
                 int32 damage = m_modifier.m_amount;
-                // Full damage to target at 0 tick
-                if (m_duration > m_modifier.periodictime)
-                {
-                    caster->CastCustomSpell(m_target, 53352, &damage, 0, 0, true, 0, this);
-                    return;
-                }
-                damage/=4;
-                caster->CastCustomSpell(m_target, 56298, &damage, 0, 0, true, 0, this);
+                caster->CastCustomSpell(m_target, 53352, &damage, 0, 0, true, 0, this);
                 return;
             }
             switch (spell->Id)
