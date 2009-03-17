@@ -3624,7 +3624,15 @@ SpellCastResult Spell::CheckCast(bool strict)
       case 47471: ex= true;
       }
 
-    //if(ex && m_caster->HasAura(52437)) return 0; // Allow execute
+// Death Pact
+	if(m_spellInfo->Id == 48743 && m_caster->GetTypeId()==TYPEID_PLAYER)
+	{
+		Unit *t1 =  m_caster->GetUnit(*m_caster, ((Player *)m_caster)->GetSelection());
+		if(!t1 || t1->isDead() || !t1->GetOwner()) return SPELL_FAILED_BAD_TARGETS;
+		if(((Creature*)t1)->GetCreatureType()!=CREATURE_TYPE_UNDEAD 
+			|| t1->GetOwnerGUID() != m_caster->GetGUID()) return SPELL_FAILED_BAD_TARGETS;
+		 m_targets.setUnitTarget(t1);
+	}
 
     // check cooldowns to prevent cheating
     if(m_caster->GetTypeId()==TYPEID_PLAYER && ((Player*)m_caster)->HasSpellCooldown(m_spellInfo->Id))
@@ -4378,6 +4386,20 @@ SpellCastResult Spell::CheckCast(bool strict)
     {
         switch(m_spellInfo->EffectApplyAuraName[i])
         {
+            case SPELL_AURA_DUMMY:
+            {
+                //custom check
+                switch(m_spellInfo->Id)
+                {
+                    case 61336:
+                        if(m_caster->GetTypeId()!=TYPEID_PLAYER || !((Player*)m_caster)->IsInFeralForm())
+                            return SPELL_FAILED_ONLY_SHAPESHIFT;
+                        break;
+                    default:
+                        break;
+                }
+                break;
+            }
             case SPELL_AURA_MOD_POSSESS:
             case SPELL_AURA_MOD_CHARM:
             {

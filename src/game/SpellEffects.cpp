@@ -277,31 +277,20 @@ void Spell::EffectInstaKill(uint32 /*i*/)
         m_caster->CastSpell(m_caster,spellID,true);
     }
 
-    // Death Pact
-    if(m_spellInfo->Id==48743)
-    {
-        if (((Player*)m_caster)->death_pact == true)//only one undead minion killed
-            return;
-        if(unitTarget->GetTypeId()==TYPEID_UNIT)
-        {
-            uint32 entry = unitTarget->GetEntry();
-            switch(entry)
-            {
-                case    24207:                //army of dead -> summoned ghoul
-                case    26125:                //raise death -> ghoul
-                case    27829:                //summon gargoyle -> summoned gargoyle
-                {
-                    if (unitTarget->GetUInt64Value(UNIT_FIELD_SUMMONEDBY) == m_caster->GetGUID())
-                    {
-                        uint32 health = unitTarget->GetHealth();
-                        m_caster->DealDamage(unitTarget, health, NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, NULL, false);
-                        ((Player*)m_caster)->death_pact = true;
-                    }
-                }
-            }
-        }
-        return;
-    }
+	// Death Pact
+	if(m_spellInfo->Id==48743)
+	{	Unit *target = m_targets.getUnitTarget();
+		if(target && !target->isDead())
+		{
+			int32 heal =  m_caster->GetMaxHealth()  * 0.4;
+			m_caster->ModifyHealth(heal);
+			m_caster->SendHealSpellLog(m_caster,48743,heal,false);
+			target->SetHealth(0);
+			target->setDeathState(JUST_DIED);
+			m_targets.setUnitTarget(NULL);
+		}
+		return;
+	}
 
     if(m_caster==unitTarget)                                // prevent interrupt message
         finish();
