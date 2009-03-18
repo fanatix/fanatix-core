@@ -1,19 +1,3 @@
-/* Copyright (C) 2006 - 2009 ScriptDev2 <https://scriptdev2.svn.sourceforge.net/>
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- */
-
 /* ScriptData
 SDName: Boss_Ingvar_The_Plunderer
 SD%Complete: 95
@@ -22,25 +6,18 @@ SDCategory: Udgarde Keep
 EndScriptData */
 
 #include "precompiled.h"
-#include "def_utgarde_keep.h"
 #include "sc_creature.h"
-#include "sc_instance.h"
+#include "def_utgarde_keep.h"
 
 //Yells Ingvar
-#define YELL_AGGRO_1                        "I'll paint my face with your blood!"
-#define SOUND_AGGRO_1                       13207
-#define YELL_AGGRO_2                        "I return! A second chance to carve out your skull!"
-#define SOUND_AGGRO_2                       13209
+#define SAY_AGGRO_1                         -1999670
+#define SAY_AGGRO_2                         -1999663
 
-#define YELL_DEAD_1                         "My life for the... death god!"
-#define SOUND_DEAD_1                        13213
-#define YELL_DEAD_2                         "No! I can do... better! I can..."
-#define SOUND_DEAD_2                        13211
+#define SAY_DEAD_1                          -1999668
+#define SAY_DEAD_2                          -1999661
 
-#define YELL_KILL_1                         "Mjul orm agn gjor!"
-#define SOUND_KILL_1                        13212
-#define YELL_KILL_2                         "I am a warriorborn!"
-#define SOUND_KILL_2                        13214
+#define SAY_KILL_1                          -1999662
+#define SAY_KILL_2                          -1999669
 
 //Ingvar Spells human form
 #define MOB_INGVAR_HUMAN                            23954
@@ -136,8 +113,7 @@ struct MANGOS_DLL_DECL boss_ingvar_the_plundererAI : public ScriptedAI
             event_inProgress = true;
             undead = true;
 
-            DoYell(YELL_DEAD_1,LANG_UNIVERSAL,NULL);
-            DoPlaySoundToSet(m_creature,SOUND_DEAD_1);
+            DoScriptText(SAY_AGGRO_1,m_creature);
         }
 
         if(event_inProgress)
@@ -154,8 +130,7 @@ struct MANGOS_DLL_DECL boss_ingvar_the_plundererAI : public ScriptedAI
         m_creature->GetMotionMaster()->MoveChase(m_creature->getVictim());
         m_creature->AI()->AttackStart(m_creature->getVictim());
 
-        DoYell(YELL_AGGRO_2,LANG_UNIVERSAL,NULL);
-        DoPlaySoundToSet(m_creature,SOUND_AGGRO_2);
+        DoScriptText(SAY_AGGRO_2,m_creature);
     }
 
     void Aggro(Unit *who)
@@ -163,8 +138,7 @@ struct MANGOS_DLL_DECL boss_ingvar_the_plundererAI : public ScriptedAI
         if(pInstance)
             pInstance->SetData(DATA_INGVAR, IN_PROGRESS);
 
-        DoYell(YELL_AGGRO_1,LANG_UNIVERSAL,NULL);
-        DoPlaySoundToSet(m_creature,SOUND_AGGRO_1);
+        DoScriptText(SAY_AGGRO_1,m_creature);
     }
 
     void JustDied(Unit* killer)  
@@ -172,21 +146,18 @@ struct MANGOS_DLL_DECL boss_ingvar_the_plundererAI : public ScriptedAI
         if(pInstance)
             pInstance->SetData(DATA_INGVAR, DONE);
 
-        DoYell(YELL_DEAD_2,LANG_UNIVERSAL,NULL);
-        DoPlaySoundToSet(m_creature,SOUND_DEAD_2);
+        DoScriptText(SAY_DEAD_2,m_creature);
     }
 
     void KilledUnit(Unit *victim)
     {
         if(undead)
         {
-            DoYell(YELL_KILL_1,LANG_UNIVERSAL,NULL);
-            DoPlaySoundToSet(m_creature,SOUND_KILL_1);
+            DoScriptText(SAY_KILL_1,m_creature);
         }
         else
         {
-            DoYell(YELL_KILL_2,LANG_UNIVERSAL,NULL);
-            DoPlaySoundToSet(m_creature,SOUND_KILL_2);
+            DoScriptText(SAY_KILL_2,m_creature);
         }
     }
 
@@ -294,8 +265,7 @@ CreatureAI* GetAI_boss_ingvar_the_plunderer(Creature *_Creature)
     return new boss_ingvar_the_plundererAI (_Creature);
 }
 
-#define YELL_RESSURECT                      "Ingvar! Your pathetic failure will serve as a warning to all... you are damned! Arise and carry out the master's will!"
-#define SOUND_RESSURECT                     13754
+#define SAY_RESSURECT                       -1999524
 
 //Spells for Annhylde
 #define SPELL_SCOURG_RESURRECTION_HEAL              42704 //Heal Max + DummyAura
@@ -325,15 +295,13 @@ struct MANGOS_DLL_DECL mob_annhylde_the_callerAI : public ScriptedAI
         m_creature->SetSpeed(MOVE_FLIGHT , 0.1f);
 
         m_creature->GetPosition(x,y,z);
-        //DoTeleportPlayer(x+1,y,z+30);
-
+        DoTeleportPlayer(m_creature, x+1, y, z+30, m_creature->GetOrientation());
         Unit* ingvar = Unit::GetUnit((*m_creature), pInstance->GetData64(DATA_INGVAR));
         if(ingvar)
         {
             m_creature->GetMotionMaster()->MovePoint(1,x,y,z+15);
 
-            DoYell(YELL_RESSURECT,LANG_UNIVERSAL,NULL);
-            DoPlaySoundToSet(m_creature,SOUND_RESSURECT);
+            DoScriptText(SAY_RESSURECT,m_creature);
         }
     }
 
@@ -424,15 +392,15 @@ struct MANGOS_DLL_DECL mob_ingvar_throw_dummyAI : public ScriptedAI
 
     void Reset()
     {
-        /*Unit* target = SummonCreature(ENTRY_THROW_TARGET,50,m_creature);
-        if(target)
-        {
-            DoCast(m_creature, HeroicMode ? H_SPELL_SHADOW_AXE_DAMAGE : SPELL_SHADOW_AXE_DAMAGE);
-            float x,y,z;
-            target->GetPosition(x,y,z);
-            m_creature->GetMotionMaster()->MovePoint(0,x,y,z);
-        }
-        Despawn_Timer = 7000;*/
+//        Unit* target = FindCreature(ENTRY_THROW_TARGET,50,m_creature);
+//        if(target)
+//        {
+//            DoCast(m_creature, HeroicMode ? H_SPELL_SHADOW_AXE_DAMAGE : SPELL_SHADOW_AXE_DAMAGE);
+//            float x,y,z;
+//            target->GetPosition(x,y,z);
+//            m_creature->GetMotionMaster()->MovePoint(0,x,y,z);
+//        }
+        Despawn_Timer = 7000;
     }
     void AttackStart(Unit* who) {}
     void MoveInLineOfSight(Unit* who) {}
