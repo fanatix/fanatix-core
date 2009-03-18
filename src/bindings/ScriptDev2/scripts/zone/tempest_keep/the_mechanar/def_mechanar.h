@@ -1,6 +1,0 @@
-#ifndef DEF_MECHANAR_H
-#define DEF_MECHANAR_H
-
-#define DATA_SEPETHREA_DEATH 1
-#define DATA_SEPETHREAISDEAD 2
-#endif
