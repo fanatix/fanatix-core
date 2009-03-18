@@ -620,7 +620,7 @@ extern void AddSC_boss_zuljin();
 extern void AddSC_zulaman();
 
 //Utgarde: Utgarde Keep
-//extern void AddSC_boss_ingvar_the_plunderer();
+extern void AddSC_boss_ingvar_the_plunderer();
 extern void AddSC_boss_keleseth();
 extern void AddSC_boss_skarvald_dalronn();
 extern void AddSC_instance_utgarde_keep();
@@ -2063,7 +2063,7 @@ void ScriptsInit()
     AddSC_zulaman();
 
    //Utgarde: Utgarde Keep
-   //AddSC_boss_ingvar_the_plunderer();
+   AddSC_boss_ingvar_the_plunderer();
    AddSC_boss_keleseth();
    AddSC_boss_skarvald_dalronn();
    AddSC_instance_utgarde_keep();
