@@ -1,18 +1,18 @@
-/* Copyright (C) 2006 - 2008 ScriptDev2 <https://scriptdev2.svn.sourceforge.net/>
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- */
+/* Copyright (C) 2006 - 2009 ScriptDev2 <https://scriptdev2.svn.sourceforge.net/>
+* This program is free software; you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License, or
+* (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+* GNU General Public License for more details.
+*
+* You should have received a copy of the GNU General Public License
+* along with this program; if not, write to the Free Software
+* Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+*/
 
 /* ScriptData
 SDName: Boss_Kalecgos
@@ -23,7 +23,6 @@ EndScriptData */
 
 #include "precompiled.h"
 #include "def_sunwell_plateau.h"
-#include "sc_creature.h"
 
 //kalecgos dragon form
 #define SAY_EVIL_AGGRO                  -1580000
@@ -164,9 +163,6 @@ struct MANGOS_DLL_DECL boss_kalecgosAI : public ScriptedAI
         GameObject *Door = GameObject::GetGameObject(*m_creature, DoorGUID);
         if(Door) Door->SetLootState(GO_ACTIVATED);
         DoZoneInCombat();
-
-        if(pInstance)
-            pInstance->SetData(DATA_KALECGOS_EVENT, IN_PROGRESS);
     }
 
     void KilledUnit(Unit *victim)
@@ -281,9 +277,6 @@ struct MANGOS_DLL_DECL boss_sathrovarrAI : public ScriptedAI
         ResetThreat = 1000;
         isEnraged = false;
         isBanished = false;
-
-        if(pInstance)
-            pInstance->SetData(DATA_KALECGOS_EVENT, NOT_STARTED);
     }
 
     void Aggro(Unit* who)
@@ -292,7 +285,7 @@ struct MANGOS_DLL_DECL boss_sathrovarrAI : public ScriptedAI
         if(Kalec)
         {
             KalecGUID = Kalec->GetGUID();
-            //m_creature->inCombat(Kalec);
+			m_creature->AI()->AttackStart(Kalec);
             m_creature->AddThreat(Kalec, 100.0f);
         }
         DoScriptText(SAY_SATH_AGGRO, m_creature);
@@ -334,9 +327,6 @@ struct MANGOS_DLL_DECL boss_sathrovarrAI : public ScriptedAI
             ((boss_kalecgosAI*)((Creature*)Kalecgos)->AI())->TalkTimer = 1;
             ((boss_kalecgosAI*)((Creature*)Kalecgos)->AI())->isFriendly = true;
         }
-
-        if(pInstance)
-            pInstance->SetData(DATA_KALECGOS_EVENT, DONE);
     }
 
     void TeleportAllPlayersBack()
@@ -353,7 +343,7 @@ struct MANGOS_DLL_DECL boss_sathrovarrAI : public ScriptedAI
 
     void UpdateAI(const uint32 diff)
     {
-        if(!m_creature->SelectHostilTarget() || !m_creature->getVictim() )
+        if (!m_creature->SelectHostilTarget() || !m_creature->getVictim())
             return;
 
         if(CheckTimer < diff)
@@ -387,7 +377,7 @@ struct MANGOS_DLL_DECL boss_sathrovarrAI : public ScriptedAI
                 }
                 else
                 {
-                    DoTextEmote("is unable to find Kalecgos", NULL);
+					m_creature->MonsterTextEmote("is unable to find Kalecgos", NULL);
                     EnterEvadeMode();
                 }
             }
@@ -480,7 +470,7 @@ struct MANGOS_DLL_DECL boss_kalecAI : public ScriptedAI
 
     void UpdateAI(const uint32 diff)
     {
-       if(!m_creature->SelectHostilTarget() || !m_creature->getVictim() )
+        if (!m_creature->SelectHostilTarget() || !m_creature->getVictim())
             return;
 
         if(YellTimer < diff)
@@ -553,7 +543,7 @@ void boss_kalecgosAI::UpdateAI(const uint32 diff)
     }
     else
     {
-        if(!m_creature->SelectHostilTarget() || !m_creature->getVictim() )
+        if (!m_creature->SelectHostilTarget() || !m_creature->getVictim())
             return;
 
         if(CheckTimer < diff)
@@ -587,7 +577,7 @@ void boss_kalecgosAI::UpdateAI(const uint32 diff)
                  }
                  else
                  {
-                     error_log("TSCR: Didn't find Shathrowar. Kalecgos event reseted.");
+                     error_log("SD2: Didn't find Shathrowar. Kalecgos event reseted.");
                      EnterEvadeMode();
                  }
              }
@@ -596,25 +586,25 @@ void boss_kalecgosAI::UpdateAI(const uint32 diff)
 
         if(ArcaneBuffetTimer < diff)
         {
-            DoCast(m_creature->getVictim(), SPELL_ARCANE_BUFFET);
+            DoCast(m_creature, SPELL_ARCANE_BUFFET);
             ArcaneBuffetTimer = 8000;
         }else ArcaneBuffetTimer -= diff;
 
         if(FrostBreathTimer < diff)
         {
-            DoCast(m_creature->getVictim(), SPELL_FROST_BREATH);
+            DoCast(m_creature, SPELL_FROST_BREATH);
             FrostBreathTimer = 15000;
         }else FrostBreathTimer -= diff;
 
         if(TailLashTimer < diff)
         {
-            DoCast(m_creature->getVictim(), SPELL_TAIL_LASH);
+            DoCast(m_creature, SPELL_TAIL_LASH);
             TailLashTimer = 15000;
         }else TailLashTimer -= diff;
 
         if(WildMagicTimer < diff)
         {
-            DoCast(m_creature->getVictim(), WildMagic[rand()%6]);
+            DoCast(m_creature, WildMagic[rand()%6]);
             WildMagicTimer = 20000;
         }else WildMagicTimer -= diff;
 
@@ -684,3 +674,4 @@ void AddSC_boss_kalecgos()
     newscript->pGOHello = &GOkalocegos_teleporter;
     newscript->RegisterSelf();
 }
+

@@ -123,7 +123,7 @@ static EventFelmyst MaxTimer[]=
     EVENT_SUMMON_FOG,
 };
 
-struct TRINITY_DLL_DECL boss_felmystAI : public ScriptedAI
+struct MANGOS_DLL_DECL boss_felmystAI : public ScriptedAI
 {
     boss_felmystAI(Creature *c) : ScriptedAI(c)
     {
@@ -162,12 +162,12 @@ struct TRINITY_DLL_DECL boss_felmystAI : public ScriptedAI
         m_creature->SetFloatValue(UNIT_FIELD_COMBATREACH, 10);
 
         DespawnSummons(MOB_VAPOR_TRAIL);
-  m_creature->setActive(false);
+        m_creature->SetActiveObjectState(false);
     }
 
     void Aggro(Unit *who)
     {
-  m_creature->setActive(true);
+        m_creature->SetActiveObjectState(true);
         DoZoneInCombat();
         m_creature->CastSpell(m_creature, AURA_SUNWELL_RADIANCE, true);
         m_creature->CastSpell(m_creature, AURA_NOXIOUS_FUMES, true);
@@ -191,11 +191,11 @@ struct TRINITY_DLL_DECL boss_felmystAI : public ScriptedAI
         switch(rand()%2)
         {
         case 0:
-            DoYell(YELL_KILL1,LANG_UNIVERSAL, NULL);
+			m_creature->MonsterYell(YELL_KILL1,LANG_UNIVERSAL, NULL);
             DoPlaySoundToSet(m_creature, SOUND_KILL1);
             break;
         case 1:
-            DoYell(YELL_KILL2,LANG_UNIVERSAL, NULL);
+            m_creature->MonsterYell(YELL_KILL2,LANG_UNIVERSAL, NULL);
             DoPlaySoundToSet(m_creature, SOUND_KILL2);
             break;
         }
@@ -203,7 +203,7 @@ struct TRINITY_DLL_DECL boss_felmystAI : public ScriptedAI
 
     void JustDied(Unit* Killer)
     {
-        DoYell(YELL_DEATH, LANG_UNIVERSAL, NULL);
+        m_creature->MonsterYell(YELL_DEATH, LANG_UNIVERSAL, NULL);
         DoPlaySoundToSet(m_creature, SOUND_DEATH);
     }
 
@@ -286,7 +286,7 @@ struct TRINITY_DLL_DECL boss_felmystAI : public ScriptedAI
             m_creature->HandleEmoteCommand(EMOTE_ONESHOT_LIFTOFF);
             m_creature->SetUnitMovementFlags(MOVEMENTFLAG_LEVITATING + MOVEMENTFLAG_ONTRANSPORT);
             m_creature->StopMoving();
-            DoYell(YELL_TAKEOFF, LANG_UNIVERSAL, NULL);
+            m_creature->MonsterYell(YELL_TAKEOFF, LANG_UNIVERSAL, NULL);
             DoPlaySoundToSet(m_creature, SOUND_TAKEOFF);
             Timer[EVENT_FLIGHT_SEQUENCE] = 2000;
             break;
@@ -295,7 +295,7 @@ struct TRINITY_DLL_DECL boss_felmystAI : public ScriptedAI
             Timer[EVENT_FLIGHT_SEQUENCE] = 0;
             break;
         case 2:
-            if(Unit* target = SelectUnit(SELECT_TARGET_RANDOM, 0, 150, true))
+            if(Unit* target = SelectUnit(SELECT_TARGET_RANDOM, 0))
             {
                 Creature* Vapor = m_creature->SummonCreature(MOB_VAPOR, target->GetPositionX()-5+rand()%10, target->GetPositionY()-5+rand()%10, target->GetPositionZ(), 0, TEMPSUMMON_TIMED_DESPAWN, 9000);
                 if(Vapor)
@@ -311,7 +311,7 @@ struct TRINITY_DLL_DECL boss_felmystAI : public ScriptedAI
         case 3:
             DespawnSummons(MOB_VAPOR_TRAIL);
             //m_creature->CastSpell(m_creature, SPELL_VAPOR_SELECT); need core support
-            if(Unit* target = SelectUnit(SELECT_TARGET_RANDOM, 0, 150, true))
+            if(Unit* target = SelectUnit(SELECT_TARGET_RANDOM, 0))
             {
                 //target->CastSpell(target, SPELL_VAPOR_SUMMON, true); need core support
                 Creature* Vapor = m_creature->SummonCreature(MOB_VAPOR, target->GetPositionX()-5+rand()%10, target->GetPositionY()-5+rand()%10, target->GetPositionZ(), 0, TEMPSUMMON_TIMED_DESPAWN, 9000);
@@ -330,7 +330,7 @@ struct TRINITY_DLL_DECL boss_felmystAI : public ScriptedAI
             Timer[EVENT_FLIGHT_SEQUENCE] = 1;
             break;
         case 5:
-            if(Unit* target = SelectUnit(SELECT_TARGET_RANDOM, 0, 150, true))
+            if(Unit* target = SelectUnit(SELECT_TARGET_RANDOM, 0))
             {
                 BreathX = target->GetPositionX();
                 BreathY = target->GetPositionY();
@@ -343,7 +343,7 @@ struct TRINITY_DLL_DECL boss_felmystAI : public ScriptedAI
         case 6:
             m_creature->SetOrientation(m_creature->GetAngle(BreathX, BreathY));
             m_creature->StopMoving();
-            DoTextEmote("takes a deep breath.", NULL);
+			m_creature->MonsterTextEmote("takes a deep breath.", NULL);
             Timer[EVENT_FLIGHT_SEQUENCE] = 10000;
             break;
         case 7:
@@ -389,7 +389,7 @@ struct TRINITY_DLL_DECL boss_felmystAI : public ScriptedAI
 
     void UpdateAI(const uint32 diff)
     {
-        if (!UpdateVictim())
+        if (!m_creature->SelectHostilTarget() || !m_creature->getVictim())
         {
             if(Phase == PHASE_FLIGHT && !m_creature->IsInEvadeMode())
                 EnterEvadeMode();
@@ -415,7 +415,7 @@ struct TRINITY_DLL_DECL boss_felmystAI : public ScriptedAI
             switch(Event)
             {
             case EVENT_BERSERK:
-                DoYell(YELL_BERSERK, LANG_UNIVERSAL, NULL);
+				m_creature->MonsterYell(YELL_BERSERK, LANG_UNIVERSAL, NULL);
                 DoPlaySoundToSet(m_creature, SOUND_BERSERK);
                 m_creature->CastSpell(m_creature, SPELL_BERSERK, true);
                 Timer[EVENT_BERSERK] = 0;
@@ -433,7 +433,7 @@ struct TRINITY_DLL_DECL boss_felmystAI : public ScriptedAI
                 Timer[EVENT_GAS_NOVA] = 20000 + rand()%5 * 1000;
                 break;
             case EVENT_ENCAPSULATE:
-                if(Unit* target = SelectUnit(SELECT_TARGET_RANDOM, 0, 150, true))
+                if(Unit* target = SelectUnit(SELECT_TARGET_RANDOM, 0))
                 {
                     m_creature->CastSpell(target, SPELL_ENCAPSULATE_CHANNEL, false);
                     target->CastSpell(target, SPELL_ENCAPSULATE_EFFECT, true);// linked aura, need core patch to remove this hack
@@ -453,7 +453,7 @@ struct TRINITY_DLL_DECL boss_felmystAI : public ScriptedAI
             switch(Event)
             {
             case EVENT_BERSERK:
-                DoYell(YELL_BERSERK, LANG_UNIVERSAL, NULL);
+                m_creature->MonsterYell(YELL_BERSERK, LANG_UNIVERSAL, NULL);
                 DoPlaySoundToSet(m_creature, SOUND_BERSERK);
                 m_creature->CastSpell(m_creature, SPELL_BERSERK, true);
                 Timer[EVENT_BERSERK] = 0;
@@ -487,15 +487,15 @@ struct TRINITY_DLL_DECL boss_felmystAI : public ScriptedAI
         m_creature->GetPosition(x, y, z);
 
         {
-            CellPair pair(Trinity::ComputeCellPair(x, y));
+            CellPair pair(MaNGOS::ComputeCellPair(x, y));
             Cell cell(pair);
             cell.data.Part.reserved = ALL_DISTRICT;
             cell.SetNoCreate();
 
-            Trinity::AllCreaturesOfEntryInRange check(m_creature, entry, 100);
-            Trinity::CreatureListSearcher<Trinity::AllCreaturesOfEntryInRange> searcher(m_creature, templist, check);
+            AllCreaturesOfEntryInRange check(m_creature, entry, 100);
+            MaNGOS::CreatureListSearcher<AllCreaturesOfEntryInRange> searcher(m_creature, templist, check);
 
-            TypeContainerVisitor<Trinity::CreatureListSearcher<Trinity::AllCreaturesOfEntryInRange>, GridTypeMapContainer> cSearcher(searcher);
+            TypeContainerVisitor<MaNGOS::CreatureListSearcher<AllCreaturesOfEntryInRange>, GridTypeMapContainer> cSearcher(searcher);
 
             CellLock<GridReadGuard> cell_lock(cell, pair);
             cell_lock->Visit(cell_lock, cSearcher, *(m_creature->GetMap()));
@@ -517,7 +517,7 @@ struct TRINITY_DLL_DECL boss_felmystAI : public ScriptedAI
     }
 };
 
-struct TRINITY_DLL_DECL mob_felmyst_vaporAI : public ScriptedAI
+struct MANGOS_DLL_DECL mob_felmyst_vaporAI : public ScriptedAI
 {
     mob_felmyst_vaporAI(Creature *c) : ScriptedAI(c)
     {
@@ -537,7 +537,7 @@ struct TRINITY_DLL_DECL mob_felmyst_vaporAI : public ScriptedAI
     }
 };
 
-struct TRINITY_DLL_DECL mob_felmyst_trailAI : public ScriptedAI
+struct MANGOS_DLL_DECL mob_felmyst_trailAI : public ScriptedAI
 {
     mob_felmyst_trailAI(Creature *c) : ScriptedAI(c)
     {

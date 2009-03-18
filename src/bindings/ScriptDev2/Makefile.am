@@ -385,7 +385,7 @@ scripts/zone/stratholme/instance_stratholme.cpp \
 scripts/zone/stratholme/stratholme.cpp \
 scripts/zone/sunwell_plateau/boss_brutallus.cpp \
 scripts/zone/sunwell_plateau/boss_eredar_twins.cpp \
-scripts/zone/sunwell_plateau/boss_felmist.cpp \
+scripts/zone/sunwell_plateau/boss_felmyst.cpp \
 scripts/zone/sunwell_plateau/boss_kalecgos.cpp \
 scripts/zone/sunwell_plateau/boss_kiljaeden.cpp \
 scripts/zone/sunwell_plateau/boss_muru_entropius.cpp \
