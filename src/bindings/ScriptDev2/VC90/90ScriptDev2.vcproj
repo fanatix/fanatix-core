@@ -1127,10 +1127,6 @@
 						Name="Utgarde Keep"
 						>
 						<File
-							RelativePath="..\scripts\zone\utgarde_keep\utgarde_keep\Boss_Ingvar_The_Plunderer.cpp"
-							>
-						</File>
-						<File
 							RelativePath="..\scripts\zone\utgarde_keep\utgarde_keep\boss_keleseth.cpp"
 							>
 						</File>

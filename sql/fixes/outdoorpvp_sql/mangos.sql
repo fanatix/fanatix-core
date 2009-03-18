@@ -102,7 +102,8 @@ INSERT INTO `mangos_string` (`entry`, `content_default`) VALUES
 (9043,'The Horde lost the Eastwall Tower!'),
 (9044,'The Alliance lost the Eastwall Tower!'),
 (9045,'The Horde lost the Crown Guard Tower!'),
-(9046,'The Alliance lost the Crown Guard Tower!'),
+(9046,'The Alliance lost the Crown Gua
+rd Tower!'),
 (9047,'The Horde lost the Plaguewood Tower!'),
 (9048,'The Alliance lost the Plaguewood Tower!'),
 -- silithus
