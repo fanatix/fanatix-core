@@ -392,19 +392,41 @@ struct MANGOS_DLL_DECL mob_ingvar_throw_dummyAI : public ScriptedAI
 
     void Reset()
     {
-//        Unit* target = FindCreature(ENTRY_THROW_TARGET,50,m_creature);
-//        if(target)
-//        {
-//            DoCast(m_creature, HeroicMode ? H_SPELL_SHADOW_AXE_DAMAGE : SPELL_SHADOW_AXE_DAMAGE);
-//            float x,y,z;
-//            target->GetPosition(x,y,z);
-//            m_creature->GetMotionMaster()->MovePoint(0,x,y,z);
-//        }
+        Unit* target = SelectCreatureInGrid(ENTRY_THROW_TARGET,50);
+        if(target)
+        {
+            DoCast(m_creature, HeroicMode ? H_SPELL_SHADOW_AXE_DAMAGE : SPELL_SHADOW_AXE_DAMAGE);
+            float x,y,z;
+            target->GetPosition(x,y,z);
+            m_creature->GetMotionMaster()->MovePoint(0,x,y,z);
+        }
         Despawn_Timer = 7000;
     }
     void AttackStart(Unit* who) {}
     void MoveInLineOfSight(Unit* who) {}
-    void Aggro(Unit *who) {}
+    void Aggro(Unit* who) { }
+
+    Creature* SelectCreatureInGrid(uint32 entry, float range)
+    {
+        Creature* pCreature = NULL;
+
+        // Time for some omg mind blowing code to search for creature
+        CellPair pair(MaNGOS::ComputeCellPair(m_creature->GetPositionX(), m_creature->GetPositionY()));
+        Cell cell(pair);
+        cell.data.Part.reserved = ALL_DISTRICT;
+        cell.SetNoCreate();
+
+        MaNGOS::NearestCreatureEntryWithLiveStateInObjectRangeCheck creature_check(*m_creature, entry, true, range);
+        MaNGOS::CreatureLastSearcher<MaNGOS::NearestCreatureEntryWithLiveStateInObjectRangeCheck> searcher(m_creature, pCreature, creature_check);
+
+        TypeContainerVisitor<MaNGOS::CreatureLastSearcher<MaNGOS::NearestCreatureEntryWithLiveStateInObjectRangeCheck>, GridTypeMapContainer> creature_searcher(searcher);
+
+        CellLock<GridReadGuard> cell_lock(cell, pair);
+        cell_lock->Visit(cell_lock, creature_searcher,*(m_creature->GetMap()));
+
+        return pCreature;
+    }
+
     void UpdateAI(const uint32 diff)
     {
         if(Despawn_Timer < diff)

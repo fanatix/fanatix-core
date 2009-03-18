@@ -2031,10 +2031,6 @@
 							>
 						</File>
 						<File
-							RelativePath="..\scripts\zone\hellfire_citadel\blood_furnace\boss_kelidan_the_breaker.cpp"
-							>
-						</File>
-						<File
 							RelativePath="..\scripts\zone\hellfire_citadel\blood_furnace\boss_the_maker.cpp"
 							>
 						</File>

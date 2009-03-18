@@ -313,7 +313,7 @@ extern void AddSC_instance_gruuls_lair();
 //Hellfire Citadel
 //--Blood Furnace
 extern void AddSC_boss_broggok();
-extern void AddSC_boss_kelidan_the_breaker();
+//extern void AddSC_boss_kelidan_the_breaker(); <- adding later
 extern void AddSC_boss_the_maker();
 
 //--Magtheridon's Lair
@@ -1755,7 +1755,7 @@ void ScriptsInit()
     //Hellfire Citadel
     //--Blood Furnace
     AddSC_boss_broggok();
-    AddSC_boss_kelidan_the_breaker();
+    //AddSC_boss_kelidan_the_breaker(); <- adding later
     AddSC_boss_the_maker();
 
     //--Magtheridon's Lair
