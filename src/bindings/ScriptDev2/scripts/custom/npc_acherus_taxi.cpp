@@ -34,9 +34,9 @@ bool GossipSelect_npc_acherus_taxi(Player *player, Creature *_Creature, uint32 s
     { 
        if (player->GetPositionZ() >=316)       
         {
-        player->GetSession()->SendDoFlight(26308, 1053); 
+        player->GetSession()->SendDoFlight(28108, 1053); 
         }else{
-        player->GetSession()->SendDoFlight(26308, 1054);
+        player->GetSession()->SendDoFlight(28108, 1054);
         }
 
     }

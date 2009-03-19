@@ -43,10 +43,10 @@ struct MANGOS_DLL_DECL instance_the_eye : public ScriptedInstance
     uint64 MasterEngineerTelonicus;
     uint64 Kaelthas;
     uint64 Astromancer;
-	uint64 Alar;
+    uint64 Alar;
 
     uint8 KaelthasEventPhase;
-	uint8 AlarEventPhase;
+    uint8 AlarEventPhase;
 
     bool Encounters[ENCOUNTERS];
 
@@ -58,10 +58,10 @@ struct MANGOS_DLL_DECL instance_the_eye : public ScriptedInstance
         MasterEngineerTelonicus = 0;
         Kaelthas = 0;
         Astromancer = 0;
-		Alar = 0;
+        Alar = 0;
 
         KaelthasEventPhase = 0;
-		AlarEventPhase = 0;
+        AlarEventPhase = 0;
 
         for(uint8 i = 0; i < ENCOUNTERS; i++)
             Encounters[i] = false;
@@ -85,7 +85,7 @@ struct MANGOS_DLL_DECL instance_the_eye : public ScriptedInstance
             case 20060: LordSanguinar = creature->GetGUID(); break;
             case 19622: Kaelthas = creature->GetGUID(); break;
             case 18805: Astromancer = creature->GetGUID(); break;
-			case 19514: Alar = creature->GetGUID(); break;
+            case 19514: Alar = creature->GetGUID(); break;
         }
     }
 
@@ -123,7 +123,7 @@ struct MANGOS_DLL_DECL instance_the_eye : public ScriptedInstance
         switch(type)
         {
             case DATA_ALAREVENT:
-			    AlarEventPhase = data;
+                AlarEventPhase = data;
                 Encounters[0] = (data) ? true : false;
                 break;
 
