@@ -5469,6 +5469,16 @@ bool Unit::HandleDummyAuraProc(Unit *pVictim, uint32 damage, Aura* triggeredByAu
         }
         case SPELLFAMILY_PALADIN:
         {
+	//Judgements of the wise 
+	if ( dummySpell->SpellIconID==3017 )
+	{
+			target = this;
+			triggered_spell_id =31930;
+			basepoints0 = GetCreateMana() * 0.15;
+			CastSpell ( this,57669,true,NULL,GetDummyAura ( dummySpell->Id ),GetGUID() );
+		break;
+	}
+
             // Seal of Righteousness - melee proc dummy (addition ${$MWS*(0.022*$AP+0.044*$SPH)} damage)
             if (dummySpell->SpellFamilyFlags&0x000000008000000LL && effIndex==0)
             {
