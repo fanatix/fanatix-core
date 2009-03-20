@@ -3187,7 +3187,7 @@ bool ChatHandler::HandleGuildDeleteCommand(const char* args)
 
 bool ChatHandler::HandleGetDistanceCommand(const char* args)
 {
-    WorldObject* obj;
+    WorldObject* obj = NULL;
 
     if (*args)
     {
@@ -4422,7 +4422,7 @@ static bool HandleResetStatsOrLevelHelper(Player* player)
         player->m_form = FORM_NONE;
 
     player->SetFloatValue(UNIT_FIELD_BOUNDINGRADIUS, DEFAULT_WORLD_OBJECT_SIZE );
-    player->SetFloatValue(UNIT_FIELD_COMBATREACH, 1.5f   );
+    player->SetFloatValue(UNIT_FIELD_COMBATREACH, DEFAULT_WORLD_OBJECT_SIZE );
 
     player->setFactionForRace(player->getRace());
 

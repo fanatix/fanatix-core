@@ -567,7 +567,7 @@ bool Player::Create( uint32 guidlow, const std::string& name, uint8 race, uint8 
     uint8 powertype = cEntry->powerType;
 
     SetFloatValue(UNIT_FIELD_BOUNDINGRADIUS, DEFAULT_WORLD_OBJECT_SIZE);
-    SetFloatValue(UNIT_FIELD_COMBATREACH, 1.5f);
+    SetFloatValue(UNIT_FIELD_COMBATREACH, DEFAULT_WORLD_OBJECT_SIZE );
 
     switch(gender)
     {
@@ -16787,6 +16787,9 @@ void Player::RemovePet(Pet* pet, PetSaveMode mode, bool returnreagent)
         }
         m_temporaryUnsummonedPetNumber = 0;
     }
+
+    if(pet == GetCharm())
+        SetCharm(NULL);
 
     if(!pet || pet->GetOwnerGUID()!=GetGUID())
         return;
