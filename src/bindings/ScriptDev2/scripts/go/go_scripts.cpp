@@ -36,6 +36,21 @@ EndContentData */
 #include "precompiled.h"
 
 /*######
+## go_cat_figurine
+######*/
+
+enum
+{
+    SPELL_SUMMON_GHOST_SABER    = 5968,
+};
+
+bool GOHello_go_cat_figurine(Player *player, GameObject* _GO)
+{
+    player->CastSpell(player,SPELL_SUMMON_GHOST_SABER,true);
+    return false;
+}
+
+/*######
 ## go_crystal_pylons (3x)
 ######*/
 
@@ -108,6 +123,26 @@ bool GOHello_go_field_repair_bot_74A(Player *player, GameObject* _GO)
 }
 
 /*######
+## go_gilded_brazier
+######*/
+
+enum
+{
+    NPC_STILLBLADE  = 17716,
+};
+
+bool GOHello_go_gilded_brazier(Player* pPlayer, GameObject* pGO)
+{
+    if (pGO->GetGoType() == GAMEOBJECT_TYPE_GOOBER)
+    {
+        if (Creature* pCreature = pPlayer->SummonCreature(NPC_STILLBLADE, 8087.632, -7542.740, 151.568, 0.122, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 5000))
+            pCreature->AI()->AttackStart(pPlayer);
+    }
+
+    return true;
+}
+
+/*######
 ## go_orb_of_command
 ######*/
 
@@ -147,25 +182,15 @@ bool GOHello_go_tablet_of_the_seven(Player *player, GameObject* _GO)
 
     return true;
 }
-/*######
-## go_cat_figurine
-######*/
-
-bool GOHello_go_cat_figurine(Player *player, GameObject* _GO)
-{
-    if ((rand()%10)==0)
-    {
-        Creature* GhostSaber = NULL;
-        GhostSaber = player->SummonCreature(3619, _GO->GetPositionX(), _GO->GetPositionY(), _GO->GetPositionZ(), 0, TEMPSUMMON_TIMED_DESPAWN, 120000);
-        if (player)
-            GhostSaber->AI()->AttackStart(player);
-    }
-    return false;
-}
 
 void AddSC_go_scripts()
 {
     Script *newscript;
+
+    newscript = new Script;
+    newscript->Name = "go_cat_figurine";
+    newscript->pGOHello =           &GOHello_go_cat_figurine;
+    newscript->RegisterSelf();
 
     newscript = new Script;
     newscript->Name = "go_northern_crystal_pylon";
@@ -193,6 +218,11 @@ void AddSC_go_scripts()
     newscript->RegisterSelf();
 
     newscript = new Script;
+    newscript->Name = "go_gilded_brazier";
+    newscript->pGOHello =           &GOHello_go_gilded_brazier;
+    newscript->RegisterSelf();
+
+    newscript = new Script;
     newscript->Name = "go_orb_of_command";
     newscript->pGOHello =           &GOHello_go_orb_of_command;
     newscript->RegisterSelf();
@@ -205,10 +235,5 @@ void AddSC_go_scripts()
     newscript = new Script;
     newscript->Name = "go_tablet_of_the_seven";
     newscript->pGOHello =           &GOHello_go_tablet_of_the_seven;
-    newscript->RegisterSelf();
-
-    newscript = new Script;
-    newscript->Name = "go_cat_figurine";
-    newscript->pGOHello =           &GOHello_go_cat_figurine;
     newscript->RegisterSelf();
 }

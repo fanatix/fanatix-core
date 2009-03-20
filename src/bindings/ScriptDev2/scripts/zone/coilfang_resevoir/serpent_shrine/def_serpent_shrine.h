@@ -1,4 +1,4 @@
-/* Copyright (C) 2006 - 2008 ScriptDev2 <https://scriptdev2.svn.sourceforge.net/>
+/* Copyright (C) 2006 - 2009 ScriptDev2 <https://scriptdev2.svn.sourceforge.net/>
  * This program is free software licensed under GPL version 2
  * Please see the included DOCS/LICENSE.TXT for more information */
 
@@ -20,17 +20,16 @@
 #define DATA_SHIELDGENERATOR2 13
 #define DATA_SHIELDGENERATOR3 14
 #define DATA_SHIELDGENERATOR4 15
-#define DATA_THELURKERBELOWEVENT 16
-#define DATA_TIDALVESS 17
-#define DATA_FATHOMLORDKARATHRESSEVENT 18
-
-#define DATA_MinDmg 20
-#define DATA_MaxDmg 21
-
-#define DATA_LEOTHERAS 22
-#define DATA_LEOTHERAS_EVENT_STARTER 23
-#define DATA_KILLED_SPELLBINDER 24
-#define DATA_SPELLBINDER_1 25
-#define DATA_SPELLBINDER_2 26
-#define DATA_SPELLBINDER_3 27
+#define DATA_THELURKERBELOW 16
+#define DATA_THELURKERBELOWEVENT 17
+#define DATA_TIDALVESS 18
+#define DATA_FATHOMLORDKARATHRESSEVENT 19
+#define DATA_LEOTHERAS 20
+#define DATA_LEOTHERAS_EVENT_STARTER 21
+#define DATA_CONTROL_CONSOLE 22
+#define DATA_STRANGE_POOL 23
+#define DATA_SPELLBINDER_1 24
+#define DATA_SPELLBINDER_2 25
+#define DATA_SPELLBINDER_3 26
 #endif
+
