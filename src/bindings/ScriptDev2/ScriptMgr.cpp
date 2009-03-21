@@ -11,7 +11,6 @@
 #include "ProgressBar.h"
 #include "scripts/creature/mob_event_ai.h"
 
-//*** Global data ***
 int num_sc_scripts;
 Script *m_scripts[MAX_SCRIPTS];
 
@@ -43,20 +42,16 @@ enum ChatType
 // Text Maps
 UNORDERED_MAP<int32, StringTextData> TextMap;
 
-//*** End Global data ***
+// Waypoint lists
+std::list<PointMovement> PointMovementList;
 
-//*** EventAI data ***
 //Event AI structure. Used exclusivly by mob_event_ai.cpp (60 bytes each)
 std::list<EventAI_Event> EventAI_Event_List;
 
 //Event AI summon structure. Used exclusivly by mob_event_ai.cpp.
 UNORDERED_MAP<uint32, EventAI_Summon> EventAI_Summon_Map;
 
-//Event AI error prevention structure. Used at runtime to prevent error log spam of same creature id.
-//UNORDERED_MAP<uint32, EventAI_CreatureError> EventAI_CreatureErrorPreventionList;
-
 uint32 EAI_ErrorLevel;
-//*** End EventAI data ***
 
 void FillSpellSummary();
 
@@ -313,7 +308,6 @@ extern void AddSC_instance_gruuls_lair();
 //Hellfire Citadel
 //--Blood Furnace
 extern void AddSC_boss_broggok();
-//extern void AddSC_boss_kelidan_the_breaker(); <- adding later
 extern void AddSC_boss_the_maker();
 
 //--Magtheridon's Lair
@@ -351,6 +345,7 @@ extern void AddSC_boss_shade_of_aran();
 extern void AddSC_boss_malchezaar();
 extern void AddSC_boss_terestian_illhoof();
 extern void AddSC_boss_nightbane();
+extern void AddSC_boss_netherspite();
 extern void AddSC_netherspite_infernal();
 extern void AddSC_boss_moroes();
 extern void AddSC_bosses_opera();
@@ -959,6 +954,67 @@ void LoadDatabase()
         outstring_log(">> Loaded 0 additional Custom Texts data. DB table `custom_texts` is empty.");
     }
 
+    // Drop Existing Waypoint list
+    PointMovementList.clear();
+    uint64 uiCreatureCount = 0;
+
+    // Load Waypoints
+    result = SD2Database.PQuery("SELECT COUNT(entry) FROM script_waypoint GROUP BY entry");
+    if (result)
+    {
+        uiCreatureCount = result->GetRowCount();
+        delete result;
+    }
+
+    outstring_log("SD2: Loading Script Waypoints for %u creature(s)...", uiCreatureCount);
+
+    result = SD2Database.PQuery("SELECT entry, pointid, location_x, location_y, location_z, waittime FROM script_waypoint ORDER BY pointid");
+
+    if (result)
+    {
+        barGoLink bar(result->GetRowCount());
+        uint32 uiNodeCount = 0;
+
+        do
+        {
+            bar.step();
+            Field* pFields = result->Fetch();
+            PointMovement pTemp;
+
+            pTemp.m_uiCreatureEntry  = pFields[0].GetUInt32();
+            pTemp.m_uiPointId        = pFields[1].GetUInt32();
+            pTemp.m_fX               = pFields[2].GetFloat();
+            pTemp.m_fY               = pFields[3].GetFloat();
+            pTemp.m_fZ               = pFields[4].GetFloat();
+            pTemp.m_uiWaitTime       = pFields[5].GetUInt32();
+
+            CreatureInfo const* pCInfo = GetCreatureTemplateStore(pTemp.m_uiCreatureEntry);
+            if (!pCInfo)
+            {
+                error_db_log("SD2: DB table script_waypoint has waypoint for non-existant creature entry %u", pTemp.m_uiCreatureEntry);
+                continue;
+            }
+
+            if (!pCInfo->ScriptID)
+                error_db_log("SD2: DB table script_waypoint has waypoint for creature entry %u, but creature does not have ScriptName defined and then useless.", pTemp.m_uiCreatureEntry);
+
+            PointMovementList.push_back(pTemp);
+            ++uiNodeCount;
+        } while (result->NextRow());
+
+        delete result;
+
+        outstring_log("");
+        outstring_log(">> Loaded %u Script Waypoint nodes.", uiNodeCount);
+    }
+    else
+    {
+        barGoLink bar(1);
+        bar.step();
+        outstring_log("");
+        outstring_log(">> Loaded 0 Script Waypoints. DB table `script_waypoint` is empty.");
+    }
+
     //Gather additional data for EventAI
     result = SD2Database.PQuery("SELECT id, position_x, position_y, position_z, orientation, spawntimesecs FROM eventai_summons");
 
@@ -1002,6 +1058,17 @@ void LoadDatabase()
         outstring_log(">> Loaded 0 EventAI Summon definitions. DB table `eventai_summons` is empty.");
     }
 
+    //Drop Existing EventAI List
+    EventAI_Event_List.clear();
+    uint64 uiEAICreatureCount = 0;
+
+    result = SD2Database.PQuery("SELECT COUNT(creature_id) FROM eventai_scripts GROUP BY creature_id");
+    if (result)
+    {
+        uiEAICreatureCount = result->GetRowCount();
+        delete result;
+    }
+
     //Gather event data
     result = SD2Database.PQuery("SELECT id, creature_id, event_type, event_inverse_phase_mask, event_chance, event_flags, "
         "event_param1, event_param2, event_param3, event_param4, "
@@ -1010,10 +1077,7 @@ void LoadDatabase()
         "action3_type, action3_param1, action3_param2, action3_param3 "
         "FROM eventai_scripts");
 
-    //Drop Existing EventAI List
-    EventAI_Event_List.clear();
-
-    outstring_log("SD2: Loading EventAI scripts...");
+    outstring_log("SD2: Loading EventAI scripts for %u creature(s)...", uiEAICreatureCount);
     if (result)
     {
         barGoLink bar(result->GetRowCount());
@@ -1103,8 +1167,26 @@ void LoadDatabase()
                     }
                     break;
 
-                case EVENT_T_RANGE:
                 case EVENT_T_OOC_LOS:
+                    {
+                        if (temp.event_param2 > VISIBLE_RANGE || temp.event_param2 <= 0)
+                        {
+                            error_db_log("SD2: Creature %u are using event(%u), but param2 (MaxAllowedRange=%u) are not within allowed range.", temp.creature_id, i, temp.event_param2);
+                            temp.event_param2 = VISIBLE_RANGE;
+                        }
+
+                        if (temp.event_param3 == 0 && temp.event_param4 == 0 && temp.event_flags & EFLAG_REPEATABLE)
+                        {
+                            error_db_log("SD2: Creature %u are using event(%u) with EFLAG_REPEATABLE, but param3(RepeatMin) and param4(RepeatMax) are 0. Repeatable disabled.", temp.creature_id, i);
+                            temp.event_flags &= ~EFLAG_REPEATABLE;
+                        }
+
+                        if (temp.event_param4 < temp.event_param3)
+                            error_db_log("SD2: Creature %u are using repeatable event(%u) with param4 < param3 (RepeatMax < RepeatMin). Event will never repeat.", temp.creature_id, i);
+                    }
+                    break;
+
+                case EVENT_T_RANGE:
                 case EVENT_T_FRIENDLY_HP:
                 case EVENT_T_FRIENDLY_IS_CC:
                 case EVENT_T_FRIENDLY_MISSING_BUFF:
@@ -1755,7 +1837,6 @@ void ScriptsInit()
     //Hellfire Citadel
     //--Blood Furnace
     AddSC_boss_broggok();
-    //AddSC_boss_kelidan_the_breaker(); <- adding later
     AddSC_boss_the_maker();
 
     //--Magtheridon's Lair
@@ -1793,6 +1874,7 @@ void ScriptsInit()
     AddSC_boss_malchezaar();
     AddSC_boss_terestian_illhoof();
 	AddSC_boss_nightbane();
+    AddSC_boss_netherspite();
     AddSC_netherspite_infernal();
     AddSC_boss_moroes();
     AddSC_bosses_opera();

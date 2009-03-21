@@ -59,7 +59,7 @@ EndContentData */
 
     player->SendEquipError(EQUIP_ERR_OUT_OF_RANGE,_Item,NULL);
     return true;
-}*/
+}
 
 /*#####
 # item_arcane_charges
