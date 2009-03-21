@@ -1429,6 +1429,16 @@ void Spell::EffectDummy(uint32 i)
             // Starfall
             if (m_spellInfo->SpellFamilyFlags2 & 0x00000100LL)
             {
+                //Shapeshifting into an animal form or mounting cancels the effect. 
+                if((m_caster->m_form != FORM_NONE && m_caster->m_form != FORM_MOONKIN) || m_caster->IsMounted()){
+                    m_caster->RemoveAurasDueToSpell(m_triggeredByAuraSpell->Id);
+                    return;
+                }
+
+                //Any effect which causes you to lose control of your character will supress the starfall effect.
+                if(m_caster->hasUnitState(UNIT_STAT_STUNNED | UNIT_STAT_FLEEING | UNIT_STAT_ROOT | UNIT_STAT_CONFUSED))
+                    return;
+
                 switch(m_spellInfo->Id)
                 {
                     case 50286: m_caster->CastSpell(unitTarget, 50288, true); return;
@@ -2622,7 +2632,10 @@ void Spell::EffectHeal( uint32 /*i*/ )
 
             int32 tickheal = caster->SpellHealingBonus(unitTarget, targetAura->GetSpellProto(), targetAura->GetModifier()->m_amount, DOT);
             int32 tickcount = GetSpellDuration(targetAura->GetSpellProto()) / targetAura->GetSpellProto()->EffectAmplitude[idx];
-            unitTarget->RemoveAurasDueToSpell(targetAura->GetId());
+            
+            //Glyph of Swiftmend-Dummy
+            if(!caster->HasAura(54824))
+                unitTarget->RemoveAurasDueToSpell(targetAura->GetId());
 
             addhealth += tickheal * tickcount;
         }
