@@ -758,7 +758,8 @@ void AchievementMgr::UpdateAchievementCriteria(AchievementCriteriaTypes type, ui
                 const FactionStateList factionStateList = GetPlayer()->GetFactionStateList();
                 for (FactionStateList::const_iterator iter = factionStateList.begin(); iter!= factionStateList.end(); ++iter)
                 {
-                    if(GetPlayer()->ReputationToRank(iter->second.Standing) >= REP_EXALTED)
+                    FactionEntry const *factionEntry = sFactionStore.LookupEntry(iter->second.ID);
+                    if(GetPlayer()->ReputationToRank(iter->second.Standing + GetPlayer()->GetBaseReputation(factionEntry)) >= REP_EXALTED)
                         ++counter;
                 }
                 SetCriteriaProgress(achievementCriteria, counter);
@@ -1309,7 +1310,7 @@ void AchievementGlobalMgr::LoadAchievementCriteriaList()
     }
 
     sLog.outString();
-    sLog.outString(">> Loaded %u achievement criteria.",m_AchievementCriteriasByType->size());
+    sLog.outString(">> Loaded %lu achievement criteria.",(unsigned long)m_AchievementCriteriasByType->size());
 }
 
 
@@ -1338,7 +1339,7 @@ void AchievementGlobalMgr::LoadCompletedAchievements()
     delete result;
 
     sLog.outString();
-    sLog.outString(">> Loaded %u realm completed achievements.",m_allCompletedAchievements.size());
+    sLog.outString(">> Loaded %lu realm completed achievements.",(unsigned long)m_allCompletedAchievements.size());
 }
 
 void AchievementGlobalMgr::LoadRewards()
@@ -1448,7 +1449,7 @@ void AchievementGlobalMgr::LoadRewards()
     delete result;
 
     sLog.outString();
-    sLog.outString( ">> Loaded %u achievement reward locale strings", m_achievementRewardLocales.size() );
+    sLog.outString( ">> Loaded %lu achievement reward locale strings", (unsigned long)m_achievementRewardLocales.size() );
 }
 
 void AchievementGlobalMgr::LoadRewardLocales()
@@ -1517,5 +1518,5 @@ void AchievementGlobalMgr::LoadRewardLocales()
     delete result;
 
     sLog.outString();
-    sLog.outString( ">> Loaded %u achievement reward locale strings", m_achievementRewardLocales.size() );
+    sLog.outString( ">> Loaded %lu achievement reward locale strings", (unsigned long)m_achievementRewardLocales.size() );
 }

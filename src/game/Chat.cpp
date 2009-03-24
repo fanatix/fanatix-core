@@ -118,7 +118,6 @@ ChatCommand * ChatHandler::getCommandTable()
         { "sendopcode",     SEC_ADMINISTRATOR,  false, &ChatHandler::HandleDebugSendOpcodeCommand,          "", NULL },
         { "spawnvehicle",   SEC_ADMINISTRATOR,  false, &ChatHandler::HandleDebugSpawnVehicle,               "", NULL },
         { "uws",            SEC_ADMINISTRATOR,  false, &ChatHandler::HandleDebugUpdateWorldStateCommand,    "", NULL },
-        { "ps",             SEC_ADMINISTRATOR,  false, &ChatHandler::HandleDebugPlaySound2Command,          "", NULL },
         { "scn",            SEC_ADMINISTRATOR,  false, &ChatHandler::HandleDebugSendChannelNotifyCommand,   "", NULL },
         { "scm",            SEC_ADMINISTRATOR,  false, &ChatHandler::HandleDebugSendChatMsgCommand,         "", NULL },
         { "sps",            SEC_ADMINISTRATOR,  false, &ChatHandler::HandleDebugSendSetPhaseShiftCommand,   "", NULL },
@@ -1495,4 +1494,3 @@ bool CliHandler::needReportToTarget(Player* /*chr*/) const
 {
     return true;
 }
-

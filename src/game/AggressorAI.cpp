@@ -116,11 +116,6 @@ void AggressorAI::EnterEvadeMode()
     i_victimGuid = 0;
     i_creature.CombatStop();
     i_creature.SetLootRecipient(NULL);
-    if(i_creature.GetDeleteAfterNoAggro())
-    {
-        i_creature.CleanupsBeforeDelete();
-        i_creature.AddObjectToRemoveList();
-    }
 }
 
 void
