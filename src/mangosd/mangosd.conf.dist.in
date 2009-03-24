@@ -1,7 +1,7 @@
-#####################################
+﻿#####################################
 # MaNGOS Configuration file         #
 #####################################
-ConfVersion=2009030201
+ConfVersion=2008080101
 
 ###################################################################################################################
 # CONNECTIONS AND DIRECTORIES
@@ -173,8 +173,10 @@ GridCleanUpDelay = 300000
 MapUpdateInterval = 100
 ChangeWeatherInterval = 600000
 PlayerSaveInterval = 900000
-vmap.enableLOS = 1
-vmap.enableHeight = 1
+vmap.enableLOS = 0
+vmap.enableHeight = 0
+vmap.ignoreMapIds = "369"
+vmap.ignoreSpellIds = "7720"
 DetectPosCollision = 1
 TargetPosRecalculateRange = 1.5
 UpdateUptimeInterval = 10
@@ -286,7 +288,7 @@ AddonChannel = 1
 
 LogSQL = 1
 PidFile = ""
-LogLevel = 0
+LogLevel = 3
 LogTime = 0
 LogFile = "Server.log"
 LogTimestamp = 0
@@ -417,6 +419,13 @@ LogColors = "13 7 11 9"
 #        Default: 1
 #                The number must be between 0 (not allowed) and 10
 #
+#    MinLevelForHeroicCharacterCreating
+#        Limit creating heroic characters only for account with another character of specific level (ignored for GM accounts)
+#                 0  - not require any existed chaarcter
+#                 1  - require at least any character existed
+#        Default: 55 - default requirement
+#
+#
 #    SkipCinematics
 #        Disable in-game script movie at first character's login(allows to prevent buggy intro in case of custom start location coordinates)
 #        Default: 0 - show intro for each new characrer
@@ -472,8 +481,8 @@ LogColors = "13 7 11 9"
 #
 #    AlwaysMaxSkillForLevel
 #        Players will automatically gain max level dependent (weapon/defense) skill when logging in, leveling up etc.
-#        Default: 0 (true)
-#                 1 (false)
+#        Default: 0 (false)
+#                 1 (true)
 #
 #    ActivateWeather
 #        Activate weather system
@@ -574,6 +583,7 @@ CharactersCreatingDisabled = 0
 CharactersPerAccount = 50
 CharactersPerRealm = 10
 HeroicCharactersPerRealm = 1
+MinLevelForHeroicCharacterCreating = 55
 SkipCinematics = 0
 MaxPlayerLevel = 80
 StartPlayerLevel = 1
@@ -583,7 +593,7 @@ MaxHonorPoints = 75000
 StartHonorPoints = 0
 MaxArenaPoints = 5000
 StartArenaPoints = 0
-InstantLogout = 0
+InstantLogout = 1
 DisableWaterBreath = 4
 AllFlightPaths = 0
 AlwaysMaxSkillForLevel = 0
@@ -815,6 +825,12 @@ Channel.SilentlyGMJoin = 0
 #                 0 (disable)
 #                 1 (enable)
 #
+#    GM.Visible
+#        GM visibility at login
+#        Default: 2 (last save state)
+#                 0 (invisible)
+#                 1 (visible)
+#
 #    GM.AcceptTickets
 #        Is GM accepting tickets from player by default or not.
 #        Default: 2 (last save state)
@@ -864,14 +880,17 @@ Channel.SilentlyGMJoin = 0
 #
 ###################################################################################################################
 
-GM.LoginState     = 2
-GM.AcceptTickets  = 2
-GM.Chat           = 2
-GM.WhisperingTo   = 2
-GM.InGMList       = 0
-GM.InWhoList      = 0
-GM.LogTrade       = 1
-GM.StartLevel     = 1
+GM.LoginState            = 2
+GM.Visible               = 2
+GM.AcceptTickets         = 2
+GM.Chat                  = 2
+GM.WhisperingTo          = 2
+GM.InGMList              = 0
+GM.InWhoList             = 0
+GM.LogTrade              = 1
+GM.StartLevel            = 1
+GM.LowerSecurity         = 0
+GM.AllowAchievementGain  = 1
 
 ###################################################################################################################
 # VISIBILITY AND RADIUSES
@@ -885,9 +904,9 @@ GM.StartLevel     = 1
 #    Visibility.Distance.Creature
 #    Visibility.Distance.Player
 #        Visibility distance for different in game object
-#        Max limited by active player zone: ~ 333
+#        Max limited by active player zone: ~ 166
 #        Min limit dependent from objects
-#        Default: 132 (cell size)
+#        Default: 66 (cell size)
 #        Min limit is max aggro radius (45) * Rate.Creature.Aggro
 #
 #    Visibility.Distance.Object
@@ -901,7 +920,7 @@ GM.StartLevel     = 1
 #    Visibility.Distance.Grey.Unit
 #        Visibility grey distance for creatures/players (fast changing objects)
 #        addition to appropriate object type Visibility.Distance.* use in case visibility removing to
-#        object (except corpse around distences) If   is distance and G is grey distance then object
+#        object (except corpse around distences) If � is distance and G is grey distance then object
 #        make visible if distance to it <= D but make non visible if distance > D+G
 #        Default: 1 (yard)
 #
@@ -913,10 +932,10 @@ GM.StartLevel     = 1
 ###################################################################################################################
 
 Visibility.GroupMode = 0
-Visibility.Distance.Creature      = 132
-Visibility.Distance.Player        = 132
-Visibility.Distance.Object        = 132
-Visibility.Distance.InFlight      = 132
+Visibility.Distance.Creature      = 66
+Visibility.Distance.Player        = 66
+Visibility.Distance.Object        = 66
+Visibility.Distance.InFlight      = 66
 Visibility.Distance.Grey.Unit   = 1
 Visibility.Distance.Grey.Object = 10
 
@@ -989,6 +1008,14 @@ Visibility.Distance.Grey.Object = 10
 #        Default: 1
 #
 #    Rate.Reputation.Gain
+#         Reputation Gain rate
+#         Default: 1
+#
+#    Rate.Reputation.LowLevel.Kill
+#         Reputation Gain form low level kill (grey creture)
+#         Default: 1
+#
+#    Rate.Reputation.LowLevel.Quest
 #         Reputation Gain rate
 #         Default: 1
 #
@@ -1085,6 +1112,8 @@ Rate.Mining.Amount = 1
 Rate.Mining.Next   = 1
 Rate.Talent = 1
 Rate.Reputation.Gain = 1
+Rate.Reputation.LowLevel.Kill    = 1
+Rate.Reputation.LowLevel.Quest   = 1
 Rate.InstanceResetTime = 1
 SkillGain.Crafting = 1
 SkillGain.Defense = 1
@@ -1103,6 +1132,8 @@ DurabilityLossChance.Block  = 0.05
 Death.SicknessLevel = 11
 Death.CorpseReclaimDelay.PvP = 1
 Death.CorpseReclaimDelay.PvE = 1
+Death.Bones.World = 1
+Death.Bones.BattlegroundOrArena = 1
 
 
 ###################################################################################################################
@@ -1223,18 +1254,6 @@ Network.Threads = 1
 Network.OutKBuff = -1
 Network.OutUBuff = 65536
 Network.TcpNodelay = 1
-
-###################################################################################################################
-#
-# MULTITHREADED MAPS CONFIG
-#
-#    Map.Threads
-#         Number of threads for maps, recommend 1 thread for 1 CPU.
-#         Default: 1
-#
-###################################################################################################################
-
-Map.Threads = 1
 
 ###################################################################################################################
 # MOVEMENT ANTICHEAT
