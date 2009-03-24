@@ -571,10 +571,10 @@ struct MANGOS_DLL_DECL cthunAI : public Scripted_NoMovementAI
                 if (!map->IsDungeon())
                     return;
 
-                //Play random sound to the zone
+                /*//Play random sound to the zone, this fixed later
                 Map::PlayerList const &PlayerList = map->GetPlayers();
                 for(Map::PlayerList::const_iterator i = PlayerList.begin(); i != PlayerList.end(); ++i)
-                    i->getSource()->PlaySound(RANDOM_SOUND_WHISPER, true);
+                    i->getSource()->PlayDistanceSound(RANDOM_SOUND_WHISPER, true);*/
 
                 //One random wisper every 90 - 300 seconds
                 WisperTimer = 90000 + (rand()% 210000);
