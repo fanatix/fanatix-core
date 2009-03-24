@@ -311,6 +311,7 @@ bool Group::AddMember(const uint64 &guid, const char* name)
     }
         // FG: diplomacy stuff
         UpdateDiplomacyStatus();
+
     return true;
 }
 

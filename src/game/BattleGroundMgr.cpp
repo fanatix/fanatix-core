@@ -1176,7 +1176,7 @@ void BattleGroundMgr::Update(uint32 diff)
         // skip updating battleground template
         if( itr != m_BattleGrounds[i].end() )
             ++itr;
-        for(itr = m_BattleGrounds[i].begin(); itr != m_BattleGrounds[i].end(); itr = next)
+        for(; itr != m_BattleGrounds[i].end(); itr = next)
         {
             next = itr;
             ++next;
@@ -1392,7 +1392,7 @@ void BattleGroundMgr::BuildPvpLogDataPacket(WorldPacket *data, BattleGround *bg)
                 *data << (uint32)((BattleGroundAVScore*)itr->second)->GraveyardsDefended;   // GraveyardsDefended
                 *data << (uint32)((BattleGroundAVScore*)itr->second)->TowersAssaulted;      // TowersAssaulted
                 *data << (uint32)((BattleGroundAVScore*)itr->second)->TowersDefended;       // TowersDefended
-                *data << (uint32)((BattleGroundAVScore*)itr->second)->SecondaryObjectives;  // SecondaryObjectives - free some of the Lieutnants
+                //*data << (uint32)((BattleGroundAVScore*)itr->second)->MinesCaptured;        // MinesCaptured
                 break;
             case BATTLEGROUND_WS:
                 *data << (uint32)0x00000002;                // count of next fields
@@ -2043,17 +2043,6 @@ void BattleGroundMgr::ToggleTesting()
         sWorld.SendWorldText(LANG_DEBUG_BG_OFF);
 }
 
-void BattleGroundMgr::SetHolidayWeekends(uint32 mask)
-{
-    for(uint32 bgtype = 1; bgtype < MAX_BATTLEGROUND_TYPE_ID; ++bgtype)
-    {
-        if(BattleGround * bg = GetBattleGroundTemplate(BattleGroundTypeId(bgtype)))
-        {
-            bg->SetHoliday(mask & (1 << bgtype));
-        }
-    }
-}
-
 void BattleGroundMgr::ToggleArenaTesting()
 {
     m_ArenaTesting = !m_ArenaTesting;
@@ -2125,5 +2114,16 @@ void BattleGroundMgr::LoadBattleMastersEntry()
 
     sLog.outString();
     sLog.outString( ">> Loaded %u battlemaster entries", count );
+}
+
+void BattleGroundMgr::SetHolidayWeekends(uint32 mask)
+{
+    for(uint32 bgtype = 1; bgtype < MAX_BATTLEGROUND_TYPE_ID; ++bgtype)
+    {
+        if(BattleGround * bg = GetBattleGroundTemplate(BattleGroundTypeId(bgtype)))
+        {
+            bg->SetHoliday(mask & (1 << bgtype));
+        }
+    }
 }
 

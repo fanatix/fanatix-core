@@ -815,7 +815,7 @@ enum MangosStrings
     LANG_OPVP_SI_CAPTURE_A              = 9050,
     // FREE IDS                           1200-9999
 
-    // Use for not-in-offcial-sources patches
+   // Use for not-in-offcial-sources patches
     //                                    10000-10999
     LANG_BG_AV_ALLY                     = 10747,
     LANG_BG_AV_HORDE                    = 10748,
@@ -851,8 +851,8 @@ enum MangosStrings
     LANG_BG_AV_HAS_BEGUN                = 10776,
     LANG_BG_AV_A_NEAR_LOSE              = 10777,
     LANG_BG_AV_H_NEAR_LOSE              = 10778,
-    LANG_BG_AV_H_CAPTAIN_DEAD           = 10779,
-    LANG_BG_AV_A_CAPTAIN_DEAD           = 10780,
+    LANG_BG_AV_H_GENERAL_DEAD           = 10779,
+    LANG_BG_AV_A_GENERAL_DEAD           = 10780,
 
     // Use for custom patches             11000-11999
 

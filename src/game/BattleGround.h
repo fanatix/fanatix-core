@@ -50,9 +50,12 @@ enum BattleGroundQuests
 
 enum BattleGroundMarks
 {
-    ITEM_AV_MARK_OF_HONOR           = 20560,
-    ITEM_WS_MARK_OF_HONOR           = 20558,
-    ITEM_AB_MARK_OF_HONOR           = 20559,
+    SPELL_WS_MARK_LOSER             = 24950,
+    SPELL_WS_MARK_WINNER            = 24951,
+    SPELL_AB_MARK_LOSER             = 24952,
+    SPELL_AB_MARK_WINNER            = 24953,
+    SPELL_AV_MARK_LOSER             = 24954,
+    SPELL_AV_MARK_WINNER            = 24955,
     ITEM_EY_MARK_OF_HONOR           = 29024
 };
 
@@ -420,12 +423,12 @@ class BattleGround
         void BlockMovement(Player *plr);
 
         void SendMessageToAll(int32 entry, ChatMsg type, Player const* source = NULL);
-        void SendYellToAll(int32 entry, uint32 language, Creature const* source);
+        void SendYellToAll(int32 entry, uint32 language, uint64 const& guid);
         void PSendMessageToAll(int32 entry, ChatMsg type, Player const* source, ...  );
 
         // specialized version with 2 string id args
         void SendMessage2ToAll(int32 entry, ChatMsg type, Player const* source, int32 strId1 = 0, int32 strId2 = 0);
-        void SendYell2ToAll(int32 entry, uint32 language, Creature const* source, int32 arg1, int32 arg2);
+        void SendYell2ToAll(int32 entry, uint32 language, uint64 const& guid, int32 arg1, int32 arg2);
 
         /* Raid Group */
         Group *GetBgRaid(uint32 TeamID) const { return TeamID == ALLIANCE ? m_BgRaids[BG_TEAM_ALLIANCE] : m_BgRaids[BG_TEAM_HORDE]; }
@@ -475,8 +478,9 @@ class BattleGround
         virtual void RemovePlayerAtLeave(uint64 guid, bool Transport, bool SendPacket);
                                                             // can be extended in in BG subclass
 
-        virtual void OnCreatureCreate(Creature* /*Creature*/) {}
-        virtual void OnObjectCreate(GameObject* /*Creature*/) {}
+        virtual void OnObjectDBLoad(Creature* /*creature*/) {}
+        virtual void OnObjectDBLoad(GameObject* /*gameobject*/) {}
+        virtual void OnCreatureRespawn(Creature* /*creature*/) {}
 
         void HandleTriggerBuff(uint64 const& go_guid);
         void SetHoliday(bool is_holiday);
@@ -486,15 +490,14 @@ class BattleGround
         typedef std::vector<uint64> BGCreatures;
         BGObjects m_BgObjects;
         BGCreatures m_BgCreatures;
-        void SpawnBGObject(uint32 type, uint32 respawntime);
-        void SpawnBGObject(GameObject* obj, uint32 respawntime);
+        void SpawnBGObject(uint64 const& guid, uint32 respawntime);
         bool AddObject(uint32 type, uint32 entry, float x, float y, float z, float o, float rotation0, float rotation1, float rotation2, float rotation3, uint32 respawnTime = 0);
-        void SpawnBGCreature(Creature* obj, uint32 respawntime);
+        void SpawnBGCreature(uint64 const& guid, uint32 respawntime);
         Creature* AddCreature(uint32 entry, uint32 type, uint32 teamval, float x, float y, float z, float o, uint32 respawntime = 0);
         bool DelCreature(uint32 type);
         bool DelObject(uint32 type);
         bool AddSpiritGuide(uint32 type, float x, float y, float z, float o, uint32 team);
-        int32 GetObjectType(uint64 guid);
+        int32 GetObjectType(uint64 const& guid);
 
         void DoorOpen(uint32 type);
         void DoorClose(uint32 type);
@@ -534,7 +537,6 @@ class BattleGround
 
         bool   m_BuffChange;
 
-        BGHonorMode m_HonorMode;
     private:
         /* Battleground */
         BattleGroundTypeId m_TypeID;

@@ -857,29 +857,43 @@ void BattleGround::RewardMark(Player *plr,uint32 count)
     // 'Inactive' this aura prevents the player from gaining honor points and battleground tokens
     if(plr->GetDummyAura(SPELL_AURA_PLAYER_INACTIVE))
         return;
-    if(!plr || !count)
-        return;
 
     BattleGroundMarks mark;
+    bool IsSpell;
     switch(GetTypeID())
     {
         case BATTLEGROUND_AV:
-            mark = ITEM_AV_MARK_OF_HONOR;
+            IsSpell = true;
+            if(count == ITEM_WINNER_COUNT)
+                mark = SPELL_AV_MARK_WINNER;
+            else
+                mark = SPELL_AV_MARK_LOSER;
             break;
         case BATTLEGROUND_WS:
-            mark = ITEM_WS_MARK_OF_HONOR;
+            IsSpell = true;
+            if(count == ITEM_WINNER_COUNT)
+                mark = SPELL_WS_MARK_WINNER;
+            else
+                mark = SPELL_WS_MARK_LOSER;
             break;
         case BATTLEGROUND_AB:
-            mark = ITEM_AB_MARK_OF_HONOR;
+            IsSpell = true;
+            if(count == ITEM_WINNER_COUNT)
+                mark = SPELL_AB_MARK_WINNER;
+            else
+                mark = SPELL_AB_MARK_LOSER;
             break;
         case BATTLEGROUND_EY:
+            IsSpell = false;
             mark = ITEM_EY_MARK_OF_HONOR;
             break;
         default:
             return;
     }
 
-    if ( objmgr.GetItemPrototype( mark ) )
+    if(IsSpell)
+        plr->CastSpell(plr, mark, true);
+    else if ( objmgr.GetItemPrototype( mark ) )
     {
         ItemPosCountVec dest;
         uint32 no_space_count = 0;
@@ -887,7 +901,7 @@ void BattleGround::RewardMark(Player *plr,uint32 count)
         if( msg != EQUIP_ERR_OK )                       // convert to possible store amount
             count -= no_space_count;
 
-        if(!dest.empty())                // can add some
+        if( count != 0 && !dest.empty())                // can add some
             if(Item* item = plr->StoreNewItem( dest, mark, true, 0))
                 plr->SendNewItem(item,count,false,true);
 
@@ -1121,7 +1135,7 @@ void BattleGround::Reset()
     m_Events = 0;
 
     if (m_InvitedAlliance > 0 || m_InvitedHorde > 0)
-        sLog.outError("BattleGround system: bad counter, m_InvitedAlliance: %d, m_InvitedHorde: %d", m_InvitedAlliance, m_InvitedHorde);
+        sLog.outError("BattleGround system ERROR: bad counter, m_InvitedAlliance: %d, m_InvitedHorde: %d", m_InvitedAlliance, m_InvitedHorde);
 
     m_InvitedAlliance = 0;
     m_InvitedHorde = 0;
@@ -1232,15 +1246,10 @@ void BattleGround::AddOrSetPlayerToCorrectBgGroup(Player *plr, uint64 plr_guid, 
         if(group->IsMember(plr_guid))
         {
             uint8 subgroup = group->GetMemberGroup(plr_guid);
-            plr->SetBattleGroundRaid(group, subgroup);
+            plr->SetGroup(group, subgroup);
         }
         else
-        {
-            group->AddMember(plr_guid, plr->GetName());
-            if( Group* originalGroup = plr->GetOriginalGroup() )
-                if( originalGroup->IsLeader(plr_guid) )
-                    group->ChangeLeader(plr_guid);
-        }
+            GetBgRaid(team)->AddMember(plr_guid, plr->GetName());
     }
 }
 
@@ -1273,11 +1282,7 @@ void BattleGround::EventPlayerLoggedOut(Player* player)
         if( isBattleGround() )
             EventPlayerDroppedFlag(player);
         else
-        {
-            //1 player is logging out, if it is the last, then end arena!
-            if( GetAlivePlayersCountByTeam(player->GetTeam()) <= 1 && GetPlayersCountByTeam(GetOtherTeam(player->GetTeam())) )
-                EndBattleGround(GetOtherTeam(player->GetTeam()));
-        }
+            CheckArenaWinConditions();
     }
 }
 
@@ -1502,8 +1507,9 @@ Creature* BattleGround::GetBGCreature(uint32 type)
     return creature;
 }
 
-void BattleGround::SpawnBGObject(GameObject* obj, uint32 respawntime)
+void BattleGround::SpawnBGObject(uint64 const& guid, uint32 respawntime)
 {
+    GameObject *obj = HashMapHolder<GameObject>::Find(guid);
     if(!obj)
         return;
     Map * map = MapManager::Instance().FindMap(GetMapId(),GetInstanceID());
@@ -1511,7 +1517,9 @@ void BattleGround::SpawnBGObject(GameObject* obj, uint32 respawntime)
         return;
     if( respawntime == 0 )
     {
-        obj->SetLootState(GO_READY);
+        //we need to change state from GO_JUST_DEACTIVATED to GO_READY in case battleground is starting again
+        if( obj->getLootState() == GO_JUST_DEACTIVATED )
+            obj->SetLootState(GO_READY);
         obj->SetRespawnTime(0);
         map->Add(obj);
     }
@@ -1520,34 +1528,6 @@ void BattleGround::SpawnBGObject(GameObject* obj, uint32 respawntime)
         map->Add(obj);
         obj->SetRespawnTime(respawntime);
         obj->SetLootState(GO_JUST_DEACTIVATED);
-        obj->SaveRespawnTime();
-    }
-}
-
-void BattleGround::SpawnBGObject(uint32 type, uint32 respawntime)
-{
-    Map * map = MapManager::Instance().FindMap(GetMapId(),GetInstanceID());
-    if(!map)
-        return;
-    if( respawntime == 0 )
-    {
-        GameObject *obj = HashMapHolder<GameObject>::Find(m_BgObjects[type]);
-        if(obj)
-        {
-            obj->SetLootState(GO_READY);
-            obj->SetRespawnTime(0);
-            map->Add(obj);
-        }
-    }
-    else
-    {
-        GameObject *obj = HashMapHolder<GameObject>::Find(m_BgObjects[type]);
-        if(obj)
-        {
-            map->Add(obj);
-            obj->SetRespawnTime(respawntime);
-            obj->SetLootState(GO_JUST_DEACTIVATED);
-        }
     }
 }
 
@@ -1569,7 +1549,7 @@ Creature* BattleGround::AddCreature(uint32 entry, uint32 type, uint32 teamval, f
 
     if(!pCreature->IsPositionValid())
     {
-        sLog.outError("Creature (guidlow %d, entry %d) not added to battleground. Suggested coordinates isn't valid (X: %f Y: %f)",pCreature->GetGUIDLow(),pCreature->GetEntry(),pCreature->GetPositionX(),pCreature->GetPositionY());
+        sLog.outError("ERROR: Creature (guidlow %d, entry %d) not added to battleground. Suggested coordinates isn't valid (X: %f Y: %f)",pCreature->GetGUIDLow(),pCreature->GetEntry(),pCreature->GetPositionX(),pCreature->GetPositionY());
         return NULL;
     }
 
@@ -1591,13 +1571,9 @@ Creature* BattleGround::AddCreature(uint32 entry, uint32 type, uint32 teamval, f
     return  pCreature;
 }
 
-void BattleGround::SpawnBGCreature(Creature* obj, uint32 respawntime)
+void BattleGround::SpawnBGCreature(uint64 const& guid, uint32 respawntime)
 {
-    //i think this is done, by just setting a respawntime
-    //so despawn means, next respawn in 5days
-    //and spawn means, next respawn in normal way+respawn right now
-    //cause in the mine the troggs kill all alliance-creatures instantly
-    //this doesn't work yet (don't know if this is a db-problem)
+    Creature* obj = HashMapHolder<Creature>::Find(guid);
     if(!obj)
         return;
     Map * map = MapManager::Instance().FindMap(GetMapId(),GetInstanceID());
@@ -1628,8 +1604,8 @@ bool BattleGround::DelCreature(uint32 type)
         sLog.outError("Can't find Battleground creature type:%u guid:%u",type, GUID_LOPART(m_BgCreatures[type]));
         return false;
     }
-    //following will delete only if this creature has no aggro or bg ends
-    cr->SetDeleteAfterNoAggro(true);
+    cr->CleanupsBeforeDelete();
+    cr->AddObjectToRemoveList();
     m_BgCreatures[type] = 0;
     return true;
 }
@@ -1693,8 +1669,11 @@ void BattleGround::SendMessageToAll(int32 entry, ChatMsg type, Player const* sou
     BroadcastWorker(bg_do);
 }
 
-void BattleGround::SendYellToAll(int32 entry, uint32 language, Creature const* source)
+void BattleGround::SendYellToAll(int32 entry, uint32 language, uint64 const& guid)
 {
+    Creature *source = HashMapHolder<Creature>::Find(guid);
+    if(!source)
+        return;
     MaNGOS::BattleGroundYellBuilder bg_builder(language, entry, source);
     MaNGOS::LocalizedPacketDo<MaNGOS::BattleGroundYellBuilder> bg_do(bg_builder);
     BroadcastWorker(bg_do);
@@ -1719,8 +1698,11 @@ void BattleGround::SendMessage2ToAll(int32 entry, ChatMsg type, Player const* so
     BroadcastWorker(bg_do);
 }
 
-void BattleGround::SendYell2ToAll(int32 entry, uint32 language, Creature const* source, int32 arg1, int32 arg2)
+void BattleGround::SendYell2ToAll(int32 entry, uint32 language, uint64 const& guid, int32 arg1, int32 arg2)
 {
+    Creature *source = HashMapHolder<Creature>::Find(guid);
+    if(!source)
+        return;
     MaNGOS::BattleGround2YellBuilder bg_builder(language, entry, source, arg1, arg2);
     MaNGOS::LocalizedPacketDo<MaNGOS::BattleGround2YellBuilder> bg_do(bg_builder);
     BroadcastWorker(bg_do);
@@ -1762,17 +1744,19 @@ void BattleGround::HandleTriggerBuff(uint64 const& go_guid)
     if( m_BuffChange && entry != Buff_Entries[buff] )
     {
         //despawn current buff
-        SpawnBGObject(index, RESPAWN_ONE_DAY);
+        SpawnBGObject(m_BgObjects[index], RESPAWN_ONE_DAY);
         //set index for new one
         for (uint8 currBuffTypeIndex = 0; currBuffTypeIndex < 3; ++currBuffTypeIndex)
+        {
             if( entry == Buff_Entries[currBuffTypeIndex] )
             {
                 index -= currBuffTypeIndex;
                 index += buff;
             }
+        }
     }
 
-    SpawnBGObject(index, BUFF_RESPAWN_TIME);
+    SpawnBGObject(m_BgObjects[index], BUFF_RESPAWN_TIME);
 }
 
 void BattleGround::HandleKillPlayer( Player *player, Player *killer )
@@ -1800,20 +1784,19 @@ void BattleGround::HandleKillPlayer( Player *player, Player *killer )
         }
     }
 
-    // to be able to remove insignia -- ONLY IN BattleGrounds
-    if( !isArena() )
-        player->SetFlag( UNIT_FIELD_FLAGS, UNIT_FLAG_SKINNABLE );
+    // to be able to remove insignia
+    player->SetFlag( UNIT_FIELD_FLAGS, UNIT_FLAG_SKINNABLE );
 }
 
 void BattleGround::SetHoliday(bool is_holiday)
 {
-    if(is_holiday)
-        m_HonorMode = BG_HOLIDAY;
-    else
-        m_HonorMode = BG_NORMAL;
+    //if(is_holiday)
+        //m_HonorMode = BG_HOLIDAY;
+    //else
+        //m_HonorMode = BG_NORMAL;
 }
 
-int32 BattleGround::GetObjectType(uint64 guid)
+int32 BattleGround::GetObjectType(uint64 const& guid)
 {
     for(uint32 i = 0;i <= m_BgObjects.size(); i++)
         if(m_BgObjects[i] == guid)
