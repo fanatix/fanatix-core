@@ -1264,7 +1264,6 @@ bool SpellMgr::IsNoStackSpellDueToSpell(uint32 spellId_1, uint32 spellId_2) cons
             if( spellInfo_1->EffectSpellClassMaskC[0] == 262144 && spellInfo_2->EffectSpellClassMaskC[0] == 262144)
                 return false;
 
-
             break;
         case SPELLFAMILY_WARLOCK:
             if( spellInfo_2->SpellFamilyName == SPELLFAMILY_WARLOCK )
@@ -2386,7 +2385,6 @@ void SpellMgr::LoadPetLevelupSpellMap()
     sLog.outString( ">> Loaded %u pet levelup spells", count );
 }
 
-
 void SpellMgr::LoadWarlockPetLevelupSpellMap()
 {
 	sLog.outString();
@@ -2461,7 +2459,6 @@ void SpellMgr::LoadWarlockPetLevelupSpellMap()
 	sLog.outString( ">> Loaded %u warlock pet levelup spells ", count);
     sLog.outString();
 }
-
 
 /// Some checks for spells, to prevent adding deprecated/broken spells for trainers, spell book, etc
 bool SpellMgr::IsSpellValid(SpellEntry const* spellInfo, Player* pl, bool msg)

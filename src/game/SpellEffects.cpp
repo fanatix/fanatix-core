@@ -313,7 +313,7 @@ void Spell::EffectEnvirinmentalDMG(uint32 i)
 
     m_caster->SendSpellNonMeleeDamageLog(m_caster, m_spellInfo->Id, damage, GetSpellSchoolMask(m_spellInfo), absorb, resist, false, 0, false);
     if(m_caster->GetTypeId() == TYPEID_PLAYER)
-        ((Player*)m_caster)->EnvironmentalDamage(m_caster->GetGUID(),DAMAGE_FIRE,damage);
+        ((Player*)m_caster)->EnvironmentalDamage(DAMAGE_FIRE,damage);
 }
 
 void Spell::EffectSchoolDMG(uint32 effect_idx)
@@ -646,9 +646,7 @@ void Spell::EffectDummy(uint32 i)
 	     if(unitTarget->GetTypeId() != TYPEID_PLAYER)
 	     unitTarget->GetMap()->CreatureRelocation((Creature*)unitTarget,x,y,z,unitTarget->GetOrientation());
 	 }
-    }
-
-
+     }
     // selection by spell family
     switch(m_spellInfo->SpellFamilyName)
     {
@@ -1312,8 +1310,7 @@ void Spell::EffectDummy(uint32 i)
                 // Bloodthirst
                 case 23881:
                 {
-                    int32 heal = int32(m_caster->GetMaxHealth() / 100);
-                    m_caster->CastCustomSpell(unitTarget, 23885, &heal, NULL, NULL, true, NULL);
+                    m_caster->CastCustomSpell(unitTarget, 23885, &damage, NULL, NULL, true, NULL);
                     return;
                 }
             }
@@ -1429,9 +1426,11 @@ void Spell::EffectDummy(uint32 i)
             // Starfall
             if (m_spellInfo->SpellFamilyFlags2 & 0x00000100LL)
             {
-                //Shapeshifting into an animal form or mounting cancels the effect. 
-                if((m_caster->m_form != FORM_NONE && m_caster->m_form != FORM_MOONKIN) || m_caster->IsMounted()){
-                    m_caster->RemoveAurasDueToSpell(m_triggeredByAuraSpell->Id);
+                //Shapeshifting into an animal form or mounting cancels the effect.
+                if(m_caster->GetCreatureType() == CREATURE_TYPE_BEAST || m_caster->IsMounted())
+                {
+                    if(m_triggeredByAuraSpell)
+                        m_caster->RemoveAurasDueToSpell(m_triggeredByAuraSpell->Id);
                     return;
                 }
 
@@ -2822,6 +2821,32 @@ void Spell::DoCreateItem(uint32 i, uint32 itemtype)
 
         // we succeeded in creating at least one item, so a levelup is possible
         player->UpdateCraftSkill(m_spellInfo->Id);
+    }
+
+    // for battleground marks send by mail if not add all expected
+    if(no_space > 0 )
+    {
+        BattleGroundTypeId bgType;
+        switch(m_spellInfo->Id)
+        {
+            case SPELL_AV_MARK_WINNER:
+            case SPELL_AV_MARK_LOSER:
+                bgType = BATTLEGROUND_AV;
+                break;
+            case SPELL_WS_MARK_WINNER:
+            case SPELL_WS_MARK_LOSER:
+                bgType = BATTLEGROUND_WS;
+                break;
+            case SPELL_AB_MARK_WINNER:
+            case SPELL_AB_MARK_LOSER:
+                bgType = BATTLEGROUND_AB;
+                break;
+            default:
+                return;
+        }
+
+        if(BattleGround* bg = sBattleGroundMgr.GetBattleGroundTemplate(bgType))
+            bg->SendRewardMarkByMail(player,newitemid,no_space);
     }
 }
 
@@ -4454,8 +4479,8 @@ void Spell::EffectWeaponDmg(uint32 i)
                 if(((Player*)m_caster)->GetWeaponForAttack(OFF_ATTACK,true))
                     spell_bonus += m_caster->CalculateDamage (OFF_ATTACK, normalized);
             }
-            // Devastate bonus
-            else if(m_spellInfo->SpellFamilyFlags & 0x0000004000000000LL)
+            // Devastate bonus and sunder armor refresh
+            else if(m_spellInfo->SpellVisual[0] == 671 && m_spellInfo->SpellIconID == 1508)
             {
                 uint32 stack = 0;
                 // Need refresh all Sunder Armor auras from this caster
@@ -4467,6 +4492,7 @@ void Spell::EffectWeaponDmg(uint32 i)
                         spellInfo->SpellFamilyFlags & 0x0000000000004000LL &&
                         (*itr).second->GetCasterGUID() == m_caster->GetGUID())
                     {
+                        (*itr).second->RefreshAura();
                         stack = (*itr).second->GetStackAmount();
                     }
                 }
@@ -4481,6 +4507,7 @@ void Spell::EffectWeaponDmg(uint32 i)
             if(m_spellInfo->SpellFamilyFlags & 0x00000200LL)
             {
                 customBonusDamagePercentMod = true;
+
                 bonusDamagePercentMod = 2.75f;               // 275%
             }
             // Mutilate (for each hand)

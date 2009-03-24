@@ -320,7 +320,7 @@ class Spell
         void EffectTriggerRitualOfSummoning(uint32 i);
         void EffectKillCredit(uint32 i);
         void EffectQuestFail(uint32 i);
-	void EffectSpecialSummon( uint32 spell_id, uint32 i, Unit* m_caster );//summons that need to be scripted, PROBABLY ALL WOTLK SUMMONS :D
+        void EffectSpecialSummon( uint32 spell_id, uint32 i, Unit* m_caster );//summons that need to be scripted, PROBABLY ALL WOTLK SUMMONS :D
         void EffectActivateRune(uint32 i);
         void EffectTitanGrip(uint32 i);
         void EffectEnchantItemPrismatic(uint32 i);
