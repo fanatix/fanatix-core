@@ -1065,6 +1065,19 @@ bool SpellMgr::IsRankSpellDueToSpell(SpellEntry const *spellInfo_1,uint32 spellI
     if(!spellInfo_1 || !spellInfo_2) return false;
     if(spellInfo_1->Id == spellId_2) return false;
 
+    SpellChainMap::const_iterator itr_1 = mSpellChains.find(spellInfo_1->Id);
+    SpellChainMap::const_iterator itr_2 = mSpellChains.find(spellId_2);
+    if(itr_1 != mSpellChains.end() && itr_2 != mSpellChains.end())
+    {
+        if(uint32 reqSpell1 = itr_1->second.req)
+            if(GetFirstSpellInChain(reqSpell1) == GetFirstSpellInChain(spellId_2))
+                return true;
+
+        if(uint32 reqSpell2 = itr_2->second.req)
+            if(GetFirstSpellInChain(reqSpell2) == GetFirstSpellInChain(spellInfo_1->Id))
+                return true;
+    }
+
     return GetFirstSpellInChain(spellInfo_1->Id)==GetFirstSpellInChain(spellId_2);
 }
 

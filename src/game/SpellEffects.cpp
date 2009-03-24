@@ -376,6 +376,10 @@ void Spell::EffectSchoolDMG(uint32 effect_idx)
                 {
                     m_caster->CastSpell(m_caster,36032,true);
                 }
+                else if(m_spellInfo->SchoolMask & SPELL_SCHOOL_MASK_ARCANE)
+                {
+                    m_caster->RemoveAurasDueToSpell(36032);
+                }
                 break;
             }
             case SPELLFAMILY_WARRIOR:
@@ -433,12 +437,20 @@ void Spell::EffectSchoolDMG(uint32 effect_idx)
                 // Ferocious Bite
                 if(m_caster->GetTypeId()==TYPEID_PLAYER && (m_spellInfo->SpellFamilyFlags & 0x000800000) && m_spellInfo->SpellVisual[0]==6587)
                 {
-                    // converts each extra point of energy into ($f1+$AP/410) additional damage
+                    // converts each extra point of energy into ($f1+$AP/410) additional damage, not more than 30 energy
                     float ap = m_caster->GetTotalAttackPowerValue(BASE_ATTACK);
                     float multiple = ap / 410 + m_spellInfo->DmgMultiplier[effect_idx];
-                    damage += int32(m_caster->GetPower(POWER_ENERGY) * multiple);
-                    damage += int32(((Player*)m_caster)->GetComboPoints() * ap * 7 / 100);
-                    m_caster->SetPower(POWER_ENERGY,0);
+					damage += int32(((Player*)m_caster)->GetComboPoints() * ap * 7 / 100);
+					if (m_caster->GetPower(POWER_ENERGY) > 30)
+					{
+						damage += int32(30 * multiple);
+						m_caster->SetPower(POWER_ENERGY,(m_caster->GetPower(POWER_ENERGY) - 30));
+					}
+					else 
+						{
+						damage += int32(m_caster->GetPower(POWER_ENERGY) * multiple);
+						m_caster->SetPower(POWER_ENERGY,0);
+						}
                 }
                 // Rake
                 else if(m_spellInfo->SpellFamilyFlags & 0x0000000000001000LL)

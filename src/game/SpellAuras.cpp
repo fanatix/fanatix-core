@@ -4065,11 +4065,11 @@ void Aura::HandleAuraModIncreaseFlightSpeed(bool apply, bool Real)
         if(apply)
         {
             ((Player*)m_target)->SetCanFly(true);
-             data.Initialize(SMSG_MOVE_SET_CAN_FLY, 12);
+            data.Initialize(SMSG_MOVE_SET_CAN_FLY, 12);
         }
-         else
+        else
         {
-             data.Initialize(SMSG_MOVE_UNSET_CAN_FLY, 12);
+            data.Initialize(SMSG_MOVE_UNSET_CAN_FLY, 12);
             ((Player*)m_target)->SetCanFly(false);
         }
         data.append(m_target->GetPackGUID());
@@ -5640,22 +5640,22 @@ void Aura::HandleAuraAllowFlight(bool apply, bool Real)
     if(!Real)
         return;
 
-     // allow fly
-     WorldPacket data;
-     if(apply)
+    // allow fly
+    WorldPacket data;
+    if(apply)
     {
         ((Player*)m_target)->SetCanFly(true);
-         data.Initialize(SMSG_MOVE_SET_CAN_FLY, 12);
+        data.Initialize(SMSG_MOVE_SET_CAN_FLY, 12);
     }
-     else
+    else
     {
-         data.Initialize(SMSG_MOVE_UNSET_CAN_FLY, 12);
+        data.Initialize(SMSG_MOVE_UNSET_CAN_FLY, 12);
         ((Player*)m_target)->SetCanFly(false);
     }
-     data.append(m_target->GetPackGUID());
-     data << uint32(0);                                      // unk
-     m_target->SendMessageToSet(&data, true);
- }
+    data.append(m_target->GetPackGUID());
+    data << uint32(0);                                      // unk
+    m_target->SendMessageToSet(&data, true);
+}
 
 void Aura::HandleModRating(bool apply, bool Real)
 {

@@ -1715,6 +1715,38 @@ void Spell::SetTargetMap(uint32 i,uint32 cur,std::list<Unit*> &TagUnitMap)
                             TagUnitMap.push_back(pet);
                 }
             }
+            else if(m_spellInfo->Id==52759)                  //Ancestral Awakening (special target selection)
+            {
+                double lowest = m_caster->GetHealth() / m_caster->GetMaxHealth();
+                Unit *ulowest = m_caster;
+                Unit *tmp;
+
+                if(pGroup)
+                {
+                   Group::MemberSlotList slots = pGroup->GetMemberSlots();
+                   for(Group::MemberSlotList::const_iterator itr = slots.begin(); itr != slots.end(); itr++)
+                   {
+                       if(tmp = ObjectAccessor::GetObjectInWorld((*itr).guid, m_caster))
+                       {
+                          if(lowest > tmp->GetHealth() / tmp->GetMaxHealth() &&
+                             (m_caster->IsWithinDistInMap(tmp, radius) || tmp == m_caster) &&
+                             m_caster->IsFriendlyTo(tmp) &&
+                             !tmp->isDead())
+                          {
+                             lowest = tmp->GetHealth() / tmp->GetMaxHealth();
+                             ulowest = tmp;
+                          }
+                       }
+                       else
+                          if(!ulowest)
+                             tmp = m_caster;
+                   }
+
+                   TagUnitMap.push_back(ulowest);
+                }
+                else
+                   TagUnitMap.push_back(m_caster);
+            }
             else
             {
                 if(pGroup)

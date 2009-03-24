@@ -2357,6 +2357,7 @@ class MANGOS_DLL_SPEC Player : public Unit
         float  m_summon_y;
         float  m_summon_z;
 
+
         // Far Teleport
         WorldLocation m_teleport_dest;
 
