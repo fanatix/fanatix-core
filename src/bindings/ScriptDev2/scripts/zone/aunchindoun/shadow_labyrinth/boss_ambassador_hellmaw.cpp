@@ -98,7 +98,7 @@ struct MANGOS_DLL_DECL boss_Terrordar_der_PeinigerAI : public ScriptedAI
     void UpdateAI(const uint32 diff)
     {
         
-if (Enrage_Timer)
+if (Enrage_Timer < diff)
         {
             DoCast(m_creature, H_SPELL_ARCANE_EXPLOSION ,SPELL_ARCANE_EXPLOSION);
             DoCast(m_creature, H_SPELL_ARCANE_EXPLOSION ,SPELL_ARCANE_EXPLOSION);

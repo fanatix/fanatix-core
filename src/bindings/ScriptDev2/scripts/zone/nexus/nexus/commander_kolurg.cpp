@@ -45,7 +45,7 @@ struct MANGOS_DLL_DECL boss_commander_kolurgAI : public ScriptedAI
        FRIGHTENING_Timer = 6000;
        BATTLE_SHOUT_Timer = 60000;
 	   CHARGE_Timer = 2000;
-       WHIRLWIND_Timer = 0000;
+       WHIRLWIND_Timer = 1000;
 
 		//if(pInstance)
           //  pInstance->SetData(data_keristrasza, NOT_STARTED);
@@ -95,7 +95,7 @@ if (WHIRLWIND_Timer < diff)
                 if (Unit* target = SelectUnit(SELECT_TARGET_RANDOM,0))
                     DoCast(target,SPELL_WHIRLWIND_2);
 
-                WHIRLWIND_Timer = 0000;
+                WHIRLWIND_Timer = 1000;
             }else WHIRLWIND_Timer -=diff;
 
         DoMeleeAttackIfReady();
