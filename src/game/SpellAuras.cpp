@@ -1954,67 +1954,6 @@ void Aura::TriggerSpell()
         // Spell exist but require custom code
         switch(auraId)
         {
-            // Army of the Dead
-            case 42650: 
-            {
-                uint32 creature_entry = triggeredSpellInfo->EffectMiscValue[1];
-                if(!creature_entry)
-                    creature_entry = 24207;
-                uint32 level = caster->getLevel();
-                float px;
-                float py;
-                float pz;
-                // select center of summon position
-                float center_x = caster->GetPositionX();
-                float center_y = caster->GetPositionY();
-                float center_z = caster->GetPositionZ();
-                //float radius = GetSpellRadius(sSpellRadiusStore.LookupEntry(triggredSpellInfo->EffectRadiusIndex[0]));
-                float radius = 15;
-                caster->GetRandomPoint(center_x,center_y,center_z,radius,px,py,pz);
-                int32 duration = GetSpellDuration(triggeredSpellInfo);
-                /*TempSummonType summonType = TEMPSUMMON_TIMED_OR_CORPSE_DESPAWN;
-                Creature* spawnCreature = caster->SummonCreature(creature_entry,px,py,pz,caster->GetOrientation(),summonType,duration);*/
-                Pet* spawnCreature = new Pet(GUARDIAN_PET);//set as guardian
-
-                Map *map = caster->GetMap();
-                uint32 pet_number = objmgr.GeneratePetNumber();
-                /*if(!spawnCreature->Create(objmgr.GenerateLowGuid(HIGHGUID_PET), map, phaseMask, creature_entry, pet_number))
-                {
-                    sLog.outError("no such creature entry %u in database, you should add it",creature_entry);
-                    creature_entry = 7560;
-                    if(!spawnCreature->Create(objmgr.GenerateLowGuid(HIGHGUID_PET), map, phaseMask, creature_entry, pet_number))
-                        return;//this should never happen
-                }*/
-                spawnCreature->Relocate(px,py,pz,caster->GetOrientation());
-                if(duration > 0)
-                spawnCreature->SetDuration(duration);
-                spawnCreature->SetUInt64Value(UNIT_FIELD_SUMMONEDBY,caster->GetGUID());
-                spawnCreature->setPowerType(POWER_MANA);
-                spawnCreature->SetMaxPower(POWER_MANA,28 + 10 * level);
-                spawnCreature->SetPower(   POWER_MANA,28 + 10 * level);
-                spawnCreature->SetUInt32Value(UNIT_NPC_FLAGS , 0);
-                spawnCreature->SetLevel(level);
-                spawnCreature->SetUInt32Value(UNIT_FIELD_FACTIONTEMPLATE,caster->getFaction());
-                spawnCreature->SetUInt32Value(UNIT_FIELD_FLAGS,0);
-                spawnCreature->SetUInt32Value(UNIT_FIELD_BYTES_1,0);
-                spawnCreature->SetUInt32Value(UNIT_FIELD_PET_NAME_TIMESTAMP,0);
-                spawnCreature->SetUInt32Value(UNIT_FIELD_PETEXPERIENCE,0);
-                spawnCreature->SetUInt32Value(UNIT_FIELD_PETNEXTLEVELEXP,1000);
-                spawnCreature->SetUInt64Value(UNIT_FIELD_CREATEDBY, caster->GetGUID());
-                spawnCreature->SetUInt32Value(UNIT_CREATED_BY_SPELL, triggeredSpellInfo->Id);
-                spawnCreature->SetArmor(level*70);
-                spawnCreature->SetMaxHealth( 28 + 30*level);
-                spawnCreature->SetHealth(    28 + 30*level);
-                spawnCreature->SetAttackTime(BASE_ATTACK, 2000);
-                /*spawnCreature->HandleStatModifier(UNIT_MOD_DAMAGE_MAINHAND, TOTAL_VALUE, float(level * 3), true);*/
-                spawnCreature->SetBaseWeaponDamage(BASE_ATTACK ,MAXDAMAGE, float(level * 2.5));
-                spawnCreature->SetBaseWeaponDamage(BASE_ATTACK ,MINDAMAGE, float(level * 2));
-                spawnCreature->SetFloatValue(UNIT_FIELD_MAXDAMAGE,  float(level * 2.5));
-                spawnCreature->SetFloatValue(UNIT_FIELD_MINDAMAGE,  float(level * 2));
-                spawnCreature->AIM_Initialize();//use AI (guardian AI)
-                map->Add((Creature*)spawnCreature);
-                return;
-            }
             // Curse of Idiocy
             case 1010:
             {
