@@ -474,6 +474,21 @@ void Spell::EffectSchoolDMG(uint32 effect_idx)
                             break;
                         }
                 }
+            // Typhoon
+            else if(m_spellInfo->SpellFamilyFlags & 0x0100000000000000LL)
+            {
+                switch(m_spellInfo->Id)
+                {
+                    case 50516: m_caster->CastSpell(unitTarget, 61391, true); return;
+                    case 53223: m_caster->CastSpell(unitTarget, 61390, true); return;
+                    case 53225: m_caster->CastSpell(unitTarget, 61388, true); return;
+                    case 53226: m_caster->CastSpell(unitTarget, 61387, true); return;
+                    case 61384: m_caster->CastSpell(unitTarget, 53227, true); return;
+                    default:
+                        sLog.outError("Spell::EffectDummy: Unhandeled Typhoon spell rank %u",m_spellInfo->Id);
+                        return;
+                }
+            }
                 break;
             }
             case SPELLFAMILY_ROGUE:
