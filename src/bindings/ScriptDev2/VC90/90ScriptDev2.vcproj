@@ -537,18 +537,6 @@
 					</File>
 				</Filter>
 				<Filter
-					Name="Azshara"
-					>
-					<File
-						RelativePath="..\scripts\zone\azshara\azshara.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\scripts\zone\azshara\boss_azuregos.cpp"
-						>
-					</File>
-				</Filter>
-				<Filter
 					Name="Badlands"
 					>
 				</Filter>
@@ -2829,6 +2817,18 @@
 					>
 					<File
 						RelativePath="..\scripts\zone\loch_modan\loch_modan.cpp"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="Azshara"
+					>
+					<File
+						RelativePath="..\scripts\zone\azshara\azshara.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\scripts\zone\azshara\boss_azuregos.cpp"
 						>
 					</File>
 				</Filter>
