@@ -14,192 +14,149 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+/* Copyright (C) 2009
+Paradox Costom Raidboss
+Coded FBPBM
+*/
+
 /* ScriptData
-SDName: Boss_Ambassador_Hellmaw
-SD%Complete: 75
-SDComment: Waypoints after Intro not implemented. Enrage spell missing/not known
-SDCategory: Auchindoun, Shadow Labyrinth
+SDName: boss_Terrordar_der_Peiniger
+SD%Complete: Stats Von Maggi benutzen !!! 
+SDComment:  Raidboss / Loot : 2 Abzeichen der gerechtigkeit , 3 x Random epic rezept drop
+SDCategory: Schergrat /Resparwn : alle 6 Stunden 
 EndScriptData */
 
+/* ContentData
+boss_Terrordar_der_Peiniger
+EndContentData */
+
 #include "precompiled.h"
-#include "def_shadow_labyrinth.h"
+#include "sc_creature.h"
 
-#define SAY_INTRO       -1555000
 
-#define SAY_AGGRO1      -1555001
-#define SAY_AGGRO2      -1555002
-#define SAY_AGGRO3      -1555003
+#define SAY_AGGRO                    "Ihr Sterblichen wagt es mich zu stören ???"
+#define SAY_SLAY1                    "Der erste beißt ins Grass"
+#define SAY_SLAY2                    "Der Zweite gesellt sich zu den Toten"
+#define SAY_SLAY3                    "Ihr alle werdet Sterben !"
+#define SAY_DEATH                    "Wie ?! ich bin doch ein Gott ..."
 
-#define SAY_HELP        -1555004
 
-#define SAY_SLAY1       -1555005
-#define SAY_SLAY2       -1555006
+#define SPELL_CHAIN_LIGHTNING       44318
+#define SPELL_RAINOFFIRE            28794
+#define SPELL_ENVELOPING_WINDS      31718
+#define SPELL_ARCANE_EXPLOSION      38197
+#define H_SPELL_ARCANE_EXPLOSION    40425
+#define SPELL_FIREBALL_BARRAGE      30282
+#define SPELL_DISTRACTING_ASH       30130
 
-#define SAY_DEATH       -1555007
-
-#define SPELL_BANISH            30231
-#define SPELL_CORROSIVE_ACID    33551
-#define SPELL_FEAR              33547
-#define SPELL_ENRAGE            0                           //need to find proper spell
-
-struct MANGOS_DLL_DECL boss_ambassador_hellmawAI : public ScriptedAI
+struct MANGOS_DLL_DECL boss_Terrordar_der_PeinigerAI : public ScriptedAI
 {
-    boss_ambassador_hellmawAI(Creature *c) : ScriptedAI(c)
-    {
-        pInstance = ((ScriptedInstance*)c->GetInstanceData());
-        HeroicMode = m_creature->GetMap()->IsHeroic();
-        Reset();
+    boss_Terrordar_der_PeinigerAI(Creature *c) : ScriptedAI(c) 
+{
+ Reset();
     }
 
-    ScriptedInstance* pInstance;
-    bool HeroicMode;
 
-    uint32 EventCheck_Timer;
-    uint32 CorrosiveAcid_Timer;
-    uint32 Fear_Timer;
+    uint32 RainOfFire_Timer;
+    uint32 ChainLightningTimer;
+    uint32 EnvelopingWinds_Timer;
     uint32 Enrage_Timer;
-    bool Intro;
-    bool IsBanished;
+	uint32 Fireball_Timer;
+	uint32 timer_da;
+
 
     void Reset()
     {
-        EventCheck_Timer = 5000;
-        CorrosiveAcid_Timer = 25000;
-        Fear_Timer = 40000;
-        Enrage_Timer = 180000;
-        Intro = false;
-        IsBanished = false;
-
-        if (pInstance)
-        {
-            if (pInstance->GetData(TYPE_HELLMAW) == NOT_STARTED)
-            {
-                DoCast(m_creature,SPELL_BANISH);
-                IsBanished = true;
-            }
-            else pInstance->SetData(TYPE_HELLMAW,FAIL);
-
-            if (pInstance->GetData(TYPE_OVERSEER) == DONE)
-            {
-                if (m_creature->HasAura(SPELL_BANISH,0))
-                    m_creature->RemoveAurasDueToSpell(SPELL_BANISH);
-                Intro = true;
-            }
-        }
-    }
-
-    void MovementInform(uint32 type, uint32 id)
-    {
-        if (type != POINT_MOTION_TYPE)
-            return;
-    }
-
-    void DoIntro()
-    {
-        DoScriptText(SAY_INTRO, m_creature);
-
-        if (m_creature->HasAura(SPELL_BANISH,0))
-            m_creature->RemoveAurasDueToSpell(SPELL_BANISH);
-
-        IsBanished = false;
-        Intro = true;
-
-        if (pInstance)
-            pInstance->SetData(TYPE_HELLMAW, IN_PROGRESS);
-    }
-
-    void MoveInLineOfSight(Unit *who)
-    {
-        if (m_creature->HasAura(SPELL_BANISH,0))
-            return;
-
-        ScriptedAI::MoveInLineOfSight(who);
-    }
+        RainOfFire_Timer = 28000;
+        ChainLightningTimer = 12000;
+        EnvelopingWinds_Timer = 9000;
+		timer_da = 2000 + (rand() % 2000);
+		Fireball_Timer = 3000;
+        Enrage_Timer = 900000;
+}
 
     void Aggro(Unit *who)
     {
+        DoYell(SAY_AGGRO,LANG_UNIVERSAL, NULL);
+    }
+
+    void KilledUnit()
+    {
         switch(rand()%3)
         {
-            case 0: DoScriptText(SAY_AGGRO1, m_creature); break;
-            case 1: DoScriptText(SAY_AGGRO2, m_creature); break;
-            case 2: DoScriptText(SAY_AGGRO3, m_creature); break;
+            case 0: DoYell(SAY_SLAY1,LANG_UNIVERSAL, NULL); break;
+            case 1: DoYell(SAY_SLAY2,LANG_UNIVERSAL, NULL); break;
+            case 2: DoYell(SAY_SLAY3,LANG_UNIVERSAL, NULL); break;
         }
     }
 
-    void KilledUnit(Unit *victim)
+    void JustDied(Unit* Killer)
     {
-        switch(rand()%2)
-        {
-            case 0: DoScriptText(SAY_SLAY1, m_creature); break;
-            case 1: DoScriptText(SAY_SLAY2, m_creature); break;
-        }
-    }
-
-    void JustDied(Unit *victim)
-    {
-        DoScriptText(SAY_DEATH, m_creature);
-
-        if (pInstance)
-            pInstance->SetData(TYPE_HELLMAW, DONE);
+        DoYell(SAY_DEATH, LANG_UNIVERSAL, NULL);
     }
 
     void UpdateAI(const uint32 diff)
     {
-        if (!Intro)
+        
+if (Enrage_Timer)
         {
-            if (EventCheck_Timer < diff)
-            {
-                if (pInstance)
-                {
-                    if (pInstance->GetData(TYPE_OVERSEER) == DONE)
-                        DoIntro();
-                }
-                EventCheck_Timer = 5000;
-            }else EventCheck_Timer -= diff;
-        }
+            DoCast(m_creature, H_SPELL_ARCANE_EXPLOSION ,SPELL_ARCANE_EXPLOSION);
+            DoCast(m_creature, H_SPELL_ARCANE_EXPLOSION ,SPELL_ARCANE_EXPLOSION);
+            DoCast(m_creature, H_SPELL_ARCANE_EXPLOSION ,SPELL_ARCANE_EXPLOSION);
+            Enrage_Timer = 900000+rand()%5000;
+}else Enrage_Timer -=diff;
 
-        if (!InCombat && !IsBanished)
+        if (RainOfFire_Timer < diff)
         {
-            //this is where we add MovePoint()
-            //DoWhine("I haz no mount!", LANG_UNIVERSAL, NULL);
-        }
+            Unit* target = NULL;
+            target = SelectUnit(SELECT_TARGET_RANDOM,0);
+            if (target) DoCast(target,SPELL_RAINOFFIRE);
+            RainOfFire_Timer = 28000;
+        } else RainOfFire_Timer -= diff;
 
-        if (!m_creature->SelectHostilTarget() || !m_creature->getVictim() )
-            return;
-
-        if (CorrosiveAcid_Timer < diff)
+        if (ChainLightningTimer < diff)
         {
-            DoCast(m_creature->getVictim(),SPELL_CORROSIVE_ACID);
-            CorrosiveAcid_Timer = 15000 + rand()%10000;
-        }else CorrosiveAcid_Timer -= diff;
+            if (Unit* target = SelectUnit(SELECT_TARGET_RANDOM, 0))
+                DoCast(target, SPELL_CHAIN_LIGHTNING);
+            ChainLightningTimer = 12000;
+        }else ChainLightningTimer -= diff;
+      
+ if(timer_da < diff) 
+        { 
+            DoCast(m_creature->getVictim(), SPELL_DISTRACTING_ASH);
+            timer_da = 20000 + (rand() % 20000);
+        } else timer_da -= diff;
 
-        if (Fear_Timer < diff)
-        {
-            DoCast(m_creature,SPELL_FEAR);
-            Fear_Timer = 20000 + rand()%15000;
-        }else Fear_Timer -= diff;
+       if (Fireball_Timer < diff) 
+{ 
+if (Unit* target = SelectUnit(SELECT_TARGET_RANDOM, 0))
+DoCast(target,SPELL_FIREBALL_BARRAGE); 
+ 
+Fireball_Timer = 3000; 
+}else Fireball_Timer -= diff; 
 
-        /*if (HeroicMode)
+ if (EnvelopingWinds_Timer < diff)
         {
-            if (Enrage_Timer < diff)
-            {
-                DoCast(m_creature,SPELL_ENRAGE);
-            }else Enrage_Timer -= diff;
-        }*/
+                if (Unit* target = SelectUnit(SELECT_TARGET_RANDOM,0))
+                    DoCast(target, SPELL_ENVELOPING_WINDS);
+            EnvelopingWinds_Timer = 10000+rand()%5000;
+        }else EnvelopingWinds_Timer -=diff;
 
         DoMeleeAttackIfReady();
-    }
+}
+    
 };
-CreatureAI* GetAI_boss_ambassador_hellmaw(Creature *_Creature)
+
+CreatureAI* GetAI_boss_Terrordar_der_Peiniger(Creature *_Creature)
 {
-    return new boss_ambassador_hellmawAI (_Creature);
+    return new boss_Terrordar_der_PeinigerAI (_Creature);
 }
 
-void AddSC_boss_ambassador_hellmaw()
+void AddSC_boss_Terrordar_der_Peiniger()
 {
     Script *newscript;
     newscript = new Script;
     newscript->Name = "boss_ambassador_hellmaw";
-    newscript->GetAI = &GetAI_boss_ambassador_hellmaw;
+    newscript->GetAI = &GetAI_boss_Terrordar_der_Peiniger;
     newscript->RegisterSelf();
 }

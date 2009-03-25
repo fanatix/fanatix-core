@@ -127,7 +127,7 @@ extern void AddSC_boss_talon_king_ikiss();
 extern void AddSC_instance_sethekk_halls();
 
 //--Shadow Labyrinth
-extern void AddSC_boss_ambassador_hellmaw();
+extern void AddSC_boss_Terrordar_der_Peiniger();
 extern void AddSC_boss_blackheart_the_inciter();
 extern void AddSC_boss_grandmaster_vorpil();
 extern void AddSC_boss_murmur();
@@ -1785,7 +1785,7 @@ void ScriptsInit()
     AddSC_instance_sethekk_halls();
 
     //--Shadow Labyrinth
-    AddSC_boss_ambassador_hellmaw();
+    AddSC_boss_Terrordar_der_Peiniger();
     AddSC_boss_blackheart_the_inciter();
     AddSC_boss_grandmaster_vorpil();
     AddSC_boss_murmur();
