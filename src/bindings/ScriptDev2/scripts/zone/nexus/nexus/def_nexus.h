@@ -2,4 +2,6 @@
 #define DEF_NEXUS_H
 
 #define DATA_KERISTRASZA
+#define DATA_MAGUS_TELESTRA
+#define DATA_COMMANDER_KOLURG
 #endif

@@ -10,6 +10,7 @@ Script Data End */
 update creature_template set scriptname = 'boss_commander_kolurg' where entry = '';
 *** SQL END ***/
 #include "precompiled.h"
+#include "def_nexus.h"
 
 //Spell
 #define SPELL_FRIGHTENING_SHOUT                               19134
@@ -48,7 +49,7 @@ struct MANGOS_DLL_DECL boss_commander_kolurgAI : public ScriptedAI
        WHIRLWIND_Timer = 1000;
 
 		//if(pInstance)
-          //  pInstance->SetData(data_keristrasza, NOT_STARTED);
+            //pInstance->SetData(DATA_COMMANDER_KOLURG, NOT_STARTED);
 	}
 
     void Aggro(Unit* who)

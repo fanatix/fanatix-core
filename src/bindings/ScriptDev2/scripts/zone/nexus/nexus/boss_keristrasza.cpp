@@ -7,7 +7,7 @@ SDCategory: Nexus , Script by  http://www.wowparadox.de/
 Script Data End */
 
 #include "precompiled.h"
-//#include "def_nexus_h"
+#include "def_nexus.h"
 
 //Spells
 #define SPELL_TAIL_SWEEP                                50155
@@ -58,17 +58,16 @@ struct MANGOS_DLL_DECL boss_keristraszaAI : public ScriptedAI
 
 	   m_creature->ApplySpellImmune(0, IMMUNITY_SCHOOL, SPELL_SCHOOL_MASK_FROST, true);
 		//if(pInstance)
-          //  pInstance->SetData(data_keristrasza, NOT_STARTED);
+        //    pInstance->SetData(DATA_KERISTRASZA, NOT_STARTED);
 	}
     void Aggro(Unit* who) 
     {
 		//if(pInstance)
-        //pInstance->SetData(data_keristrasza, IN_PROGRESS);
+        //pInstance->SetData(DATA_KERISTRASZA, IN_PROGRESS);
         DoScriptText(SAY_AGGRO, m_creature);
 	//	DoZoneInCombat();
     }
-    //void AttackStart(Unit* who) {}
-    //void MoveInLineOfSight(Unit* who) {}
+
     void UpdateAI(const uint32 diff) 
     {
         //Return since we have no target
@@ -124,7 +123,7 @@ if (CRYSTALFIRE_BREATH_Timer < diff)
     void JustDied(Unit* killer)  
     {
 		//if(pInstance)
-          // pInstance->SetData(data_keristrasza, DONE);
+        //   pInstance->SetData(DATA_KERISTRASZA, DONE);
         DoScriptText(SAY_DEATH, m_creature);
     }
     void KilledUnit(Unit *victim)

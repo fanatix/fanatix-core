@@ -44,7 +44,7 @@ struct MANGOS_DLL_DECL boss_ormorokAI : public ScriptedAI
     uint32 SPELL_TRAMPLE_Timer;
 	uint32 SPELL_FRENZY_Timer;
     uint32 SPELL_SPELL_REFLECTION_Timer;
-    //uint32 SPELL_SUMMON_CRYSTALLINE_TANGLER_Timer;
+    uint32 SPELL_SUMMON_CRYSTALLINE_TANGLER_Timer;
 
 
 
@@ -53,9 +53,9 @@ struct MANGOS_DLL_DECL boss_ormorokAI : public ScriptedAI
 	//These times are probably wrong
 	   SPELL_CRYSTAL_SPIKES_Timer = 15000;                         
        SPELL_TRAMPLE_Timer = 10000;
-	   SPELL_FRENZY_Timer = 5000;
+	   SPELL_FRENZY_Timer = 65000;
        SPELL_SPELL_REFLECTION_Timer = 25000;
-      // SPELL_SUMMON_CRYSTALLINE_TANGLER_Timer = 8000;
+       SPELL_SUMMON_CRYSTALLINE_TANGLER_Timer = 20000;
 	}
     void Aggro(Unit* who) 
     {
@@ -77,6 +77,15 @@ struct MANGOS_DLL_DECL boss_ormorokAI : public ScriptedAI
 		
             SPELL_FRENZY_Timer = 5000;
 }else SPELL_FRENZY_Timer -=diff;
+
+		if (SPELL_SUMMON_CRYSTALLINE_TANGLER_Timer < diff)
+        {
+			m_creature->CastSpell(m_creature, SPELL_SUMMON_CRYSTALLINE_TANGLER, true);
+			m_creature->CastSpell(m_creature, SPELL_SUMMON_CRYSTALLINE_TANGLER, true);
+			m_creature->CastSpell(m_creature, SPELL_SUMMON_CRYSTALLINE_TANGLER, true);
+
+            SPELL_SUMMON_CRYSTALLINE_TANGLER_Timer = 20000;
+}else SPELL_SUMMON_CRYSTALLINE_TANGLER_Timer -=diff;
 
 if (SPELL_CRYSTAL_SPIKES_Timer < diff)
             {
