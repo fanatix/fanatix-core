@@ -216,9 +216,12 @@ extern void AddSC_burning_steppes();
 //Caverns of Time
 //--Battle for Mt. Hyjal
 extern void AddSC_hyjal();
+extern void AddSC_boss_anetheron();
 extern void AddSC_boss_archimonde();
-extern void AddSC_instance_mount_hyjal();
+extern void AddSC_boss_azgalor();
+extern void AddSC_boss_kazrogal();
 extern void AddSC_boss_rage_winterchill();
+extern void AddSC_instance_mount_hyjal();
 
 //--Culling of Stratholme
 extern void AddSC_boss_epoch();
@@ -1875,9 +1878,12 @@ void ScriptsInit()
     //Caverns of Time
     //--Battle for Mt. Hyjal
     AddSC_hyjal();
+    AddSC_boss_anetheron();
     AddSC_boss_archimonde();
-    AddSC_instance_mount_hyjal();
+    AddSC_boss_azgalor();
+    AddSC_boss_kazrogal();
     AddSC_boss_rage_winterchill();
+    AddSC_instance_mount_hyjal();
 	  
     //--Culling of Stratholme
     AddSC_boss_epoch();

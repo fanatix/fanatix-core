@@ -1,18 +1,18 @@
-/* Copyright (C) 2006,2007 ScriptDev2 <https://scriptdev2.svn.sourceforge.net/>
-* This program is free software; you can redistribute it and/or modify
-* it under the terms of the GNU General Public License as published by
-* the Free Software Foundation; either version 2 of the License, or
-* (at your option) any later version.
-*
-* This program is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-* GNU General Public License for more details.
-*
-* You should have received a copy of the GNU General Public License
-* along with this program; if not, write to the Free Software
-* Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-*/
+/* Copyright (C) 2006 - 2009 ScriptDev2 <https://scriptdev2.svn.sourceforge.net/>
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ */
 
 /* ScriptData
 SDName: Instance_Mount_Hyjal
@@ -33,10 +33,13 @@ EndScriptData */
 3 - Azgalor event
 4 - Archimonde event
 */
- 
+
 struct MANGOS_DLL_DECL instance_mount_hyjal : public ScriptedInstance
 {
-    instance_mount_hyjal(Map *Map) : ScriptedInstance(Map) {Initialize();};
+    instance_mount_hyjal(Map *map) : ScriptedInstance(map) {Initialize();};
+
+    uint32 Encounters[ENCOUNTERS];
+    std::string str_data;
 
     uint64 RageWinterchill;
     uint64 Anetheron;
@@ -47,9 +50,7 @@ struct MANGOS_DLL_DECL instance_mount_hyjal : public ScriptedInstance
     uint64 Thrall;
     uint64 TyrandeWhisperwind;
 
-    uint32 Encounters[ENCOUNTERS];
-
-    char save[256];
+    uint32 Trash;
 
     void Initialize()
     {
@@ -61,14 +62,15 @@ struct MANGOS_DLL_DECL instance_mount_hyjal : public ScriptedInstance
         JainaProudmoore = 0;
         Thrall = 0;
         TyrandeWhisperwind = 0;
-        
-        for(uint8 i = 0; i < ENCOUNTERS; i++)
+
+        Trash = 0;
+        for(uint8 i = 0; i < ENCOUNTERS; ++i)
             Encounters[i] = NOT_STARTED;
     }
 
-    bool IsEncounterInProgress() const 
+    bool IsEncounterInProgress() const
     {
-        for(uint8 i = 0; i < ENCOUNTERS; i++)
+        for(uint8 i = 0; i < ENCOUNTERS; ++i)
             if(Encounters[i] == IN_PROGRESS) return true;
 
         return false;
@@ -76,39 +78,16 @@ struct MANGOS_DLL_DECL instance_mount_hyjal : public ScriptedInstance
 
     void OnCreatureCreate(Creature *creature, uint32 creature_entry)
     {
-        switch(creature_entry)
+        switch(creature->GetEntry())
         {
-            case 17767:
-                RageWinterchill = creature->GetGUID();
-                break;
-
-            case 17808:
-                Anetheron = creature->GetGUID();
-                break;
-
-            case 17888:
-                Kazrogal = creature->GetGUID();
-                break;
-
-            case 17842:
-                Azgalor = creature->GetGUID();
-                break;
-
-            case 17968:
-                Archimonde = creature->GetGUID();
-                break;
-
-            case 17772:
-                JainaProudmoore = creature->GetGUID();
-                break;
-
-            case 17852:
-                Thrall = creature->GetGUID();
-                break;
-                
-            case 17948:
-                TyrandeWhisperwind = creature->GetGUID();
-                break;
+            case 17767: RageWinterchill = creature->GetGUID(); break;
+            case 17808: Anetheron = creature->GetGUID(); break;
+            case 17888: Kazrogal = creature->GetGUID();  break;
+            case 17842: Azgalor = creature->GetGUID(); break;
+            case 17968: Archimonde = creature->GetGUID(); break;
+            case 17772: JainaProudmoore = creature->GetGUID(); break;
+            case 17852: Thrall = creature->GetGUID(); break;
+            case 17948: TyrandeWhisperwind = creature->GetGUID(); break;
         }
     }
 
@@ -116,29 +95,14 @@ struct MANGOS_DLL_DECL instance_mount_hyjal : public ScriptedInstance
     {
         switch(identifier)
         {
-            case DATA_RAGEWINTERCHILL:
-                return RageWinterchill;
-                
-            case DATA_ANETHERON:
-                return Anetheron;
-
-            case DATA_KAZROGAL:
-                return Kazrogal;
-
-            case DATA_AZGALOR:
-                return Azgalor;
-            
-            case DATA_ARCHIMONDE:
-                return Archimonde;
-            
-            case DATA_JAINAPROUDMOORE:
-                return JainaProudmoore;
-
-            case DATA_THRALL:
-                return Thrall;
-
-            case DATA_TYRANDEWHISPERWIND:
-                return TyrandeWhisperwind;
+            case DATA_RAGEWINTERCHILL: return RageWinterchill;
+            case DATA_ANETHERON: return Anetheron;
+            case DATA_KAZROGAL: return Kazrogal;
+            case DATA_AZGALOR: return Azgalor;
+            case DATA_ARCHIMONDE: return Archimonde;
+            case DATA_JAINAPROUDMOORE: return JainaProudmoore;
+            case DATA_THRALL: return Thrall;
+            case DATA_TYRANDEWHISPERWIND: return TyrandeWhisperwind;
         }
 
         return 0;
@@ -148,72 +112,86 @@ struct MANGOS_DLL_DECL instance_mount_hyjal : public ScriptedInstance
     {
         switch(type)
         {
-            case DATA_RAGEWINTERCHILLEVENT:
-                Encounters[0] = data;
-                break;
+            case DATA_RAGEWINTERCHILLEVENT: Encounters[0] = data; break;
+            case DATA_ANETHERONEVENT:       Encounters[1] = data; break;
+            case DATA_KAZROGALEVENT:        Encounters[2] = data; break;
+            case DATA_AZGALOREVENT:         Encounters[3] = data; break;
+            case DATA_ARCHIMONDEEVENT:      Encounters[4] = data; break;
+            case DATA_RESET_TRASH_COUNT:    Trash = 0;            break;
 
-             case DATA_ANETHERONEVENT:
-                Encounters[1] = data;
-                break;
-
-             case DATA_KAZROGALEVENT:
-                Encounters[2] = data;
-                break;
-
-             case DATA_AZGALOREVENT:
-                Encounters[3] = data;
-                break;
-
-             case DATA_ARCHIMONDEEVENT:
-                Encounters[4] = data;
+            case DATA_TRASH:
+                if(data) Trash = data;
+                else     Trash--;
+                UpdateWorldState(WORLD_STATE_ENEMYCOUNT, Trash);
                 break;
         }
+
+         debug_log("SD2: Instance Hyjal: Instance data updated for event %u (Data=%u)",type,data);
+
+        if(data == DONE)
+        {
+            OUT_SAVE_INST_DATA;
+
+            std::ostringstream saveStream;
+            saveStream << Encounters[0] << " " << Encounters[1] << " " << Encounters[2] << " "
+                << Encounters[3] << " " << Encounters[4];
+
+            str_data = saveStream.str();
+
+            SaveToDB();
+            OUT_SAVE_INST_DATA_COMPLETE;
+        }
+
     }
 
     uint32 GetData(uint32 type)
     {
         switch(type)
         {
-            case DATA_RAGEWINTERCHILLEVENT:
-                return Encounters[0];
-
-             case DATA_ANETHERONEVENT:
-                return Encounters[1];
-
-             case DATA_KAZROGALEVENT:
-                return Encounters[2];
-
-             case DATA_AZGALOREVENT:
-                return Encounters[3];
-
-             case DATA_ARCHIMONDEEVENT:
-                return Encounters[4];
+            case DATA_RAGEWINTERCHILLEVENT: return Encounters[0];
+            case DATA_ANETHERONEVENT:      return Encounters[1];
+            case DATA_KAZROGALEVENT:       return Encounters[2];
+            case DATA_AZGALOREVENT:        return Encounters[3];
+            case DATA_ARCHIMONDEEVENT:     return Encounters[4];
+            case DATA_TRASH:               return Trash;
         }
         return 0;
     }
 
-    const char* Save()
+    void UpdateWorldState(uint32 id, uint32 state)
     {
-        uint32 r = 0;
-        for(uint8 i = 0; i < ENCOUNTERS; ++i)
-        {
-            if(Encounters[i] == DONE)
-                r++;
-        }
+        Map::PlayerList const& players = instance->GetPlayers();
 
-        if(r)
-            sprintf(save, "%d", r);
-        return save;
+        if (!players.isEmpty())
+        {
+                for(Map::PlayerList::const_iterator itr = players.begin(); itr != players.end(); ++itr)
+                {
+                    if (Player* player = itr->getSource())
+                        player->SendUpdateWorldState(id,state);
+                }
+        }else debug_log("SD2: Instance Hyjal: UpdateWorldState, but PlayerList is empty!");
     }
 
-    void Load(const char* load)
+    const char* Save()
     {
-        if(!load)
-            return;
+        return str_data.c_str();
+    }
 
-        uint32 in = atol(load);
-        for(uint8 i = 0; i < in; ++i)
-            Encounters[i] = DONE;
+    void Load(const char* in)
+    {
+        if (!in)
+        {
+            OUT_LOAD_INST_DATA_FAIL;
+            return;
+        }
+
+        OUT_LOAD_INST_DATA(in);
+        std::istringstream loadStream(in);
+        loadStream >> Encounters[0] >> Encounters[1] >> Encounters[2] >> Encounters[3] >> Encounters[4];
+        for(uint8 i = 0; i < ENCOUNTERS; ++i)
+            if(Encounters[i] == IN_PROGRESS)                // Do not load an encounter as IN_PROGRESS - reset it instead.
+                Encounters[i] = NOT_STARTED;
+        OUT_LOAD_INST_DATA_COMPLETE;
     }
 };
 
@@ -227,6 +205,6 @@ void AddSC_instance_mount_hyjal()
     Script *newscript;
     newscript = new Script;
     newscript->Name = "instance_hyjal";
-    newscript->GetInstanceData = GetInstanceData_instance_mount_hyjal;
+    newscript->GetInstanceData = &GetInstanceData_instance_mount_hyjal;
     newscript->RegisterSelf();
 }

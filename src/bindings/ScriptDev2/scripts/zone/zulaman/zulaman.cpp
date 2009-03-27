@@ -27,6 +27,7 @@ EndContentData */
 
 #include "precompiled.h"
 #include "def_zulaman.h"
+#include "../../npc/npc_escortAI.h"
 
 /*######
 ## npc_forest_frog
@@ -98,71 +99,136 @@ CreatureAI* GetAI_npc_forest_frog(Creature *_Creature)
 }
 
 /*######
-## npc_zulaman_hostage
+## npc_harrison_jones_za
 ######*/
 
-#define GOSSIP_HOSTAGE1        "I am glad to help you."
-
-static uint32 HostageInfo[] = {23790, 23999, 24024, 24001};
-
-struct MANGOS_DLL_DECL npc_zulaman_hostageAI : public ScriptedAI
+enum
 {
-    npc_zulaman_hostageAI(Creature *c) : ScriptedAI(c) {IsLoot = false;}
-    bool IsLoot;
-    uint64 PlayerGUID;
-    void Reset() {}
-    void Aggro(Unit *who) {}
-    /*void JustDied(Unit *)
+    SAY_START               = -1568079,
+    SAY_AT_GONG             = -1568080,
+    SAY_OPEN_ENTRANCE       = -1568081
+};
+
+#define GOSSIP_ITEM_BEGIN   "[PH] Begin"
+
+struct MANGOS_DLL_DECL npc_harrison_jones_zaAI : public npc_escortAI
+{
+    npc_harrison_jones_zaAI(Creature *c) : npc_escortAI(c)
     {
-        Player* player = (Player*)Unit::GetUnit(*m_creature, PlayerGUID);
-        if(player) player->SendLoot(m_creature->GetGUID(), LOOT_CORPSE);
-    }*/
+        pInstance = ((ScriptedInstance*)c->GetInstanceData());
+        Reset();
+    }
+
+    ScriptedInstance* pInstance;
+
+    void WaypointReached(uint32 i)
+    {
+        if (!pInstance)
+            return;
+
+        switch(i)
+        {
+            case 1:
+                DoScriptText(SAY_AT_GONG, m_creature);
+                if (GameObject* pEntranceDoor = GameObject::GetGameObject(*m_creature,pInstance->GetData64(DATA_GO_GONG)))
+                    pEntranceDoor->RemoveFlag(GAMEOBJECT_FLAGS, GO_FLAG_UNK1);
+                IsOnHold = true;
+                break;
+            case 3:
+                DoScriptText(SAY_OPEN_ENTRANCE, m_creature);
+
+                if (GameObject* pEntranceDoor = GameObject::GetGameObject(*m_creature,pInstance->GetData64(DATA_GO_ENTRANCE)))
+                    pEntranceDoor->SetGoState(0);
+
+                pInstance->SetData(TYPE_EVENT_RUN,IN_PROGRESS);
+                break;
+        }
+    }
+
+    void Reset()
+    {
+    }
+
+    void StartEvent()
+    {
+        DoScriptText(SAY_START, m_creature);
+        Start(false,true,false,0);
+    }
+
+    void SetHoldState(bool bOnHold)
+    {
+        IsOnHold = bOnHold;
+    }
+
+    void Aggro(Unit* who)
+    {
+    }
+
     void UpdateAI(const uint32 diff)
     {
-        if(IsLoot) m_creature->CastSpell(m_creature, 7, false);
+        npc_escortAI::UpdateAI(diff);
     }
 };
 
-bool GossipHello_npc_zulaman_hostage(Player* player, Creature* _Creature)
+bool GossipHello_npc_harrison_jones_za(Player* pPlayer, Creature* pCreature)
 {
-    player->ADD_GOSSIP_ITEM(0, GOSSIP_HOSTAGE1, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
-    player->SEND_GOSSIP_MENU(_Creature->GetNpcTextId(), _Creature->GetGUID());
+    ScriptedInstance* pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
+
+    if (pCreature->isQuestGiver())
+        pPlayer->PrepareQuestMenu(pCreature->GetGUID());
+
+    if (pInstance && pInstance->GetData(TYPE_EVENT_RUN) == NOT_STARTED)
+        pPlayer->ADD_GOSSIP_ITEM(0, GOSSIP_ITEM_BEGIN, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+1);
+
+    pPlayer->SEND_GOSSIP_MENU(pCreature->GetNpcTextId(), pCreature->GetGUID());
     return true;
 }
 
-bool GossipSelect_npc_zulaman_hostage(Player* player, Creature* _Creature, uint32 sender, uint32 action)
+bool GossipSelect_npc_harrison_jones_za(Player* pPlayer, Creature* pCreature, uint32 uiSender, uint32 uiAction)
 {
-    if(action == GOSSIP_ACTION_INFO_DEF + 1)
-        player->CLOSE_GOSSIP_MENU();
-
-    if(!_Creature->HasFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_GOSSIP))
-        return true;
-    _Creature->RemoveFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_GOSSIP);
-
-    ScriptedInstance* pInstance = ((ScriptedInstance*)_Creature->GetInstanceData());
-    if(pInstance)
+    if (uiAction == GOSSIP_ACTION_INFO_DEF+1)
     {
-        uint8 progress = pInstance->GetData(DATA_CHESTLOOTED);
-        pInstance->SetData(DATA_CHESTLOOTED, 0);
-        float x, y, z;
-        _Creature->GetPosition(x, y, z);
-        //Creature* summon = _Creature->SummonCreature(HostageInfo[progress], x, y, z, 0, TEMPSUMMON_TIMED_DESPAWN, 300000);
-        Creature* summon = _Creature->SummonCreature(HostageInfo[progress], x-2, y, z, 0, TEMPSUMMON_DEAD_DESPAWN, 0);
-        if(summon)
-        {
-            ((npc_zulaman_hostageAI*)summon->AI())->PlayerGUID = player->GetGUID();
-            ((npc_zulaman_hostageAI*)summon->AI())->IsLoot = true;
-            summon->SetDisplayId(10056);
-            summon->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
-            summon->RemoveFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_GOSSIP);
-        }
+        ((npc_harrison_jones_zaAI*)pCreature->AI())->StartEvent();
+        pPlayer->CLOSE_GOSSIP_MENU();
     }
     return true;
 }
 
-CreatureAI* GetAI_npc_zulaman_hostage(Creature *_Creature)
+CreatureAI* GetAI_npc_harrison_jones_za(Creature* pCreature)
 {
-    return new npc_zulaman_hostageAI(_Creature);
+    npc_harrison_jones_zaAI* tempAI = new npc_harrison_jones_zaAI(pCreature);
+
+    //TODO: create proper waypoints
+    tempAI->FillPointMovementListForCreature();
+
+    return (CreatureAI*)tempAI;
+}
+
+/*######
+## go_strange_gong
+######*/
+
+//Unsure how this Gong must work. Here we always return false to allow Mangos always process further.
+bool GOHello_go_strange_gong(Player* pPlayer, GameObject* pGo)
+{
+    ScriptedInstance* pInstance = (ScriptedInstance*)pGo->GetInstanceData();
+
+    if (!pInstance)
+        return false;
+
+    if (pInstance->GetData(TYPE_EVENT_RUN) == SPECIAL)
+    {
+        if (Creature* pCreature = (Creature*)Unit::GetUnit(*pPlayer,pInstance->GetData64(DATA_HARRISON)))
+            ((npc_harrison_jones_zaAI*)pCreature->AI())->SetHoldState(false);
+        else
+            error_log("SD2: Instance Zulaman: go_strange_gong failed");
+
+        pGo->SetFlag(GAMEOBJECT_FLAGS, GO_FLAG_UNK1);
+        return false;
+    }
+
+    pInstance->SetData(TYPE_EVENT_RUN, SPECIAL);
+    return false;
 }
 
 void AddSC_zulaman()
@@ -175,9 +241,14 @@ void AddSC_zulaman()
     newscript->RegisterSelf();
 
     newscript = new Script;
-    newscript->Name = "npc_zulaman_hostage";
-    newscript->GetAI = &GetAI_npc_zulaman_hostage;
-    newscript->pGossipHello = GossipHello_npc_zulaman_hostage;
-    newscript->pGossipSelect = GossipSelect_npc_zulaman_hostage;
+    newscript->Name = "npc_harrison_jones_za";
+    newscript->GetAI = &GetAI_npc_harrison_jones_za;
+    newscript->pGossipHello =  &GossipHello_npc_harrison_jones_za;
+    newscript->pGossipSelect = &GossipSelect_npc_harrison_jones_za;
+    newscript->RegisterSelf();
+
+    newscript = new Script;
+    newscript->Name = "go_strange_gong";
+    newscript->pGOHello = &GOHello_go_strange_gong;
     newscript->RegisterSelf();
 }
