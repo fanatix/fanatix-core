@@ -70,7 +70,7 @@ void SendDefaultMenu_telefratz(Player *player, Creature *_Creature, uint32 actio
 		// Teleport to Stormwind
 		case 1206:
 		player->CLOSE_GOSSIP_MENU();
-		player->TeleportTo(0, -8807.040039f, 638.359009f, 94.311996f, 3.560470f);
+		player->TeleportTo(0, -8960.14f, 516.266f, 96.3568f, 3.560470f);
 		player->ModifyMoney(-1*costo);
 		return;
 
@@ -111,7 +111,7 @@ void SendDefaultMenu_telefratz(Player *player, Creature *_Creature, uint32 actio
 		// Teleport to Orgrimmar
 		case 1215:
 		player->CLOSE_GOSSIP_MENU();
-		player->TeleportTo(1, 1630.220215f, -4420.66f, 31.253402f, 0.409934f);
+		player->TeleportTo(1, 1552.5f, -4420.66f, 8.94802f, 0.409934f);
 		player->ModifyMoney(-1*costo);
 		break;
 
