@@ -6,7 +6,7 @@
 #define SCRIPTMGR_H
 
 #include "Common.h"
-#include "../game/DBCStructure.h"
+#include "DBCStructure.h"
 
 class Player;
 class Creature;
