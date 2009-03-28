@@ -1423,31 +1423,6 @@ void Spell::EffectDummy(uint32 i)
                     m_caster->CastSpell(unitTarget, hurt, true, 0);
                 return;
             }
-            switch(m_spellInfo->Id )
-            {
-                case 28598:                                 // Touch of Weakness triggered spell
-                {
-                    if(!unitTarget || !m_triggeredByAuraSpell)
-                        return;
-
-                    uint32 spellid = 0;
-                    switch(m_triggeredByAuraSpell->Id)
-                    {
-                        case 2652:  spellid =  2943; break; // Rank 1
-                        case 19261: spellid = 19249; break; // Rank 2
-                        case 19262: spellid = 19251; break; // Rank 3
-                        case 19264: spellid = 19252; break; // Rank 4
-                        case 19265: spellid = 19253; break; // Rank 5
-                        case 19266: spellid = 19254; break; // Rank 6
-                        case 25461: spellid = 25460; break; // Rank 7
-                        default:
-                            sLog.outError("Spell::EffectDummy: Spell 28598 triggered by unhandeled spell %u",m_triggeredByAuraSpell->Id);
-                            return;
-                    }
-                    m_caster->CastSpell(unitTarget, spellid, true, NULL);
-                    return;
-                }
-            }
             break;
         case SPELLFAMILY_DRUID:
             // Starfall
@@ -4461,11 +4436,9 @@ void Spell::EffectWeaponDmg(uint32 i)
     }
 
     // some spell specific modifiers
-    bool customBonusDamagePercentMod = false;
     bool spellBonusNeedWeaponDamagePercentMod = false;      // if set applied weapon damage percent mode to spell bonus
 
-    float bonusDamagePercentMod  = 1.0f;                    // applied to fixed effect damage bonus if set customBonusDamagePercentMod
-    float weaponDamagePercentMod = 1.0f;                    // applied to weapon damage (and to fixed effect damage bonus if customBonusDamagePercentMod not set
+    float weaponDamagePercentMod = 1.0f;                    // applied to weapon damage and to fixed effect damage bonus
     float totalDamagePercentMod  = 1.0f;                    // applied to final bonus+weapon damage
     bool normalized = false;
 
@@ -4504,15 +4477,8 @@ void Spell::EffectWeaponDmg(uint32 i)
         }
         case SPELLFAMILY_ROGUE:
         {
-            // Ambush
-            if(m_spellInfo->SpellFamilyFlags & 0x00000200LL)
-            {
-                customBonusDamagePercentMod = true;
-
-                bonusDamagePercentMod = 2.75f;               // 275%
-            }
             // Mutilate (for each hand)
-            else if(m_spellInfo->SpellFamilyFlags & 0x600000000LL)
+            if(m_spellInfo->SpellFamilyFlags & 0x600000000LL)
             {
                 bool found = false;
                 // fast check
@@ -4585,10 +4551,7 @@ void Spell::EffectWeaponDmg(uint32 i)
                 weaponDamagePercentMod *= float(CalculateDamage(j,unitTarget)) / 100.0f;
 
                 // applied only to prev.effects fixed damage
-                if(customBonusDamagePercentMod)
-                    fixed_bonus = int32(fixed_bonus*bonusDamagePercentMod);
-                else
-                    fixed_bonus = int32(fixed_bonus*weaponDamagePercentMod);
+                fixed_bonus = int32(fixed_bonus*weaponDamagePercentMod);
                 break;
             default:
                 break;                                      // not weapon damage effect, just skip

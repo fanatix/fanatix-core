@@ -2359,8 +2359,8 @@ bool Unit::isSpellBlocked(Unit *pVictim, SpellEntry const *spellProto, WeaponAtt
            ((Creature*)pVictim)->GetCreatureInfo()->flags_extra & CREATURE_FLAG_EXTRA_NO_BLOCK )
                 return false;
 
-        float blockChance = GetUnitBlockChance();
-        blockChance += (GetWeaponSkillValue(attackType) - pVictim->GetMaxSkillValueForLevel() )*0.04;
+        float blockChance = pVictim->GetUnitBlockChance();
+        blockChance += (int32(GetWeaponSkillValue(attackType)) - int32(pVictim->GetMaxSkillValueForLevel()))*0.04f;
         if (roll_chance_f(blockChance))
             return true;
     }
@@ -7853,8 +7853,8 @@ uint32 Unit::SpellDamageBonus(Unit *pVictim, SpellEntry const *spellProto, uint3
                     DotTicks = DotDuration / spellProto->EffectAmplitude[x];
                 if(DotTicks)
                 {
-                    DoneAdvertisedBenefit = DoneAdvertisedBenefit*int32(stack)/DotTicks;
-                    TakenAdvertisedBenefit = TakenAdvertisedBenefit*int32(stack)/DotTicks;
+                    DoneAdvertisedBenefit = DoneAdvertisedBenefit * int32(stack) / DotTicks;
+                    TakenAdvertisedBenefit = TakenAdvertisedBenefit * int32(stack) / DotTicks;
                 }
             }
         }
@@ -8271,8 +8271,8 @@ uint32 Unit::SpellHealingBonus(Unit *pVictim, SpellEntry const *spellProto, uint
                     DotTicks = DotDuration / spellProto->EffectAmplitude[x];
                 if(DotTicks)
                 {
-                    DoneAdvertisedBenefit /= DotTicks*int32(stack);
-                    TakenAdvertisedBenefit /= DotTicks*int32(stack);
+                    DoneAdvertisedBenefit = DoneAdvertisedBenefit * int32(stack) / DotTicks;
+                    TakenAdvertisedBenefit = TakenAdvertisedBenefit * int32(stack) / DotTicks;
                 }
             }
         }
