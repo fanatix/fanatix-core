@@ -531,7 +531,7 @@ EXTRA_DIST = \
 	Scripts/sc_default.cpp \
 	Scripts/sc_defines.cpp \
 	Scripts/sc_defines.h \
-	scriptdev2.conf.dist
+	scriptdev2.conf.dist.in
 
 ## Additional files to install
 sysconf_DATA = \
