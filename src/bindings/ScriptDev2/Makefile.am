@@ -535,7 +535,7 @@ EXTRA_DIST = \
 
 ## Additional files to install
 sysconf_DATA = \
-	scriptdev2.conf.dist
+	scriptdev2.conf.dist.in
 
 install-data-hook:
 	@list='$(sysconf_DATA)'; for p in $$list; do \

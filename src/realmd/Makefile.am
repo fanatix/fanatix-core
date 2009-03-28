@@ -36,11 +36,11 @@ mangos_realmd_LDFLAGS = -L../../dep/src/sockets -L../../dep/src/zthread -L$(libd
 ## Additional files to include when running 'make dist'
 #  Include realm list daemon configuration
 EXTRA_DIST = \
-	realmd.conf.dist
+	realmd.conf.dist.in
 
 ## Additional files to install
 sysconf_DATA = \
-	realmd.conf.dist
+	realmd.conf.dist.in
 
 install-data-hook:
 	@list='$(sysconf_DATA)'
