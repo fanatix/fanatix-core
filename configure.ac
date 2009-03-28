@@ -308,12 +308,12 @@ AC_CONFIG_FILES([
    src/shared/SystemConfig.h
    src/game/Makefile
    src/realmd/Makefile
-   src/realmd/realmd.conf
+   src/realmd/realmd.conf.dist
    src/mangosd/Makefile
-   src/mangosd/mangosd.conf
+   src/mangosd/mangosd.conf.dist
    src/bindings/Makefile
    src/bindings/ScriptDev2/Makefile
-   src/bindings/ScriptDev2/scriptdev2.conf
+   src/bindings/ScriptDev2/scriptdev2.conf.dist
    src/bindings/ScriptDev2/config.h
    src/bindings/ScriptDev2/sql/Makefile
    src/bindings/ScriptDev2/sql/Updates/Makefile
