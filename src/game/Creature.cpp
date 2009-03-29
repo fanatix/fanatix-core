@@ -1617,10 +1617,7 @@ SpellEntry const *Creature::reachWithSpellAttack(Unit *pVictim)
         float range = GetSpellMaxRange(srange);
         float minrange = GetSpellMinRange(srange);
 
-        // DasMy: respect victims dimensions
-        float dist = GetDistance(pVictim) - pVictim->GetFloatValue(UNIT_FIELD_COMBATREACH) - GetFloatValue(UNIT_FIELD_COMBATREACH);
-        if (dist < 0.0f)
-            dist = 0.0f;
+        float dist = GetCombatDistance(pVictim);
 
         //if(!isInFront( pVictim, range ) && spellInfo->AttributesEx )
         //    continue;
@@ -1668,10 +1665,7 @@ SpellEntry const *Creature::reachWithSpellCure(Unit *pVictim)
         float range = GetSpellMaxRange(srange);
         float minrange = GetSpellMinRange(srange);
 
-        // DasMy: respect victims dimensions
-        float dist = GetDistance(pVictim) - pVictim->GetFloatValue(UNIT_FIELD_COMBATREACH) - GetFloatValue(UNIT_FIELD_COMBATREACH);
-        if (dist < 0.0f)
-            dist = 0.0f;
+        float dist = GetCombatDistance(pVictim);
 
         //if(!isInFront( pVictim, range ) && spellInfo->AttributesEx )
         //    continue;

@@ -307,7 +307,7 @@ void Spell::EffectEnvirinmentalDMG(uint32 i)
     // Note: this hack with damage replace required until GO casting not implemented
     // environment damage spells already have around enemies targeting but this not help in case not existed GO casting support
     // currently each enemy selected explicitly and self cast damage, we prevent apply self casted spell bonuses/etc
-    damage = m_spellInfo->EffectBasePoints[i]+m_spellInfo->EffectBaseDice[i];
+    damage = m_spellInfo->CalculateSimpleValue(i);
 
     m_caster->CalcAbsorbResist(m_caster,GetSpellSchoolMask(m_spellInfo), SPELL_DIRECT_DAMAGE, damage, &absorb, &resist);
 
@@ -1169,6 +1169,24 @@ void Spell::EffectDummy(uint32 i)
                     m_caster->CastSpell(m_caster, 30452, true, NULL);
                     return;
                 }
+                case 52308:
+                {
+                    switch(i)
+                    {
+                        case 0:
+                        {
+                            uint32 spellID = m_spellInfo->CalculateSimpleValue(0);
+                            uint32 reqAuraID = m_spellInfo->CalculateSimpleValue(1);
+
+                            if (m_caster->HasAura(reqAuraID,0))
+                                m_caster->CastSpell(m_caster,spellID,true,NULL);
+                            return;
+                        }
+                        case 1:
+                            return;                         // additional data for dummy[0]
+                    }
+                    return;
+                }
                 case 53341:
                 case 53343:
                 {
@@ -1176,21 +1194,8 @@ void Spell::EffectDummy(uint32 i)
                     return;
                 }
                 case 58418:                                 // Portal to Orgrimmar
-                {
-                    if(!unitTarget)
-                        return;
-
-                    unitTarget->CastSpell(unitTarget, 58419, true);
-                    return;
-                }
                 case 58420:                                 // Portal to Stormwind
-                {
-                    if(!unitTarget)
-                        return;
-
-                    unitTarget->CastSpell(unitTarget, 58421, true);
-                    return;
-                }
+                    return;                                 // implemented in EffectScript[0]
             }
 
             //All IconID Check in there
@@ -5018,6 +5023,20 @@ void Spell::EffectScriptEffect(uint32 effIndex)
                     // triggered spell is stored in m_spellInfo->EffectBasePoints[0]
                     unitTarget->CastSpell(unitTarget, damage, false);
                     break;
+                }
+                case 58418:                                 // Portal to Orgrimmar
+                case 58420:                                 // Portal to Stormwind
+                {
+                    if(!unitTarget || unitTarget->GetTypeId() != TYPEID_PLAYER || effIndex!=0)
+                        return;
+
+                    uint32 spellID = m_spellInfo->CalculateSimpleValue(0);
+                    uint32 questID = m_spellInfo->CalculateSimpleValue(1);
+
+                    if( ((Player*)unitTarget)->GetQuestStatus(questID) == QUEST_STATUS_COMPLETE && !((Player*)unitTarget)->GetQuestRewardStatus (questID) )
+                        unitTarget->CastSpell(unitTarget, spellID, true);
+
+                    return;
                 }
                 // random spell learn instead placeholder
                 case 60893:                                 // Northrend Alchemy Research
