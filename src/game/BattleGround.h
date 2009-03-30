@@ -62,6 +62,12 @@ enum BattleGroundMarksCount
     ITEM_LOSER_COUNT                = 1
 };
 
+enum BattleGroundCreatures
+{
+    BG_CREATURE_ENTRY_A_SPIRITGUIDE      = 13116,           // alliance
+    BG_CREATURE_ENTRY_H_SPIRITGUIDE      = 13117,           // horde
+};
+
 enum BattleGroundSpells
 {
     SPELL_WAITING_FOR_RESURRECT     = 2584,                 // Waiting to Resurrect
@@ -496,8 +502,8 @@ class BattleGround
         bool AddSpiritGuide(uint32 type, float x, float y, float z, float o, uint32 team);
         int32 GetObjectType(uint64 const& guid);
 
-        void DoorOpen(uint32 type);
-        void DoorClose(uint32 type);
+        void DoorOpen(uint64 const& guid);
+        void DoorClose(uint64 const& guid);
 
         virtual bool HandlePlayerUnderMap(Player * /*plr*/) { return false; }
 

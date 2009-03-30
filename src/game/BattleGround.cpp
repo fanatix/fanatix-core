@@ -1443,9 +1443,9 @@ bool BattleGround::AddObject(uint32 type, uint32 entry, float x, float y, float 
 
 //some doors aren't despawned so we cannot handle their closing in gameobject::update()
 //it would be nice to correctly implement GO_ACTIVATED state and open/close doors in gameobject code
-void BattleGround::DoorClose(uint32 type)
+void BattleGround::DoorClose(uint64 const& guid)
 {
-    GameObject *obj = HashMapHolder<GameObject>::Find(m_BgObjects[type]);
+    GameObject *obj = HashMapHolder<GameObject>::Find(guid);
     if(obj)
     {
         //if doors are open, close it
@@ -1462,9 +1462,9 @@ void BattleGround::DoorClose(uint32 type)
     }
 }
 
-void BattleGround::DoorOpen(uint32 type)
+void BattleGround::DoorOpen(uint64 const& guid)
 {
-    GameObject *obj = HashMapHolder<GameObject>::Find(m_BgObjects[type]);
+    GameObject *obj = HashMapHolder<GameObject>::Find(guid);
     if(obj)
     {
         //change state to be sure they will be opened
@@ -1576,6 +1576,23 @@ void BattleGround::SpawnBGCreature(uint64 const& guid, uint32 respawntime)
     {
         obj->SetPhaseMask(0,false);
         map->Add(obj);
+        if(obj->GetEntry() == BG_CREATURE_ENTRY_A_SPIRITGUIDE || obj->GetEntry() == BG_CREATURE_ENTRY_H_SPIRITGUIDE)
+        {
+            if( !m_ReviveQueue[guid].empty() )
+            {
+                WorldSafeLocsEntry const *ClosestGrave = NULL;
+                for (std::vector<uint64>::const_iterator itr = m_ReviveQueue[guid].begin(); itr != m_ReviveQueue[guid].end(); ++itr)
+                {
+                    Player *plr = objmgr.GetPlayer( *itr );
+                    if( !plr )
+                        continue;
+                    if(!ClosestGrave)
+                        ClosestGrave = GetClosestGraveYard(plr);
+                    plr->TeleportTo(GetMapId(), ClosestGrave->x, ClosestGrave->y, ClosestGrave->z, plr->GetOrientation());
+                }
+                m_ReviveQueue[guid].clear();
+            }
+        }
     }
 }
 
@@ -1618,9 +1635,9 @@ bool BattleGround::AddSpiritGuide(uint32 type, float x, float y, float z, float 
     uint32 entry = 0;
 
     if(team == ALLIANCE)
-        entry = 13116;
+        entry = BG_CREATURE_ENTRY_A_SPIRITGUIDE;
     else
-        entry = 13117;
+        entry = BG_CREATURE_ENTRY_H_SPIRITGUIDE;
 
     Creature* pCreature = AddCreature(entry,type,team,x,y,z,o);
     if(!pCreature)
