@@ -358,6 +358,13 @@ void Spell::EffectSchoolDMG(uint32 effect_idx)
                             damage = 200;
                         break;
                     }
+                    // must only affect demons
+                    case 45072:
+                    {
+                        if(unitTarget->GetCreatureType() != CREATURE_TYPE_DEMON)
+                            return;
+                        break;
+                    }
                     // Intercept (warrior spell trigger)
                     case 20253:
                     case 61491:
