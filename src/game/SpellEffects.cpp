@@ -5917,22 +5917,52 @@ void Spell::EffectMomentMove(uint32 i)
     {
         float dis = GetSpellRadius(sSpellRadiusStore.LookupEntry(m_spellInfo->EffectRadiusIndex[i]));
 
-        // before caster
-        float fx,fy,fz;
-        unitTarget->GetClosePoint(fx,fy,fz,unitTarget->GetObjectSize(),dis);
-        float ox,oy,oz;
-        unitTarget->GetPosition(ox,oy,oz);
+        float x1, y1, z1;
+        float x2, y2/*, z2*/;
+        unitTarget->GetPosition(x1,y1,z1);
+        unitTarget->GetNearPoint2D(x2,y2,dis,unitTarget->GetOrientation());
 
-        float fx2,fy2,fz2;                                  // getObjectHitPos overwrite last args in any result case
-        if(VMAP::VMapFactory::createOrGetVMapManager()->getObjectHitPos(unitTarget->GetMapId(), ox,oy,oz+0.5, fx,fy,oz+0.5,fx2,fy2,fz2, -0.5))
+        const float dl_2d = 0.7f;
+        const float m = x2 - x1, n = y2 - y1;/*, p = z2 - z1;*/
+
+    //----------calculates dx ,dy, dz, n of steps
+        const float lenght2d  = sqrtf(m*m + n*n);
+        const int   n_itrs = int(lenght2d/dl_2d);
+        if(n_itrs == 0)
+            return;
+
+        const float dx = m/n_itrs;
+        const float dy = n/n_itrs;
+
+        float x_i = x1, y_i = y1, z_i = z1;
+        Map const* map = MapManager::Instance().GetBaseMap(unitTarget->GetMapId());
+        const bool above_map = z1+0.1f >= map->GetHeight(x1,y1,MAX_HEIGHT,false) ? true : false;
+        for(int itr = 0; itr < n_itrs; ++itr)
         {
-            fx = fx2;
-            fy = fy2;
-            fz = fz2;
-            unitTarget->UpdateGroundPositionZ(fx,fy,fz);
+            float mapHeight = map->GetHeight(x_i + dx,y_i + dy,MAX_HEIGHT,false);
+            if ((above_map && z_i+1.2f < mapHeight) || (!above_map && z_i+1.2f > mapHeight))
+                break;
+
+            x_i += dx;
+            y_i += dy;
         }
 
-        unitTarget->NearTeleportTo(fx, fy, fz, unitTarget->GetOrientation(),unitTarget==m_caster);
+        float v_x, v_y, v_z;
+        VMAP::IVMapManager* vmgr = VMAP::VMapFactory::createOrGetVMapManager();
+        vmgr->getObjectHitPos(unitTarget->GetMapId(), x1,y1,z1+1.2f, x_i,y_i,z_i+1.2f, v_x,v_y,v_z, -unitTarget->GetObjectSize());
+        const float mapH   = map->GetHeight(v_x,v_y,MAX_HEIGHT,false);
+        const float vmapH  = vmgr->getHeight(unitTarget->GetMapId(),v_x,v_y,v_z);
+        const float ground = vmapH > mapH ? vmapH : mapH;
+        if(unitTarget->GetTypeId() == TYPEID_PLAYER && unitTarget->HasUnitMovementFlag(MOVEMENTFLAG_FALLING))
+        {
+            Player *pl = (Player*)unitTarget;
+            SafePosition lpos = pl->m_safeposition;
+            if(lpos.fall_time < 2500 && z1 - ground > 14.0f)
+                v_x = lpos.x,v_y = lpos.y,v_z = lpos.z;
+        }else
+            v_z = fabs(v_z - ground) < 1.5f ? ground : v_z;
+
+        unitTarget->NearTeleportTo(v_x, v_y, v_z, unitTarget->GetOrientation(),unitTarget==m_caster);
     }
 }
 

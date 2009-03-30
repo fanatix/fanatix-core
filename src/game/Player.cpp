@@ -5470,6 +5470,16 @@ bool Player::SetPosition(float x, float y, float z, float orientation, bool tele
         y = GetPositionY();
         z = GetPositionZ();
 
+        if( !(m_unit_movement_flags & (MOVEMENTFLAG_FALLING | MOVEMENTFLAG_JUMPING)) )
+        {
+            m_safeposition.x = x;
+            m_safeposition.y = y;
+            m_safeposition.z = z;
+            m_safeposition.o = orientation;
+            m_safeposition.fall_time = 0;
+        }else
+            m_safeposition.fall_time += m_movementInfo.fallTime;
+
         // group update
         if(GetGroup() && (old_x != x || old_y != y))
             SetGroupUpdateFlag(GROUP_UPDATE_FLAG_POSITION);

@@ -2143,47 +2143,43 @@ void SpellMgr::LoadPetLevelupSpellMap()
     SpellEntry const *spell;
     uint32 count = 0;
 
-    #define MAX_PET_SPELL_COUNT 1024
+	#define MAX_PET_SPELL_COUNT 1024
+	uint32 pet_spell_db_no = 0;
+	uint32 pet_spell_is;
+	uint32 pet_spell_count;
+	uint32 pet_spell_data[MAX_PET_SPELL_COUNT][2];
+	QueryResult *result = WorldDatabase.PQuery("SELECT entry, spell FROM pet_levelspells");
+	if(!result)
+	{
+		sLog.outErrorDb(">> Loaded 0 pet dblevel spells. DB table `pet_levelspells` is empty.");
+		pet_spell_db_no = 1;
+	}
+	else
+	{
+		pet_spell_count = 0;
+		do 
+		{
+			Field *fields = result->Fetch();
+			
+			pet_spell_data[pet_spell_count][0] = fields[0].GetUInt32();
+			pet_spell_data[pet_spell_count][1] = fields[1].GetUInt32();
+			
+			pet_spell_count++;
+			
+			if(pet_spell_count >= MAX_PET_SPELL_COUNT)
+			{
+				// Overflow Detect
+				sLog.outErrorDb(">> Loaded %u over pet dblevel spells. DB table `pet_levelspells`.",pet_spell_count);
+				break;
+			}
+		}
+		while ( result->NextRow() );
 
-    uint32 pet_spell_db_no = 0;
-    uint32 pet_spell_is;
-    uint32 pet_spell_count;
-    uint32 pet_spell_data[MAX_PET_SPELL_COUNT][2];
-    //                                                 0      1
-    QueryResult *result = WorldDatabase.PQuery("SELECT entry, spell FROM pet_levelspells");    
+		delete result;
 
-    if(!result)
-    {
-        sLog.outErrorDb(">> Loaded 0 pet dblevel spells. DB table `pet_levelspells` is empty.");
-        pet_spell_db_no = 1;
-    }
-    else
-    {
-        pet_spell_count = 0;
-
-        do {
-            Field *fields = result->Fetch();
-
-            pet_spell_data[pet_spell_count][0] = fields[0].GetUInt32();
-            pet_spell_data[pet_spell_count][1] = fields[1].GetUInt32();
-
-            pet_spell_count++;
-
-            if(pet_spell_count >= MAX_PET_SPELL_COUNT)
-            {
-                // Overflow Detect
-                sLog.outErrorDb(">> Loaded %u over pet dblevel spells. DB table `pet_levelspells`.",pet_spell_count);
-                break;
-            }
-        }
-        while ( result->NextRow() );
-
-        delete result;
-
-        sLog.outString();
-        sLog.outString( ">> Loaded %u spell pet dblevel spells", pet_spell_count );
-
-    }
+		sLog.outString();
+		sLog.outString( ">> Loaded %u spell pet dblevel spells", pet_spell_count );
+	}
 
     for (uint32 i = 0; i < sCreatureFamilyStore.GetNumRows(); ++i)
     {
@@ -2193,31 +2189,32 @@ void SpellMgr::LoadPetLevelupSpellMap()
             continue;
 
         if(pet_spell_db_no == 0)
-        {
-            //WARLOCK
-            switch(creatureFamily->ID)
-            {
-                case CREATURE_FAMILY_IMP:
-                case CREATURE_FAMILY_VOIDWALKER:
-                case CREATURE_FAMILY_SUCCUBUS:
-                case CREATURE_FAMILY_FELHUNTER:
-                case CREATURE_FAMILY_FELGUARD:
-                    pet_spell_is = 1;
-                    break;
-                default:
-                    pet_spell_is = 0;
-                    break;
-            }
-        }
-        else {
-            pet_spell_is = 0;
-        }
+		{
+			//WARLOCK
+			switch(creatureFamily->ID)
+			{
+			case CREATURE_FAMILY_IMP:
+			case CREATURE_FAMILY_VOIDWALKER:
+			case CREATURE_FAMILY_SUCCUBUS:
+			case CREATURE_FAMILY_FELHUNTER:
+			case CREATURE_FAMILY_FELGUARD:
+				pet_spell_is = 1;
+				break;
+			default:
+				pet_spell_is = 0;
+				break;
+			}
+		}
+		else
+		{
+			pet_spell_is = 0;
+		}
 
-        if(pet_spell_is == 0)
-        {
-            if(creatureFamily->petTalentType < 0)               // not hunter pet family
-                continue;
-        }
+		if(pet_spell_is == 0)
+		{
+			if(creatureFamily->petTalentType < 0) // not hunter pet family
+				continue;
+		}
 
         for(uint32 j = 0; j < sSpellStore.GetNumRows(); ++j)
         {
@@ -2226,6 +2223,21 @@ void SpellMgr::LoadPetLevelupSpellMap()
             // not exist
             if(!spell)
                 continue;
+			
+			//WARLOCK
+			if(pet_spell_is)
+			{
+				for(uint32 k = 0; k < pet_spell_count; k++)
+				{
+					if(creatureFamily->ID == pet_spell_data[k][0] && spell->Id == pet_spell_data[k][1])
+					{
+						mPetLevelupSpellMap[creatureFamily->ID][spell->spellLevel + (k*0x10000)] = spell->Id;
+						count++;
+						break;
+					}
+				}
+				continue;
+			}
 
             //WARLOCK
             if(pet_spell_is)
