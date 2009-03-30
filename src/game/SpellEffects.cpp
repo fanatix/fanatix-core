@@ -663,24 +663,6 @@ void Spell::EffectDummy(uint32 i)
     if( m_spellInfo->Id == 46584 && i == 2)
 	EffectSpecialSummon( 52150, 0, m_caster );
 
-    // Death Grip
-      //todo: insert it to right spell family
-    if(m_spellInfo->Id == 49560 || m_spellInfo->Id == 49576)//wtf 2 IDs
-    {
-         // Init dest coordinates
-	 if(m_caster && unitTarget)
-	 {	      
-	    uint32 mapid = m_caster->GetMapId();
-	    float x = m_caster->GetPositionX();
-	    float y = m_caster->GetPositionY();
-	    float z = m_caster->GetPositionZ()+1;
-	    float orientation = unitTarget->GetOrientation();
-				
-	     unitTarget->SendMonsterMove(x, y, z, orientation, MOVEMENTFLAG_JUMPING, 1);
-	     if(unitTarget->GetTypeId() != TYPEID_PLAYER)
-	     unitTarget->GetMap()->CreatureRelocation((Creature*)unitTarget,x,y,z,unitTarget->GetOrientation());
-	 }
-     }
     // selection by spell family
     switch(m_spellInfo->SpellFamilyName)
     {
@@ -1858,7 +1840,7 @@ void Spell::EffectDummy(uint32 i)
             if(m_spellInfo->SpellFamilyFlags & 0x002000LL)
             {
                 uint32 spell_id = NULL;
-				int32 bp = 0;
+                int32 bp = 0;
                 damage += m_caster->GetTotalAttackPowerValue(BASE_ATTACK) * 0.15f;
                 if(m_caster->IsFriendlyTo(unitTarget))
                 {
@@ -1874,6 +1856,33 @@ void Spell::EffectDummy(uint32 i)
                 bp = int32(damage);
                 m_caster->CastCustomSpell(unitTarget,spell_id,&bp,NULL,NULL,true);
                 return;
+            }
+            break;
+            switch(m_spellInfo->Id)
+            {
+                // Death Grip
+                case 49560:
+                case 49576:
+                {
+                    if (!unitTarget || !m_caster)
+                        return;
+
+                    uint32 mapid = m_caster->GetMapId();
+                    float x = m_caster->GetPositionX();
+                    float y = m_caster->GetPositionY();
+                    float z = m_caster->GetPositionZ()+1;
+                    float orientation = unitTarget->GetOrientation();
+                
+                    unitTarget->SendMonsterMove(x, y, z, 0, MOVEMENTFLAG_JUMPING, 1);
+
+                    if(unitTarget->GetTypeId() != TYPEID_PLAYER)
+                        unitTarget->GetMap()->CreatureRelocation((Creature*)unitTarget,x,y,z,orientation);
+                    else
+                        unitTarget->NearTeleportTo(x,y,z,orientation,false);
+
+                    //m_caster->CastSpell(unitTarget,49575,true,NULL);
+                    return;
+                }
             }
             break;
     }
