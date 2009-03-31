@@ -256,8 +256,23 @@ void Spell::EffectInstaKill(uint32 /*i*/)
 {
     if( !unitTarget || !unitTarget->isAlive() )
         return;
-
-    // Demonic Sacrifice
+	
+	// Death Pact
+	if(m_spellInfo->Id==48743)
+	{	Unit *target = m_targets.getUnitTarget();
+		if(target && !target->isDead())
+		{
+			int32 heal =  m_caster->GetMaxHealth()  * 0.4;
+			m_caster->ModifyHealth(heal);
+			m_caster->SendHealSpellLog(m_caster,48743,heal,false);
+			target->SetHealth(0);
+			target->setDeathState(JUST_DIED);
+			m_targets.setUnitTarget(NULL);
+		}
+		return;
+	}
+    
+	// Demonic Sacrifice
     if(m_spellInfo->Id==18788 && unitTarget->GetTypeId()==TYPEID_UNIT)
     {
         uint32 entry = unitTarget->GetEntry();
@@ -1836,28 +1851,29 @@ void Spell::EffectDummy(uint32 i)
             }
             break;
         case SPELLFAMILY_DEATHKNIGHT:
+
             // Death Coil
             if(m_spellInfo->SpellFamilyFlags & 0x002000LL)
             {
                 uint32 spell_id = NULL;
                 int32 bp = 0;
-                damage += m_caster->GetTotalAttackPowerValue(BASE_ATTACK) * 0.15f;
                 if(m_caster->IsFriendlyTo(unitTarget))
                 {
                     if(unitTarget->GetCreatureType() != CREATURE_TYPE_UNDEAD)
                         return;
 
                     spell_id = 47633;
-                    damage *= 1.5f;
+                    bp = damage * 1.5f;
                 }
                 else
+                {
                     spell_id = 47632;
-
-                bp = int32(damage);
+                    bp = damage;
+                }               
+                
                 m_caster->CastCustomSpell(unitTarget,spell_id,&bp,NULL,NULL,true);
                 return;
-            }
-            break;
+           }
             switch(m_spellInfo->Id)
             {
                 // Death Grip
@@ -1870,7 +1886,7 @@ void Spell::EffectDummy(uint32 i)
                     uint32 mapid = m_caster->GetMapId();
                     float x = m_caster->GetPositionX();
                     float y = m_caster->GetPositionY();
-                    float z = m_caster->GetPositionZ()+1;
+                    float z = m_caster->GetPositionZ()+3;
                     float orientation = unitTarget->GetOrientation();
                 
                     unitTarget->SendMonsterMove(x, y, z, 0, MOVEMENTFLAG_JUMPING, 1);
@@ -1880,11 +1896,13 @@ void Spell::EffectDummy(uint32 i)
                     else
                         unitTarget->NearTeleportTo(x,y,z,orientation,false);
 
-                    //m_caster->CastSpell(unitTarget,49575,true,NULL);
+                    m_caster->CastSpell(unitTarget,49575,true,NULL);
                     return;
                 }
             }
             break;
+			
+		break;
     }
 
     // pet auras
@@ -3317,6 +3335,9 @@ void Spell::EffectSummonType(uint32 i)
         case SUMMON_TYPE_FORCE_OF_NATURE:
         case SUMMON_TYPE_GUARDIAN2:
         case SUMMON_TYPE_UNKNOWN13:
+            EffectSummonGuardian(i);
+            break;
+       case SUMMON_TYPE_GHOUL:
             EffectSummonGuardian(i);
             break;
         case SUMMON_TYPE_WILD:
@@ -5360,8 +5381,60 @@ void Spell::EffectScriptEffect(uint32 effIndex)
                 }
             }
             break;
+   
+		}
+        case SPELLFAMILY_DEATHKNIGHT:
+        {
+            switch(m_spellInfo->Id)
+            {
+                // Summon Ghoul
+                case 46584:
+                {
+                    // Corpse or dust check
+                    // See if player is targeting a dead, humanoid, =plevel-3 target
+                    if( unitTarget->isDead() && unitTarget->GetCreatureType()==CREATURE_TYPE_HUMANOID && unitTarget->getLevel() >= m_caster->getLevel()-3 )
+                    {
+                        // Look for Master of Ghouls talent dummy spell (52143)
+                        if( m_caster->GetTypeId()==TYPEID_PLAYER && ((Player*)m_caster)->HasSpell(52143) )
+                        {
+                            // Player has talent; cast pet ghoul spell
+                            m_caster->CastSpell(m_caster, 52150, false);
+                        }
+                        else
+                        {
+                            // Player has not got talent; cast time limited ghoul spell
+                            m_caster->CastSpell(m_caster, 46585, false);
+                        }
+                    }
+                    else
+                    {
+                        //See if player has [Corpse Dust]; if yes -1 and continue, if no reset and break. (Note Dust removed after cast)
+                        if(((Player*)m_caster)->HasItemCount(37201,1))
+                        {
+                            ((Player*)m_caster)->DestroyItemCount(37201,1,true);
+                            // Look for Master of Ghouls talent dummy spell (52143)
+                            if( m_caster->GetTypeId()==TYPEID_PLAYER && ((Player*)m_caster)->HasSpell(52143) )
+                            {
+                                // Player has talent; cast pet ghoul spell
+                                m_caster->CastSpell(m_caster, 52150, false);
+                                ((Player*)m_caster)->DestroyItemCount(37201,1,true);
+                            }
+                            else
+                            {
+                                // Player has not got talent; cast time limited ghoul spell
+                                m_caster->CastSpell(m_caster, 46585, false);
+                                ((Player*)m_caster)->DestroyItemCount(37201,1,true);
+                            }
+                        }
+                        else
+                            m_caster->CastStop();
+                            return;
+                    }
+                        return;
+                  }
+            }
         }
-    }
+ }
 
     // normal DB scripted effect
     if(!unitTarget)
