@@ -41,6 +41,12 @@ enum SelectAggroTarget
     SELECT_TARGET_BOTTOMAGGRO,                              //Selects targets from bottom aggro to top
 };
 
+enum SCEquip
+{
+    EQUIP_NO_CHANGE = -1,
+    EQUIP_UNEQUIP   = 0
+};
+
 struct PointMovement
 {
     uint32 m_uiCreatureEntry;
@@ -53,7 +59,7 @@ struct PointMovement
 
 struct MANGOS_DLL_DECL ScriptedAI : public CreatureAI
 {
-    ScriptedAI(Creature* creature) : m_creature(creature), InCombat(false) {}
+    ScriptedAI(Creature* creature) : m_creature(creature), InCombat(false), bCombatMovement(true) {}
     ~ScriptedAI() {}
 
     //*************
@@ -191,6 +197,15 @@ struct MANGOS_DLL_DECL ScriptedAI : public CreatureAI
 
     //Checks if you can cast the specified spell
     bool CanCast(Unit* Target, SpellEntry const *Spell, bool Triggered = false);
+
+    void SetEquipmentSlots(bool bLoadDefault, int32 uiMainHand = EQUIP_NO_CHANGE, int32 uiOffHand = EQUIP_NO_CHANGE, int32 uiRanged = EQUIP_NO_CHANGE);
+
+    void SetSheathState(SheathState newState);
+
+    void SetCombatMovement(bool bCombatMove);
+
+    protected:
+        bool bCombatMovement;
 };
 
 struct MANGOS_DLL_DECL Scripted_NoMovementAI : public ScriptedAI

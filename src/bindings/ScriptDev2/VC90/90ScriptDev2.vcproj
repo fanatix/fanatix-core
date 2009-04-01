@@ -2844,6 +2844,14 @@
 						>
 					</File>
 				</Filter>
+				<Filter
+					Name="Deads Breach"
+					>
+					<File
+						RelativePath="..\scripts\zone\deads_breach\deadsbreach.cpp"
+						>
+					</File>
+				</Filter>
 			</Filter>
 		</Filter>
 		<Filter

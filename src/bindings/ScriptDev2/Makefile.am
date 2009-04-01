@@ -202,6 +202,7 @@ scripts/zone/darkshore/darkshore.cpp \
 scripts/zone/deadmines/deadmines.cpp \
 scripts/zone/deadmines/def_deadmines.h \
 scripts/zone/deadmines/instance_deadmines.cpp \
+scripts/zone/deads_breach/deadsbreach.cpp \
 scripts/zone/dragonblight/dragonblight.cpp \
 scripts/zone/draktharon_keep/boss_dred.cpp \
 scripts/zone/draktharon_keep/boss_novos.cpp \

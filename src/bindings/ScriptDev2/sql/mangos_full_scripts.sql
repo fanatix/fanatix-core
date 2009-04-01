@@ -25,6 +25,8 @@ UPDATE gameobject_template SET ScriptName='go_orb_of_command' WHERE entry=179879
 UPDATE gameobject_template SET ScriptName='go_sacred_fire_of_life' WHERE entry=175944;
 UPDATE gameobject_template SET ScriptName='go_tablet_of_madness' WHERE entry=180368;
 UPDATE gameobject_template SET ScriptName='go_tablet_of_the_seven' WHERE entry=169294;
+UPDATE gameobject_template SET ScriptName='go_tele_to_dalaran_crystal' WHERE entry=191230;
+UPDATE gameobject_template SET ScriptName='go_tele_to_violet_stand' WHERE entry=191229;
 
 /* GUARD */
 UPDATE creature_template SET ScriptName='guard_azuremyst' WHERE entry=18038;
@@ -814,6 +816,7 @@ UPDATE gameobject_template SET ScriptName='go_gauntlet_gate' WHERE entry=175357;
 UPDATE creature_template SET ScriptName='mob_aquementas' WHERE entry=9453;
 UPDATE creature_template SET ScriptName='npc_custodian_of_time' WHERE entry=20129;
 UPDATE creature_template SET ScriptName='npc_marin_noggenfogger' WHERE entry=7564;
+UPDATE creature_template SET ScriptName='npc_oox17tn' WHERE entry=7784;
 UPDATE creature_template SET ScriptName='npc_steward_of_time' WHERE entry=20142;
 UPDATE creature_template SET ScriptName='npc_stone_watcher_of_norgannon' WHERE entry=7918;
 
@@ -953,6 +956,7 @@ UPDATE creature_template SET ScriptName='npcs_dithers_and_arbington' WHERE entry
 UPDATE creature_template SET ScriptName='npc_the_scourge_cauldron' WHERE entry=11152;
 
 /* WESTFALL */
+UPDATE creature_template SET ScriptName='npc_daphne_stilwell' WHERE entry=6182;
 UPDATE creature_template SET ScriptName='npc_defias_traitor' WHERE entry=467;
 
 /* WETLANDS */
