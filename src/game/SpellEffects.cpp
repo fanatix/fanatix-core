@@ -1851,29 +1851,24 @@ void Spell::EffectDummy(uint32 i)
             }
             break;
         case SPELLFAMILY_DEATHKNIGHT:
-
             // Death Coil
             if(m_spellInfo->SpellFamilyFlags & 0x002000LL)
             {
-                uint32 spell_id = NULL;
-                int32 bp = 0;
                 if(m_caster->IsFriendlyTo(unitTarget))
                 {
                     if(unitTarget->GetCreatureType() != CREATURE_TYPE_UNDEAD)
                         return;
 
-                    spell_id = 47633;
-                    bp = damage * 1.5f;
+                    int32 bp = damage * 1.5f;
+                    m_caster->CastCustomSpell(unitTarget,47633,&bp,NULL,NULL,true);
                 }
                 else
                 {
-                    spell_id = 47632;
-                    bp = damage;
-                }               
-                
-                m_caster->CastCustomSpell(unitTarget,spell_id,&bp,NULL,NULL,true);
+                    int32 bp = damage;
+                    m_caster->CastCustomSpell(unitTarget,47632,&bp,NULL,NULL,true);
+                }
                 return;
-           }
+            }
             switch(m_spellInfo->Id)
             {
                 // Death Grip
@@ -1900,8 +1895,6 @@ void Spell::EffectDummy(uint32 i)
                     return;
                 }
             }
-            break;
-			
 		break;
     }
 
