@@ -168,6 +168,7 @@ UPDATE creature_template SET ScriptName='npc_taskmaster_fizzule' WHERE entry=723
 UPDATE creature_template SET ScriptName='npc_twiggy_flathead' WHERE entry=6248;
 DELETE FROM areatrigger_scripts WHERE entry=522;
 INSERT INTO areatrigger_scripts VALUES (522,'at_twiggy_flathead');
+UPDATE creature_template SET ScriptName='npc_wizzlecranks_shredder' WHERE entry=3439;
 
 /* BLACK TEMPLE */
 UPDATE instance_template SET script='instance_black_temple' WHERE map=564;
@@ -478,6 +479,7 @@ UPDATE creature_template SET ScriptName='mob_shadowmoon_channeler' WHERE entry=1
 /* Vazruden,Omor the Unscarred,Watchkeeper Gargolmar */
 UPDATE creature_template SET ScriptName='boss_omor_the_unscarred' WHERE entry=17308;
 UPDATE creature_template SET ScriptName='boss_watchkeeper_gargolmar' WHERE entry=17306;
+UPDATE instance_template SET script='instance_ramparts' WHERE map=543;
 
 /* SHATTERED HALLS */
 /* Nethekurse and his spawned shadowfissure */
@@ -767,6 +769,7 @@ UPDATE creature_template SET ScriptName='npc_blood_knight_stillblade' WHERE entr
 
 /* SILVERPINE FOREST */
 UPDATE creature_template SET ScriptName='npc_astor_hadren' WHERE entry=6497;
+UPDATE creature_template SET ScriptName='npc_deathstalker_erland' WHERE entry=1978;
 
 /* STOCKADES */
 

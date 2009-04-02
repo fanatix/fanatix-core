@@ -16,7 +16,7 @@
 
 /* ScriptData
 SDName: The_Barrens
-SD%Complete: 92
+SD%Complete: 90
 SDComment: Quest support: 863, 1719, 2458, 4921, 6981
 SDCategory: Barrens
 EndScriptData */
@@ -362,22 +362,22 @@ CreatureAI* GetAI_npc_twiggy_flathead(Creature *_Creature)
     return new npc_twiggy_flatheadAI (_Creature);
 }
 
-Creature* SelectCreatureInGrid(Unit *pUnit, uint32 entry, float range)
+Creature* SelectCreatureInGrid(Player *player, uint32 entry, float range)
 {
     Creature* pCreature = NULL;
 
-    CellPair pair(MaNGOS::ComputeCellPair(pUnit->GetPositionX(), pUnit->GetPositionY()));
+    CellPair pair(MaNGOS::ComputeCellPair(player->GetPositionX(), player->GetPositionY()));
     Cell cell(pair);
     cell.data.Part.reserved = ALL_DISTRICT;
     cell.SetNoCreate();
 
-    MaNGOS::NearestCreatureEntryWithLiveStateInObjectRangeCheck creature_check(*pUnit, entry, true, range);
-    MaNGOS::CreatureLastSearcher<MaNGOS::NearestCreatureEntryWithLiveStateInObjectRangeCheck> searcher(pUnit, pCreature, creature_check);
+    MaNGOS::NearestCreatureEntryWithLiveStateInObjectRangeCheck creature_check(*player, entry, true, range);
+    MaNGOS::CreatureLastSearcher<MaNGOS::NearestCreatureEntryWithLiveStateInObjectRangeCheck> searcher(player, pCreature, creature_check);
 
     TypeContainerVisitor<MaNGOS::CreatureLastSearcher<MaNGOS::NearestCreatureEntryWithLiveStateInObjectRangeCheck>, GridTypeMapContainer> creature_searcher(searcher);
 
     CellLock<GridReadGuard> cell_lock(cell, pair);
-    cell_lock->Visit(cell_lock, creature_searcher,*(pUnit->GetMap()));
+    cell_lock->Visit(cell_lock, creature_searcher,*(player->GetMap()));
 
     return pCreature;
 }
@@ -405,83 +405,116 @@ bool AreaTrigger_at_twiggy_flathead(Player *player, AreaTriggerEntry *at)
     }
     return true;
 }
+
 /*#####
-## npc_wizzlecrank_shredder
+## npc_wizzlecranks_shredder
 #####*/
-#define SAY_PROGRESS_1  -1000272
-#define SAY_PROGRESS_2  -1000273
-#define SAY_PROGRESS_3  -1000274
 
-#define SAY_MERCENARY_4 -1000275
-
-#define SAY_PROGRESS_5  -1000276
-#define SAY_PROGRESS_6  -1000277
-#define SAY_PROGRESS_7  -1000278
-#define SAY_PROGRESS_8  -1000279
-
-#define QUEST_ESCAPE    863
-#define NPC_PILOT       3451
-#define MOB_MERCENARY   3282
-
-struct MANGOS_DLL_DECL npc_wizzlecrank_shredderAI : public npc_escortAI
+enum
 {
-    npc_wizzlecrank_shredderAI(Creature* c) : npc_escortAI(c) {Reset();}
+    SAY_START           = -1000298,
+    SAY_STARTUP1        = -1000299,
+    SAY_STARTUP2        = -1000300,
+    SAY_MERCENARY       = -1000301,
+    SAY_PROGRESS_1      = -1000302,
+    SAY_PROGRESS_2      = -1000303,
+    SAY_PROGRESS_3      = -1000304,
+    SAY_END             = -1000305,
 
-    bool Completed;
+    QUEST_ESCAPE        = 863,
+    FACTION_RATCHET     = 637,
+    NPC_PILOT_WIZZ      = 3451,
+    NPC_MERCENARY       = 3282
+};
+
+struct MANGOS_DLL_DECL npc_wizzlecranks_shredderAI : public npc_escortAI
+{
+    npc_wizzlecranks_shredderAI(Creature* c) : npc_escortAI(c)
+    {
+        uiNormFaction = c->getFaction();
+        Reset();
+    }
+
+    uint32 uiNormFaction;
+
+    void MoveInLineOfSight(Unit* pUnit)
+    {
+        if (IsBeingEscorted && !m_creature->getVictim())
+        {
+            if (pUnit->GetEntry() == NPC_MERCENARY)
+            {
+                if (m_creature->IsWithinDistInMap(pUnit, 50.0f))
+                    pUnit->AddThreat(m_creature, 0.0f);
+            }
+        }
+
+        npc_escortAI::MoveInLineOfSight(pUnit);
+    }
 
     void WaypointReached(uint32 i)
     {
-        Unit* player = Unit::GetUnit((*m_creature), PlayerGUID);
+        Unit* pUnit = Unit::GetUnit(*m_creature, PlayerGUID);
 
-        if(!player)
+        if (!pUnit || pUnit->GetTypeId() != TYPEID_PLAYER)
             return;
 
         switch(i)
         {
-        case 0: DoScriptText(SAY_PROGRESS_1, m_creature);
-            m_creature->RemoveUnitMovementFlag(MOVEMENTFLAG_WALK_MODE); break;
-        case 1: DoScriptText(SAY_PROGRESS_2, m_creature); break;
-        case 10: DoScriptText(SAY_PROGRESS_3, m_creature, player);
-            m_creature->AddUnitMovementFlag(MOVEMENTFLAG_WALK_MODE); break;
-        case 20:{
-            Unit* Mercenary = SelectCreatureInGrid(m_creature, MOB_MERCENARY, 99);
-            if(Mercenary)
-            {
-                DoScriptText(SAY_MERCENARY_4, Mercenary);
-                ((Creature*)Mercenary)->AI()->AttackStart(m_creature);
-                AttackStart(Mercenary);
-            }
-                }break;
-        case 21: DoScriptText(SAY_PROGRESS_5, m_creature);
-            m_creature->RemoveUnitMovementFlag(MOVEMENTFLAG_WALK_MODE); break;
-        case 28: DoScriptText(SAY_PROGRESS_6, m_creature); break;
-        case 29: DoScriptText(SAY_PROGRESS_7, m_creature); break;
-        case 30: DoScriptText(SAY_PROGRESS_8, m_creature); break;
-        case 31: m_creature->SummonCreature(NPC_PILOT, 1088.77, -2985.39, 91.84, 0.0f, TEMPSUMMON_TIMED_DESPAWN, 300000);
-            m_creature->setDeathState(JUST_DIED);
-            Completed = true;
-            if (player && player->GetTypeId() == TYPEID_PLAYER)
-                    ((Player*)player)->GroupEventHappens(QUEST_ESCAPE, m_creature);
-            break;
+            case 3:
+                DoScriptText(SAY_STARTUP1, m_creature, pUnit);
+                break;
+            case 10:
+                DoScriptText(SAY_STARTUP2, m_creature, pUnit);
+                SetRun(false);
+                break;
+            case 21:
+                DoScriptText(SAY_PROGRESS_1, m_creature, pUnit);
+                SetRun();
+                break;
+            case 27:
+                DoScriptText(SAY_PROGRESS_2, m_creature, pUnit);
+                break;
+            case 29:
+                DoScriptText(SAY_PROGRESS_3, m_creature, pUnit);
+                SetRun(false);
+                break;
+            case 30:
+                DoScriptText(SAY_END, m_creature, pUnit);
+                break;
+            case 31:
+                ((Player*)pUnit)->GroupEventHappens(QUEST_ESCAPE, m_creature);
+                m_creature->SummonCreature(NPC_PILOT_WIZZ, 1089.837, -2986.644, 91.752, 3.807, TEMPSUMMON_TIMED_DESPAWN, 180000);
+                break;
         }
     }
 
     void Reset()
     {
-        m_creature->setDeathState(ALIVE);
-        Completed = false;
-        m_creature->setFaction(69);
+        if (!IsBeingEscorted)
+        {
+            m_creature->setFaction(uiNormFaction);
+            if (m_creature->getStandState() == UNIT_STAND_STATE_DEAD)
+                m_creature->SetStandState(UNIT_STAND_STATE_STAND);
+        }
     }
 
-    void Aggro(Unit* who){}
+    void Aggro(Unit* who)
+    {
+        if (who->GetEntry() == NPC_MERCENARY)
+            DoScriptText(SAY_MERCENARY, who);
+    }
+
+    void JustSummoned(Creature* pSummoned)
+    {
+        m_creature->SetStandState(UNIT_STAND_STATE_DEAD);
+    }
 
     void JustDied(Unit* killer)
     {
-        if (PlayerGUID && !Completed)
+        if (Unit* pUnit = Unit::GetUnit(*m_creature, PlayerGUID))
         {
-            Unit* player = Unit::GetUnit((*m_creature), PlayerGUID);
-            if (player)
-                ((Player*)player)->FailQuest(QUEST_ESCAPE);
+            if (((Player*)pUnit)->GetQuestStatus(QUEST_ESCAPE) == QUEST_STATUS_INCOMPLETE)
+                ((Player*)pUnit)->FailQuest(QUEST_ESCAPE);
         }
     }
 
@@ -491,52 +524,22 @@ struct MANGOS_DLL_DECL npc_wizzlecrank_shredderAI : public npc_escortAI
     }
 };
 
-bool QuestAccept_npc_wizzlecrank_shredder(Player* player, Creature* creature, Quest const* quest)
+bool QuestAccept_npc_wizzlecranks_shredder(Player* pPlayer, Creature* pCreature, Quest const* pQuest)
 {
-    if (quest->GetQuestId() == QUEST_ESCAPE)
+    if (pQuest->GetQuestId() == QUEST_ESCAPE)
     {
-        ((npc_escortAI*)(creature->AI()))->Start(true, true, false, player->GetGUID());
-        creature->setFaction(113);
+        DoScriptText(SAY_START, pCreature);
+        pCreature->setFaction(FACTION_RATCHET);
+        ((npc_escortAI*)(pCreature->AI()))->Start(true, true, true, pPlayer->GetGUID());
     }
     return true;
 }
 
-CreatureAI* GetAI_npc_wizzlecrank_shredderAI(Creature *_Creature)
+CreatureAI* GetAI_npc_wizzlecranks_shredder(Creature* pCreature)
 {
-    npc_wizzlecrank_shredderAI* thisAI = new npc_wizzlecrank_shredderAI(_Creature);
+    npc_wizzlecranks_shredderAI* thisAI = new npc_wizzlecranks_shredderAI(pCreature);
 
-    thisAI->AddWaypoint(0, 1109.15, -3104.11, 82.41, 6000);
-    thisAI->AddWaypoint(1, 1105.39, -3102.86, 82.74, 2000);
-    thisAI->AddWaypoint(2, 1104.97, -3108.52, 83.10, 1000);
-    thisAI->AddWaypoint(3, 1110.01, -3110.48, 82.81, 1000);
-    thisAI->AddWaypoint(4, 1111.72, -3103.03, 82.21, 1000);
-    thisAI->AddWaypoint(5, 1106.98, -3099.44, 82.18, 1000);
-    thisAI->AddWaypoint(6, 1103.74, -3103.29, 83.05, 1000);
-    thisAI->AddWaypoint(7, 1112.55, -3106.56, 82.31, 1000);
-    thisAI->AddWaypoint(8, 1108.12, -3111.04, 82.99, 1000);
-    thisAI->AddWaypoint(9, 1109.32, -3100.39, 82.08, 1000);
-    thisAI->AddWaypoint(10, 1109.32, -3100.39, 82.08, 6000);
-    thisAI->AddWaypoint(11, 1098.92, -3095.14, 82.97);
-    thisAI->AddWaypoint(12, 1100.94, -3082.60, 82.83);
-    thisAI->AddWaypoint(13, 1101.12, -3068.83, 82.53);
-    thisAI->AddWaypoint(14, 1096.97, -3051.99, 82.50);
-    thisAI->AddWaypoint(15, 1094.06, -3036.79, 82.70);
-    thisAI->AddWaypoint(16, 1098.22, -3027.84, 83.79);
-    thisAI->AddWaypoint(17, 1109.51, -3015.92, 85.73);
-    thisAI->AddWaypoint(18, 1119.87, -3007.21, 87.08);
-    thisAI->AddWaypoint(19, 1130.23, -3002.49, 91.27, 5000);
-    thisAI->AddWaypoint(20, 1130.23, -3002.49, 91.27, 3000);
-    thisAI->AddWaypoint(21, 1130.23, -3002.49, 91.27, 4000);
-    thisAI->AddWaypoint(22, 1129.73, -2985.89, 92.46);
-    thisAI->AddWaypoint(23, 1124.10, -2983.29, 92.81);
-    thisAI->AddWaypoint(24, 1111.74, -2992.38, 91.59);
-    thisAI->AddWaypoint(25, 1111.06, -2976.54, 91.81);
-    thisAI->AddWaypoint(26, 1099.91, -2991.17, 91.67);
-    thisAI->AddWaypoint(27, 1096.32, -2981.55, 91.73);
-    thisAI->AddWaypoint(28, 1091.28, -2985.82, 91.74, 4000);
-    thisAI->AddWaypoint(29, 1091.28, -2985.82, 91.74, 3000);
-    thisAI->AddWaypoint(30, 1091.28, -2985.82, 91.74, 7000);
-    thisAI->AddWaypoint(31, 1091.28, -2985.82, 91.74, 3000);
+    thisAI->FillPointMovementListForCreature();
 
     return (CreatureAI*)thisAI;
 }
@@ -574,8 +577,8 @@ void AddSC_the_barrens()
     newscript->RegisterSelf();
 
     newscript = new Script;
-    newscript->Name="npc_wizzlecrank_shredder";
-    newscript->GetAI = &GetAI_npc_wizzlecrank_shredderAI;
-    newscript->pQuestAccept = &QuestAccept_npc_wizzlecrank_shredder;
+    newscript->Name="npc_wizzlecranks_shredder";
+    newscript->GetAI = &GetAI_npc_wizzlecranks_shredder;
+    newscript->pQuestAccept = &QuestAccept_npc_wizzlecranks_shredder;
     newscript->RegisterSelf();
 }

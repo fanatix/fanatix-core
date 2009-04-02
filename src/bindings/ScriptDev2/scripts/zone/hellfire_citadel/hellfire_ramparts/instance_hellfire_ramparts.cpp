@@ -16,119 +16,109 @@
 
 /* ScriptData
 SDName: Instance_Hellfire_Ramparts
-SD%Complete: 0
-SDComment: 
-SDCategory: Hellfire Citadel, Hellfire Ramparts
+SD%Complete: 50
+SDComment:
+SDCategory: Hellfire Ramparts
 EndScriptData */
 
 #include "precompiled.h"
 #include "def_hellfire_ramparts.h"
 
-#define ENCOUNTERS 2
-
-struct MANGOS_DLL_DECL instance_hellfire_ramparts : public ScriptedInstance
+struct MANGOS_DLL_DECL instance_ramparts : public ScriptedInstance
 {
-    instance_hellfire_ramparts(Map *map) : ScriptedInstance(map) {Initialize();};
+    instance_ramparts(Map* pMap) : ScriptedInstance(pMap) {Initialize();}
 
-    uint32 Encounter[ENCOUNTERS];
-    uint64 Chest_Normal_GUID;
-    uint64 Chest_Heroic_GUID;
+    uint32 m_uiEncounter[ENCOUNTERS];
+    uint64 m_uiChestNGUID;
+    uint64 m_uiChestHGUID;
 
     void Initialize()
     {
-        Chest_Normal_GUID = NULL;
-        Chest_Heroic_GUID = NULL;
+        m_uiChestNGUID = 0;
+        m_uiChestHGUID = 0;
 
         for(uint8 i = 0; i < ENCOUNTERS; i++)
-            Encounter[i] = NOT_STARTED;
+            m_uiEncounter[i] = NOT_STARTED;
+
     }
 
-    void OnObjectCreate(GameObject *go)
+    void OnObjectCreate(GameObject* pGo)
     {
-        switch(go->GetEntry())
+        switch(pGo->GetEntry())
         {
-            case 185168: Chest_Normal_GUID = go->GetGUID(); break; //Chest normal
-            case 185169: Chest_Heroic_GUID = go->GetGUID(); break; //Chest heroic
+            case 185168: m_uiChestNGUID = pGo->GetGUID(); break;
+            case 185169: m_uiChestHGUID = pGo->GetGUID(); break;
         }
     }
 
-    Player* GetPlayerInMap()
+    Player* GetFirstPlayerInInstance()
     {
-        Map::PlayerList const& players = instance->GetPlayers();
+        Map::PlayerList const& pPlayers = instance->GetPlayers();
 
-        if (!players.isEmpty())
+        if (!pPlayers.isEmpty())
         {
-            for(Map::PlayerList::const_iterator itr = players.begin(); itr != players.end(); ++itr)
+            for(Map::PlayerList::const_iterator itr = pPlayers.begin(); itr != pPlayers.end(); ++itr)
             {
-                if (Player* plr = itr->getSource())
-                    return plr;
+                if (Player* pPlr = itr->getSource())
+                    return pPlr;
             }
         }
 
-        debug_log("SD2: Instance Hellfire Ramparts: GetPlayerInMap, but PlayerList is empty!");
+        debug_log("SD2: Instance Ramparts: GetFirstPlayerInInstance, but PlayerList is empty.");
         return NULL;
     }
 
-     void HandleGameObjectSetFlag(uint64 guid, uint64 flag)
+    void DoRespawnChest()
     {
-        Player *player = GetPlayerInMap();
-
-        if (!player || !guid)
+        if (Player* pPlayer = GetFirstPlayerInInstance())
         {
-            debug_log("SD2: Hellfire Ramparts: HandleGameObject fail");
-            return;
-        }
+            uint64 uiChest;
 
-        if (GameObject *go = GameObject::GetGameObject(*player,guid))
-            go->SetUInt32Value (GAMEOBJECT_FLAGS, flag);
-    }
+            if (instance->IsHeroic())
+                uiChest = m_uiChestHGUID;
+            else
+                uiChest = m_uiChestNGUID;
 
-    void SetData(uint32 type, uint32 data)
-    {
-        switch(type)
-        {
-            case TYPE_VAZRUDEN_DATA:
-                Encounter[0] = data;
-                break;
-            case TYPE_NAZAN_DATA:
-                Encounter[1] = data;
-                break;
-        }
-        if (data == DONE)
-        {
-            if (Encounter[0] == DONE && Encounter[1] == DONE)
+            if (GameObject* pGo = GameObject::GetGameObject(*pPlayer,uiChest))
             {
-                if (Chest_Normal_GUID)
-                    HandleGameObjectSetFlag(Chest_Normal_GUID, 0);
-                if (Chest_Heroic_GUID)
-                    HandleGameObjectSetFlag(Chest_Heroic_GUID, 0);
+                if (pGo->isSpawned())
+                    return;
+
+                pGo->SetRespawnTime(HOUR*IN_MILISECONDS);
             }
         }
     }
 
-    uint32 GetData(uint32 type)
+    void SetData(uint32 uiType, uint32 uiData)
     {
-        switch( type )
+        debug_log("SD2: Instance Ramparts: SetData received for type %u with data %u",uiType,uiData);
+
+        switch(uiType)
         {
-            case TYPE_VAZRUDEN_DATA:
-                return Encounter[0];
-            case TYPE_NAZAN_DATA:
-                return Encounter[1];
+            case TYPE_VAZRUDEN:
+                if (uiData == DONE && m_uiEncounter[1] == DONE)
+                    DoRespawnChest();
+                m_uiEncounter[0] = uiData;
+                break;
+            case TYPE_NAZAN:
+                if (uiData == DONE && m_uiEncounter[0] == DONE)
+                    DoRespawnChest();
+                m_uiEncounter[1] = uiData;
+                break;
         }
-        return 0;
     }
 };
 
-InstanceData* GetInstanceData_instance_hellfire_ramparts(Map* map)
+InstanceData* GetInstanceData_instance_ramparts(Map* pMap)
 {
-    return new instance_hellfire_ramparts(map);
+    return new instance_ramparts(pMap);
 }
 
-void AddSC_instance_hellfire_ramparts()
+void AddSC_instance_ramparts()
 {
-    Script *newscript;
-    newscript = new Script;
-    newscript->Name = "instance_hellfire_ramparts";
-    newscript->GetInstanceData = &GetInstanceData_instance_hellfire_ramparts;
-    newscript->RegisterSelf();
+    Script* pNewScript;
+    pNewScript = new Script;
+    pNewScript->Name = "instance_ramparts";
+    pNewScript->GetInstanceData = &GetInstanceData_instance_ramparts;
+    pNewScript->RegisterSelf();
 }
