@@ -3561,7 +3561,9 @@ void Aura::HandleAuraModStun(bool apply, bool Real)
 
 void Aura::HandleModStealth(bool apply, bool Real)
 {
-    if(apply)
+    Unit* pTarget = m_target;
+
+    if (apply)
     {
         if(Real && m_target->GetTypeId()==TYPEID_PLAYER)
         {
@@ -3576,78 +3578,72 @@ void Aura::HandleModStealth(bool apply, bool Real)
                 pvp->HandlePlayerActivityChanged((Player*)m_target);
         }
 
+        // drop flag at stealth in bg
+         pTarget->RemoveAurasWithInterruptFlags(AURA_INTERRUPT_FLAG_IMMUNE_OR_LOST_SELECTION);
+
         // only at real aura add
-        if(Real)
+        if (Real)
         {
-            m_target->SetStandFlags(UNIT_STAND_FLAGS_CREEP);
-            if(m_target->GetTypeId()==TYPEID_PLAYER)
-                m_target->SetFlag(PLAYER_FIELD_BYTES2, 0x2000);
+            pTarget->SetStandFlags(UNIT_STAND_FLAGS_CREEP);
+
+            if (pTarget->GetTypeId()==TYPEID_PLAYER)
+                pTarget->SetFlag(PLAYER_FIELD_BYTES2, 0x2000);
 
             // apply only if not in GM invisibility (and overwrite invisibility state)
-            if(m_target->GetVisibility()!=VISIBILITY_OFF)
+            if (pTarget->GetVisibility()!=VISIBILITY_OFF)
             {
-                m_target->SetVisibility(VISIBILITY_GROUP_NO_DETECT);
-                m_target->SetVisibility(VISIBILITY_GROUP_STEALTH);
+                pTarget->SetVisibility(VISIBILITY_GROUP_NO_DETECT);
+                pTarget->SetVisibility(VISIBILITY_GROUP_STEALTH);
             }
         }
     }
     else
     {
         // only at real aura remove
-        if(Real)
+        if (Real)
         {
             // if last SPELL_AURA_MOD_STEALTH and no GM invisibility
-            if(!m_target->HasAuraType(SPELL_AURA_MOD_STEALTH) && m_target->GetVisibility()!=VISIBILITY_OFF)
+            if (!pTarget->HasAuraType(SPELL_AURA_MOD_STEALTH) && pTarget->GetVisibility()!=VISIBILITY_OFF)
             {
-                m_target->RemoveStandFlags(UNIT_STAND_FLAGS_CREEP);
-                if(m_target->GetTypeId()==TYPEID_PLAYER)
-                    m_target->RemoveFlag(PLAYER_FIELD_BYTES2, 0x2000);
+                pTarget->RemoveStandFlags(UNIT_STAND_FLAGS_CREEP);
+
+                if (pTarget->GetTypeId()==TYPEID_PLAYER)
+                    pTarget->RemoveFlag(PLAYER_FIELD_BYTES2, 0x2000);
 
                 // restore invisibility if any
-                if(m_target->HasAuraType(SPELL_AURA_MOD_INVISIBILITY))
+                if (pTarget->HasAuraType(SPELL_AURA_MOD_INVISIBILITY))
                 {
-                    m_target->SetVisibility(VISIBILITY_GROUP_NO_DETECT);
-                    m_target->SetVisibility(VISIBILITY_GROUP_INVISIBILITY);
+                    pTarget->SetVisibility(VISIBILITY_GROUP_NO_DETECT);
+                    pTarget->SetVisibility(VISIBILITY_GROUP_INVISIBILITY);
                 }
                 else
-                    m_target->SetVisibility(VISIBILITY_ON);
-                if(m_target->GetTypeId() == TYPEID_PLAYER)
+                    pTarget->SetVisibility(VISIBILITY_ON);
+                if(pTarget->GetTypeId() == TYPEID_PLAYER)
                 {
                     if(OutdoorPvP * pvp = ((Player*)m_target)->GetOutdoorPvP())
                         pvp->HandlePlayerActivityChanged((Player*)m_target);
-                    m_target->SendUpdateToPlayer((Player*)m_target);
+                    pTarget->SendUpdateToPlayer((Player*)m_target);
                 }
             }
         }
     }
 
     // Master of Subtlety
-    Unit::AuraList const& mDummyAuras = m_target->GetAurasByType(SPELL_AURA_DUMMY);
+    Unit::AuraList const& mDummyAuras = pTarget->GetAurasByType(SPELL_AURA_DUMMY);
     for(Unit::AuraList::const_iterator i = mDummyAuras.begin();i != mDummyAuras.end(); ++i)
     {
-               switch((*i)->GetSpellProto()->SpellIconID)
-               {
-                       case 2114:
-                       {
-                               if (apply)
-                                       {
-                                               int32 bp = (*i)->GetModifier()->m_amount;
-                                               m_target->CastCustomSpell(m_target,31665,&bp,NULL,NULL,true);
-                                       }
-                               else
-                                       m_target->CastSpell(m_target,31666,true);
-                                break;
-                       }
-                       case 2285:
-                       {
-                               if(apply)
-                                       m_target->CastSpell(m_target, 58427, true);
-                               else
-                                       m_target->CastSpell(m_target, 58428, true);
-                               break;
-                       }
-               }
-       }
+        if ((*i)->GetSpellProto()->SpellIconID == 2114)
+        {
+            if (apply)
+            {
+                int32 bp = (*i)->GetModifier()->m_amount;
+                pTarget->CastCustomSpell(pTarget,31665,&bp,NULL,NULL,true);
+            }
+            else
+                pTarget->CastSpell(pTarget,31666,true);
+            break;
+        }
+    }
 }
 
 void Aura::HandleInvisibility(bool apply, bool Real)
