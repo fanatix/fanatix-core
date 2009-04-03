@@ -24,39 +24,38 @@ EndScriptData */
 #include "precompiled.h"
 #include "def_zulaman.h"
 
-enum
-{
-    SAY_WAVE1_AGGRO         = -1568010,
-    SAY_WAVE2_STAIR1        = -1568011,
-    SAY_WAVE3_STAIR2        = -1568012,
-    SAY_WAVE4_PLATFORM      = -1568013,
+#define SAY_WAVE1_AGGRO         -1568010
+#define SAY_WAVE2_STAIR1        -1568011
+#define SAY_WAVE3_STAIR2        -1568012
+#define SAY_WAVE4_PLATFORM      -1568013
 
-    SAY_EVENT1_SACRIFICE    = -1568014,
-    SAY_EVENT2_SACRIFICE    = -1568015,
+#define SAY_EVENT1_SACRIFICE    -1568014
+#define SAY_EVENT2_SACRIFICE    -1568015
 
-    SAY_AGGRO               = -1568016,
-    SAY_SURGE               = -1568017,
-    SAY_TOBEAR              = -1568018,
-    SAY_TOTROLL             = -1568019,
-    SAY_BERSERK             = -1568020,
-    SAY_SLAY1               = -1568021,
-    SAY_SLAY2               = -1568022,
-    SAY_DEATH               = -1568023,
+#define SAY_AGGRO               -1568016
+#define SAY_SURGE               -1568017
+#define SAY_TOBEAR              -1568018
+#define SAY_TOTROLL             -1568019
+#define SAY_BERSERK             -1568020
+#define SAY_SLAY1               -1568021
+#define SAY_SLAY2               -1568022
+#define SAY_DEATH               -1568023
 
-    SPELL_BERSERK           = 45078,                        //unsure, this increases damage, size and speed
+#define SPELL_BERSERK           45078
 
-    //Defines for Troll form
-    SPELL_BRUTALSWIPE       = 42384,
-    //SPELL_MANGLE            = 42389,                        //This doesn't seem to apply the mangle debuff after all
-    SPELL_MANGLEEFFECT      = 44955,
-    SPELL_SURGE             = 42402,
-    SPELL_BEARFORM          = 42377,
+//Defines for Troll form
+#define SPELL_BRUTALSWIPE       42384
+#define SPELL_MANGLE            42389
+#define SPELL_MANGLEEFFECT      44955
+#define SPELL_SURGE             42402
+#define SPELL_BEARFORM          42377
 
-    //Defines for Bear form
-    SPELL_LACERATINGSLASH   = 42395,
-    SPELL_RENDFLESH         = 42397,
-    SPELL_DEAFENINGROAR     = 42398
-};
+//Defines for Bear form
+#define SPELL_LACERATINGSLASH   42395
+#define SPELL_RENDFLESH         42397
+#define SPELL_DEAFENINGROAR     42398
+
+#define WEAPON_ID               33094
 
 struct MANGOS_DLL_DECL boss_nalorakkAI : public ScriptedAI
 {
@@ -68,43 +67,58 @@ struct MANGOS_DLL_DECL boss_nalorakkAI : public ScriptedAI
 
     ScriptedInstance *pInstance;
 
-    uint32 ChangeForm_Timer;
     uint32 BrutalSwipe_Timer;
     uint32 Mangle_Timer;
     uint32 Surge_Timer;
+
     uint32 LaceratingSlash_Timer;
     uint32 RendFlesh_Timer;
     uint32 DeafeningRoar_Timer;
-    uint32 ShapeShiftCheck_Timer;
+
+    uint32 ShapeShift_Timer;
     uint32 Berserk_Timer;
+
+    uint64 ChargeTargetGUID;
+    bool isCharging;
+
     bool inBearForm;
-    bool Berserking;
-    bool ChangedToBear;
-    bool ChangedToTroll;
 
     void Reset()
     {
-        ChangeForm_Timer = 45000;
-        BrutalSwipe_Timer = 12000;
-        Mangle_Timer = 15000;
-        Surge_Timer = 20000;
-        LaceratingSlash_Timer = 6000;
-        RendFlesh_Timer = 6000;
-        DeafeningRoar_Timer = 20000;
-        ShapeShiftCheck_Timer = 40000;
+        if(pInstance)
+            pInstance->SetData(DATA_NALORAKKEVENT, NOT_STARTED);
+
+        Surge_Timer = 15000 + rand()%5000;
+        BrutalSwipe_Timer = 7000 + rand()%5000;
+        Mangle_Timer = 10000 + rand()%5000;
+        ShapeShift_Timer = 45000 + rand()%5000;
         Berserk_Timer = 600000;
+
+        ChargeTargetGUID = 0;
+        isCharging = false;
+
         inBearForm = false;
-        Berserking = false;
-        ChangedToBear = false;
-        ChangedToTroll = true;
+        m_creature->SetUInt32Value(UNIT_VIRTUAL_ITEM_SLOT_ID+1, WEAPON_ID);
     }
 
     void Aggro(Unit *who)
     {
+        if(pInstance)
+            pInstance->SetData(DATA_NALORAKKEVENT, IN_PROGRESS);
+
         DoScriptText(SAY_AGGRO, m_creature);
+        DoZoneInCombat();
     }
 
-    void KilledUnit(Unit* victim)
+    void JustDied(Unit* Killer)    
+    {	
+        if(pInstance)
+            pInstance->SetData(DATA_NALORAKKEVENT, DONE);
+
+        DoScriptText(SAY_DEATH, m_creature);
+    }
+
+    void KilledUnit(Unit* victim)    
     {
         switch(rand()%2)
         {
@@ -113,129 +127,164 @@ struct MANGOS_DLL_DECL boss_nalorakkAI : public ScriptedAI
         }
     }
 
-    void JustDied(Unit* Killer)
+    void MovementInform(uint32, uint32)
     {
-        DoScriptText(SAY_DEATH, m_creature);
+        if(ChargeTargetGUID)
+        {
+            if(Unit* target = Unit::GetUnit(*m_creature, ChargeTargetGUID))
+                m_creature->CastSpell(target, SPELL_SURGE, true);
+            ChargeTargetGUID = 0;
+        }
+    }
 
-        if (!pInstance)
-            return;
+    Player* SelectRandomPlayer(float range = 0.0f, bool alive = true)
+    {
+        Map *map = m_creature->GetMap();
+        if (!map->IsDungeon()) return NULL;
 
-        pInstance->SetData(TYPE_NALORAKK, DONE);
+        Map::PlayerList const &PlayerList = map->GetPlayers();
+        if (PlayerList.isEmpty())
+            return NULL;
+        
+        std::list<Player*> temp;
+        std::list<Player*>::iterator j;
+		
+        for(Map::PlayerList::const_iterator i = PlayerList.begin(); i != PlayerList.end(); ++i)
+			if((range == 0.0f || m_creature->IsWithinDistInMap(i->getSource(), range))
+				&& (!alive || i->getSource()->isTargetableForAttack()))
+				temp.push_back(i->getSource());
+
+		if (temp.size()) {
+			j = temp.begin();
+		    advance(j, rand()%temp.size());
+		    return (*j);
+		}
+        return NULL;
+
     }
 
     void UpdateAI(const uint32 diff)
     {
-        //Return since we have no target
-        if (!m_creature->SelectHostilTarget() || !m_creature->getVictim() )
+        if(isCharging)
+        {
+            if(!ChargeTargetGUID)
+            {
+                m_creature->SetSpeed(MOVE_RUN, 1.2f);
+                m_creature->GetMotionMaster()->Clear();
+                if(m_creature->getVictim())
+                {
+                    m_creature->Attack(m_creature->getVictim(), true);
+                    m_creature->GetMotionMaster()->MoveChase(m_creature->getVictim());
+                }
+                isCharging = false;
+            }
+            return;
+        }
+
+        if(!m_creature->SelectHostilTarget() && !m_creature->getVictim())
             return;
 
-        //Berserking
-        if ((Berserk_Timer < diff) && (!Berserking))
+        if(Berserk_Timer < diff)
         {
             DoScriptText(SAY_BERSERK, m_creature);
-            DoCast(m_creature, SPELL_BERSERK);
-            Berserking = true;
+            DoCast(m_creature, SPELL_BERSERK, true);
+            Berserk_Timer = 600000;
         }else Berserk_Timer -= diff;
 
-        //Don't check if we're shapeshifted every UpdateAI
-        if (ShapeShiftCheck_Timer < diff)
+        if(ShapeShift_Timer < diff)
         {
-            //This will return true if we have bearform aura
-            inBearForm = m_creature->HasAura(SPELL_BEARFORM, 0);
-            ShapeShiftCheck_Timer = 1000;
-        }else ShapeShiftCheck_Timer -= diff;
-
-        //Spells for Troll Form (only to be casted if we NOT have bear phase aura)
-        if (!inBearForm)
-        {
-            //We just changed to troll form!
-            if (!ChangedToTroll)
+            if(inBearForm)
             {
                 DoScriptText(SAY_TOTROLL, m_creature);
 
-                ChangedToTroll = true;
-                ChangedToBear = false;
-                //Reset spell timers
-                LaceratingSlash_Timer = 6000 + rand()%19000;
-                RendFlesh_Timer = 6000 + rand()%19000;
-                DeafeningRoar_Timer = 15000 + rand()%10000;
-                ShapeShiftCheck_Timer = 40000;
+                m_creature->SetUInt32Value(UNIT_VIRTUAL_ITEM_SLOT_ID+1, WEAPON_ID);
+                m_creature->RemoveAurasDueToSpell(SPELL_BEARFORM);
+                Surge_Timer = 15000 + rand()%5000;
+                BrutalSwipe_Timer = 7000 + rand()%5000;
+                Mangle_Timer = 10000 + rand()%5000;
+                ShapeShift_Timer = 45000 + rand()%5000;
+                inBearForm = false;
             }
-
-            //Brutal Swipe (some sources may say otherwise, but I've never seen this in Bear form)
-            if (BrutalSwipe_Timer < diff)
-            {
-                DoCast(m_creature->getVictim(), SPELL_BRUTALSWIPE);
-                BrutalSwipe_Timer = 7000 + rand()%13000;
-            }else BrutalSwipe_Timer -= diff;
-
-            //Mangle
-            if (Mangle_Timer < diff)
-            {
-                DoCast(m_creature->getVictim(), SPELL_MANGLEEFFECT);
-                Mangle_Timer = 3000 + rand()%17000;
-            }else Mangle_Timer -= diff;
-
-            //Surge
-            if (Surge_Timer < diff)
-            {
-                //select a random unit other than the main tank
-                Unit *target = SelectUnit(SELECT_TARGET_RANDOM, 1);
-
-                //if there aren't other units, cast on the tank
-                if (!target)
-                    target = m_creature->getVictim();
-
-                DoCast(target, SPELL_SURGE);
-                DoScriptText(SAY_SURGE, m_creature);
-
-                Surge_Timer = 15000 + rand()%17500;
-            }else Surge_Timer -= diff;
-
-            //Change to Bear Form if we're in Troll Form for 45sec
-            if (ChangeForm_Timer < diff)
-            {
-                DoCast(m_creature, SPELL_BEARFORM);
-                //And 30sec (bear form) + 45sec (troll form) before we should cast this again
-                ChangeForm_Timer = 75000;
-            }else ChangeForm_Timer -= diff;
-        }
-        //Spells for Bear Form (only to be casted if we have bear phase aura)
-        else
-        {
-            //We just changed to bear form!
-            if (!ChangedToBear)
+            else
             {
                 DoScriptText(SAY_TOBEAR, m_creature);
-
-                ChangedToBear = true;
-                ChangedToTroll = false;
-                //Reset spell timers
-                Surge_Timer = 15000 + rand()%17500;
-                BrutalSwipe_Timer = 7000 + rand()%13000;
-                Mangle_Timer = 3000 + rand()%17000;
-                ShapeShiftCheck_Timer = 25000;
+                m_creature->SetUInt32Value(UNIT_VIRTUAL_ITEM_SLOT_ID+1, 0);
+                DoCast(m_creature, SPELL_BEARFORM, true);
+                LaceratingSlash_Timer = 2000; // dur 18s
+                RendFlesh_Timer = 3000;  // dur 5s
+                DeafeningRoar_Timer = 5000 + rand()%5000;  // dur 2s
+                ShapeShift_Timer = 20000 + rand()%5000; // dur 30s
+                inBearForm = true;
             }
+        }else ShapeShift_Timer -= diff;
 
-            //Lacerating Slash
-            if (LaceratingSlash_Timer < diff)
+        if(!inBearForm)
+        {
+            if(BrutalSwipe_Timer < diff)
             {
-                DoCast(m_creature->getVictim(), SPELL_LACERATINGSLASH);
-                LaceratingSlash_Timer = 6000 + rand()%19000;
+                DoCast(m_creature->getVictim(), SPELL_BRUTALSWIPE);
+                BrutalSwipe_Timer = 7000 + rand()%5000;
+            }else BrutalSwipe_Timer -= diff;
+
+            if(Mangle_Timer < diff)
+            {
+                if(!m_creature->getVictim()->HasAura(SPELL_MANGLEEFFECT, 0))
+                {
+                    DoCast(m_creature->getVictim(), SPELL_MANGLE);
+                    Mangle_Timer = 1000;
+                }
+                else Mangle_Timer = 10000 + rand()%5000;
+            }else Mangle_Timer -= diff;
+
+            if(Surge_Timer < diff)
+            {
+                DoScriptText(SAY_SURGE, m_creature);
+
+                Unit *target = SelectRandomPlayer(45);
+                if(!target) target = m_creature->getVictim();
+                isCharging = true;
+                ChargeTargetGUID = target->GetGUID();
+
+                float x, y, z;
+                target->GetContactPoint(m_creature, x, y, z);
+                m_creature->SetSpeed(MOVE_RUN, 5.0f);
+                m_creature->GetMotionMaster()->Clear();
+                m_creature->GetMotionMaster()->MovePoint(0, x, y, z);
+
+                Surge_Timer = 15000 + rand()%5000;
+                return;
+            }else Surge_Timer -= diff;
+        }
+        else
+        {
+            if(LaceratingSlash_Timer < diff)
+            {
+                if(!m_creature->getVictim()->HasAura(SPELL_MANGLEEFFECT, 0))
+                    DoCast(m_creature->getVictim(), SPELL_LACERATINGSLASH);
+                else
+                {
+                    int32 bp0 = 3470;
+                    m_creature->CastCustomSpell(m_creature->getVictim(), SPELL_LACERATINGSLASH, &bp0, NULL, NULL, false);
+                }
+                LaceratingSlash_Timer = 18000 + rand()%5000;
             }else LaceratingSlash_Timer -= diff;
 
-            //Rend Flesh
-            if (RendFlesh_Timer < diff)
+            if(RendFlesh_Timer < diff)
             {
-                DoCast(m_creature->getVictim(), SPELL_RENDFLESH);
-                RendFlesh_Timer = 6000 + rand()%19000;
+                if(!m_creature->getVictim()->HasAura(SPELL_MANGLEEFFECT, 0))
+                    DoCast(m_creature->getVictim(), SPELL_RENDFLESH);
+                else
+                {
+                    int32 bp1 = 4670;
+                    m_creature->CastCustomSpell(m_creature->getVictim(), SPELL_RENDFLESH, NULL, &bp1, NULL, false);
+                }
+                RendFlesh_Timer = 5000 + rand()%5000;
             }else RendFlesh_Timer -= diff;
 
-            //Deafening Roar
-            if (DeafeningRoar_Timer < diff)
+            if(DeafeningRoar_Timer < diff)
             {
                 DoCast(m_creature->getVictim(), SPELL_DEAFENINGROAR);
-                DeafeningRoar_Timer = 15000 + rand()%10000;
+                DeafeningRoar_Timer = 15000 + rand()%5000;
             }else DeafeningRoar_Timer -= diff;
         }
 
@@ -243,9 +292,9 @@ struct MANGOS_DLL_DECL boss_nalorakkAI : public ScriptedAI
     }
 };
 
-CreatureAI* GetAI_boss_nalorakk(Creature* pCreature)
+CreatureAI* GetAI_boss_nalorakk(Creature *_Creature)
 {
-    return new boss_nalorakkAI(pCreature);
+    return new boss_nalorakkAI (_Creature);
 }
 
 void AddSC_boss_nalorakk()
