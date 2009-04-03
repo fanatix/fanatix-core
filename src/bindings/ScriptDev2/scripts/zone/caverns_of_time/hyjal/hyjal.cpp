@@ -16,7 +16,7 @@
 
 /* ScriptData
 SDName: Hyjal
-SD%Complete: 80
+SD%Complete: 81
 SDComment: gossip text id's unknown
 SDCategory: Caverns of Time, Mount Hyjal
 EndScriptData */
