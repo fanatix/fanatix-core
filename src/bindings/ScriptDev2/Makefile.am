@@ -290,7 +290,7 @@ scripts/zone/mulgore/mulgore.cpp \
 scripts/zone/nagrand/nagrand.cpp \
 scripts/zone/naxxramas/boss_anubrekhan.cpp \
 scripts/zone/naxxramas/boss_faerlina.cpp \
-scripts/zone/naxxramas/boss_four_horsemen.cpp \
+scripts/zone/naxxramas/boss_fourhorsemen.cpp \
 scripts/zone/naxxramas/boss_gluth.cpp \
 scripts/zone/naxxramas/boss_gothik.cpp \
 scripts/zone/naxxramas/boss_grobbulus.cpp \
@@ -303,7 +303,9 @@ scripts/zone/naxxramas/boss_patchwerk.cpp \
 scripts/zone/naxxramas/boss_razuvious.cpp \
 scripts/zone/naxxramas/boss_sapphiron.cpp \
 scripts/zone/naxxramas/boss_thaddius.cpp \
+scripts/zone/naxxramas/def_naxxramas.h \
 scripts/zone/naxxramas/instance_naxxramas.cpp \
+scripts/zone/naxxramas/npcs_naxxramas_controller.cpp \
 scripts/zone/netherstorm/netherstorm.cpp \
 scripts/zone/nexus/eye_of_eternity/boss_malygos.cpp \
 scripts/zone/nexus/eye_of_eternity/def_eye_of_eternity.h \

@@ -813,10 +813,6 @@
 					>
 				</Filter>
 				<Filter
-					Name="The Storm Peaks"
-					>
-				</Filter>
-				<Filter
 					Name="Zul&apos;Drak"
 					>
 				</Filter>
@@ -1456,7 +1452,7 @@
 						>
 					</File>
 					<File
-						RelativePath="..\scripts\zone\naxxramas\boss_four_horsemen.cpp"
+						RelativePath="..\scripts\zone\naxxramas\boss_fourhorsemen.cpp"
 						>
 					</File>
 					<File
@@ -1508,7 +1504,15 @@
 						>
 					</File>
 					<File
+						RelativePath="..\scripts\zone\naxxramas\def_naxxramas.h"
+						>
+					</File>
+					<File
 						RelativePath="..\scripts\zone\naxxramas\instance_naxxramas.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\scripts\zone\naxxramas\npcs_naxxramas_controller.cpp"
 						>
 					</File>
 				</Filter>
@@ -2307,6 +2311,10 @@
 						RelativePath="..\scripts\zone\terokkar_forest\terokkar_forest.cpp"
 						>
 					</File>
+					<Filter
+						Name="The Storm Peaks"
+						>
+					</Filter>
 				</Filter>
 				<Filter
 					Name="Zangarmarsh"
