@@ -232,7 +232,7 @@ pAuraHandler AuraHandler[TOTAL_AURAS]=
     &Aura::HandleNoImmediateEffect,                         //178 SPELL_AURA_MOD_DEBUFF_RESISTANCE          implemented in Unit::MagicSpellHitResult
     &Aura::HandleNoImmediateEffect,                         //179 SPELL_AURA_MOD_ATTACKER_SPELL_CRIT_CHANCE implemented in Unit::SpellCriticalBonus
     &Aura::HandleNoImmediateEffect,                         //180 SPELL_AURA_MOD_FLAT_SPELL_DAMAGE_VERSUS   implemented in Unit::SpellDamageBonus
-    &Aura::HandleUnused,                                    //181 unused (3.0.8a) old SPELL_AURA_MOD_FLAT_SPELL_CRIT_DAMAGE_VERSUS 
+    &Aura::HandleUnused,                                    //181 unused (3.0.8a) old SPELL_AURA_MOD_FLAT_SPELL_CRIT_DAMAGE_VERSUS
     &Aura::HandleAuraModResistenceOfStatPercent,            //182 SPELL_AURA_MOD_RESISTANCE_OF_STAT_PERCENT
     &Aura::HandleNULL,                                      //183 SPELL_AURA_MOD_CRITICAL_THREAT only used in 28746
     &Aura::HandleNoImmediateEffect,                         //184 SPELL_AURA_MOD_ATTACKER_MELEE_HIT_CHANCE  implemented in Unit::RollMeleeOutcomeAgainst
@@ -3125,21 +3125,28 @@ void Aura::HandleModPossess(bool apply, bool Real)
             m_target->StopMoving();
             m_target->GetMotionMaster()->Clear();
             m_target->GetMotionMaster()->MoveIdle();
-            CharmInfo *charmInfo = ((Creature*)m_target)->InitCharmInfo(m_target);
-            charmInfo->InitPossessCreateSpells();
+        }
+        else if(m_target->GetTypeId() == TYPEID_PLAYER)
+        {
+            ((Player*)m_target)->SetClientControl(m_target, 0);
         }
 
+        if(CharmInfo *charmInfo = m_target->InitCharmInfo(m_target))
+            charmInfo->InitPossessCreateSpells();
+
         if(caster->GetTypeId() == TYPEID_PLAYER)
-        {
             ((Player*)caster)->PossessSpellInitialize();
-        }
     }
     else
     {
         m_target->SetCharmerGUID(0);
+        caster->InterruptSpell(CURRENT_CHANNELED_SPELL);    // the spell is not automatically canceled when interrupted, do it now
 
         if(m_target->GetTypeId() == TYPEID_PLAYER)
+        {
             ((Player*)m_target)->setFactionForRace(m_target->getRace());
+            ((Player*)m_target)->SetClientControl(m_target, 1);
+        }
         else if(m_target->GetTypeId() == TYPEID_UNIT)
         {
             CreatureInfo const *cinfo = ((Creature*)m_target)->GetCreatureInfo();
@@ -3245,7 +3252,7 @@ void Aura::HandleModCharm(bool apply, bool Real)
             if(m_target->GetTypeId() == TYPEID_UNIT)
             {
                 ((Creature*)m_target)->AIM_Initialize();
-                CharmInfo *charmInfo = ((Creature*)m_target)->InitCharmInfo(m_target);
+                CharmInfo *charmInfo = m_target->InitCharmInfo(m_target);
                 charmInfo->InitCharmCreateSpells();
                 charmInfo->SetReactState( REACT_DEFENSIVE );
 
@@ -4358,7 +4365,7 @@ void Aura::HandlePeriodicDamage(bool apply, bool Real)
     if (apply)
     {
         if(loading)
-            return; 
+            return;
 
         Unit *caster = GetCaster();
         if (!caster)
@@ -6310,7 +6317,7 @@ void Aura::PeriodicTick()
             }
 
             // Anger Management
-            // amount = 1+ 16 = 17 = 3,4*5 = 10,2*5/3 
+            // amount = 1+ 16 = 17 = 3,4*5 = 10,2*5/3
             // so 17 is rounded amount for 5 sec tick grow ~ 1 range grow in 3 sec
             if(pt == POWER_RAGE)
                 m_target->ModifyPower(pt, m_modifier.m_amount*3/5);

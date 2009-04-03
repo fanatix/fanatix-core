@@ -10356,10 +10356,10 @@ void CharmInfo::InitEmptyActionBar()
 
 void CharmInfo::InitPossessCreateSpells()
 {
-    if(m_unit->GetTypeId() == TYPEID_PLAYER)
-        return;
-
     InitEmptyActionBar();                                   //charm action bar
+
+    if(m_unit->GetTypeId() == TYPEID_PLAYER)                //possessed players don't have spells, keep the action bar empty
+        return;
 
     for(uint32 x = 0; x < CREATURE_MAX_SPELLS; ++x)
     {
@@ -10838,7 +10838,7 @@ Player* Unit::GetSpellModOwner()
 void Unit::SendPetCastFail(uint32 spellid, SpellCastResult msg)
 {
     if(msg == SPELL_CAST_OK)
-        return; 
+        return;
 
     Unit *owner = GetCharmerOrOwner();
     if(!owner || owner->GetTypeId() != TYPEID_PLAYER)
