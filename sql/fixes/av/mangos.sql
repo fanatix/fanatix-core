@@ -1,20 +1,21 @@
-REPLACE INTO gameobject_template VALUES (178925,1,5651,"Alliance Banner","",83,0,1,0,1479,196608,180421,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"");
-REPLACE INTO gameobject_template VALUES (178943,1,5652,"Horde Banner","",84,0,1,0,1479,196608,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"");
-REPLACE INTO gameobject_template VALUES (178940,1,5653,"Contested Banner","",83,0,1,0,1479,196608,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"");
-REPLACE INTO gameobject_template VALUES (179435,1,5654,"Contested Banner","",84,0,1,0,1479,196608,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"");
+﻿REPLACE INTO gameobject_template VALUES (178925,1,5651,"Alliance Banner","","",83,0,1,0,1479,196608,180421,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"");
+REPLACE INTO gameobject_template VALUES (178943,1,5652,"Horde Banner","","",84,0,1,0,1479,196608,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"");
+REPLACE INTO gameobject_template VALUES (178940,1,5653,"Contested Banner","","",83,0,1,0,1479,196608,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"");
+REPLACE INTO gameobject_template VALUES (179435,1,5654,"Contested Banner","","",84,0,1,0,1479,196608,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"");
 
-REPLACE INTO gameobject_template VALUES (178365,1,5771,"Alliance Banner","",83,0,1,0,1479,196608,180100,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"");
-REPLACE INTO gameobject_template VALUES (179286,1,5772,"Contested Banner","",83,0,1,0,1479,196608,180102,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"");
-REPLACE INTO gameobject_template VALUES (179287,1,5774,"Contested Banner","",84,0,1,0,1479,0,180102,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"");
-REPLACE INTO gameobject_template VALUES (180418,1,6211,"Snowfall Banner","",0,0,1,0,1479,196608,180100,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"");
+REPLACE INTO gameobject_template VALUES (178365,1,5771,"Alliance Banner","","",83,0,1,0,1479,196608,180100,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"");
+REPLACE INTO gameobject_template VALUES (179286,1,5772,"Contested Banner","","",83,0,1,0,1479,196608,180102,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"");
+REPLACE INTO gameobject_template VALUES (179287,1,5774,"Contested Banner","","",84,0,1,0,1479,0,180102,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"");
+REPLACE INTO gameobject_template VALUES (180418,1,6211,"Snowfall Banner","","",0,0,1,0,1479,196608,180100,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"");
 
-REPLACE INTO gameobject_template VALUES (180424,0,3751,"Alterac Valley Gate","",100,0,3.5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"");
-REPLACE INTO gameobject_template VALUES (180100,6,2232,"Alliance Banner Aura","",0,0,2,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,"");
-REPLACE INTO gameobject_template VALUES (180102,6,266,"Neutral Banner Aura","",0,0,2,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,"");
-REPLACE INTO gameobject_template VALUES (180101,6,1311,"Horde Banner Aura","",0,0,2,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,"");
-REPLACE INTO gameobject_template VALUES (180421,6,2232,"Alliance Banner Aura, Large","",0,0,5,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,"");
-REPLACE INTO gameobject_template VALUES (180423,6,266,"Neutral Banner Aura, Large","",0,0,5,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,"");
-REPLACE INTO gameobject_template VALUES (180422,6,1311,"Horde Banner Aura, Large","",0,0,5,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,"");
+REPLACE INTO gameobject_template VALUES (180424,0,3751,"Alterac Valley Gate","","",100,0,3.5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"");
+REPLACE INTO gameobject_template VALUES (180100,6,2232,"Alliance Banner Aura","","",0,0,2,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,"");
+REPLACE INTO gameobject_template VALUES (180102,6,266,"Neutral Banner Aura","","",0,0,2,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,"");
+REPLACE INTO gameobject_template VALUES (180101,6,1311,"Horde Banner Aura","","",0,0,2,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,"");
+REPLACE INTO gameobject_template VALUES (180421,6,2232,"Alliance Banner Aura, Large","","",0,0,5,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,"");
+REPLACE INTO gameobject_template VALUES (180423,6,266,"Neutral Banner Aura, Large","","",0,0,5,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,"");
+REPLACE INTO gameobject_template VALUES (180422,6,1311,"Horde Banner Aura, Large","","",0,0,5,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,"");
+>>>>>>> b8813e5e6e89a72a94dfc300277a9282bad1b0cf:sql/updates/av/mangos.sql
 
 -- removes the damage from the fire-gos (used for destroyed towers) - but this is not blizzlike TODO remove this hack
 UPDATE `gameobject_template` SET `type` = '5',`data0` = '0',`data1` = '0',`data2` = '0',`data3` = '1',`data5` = '0',`data10` = '0' WHERE `gameobject_template`.`entry` =179065 LIMIT 1 ;
@@ -172,6 +173,36 @@ UPDATE creature_template SET minlevel=54 , maxlevel=55 WHERE entry IN (11602,130
 UPDATE creature_template SET minlevel=58 , maxlevel=58 WHERE entry IN (11657,13078,13079,11677,13086,13088);
 UPDATE creature_template SET minlevel=54 , maxlevel=55 WHERE entry=10982;
 
+-- grave creatures
+UPDATE creature_template SET minlevel=58, maxlevel=58 WHERE entry IN (12050,12053);
+UPDATE creature_template SET minlevel=59, maxlevel=59 WHERE entry IN (13326,13328);
+UPDATE creature_template SET minlevel=60, maxlevel=60 WHERE entry IN (13331,13332);
+UPDATE creature_template SET minlevel=61, maxlevel=61 WHERE entry IN (13422,13421);
+-- spiritguides
+UPDATE creature_template SET minlevel=60, maxlevel=60 WHERE entry IN (13116,13117);
+-- bowman
+UPDATE creature_template SET minlevel=59, maxlevel=60 WHERE entry IN (13359,13358);
+
+-- set as elites lvl 60
+-- Dun Baldar North Marshal 14762
+-- Dun Baldar South Marshal 14763
+-- Icewing Marshal          14764
+-- Stonehearth Marshal      14765
+UPDATE creature_template SET minlevel=60, maxlevel=60, rank=1, faction_A=1216, faction_H=1216 WHERE entry IN (14762, 14763, 14764, 14765);
+-- set as elites lvl 60
+-- East Frostwolf Warmaster 14772
+-- Iceblood Warmaster       14773
+-- Tower Point Warmaster    14776
+-- West Frostwolf Warmaster 14777
+UPDATE creature_template SET minlevel=60, maxlevel=60, rank=1, faction_A=1214, faction_H=1214 WHERE entry IN (14772, 14773, 14776, 14777);
+DROP TABLE IF EXISTS `creature_battleground`;
+CREATE TABLE `creature_battleground` (
+    `guid` int(10) unsigned NOT NULL COMMENT 'Creature\'s GUID',
+    `eventIndex` tinyint(3) unsigned NOT NULL,
+    PRIMARY KEY  (`guid`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='Creature battleground indexing system';
+
+DELETE FROM creature_battleground WHERE guid=( SELECT guid FROM creature WHERE map=30 );
 DELETE FROM creature WHERE map=30;
 INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(2225,30,-1235.31, -340.777, 60.5088, 3.31613);
 INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(3343,30,-1244.02, -323.795, 61.0485, 5.21853);
@@ -317,6 +348,459 @@ INSERT INTO creature(id,map,position_x,position_y,position_z,orientation)
 VALUES(14772,30,-1378.37, -228.614, 99.3546, 5.38565);
 INSERT INTO creature(id,map,position_x,position_y,position_z,orientation)
 VALUES(14777,30,-1358.02, -228.998, 98.868, 3.87768);
+
+
+-- hack for herald, if no alliance has joined:
+INSERT INTO creature VALUES (143817,11997,30,1,1,0,0,-1539.03,-763.518,-0.000621079,1.17101,25,0,0,3000,0,0,0);
+-- on official server i think they use another (invisible) creature for yelling
+-- but at the place where i spawned this creature it's the same like invisible
+-- (i only hope that the creature will now be loaded after horde enters
+    -- graves
+    -- firstaid
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(12050,30,635.17,-29.5594,46.5056,4.81711);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(12050,30,642.488,-32.9437,46.365,4.67748);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(12050,30,642.326,-27.9442,46.9211,4.59022);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(12050,30,635.945,-33.6171,45.7164,4.97419);
+INSERT INTO creature_battleground (guid,eventIndex) SELECT guid, 2 FROM creature ORDER BY guid DESC LIMIT 4;
+
+    -- stormpike
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(12050,30,669.272,-297.304,30.291,4.66604);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(12050,30,674.08,-292.328,30.4817,0.0918785);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(12050,30,667.01,-288.532,29.8809,1.81583);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(12050,30,664.153,-294.042,30.2851,3.28531);
+INSERT INTO creature_battleground (guid,eventIndex) SELECT guid, 6 FROM creature ORDER BY guid DESC LIMIT 4;
+    -- stone
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(12050,30,81.7027,-406.135,47.7843,0.598464);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(12050,30,78.1431,-409.215,48.0401,5.05953);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(12050,30,73.4135,-407.035,46.7527,3.34736);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(12050,30,78.2258,-401.859,46.4202,2.05852);
+INSERT INTO creature_battleground (guid,eventIndex) SELECT guid, 10 FROM creature ORDER BY guid DESC LIMIT 4;
+    -- snowfall
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(12050,30,-207.412,-110.616,78.7959,2.43251);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(12050,30,-197.95,-112.205,78.5686,6.22441);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(12050,30,-202.709,-116.829,78.4358,5.13742);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(12050,30,-202.059,-108.314,78.5783,5.91968);
+INSERT INTO creature_battleground (guid,eventIndex) SELECT guid, 14 FROM creature ORDER BY guid DESC LIMIT 4;
+    -- ice
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(12050,30,-615.501,-393.802,60.4299,3.06147);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(12050,30,-608.513,-392.717,62.5724,2.06323);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(12050,30,-609.769,-400.072,60.7174,5.22367);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(12050,30,-616.093,-398.293,60.5628,3.73613);
+INSERT INTO creature_battleground (guid,eventIndex) SELECT guid, 18 FROM creature ORDER BY guid DESC LIMIT 4;
+    -- frost
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(12050,30,-1077.7,-340.21,55.4682,6.25569);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(12050,30,-1082.74,-333.821,54.7962,2.05459);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(12050,30,-1090.66,-341.267,54.6768,3.27746);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(12050,30,-1081.58,-344.63,55.256,4.75636);
+INSERT INTO creature_battleground (guid,eventIndex) SELECT guid, 22 FROM creature ORDER BY guid DESC LIMIT 4;
+    -- frost hut
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(12050,30,-1408.95,-311.69,89.2536,4.49954);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(12050,30,-1407.15,-305.323,89.1993,2.86827);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(12050,30,-1400.64,-304.3,89.7008,1.0595);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(12050,30,-1400.4,-311.35,89.3028,4.99434);
+INSERT INTO creature_battleground (guid,eventIndex) SELECT guid, 26 FROM creature ORDER BY guid DESC LIMIT 4;
+
+    -- graves
+    -- firstaid
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13326,30,635.17,-29.5594,46.5056,4.81711);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13326,30,642.488,-32.9437,46.365,4.67748);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13326,30,642.326,-27.9442,46.9211,4.59022);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13326,30,635.945,-33.6171,45.7164,4.97419);
+INSERT INTO creature_battleground (guid,eventIndex) SELECT guid, 2 FROM creature ORDER BY guid DESC LIMIT 4;
+    -- stormpike
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13326,30,669.272,-297.304,30.291,4.66604);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13326,30,674.08,-292.328,30.4817,0.0918785);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13326,30,667.01,-288.532,29.8809,1.81583);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13326,30,664.153,-294.042,30.2851,3.28531);
+INSERT INTO creature_battleground (guid,eventIndex) SELECT guid, 6 FROM creature ORDER BY guid DESC LIMIT 4;
+    -- stone
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13326,30,81.7027,-406.135,47.7843,0.598464);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13326,30,78.1431,-409.215,48.0401,5.05953);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13326,30,73.4135,-407.035,46.7527,3.34736);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13326,30,78.2258,-401.859,46.4202,2.05852);
+INSERT INTO creature_battleground (guid,eventIndex) SELECT guid, 10 FROM creature ORDER BY guid DESC LIMIT 4;
+    -- snowfall
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13326,30,-207.412,-110.616,78.7959,2.43251);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13326,30,-197.95,-112.205,78.5686,6.22441);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13326,30,-202.709,-116.829,78.4358,5.13742);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13326,30,-202.059,-108.314,78.5783,5.91968);
+INSERT INTO creature_battleground (guid,eventIndex) SELECT guid, 14 FROM creature ORDER BY guid DESC LIMIT 4;
+    -- ice
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13326,30,-615.501,-393.802,60.4299,3.06147);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13326,30,-608.513,-392.717,62.5724,2.06323);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13326,30,-609.769,-400.072,60.7174,5.22367);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13326,30,-616.093,-398.293,60.5628,3.73613);
+INSERT INTO creature_battleground (guid,eventIndex) SELECT guid, 18 FROM creature ORDER BY guid DESC LIMIT 4;
+    -- frost
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13326,30,-1077.7,-340.21,55.4682,6.25569);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13326,30,-1082.74,-333.821,54.7962,2.05459);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13326,30,-1090.66,-341.267,54.6768,3.27746);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13326,30,-1081.58,-344.63,55.256,4.75636);
+INSERT INTO creature_battleground (guid,eventIndex) SELECT guid, 22 FROM creature ORDER BY guid DESC LIMIT 4;
+    -- frost hut
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13326,30,-1408.95,-311.69,89.2536,4.49954);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13326,30,-1407.15,-305.323,89.1993,2.86827);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13326,30,-1400.64,-304.3,89.7008,1.0595);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13326,30,-1400.4,-311.35,89.3028,4.99434);
+INSERT INTO creature_battleground (guid,eventIndex) SELECT guid, 26 FROM creature ORDER BY guid DESC LIMIT 4;
+
+    -- graves
+    -- firstaid
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13331,30,635.17,-29.5594,46.5056,4.81711);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13331,30,642.488,-32.9437,46.365,4.67748);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13331,30,642.326,-27.9442,46.9211,4.59022);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13331,30,635.945,-33.6171,45.7164,4.97419);
+INSERT INTO creature_battleground (guid,eventIndex) SELECT guid, 2 FROM creature ORDER BY guid DESC LIMIT 4;
+    -- stormpike
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13331,30,669.272,-297.304,30.291,4.66604);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13331,30,674.08,-292.328,30.4817,0.0918785);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13331,30,667.01,-288.532,29.8809,1.81583);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13331,30,664.153,-294.042,30.2851,3.28531);
+INSERT INTO creature_battleground (guid,eventIndex) SELECT guid, 6 FROM creature ORDER BY guid DESC LIMIT 4;
+    -- stone
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13331,30,81.7027,-406.135,47.7843,0.598464);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13331,30,78.1431,-409.215,48.0401,5.05953);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13331,30,73.4135,-407.035,46.7527,3.34736);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13331,30,78.2258,-401.859,46.4202,2.05852);
+INSERT INTO creature_battleground (guid,eventIndex) SELECT guid, 10 FROM creature ORDER BY guid DESC LIMIT 4;
+    -- snowfall
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13331,30,-207.412,-110.616,78.7959,2.43251);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13331,30,-197.95,-112.205,78.5686,6.22441);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13331,30,-202.709,-116.829,78.4358,5.13742);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13331,30,-202.059,-108.314,78.5783,5.91968);
+INSERT INTO creature_battleground (guid,eventIndex) SELECT guid, 14 FROM creature ORDER BY guid DESC LIMIT 4;
+    -- ice
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13331,30,-615.501,-393.802,60.4299,3.06147);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13331,30,-608.513,-392.717,62.5724,2.06323);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13331,30,-609.769,-400.072,60.7174,5.22367);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13331,30,-616.093,-398.293,60.5628,3.73613);
+INSERT INTO creature_battleground (guid,eventIndex) SELECT guid, 18 FROM creature ORDER BY guid DESC LIMIT 4;
+    -- frost
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13331,30,-1077.7,-340.21,55.4682,6.25569);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13331,30,-1082.74,-333.821,54.7962,2.05459);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13331,30,-1090.66,-341.267,54.6768,3.27746);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13331,30,-1081.58,-344.63,55.256,4.75636);
+INSERT INTO creature_battleground (guid,eventIndex) SELECT guid, 22 FROM creature ORDER BY guid DESC LIMIT 4;
+    -- frost hut
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13331,30,-1408.95,-311.69,89.2536,4.49954);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13331,30,-1407.15,-305.323,89.1993,2.86827);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13331,30,-1400.64,-304.3,89.7008,1.0595);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13331,30,-1400.4,-311.35,89.3028,4.99434);
+INSERT INTO creature_battleground (guid,eventIndex) SELECT guid, 26 FROM creature ORDER BY guid DESC LIMIT 4;
+
+    -- graves
+    -- firstaid
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13422,30,635.17,-29.5594,46.5056,4.81711);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13422,30,642.488,-32.9437,46.365,4.67748);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13422,30,642.326,-27.9442,46.9211,4.59022);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13422,30,635.945,-33.6171,45.7164,4.97419);
+INSERT INTO creature_battleground (guid,eventIndex) SELECT guid, 2 FROM creature ORDER BY guid DESC LIMIT 4;
+    -- stormpike
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13422,30,669.272,-297.304,30.291,4.66604);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13422,30,674.08,-292.328,30.4817,0.0918785);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13422,30,667.01,-288.532,29.8809,1.81583);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13422,30,664.153,-294.042,30.2851,3.28531);
+INSERT INTO creature_battleground (guid,eventIndex) SELECT guid, 6 FROM creature ORDER BY guid DESC LIMIT 4;
+    -- stone
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13422,30,81.7027,-406.135,47.7843,0.598464);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13422,30,78.1431,-409.215,48.0401,5.05953);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13422,30,73.4135,-407.035,46.7527,3.34736);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13422,30,78.2258,-401.859,46.4202,2.05852);
+INSERT INTO creature_battleground (guid,eventIndex) SELECT guid, 10 FROM creature ORDER BY guid DESC LIMIT 4;
+    -- snowfall
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13422,30,-207.412,-110.616,78.7959,2.43251);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13422,30,-197.95,-112.205,78.5686,6.22441);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13422,30,-202.709,-116.829,78.4358,5.13742);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13422,30,-202.059,-108.314,78.5783,5.91968);
+INSERT INTO creature_battleground (guid,eventIndex) SELECT guid, 14 FROM creature ORDER BY guid DESC LIMIT 4;
+    -- ice
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13422,30,-615.501,-393.802,60.4299,3.06147);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13422,30,-608.513,-392.717,62.5724,2.06323);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13422,30,-609.769,-400.072,60.7174,5.22367);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13422,30,-616.093,-398.293,60.5628,3.73613);
+INSERT INTO creature_battleground (guid,eventIndex) SELECT guid, 18 FROM creature ORDER BY guid DESC LIMIT 4;
+    -- frost
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13422,30,-1077.7,-340.21,55.4682,6.25569);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13422,30,-1082.74,-333.821,54.7962,2.05459);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13422,30,-1090.66,-341.267,54.6768,3.27746);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13422,30,-1081.58,-344.63,55.256,4.75636);
+INSERT INTO creature_battleground (guid,eventIndex) SELECT guid, 22 FROM creature ORDER BY guid DESC LIMIT 4;
+    -- frost hut
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13422,30,-1408.95,-311.69,89.2536,4.49954);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13422,30,-1407.15,-305.323,89.1993,2.86827);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13422,30,-1400.64,-304.3,89.7008,1.0595);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13422,30,-1400.4,-311.35,89.3028,4.99434);
+INSERT INTO creature_battleground (guid,eventIndex) SELECT guid, 26 FROM creature ORDER BY guid DESC LIMIT 4;
+
+    -- graves
+    -- firstaid
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(12053,30,635.17,-29.5594,46.5056,4.81711);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(12053,30,642.488,-32.9437,46.365,4.67748);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(12053,30,642.326,-27.9442,46.9211,4.59022);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(12053,30,635.945,-33.6171,45.7164,4.97419);
+INSERT INTO creature_battleground (guid,eventIndex) SELECT guid, 4 FROM creature ORDER BY guid DESC LIMIT 4;
+    -- stormpike
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(12053,30,669.272,-297.304,30.291,4.66604);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(12053,30,674.08,-292.328,30.4817,0.0918785);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(12053,30,667.01,-288.532,29.8809,1.81583);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(12053,30,664.153,-294.042,30.2851,3.28531);
+INSERT INTO creature_battleground (guid,eventIndex) SELECT guid, 8 FROM creature ORDER BY guid DESC LIMIT 4;
+    -- stone
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(12053,30,81.7027,-406.135,47.7843,0.598464);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(12053,30,78.1431,-409.215,48.0401,5.05953);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(12053,30,73.4135,-407.035,46.7527,3.34736);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(12053,30,78.2258,-401.859,46.4202,2.05852);
+INSERT INTO creature_battleground (guid,eventIndex) SELECT guid, 12 FROM creature ORDER BY guid DESC LIMIT 4;
+    -- snowfall
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(12053,30,-207.412,-110.616,78.7959,2.43251);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(12053,30,-197.95,-112.205,78.5686,6.22441);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(12053,30,-202.709,-116.829,78.4358,5.13742);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(12053,30,-202.059,-108.314,78.5783,5.91968);
+INSERT INTO creature_battleground (guid,eventIndex) SELECT guid, 16 FROM creature ORDER BY guid DESC LIMIT 4;
+    -- ice
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(12053,30,-615.501,-393.802,60.4299,3.06147);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(12053,30,-608.513,-392.717,62.5724,2.06323);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(12053,30,-609.769,-400.072,60.7174,5.22367);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(12053,30,-616.093,-398.293,60.5628,3.73613);
+INSERT INTO creature_battleground (guid,eventIndex) SELECT guid, 20 FROM creature ORDER BY guid DESC LIMIT 4;
+    -- frost
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(12053,30,-1077.7,-340.21,55.4682,6.25569);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(12053,30,-1082.74,-333.821,54.7962,2.05459);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(12053,30,-1090.66,-341.267,54.6768,3.27746);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(12053,30,-1081.58,-344.63,55.256,4.75636);
+INSERT INTO creature_battleground (guid,eventIndex) SELECT guid, 24 FROM creature ORDER BY guid DESC LIMIT 4;
+    -- frost hut
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(12053,30,-1408.95,-311.69,89.2536,4.49954);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(12053,30,-1407.15,-305.323,89.1993,2.86827);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(12053,30,-1400.64,-304.3,89.7008,1.0595);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(12053,30,-1400.4,-311.35,89.3028,4.99434);
+INSERT INTO creature_battleground (guid,eventIndex) SELECT guid, 28 FROM creature ORDER BY guid DESC LIMIT 4;
+
+    -- graves
+    -- firstaid
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13328,30,635.17,-29.5594,46.5056,4.81711);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13328,30,642.488,-32.9437,46.365,4.67748);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13328,30,642.326,-27.9442,46.9211,4.59022);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13328,30,635.945,-33.6171,45.7164,4.97419);
+INSERT INTO creature_battleground (guid,eventIndex) SELECT guid, 4 FROM creature ORDER BY guid DESC LIMIT 4;
+    -- stormpike
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13328,30,669.272,-297.304,30.291,4.66604);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13328,30,674.08,-292.328,30.4817,0.0918785);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13328,30,667.01,-288.532,29.8809,1.81583);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13328,30,664.153,-294.042,30.2851,3.28531);
+INSERT INTO creature_battleground (guid,eventIndex) SELECT guid, 8 FROM creature ORDER BY guid DESC LIMIT 4;
+    -- stone
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13328,30,81.7027,-406.135,47.7843,0.598464);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13328,30,78.1431,-409.215,48.0401,5.05953);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13328,30,73.4135,-407.035,46.7527,3.34736);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13328,30,78.2258,-401.859,46.4202,2.05852);
+INSERT INTO creature_battleground (guid,eventIndex) SELECT guid, 12 FROM creature ORDER BY guid DESC LIMIT 4;
+    -- snowfall
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13328,30,-207.412,-110.616,78.7959,2.43251);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13328,30,-197.95,-112.205,78.5686,6.22441);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13328,30,-202.709,-116.829,78.4358,5.13742);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13328,30,-202.059,-108.314,78.5783,5.91968);
+INSERT INTO creature_battleground (guid,eventIndex) SELECT guid, 16 FROM creature ORDER BY guid DESC LIMIT 4;
+    -- ice
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13328,30,-615.501,-393.802,60.4299,3.06147);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13328,30,-608.513,-392.717,62.5724,2.06323);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13328,30,-609.769,-400.072,60.7174,5.22367);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13328,30,-616.093,-398.293,60.5628,3.73613);
+INSERT INTO creature_battleground (guid,eventIndex) SELECT guid, 20 FROM creature ORDER BY guid DESC LIMIT 4;
+    -- frost
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13328,30,-1077.7,-340.21,55.4682,6.25569);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13328,30,-1082.74,-333.821,54.7962,2.05459);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13328,30,-1090.66,-341.267,54.6768,3.27746);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13328,30,-1081.58,-344.63,55.256,4.75636);
+INSERT INTO creature_battleground (guid,eventIndex) SELECT guid, 24 FROM creature ORDER BY guid DESC LIMIT 4;
+    -- frost hut
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13328,30,-1408.95,-311.69,89.2536,4.49954);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13328,30,-1407.15,-305.323,89.1993,2.86827);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13328,30,-1400.64,-304.3,89.7008,1.0595);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13328,30,-1400.4,-311.35,89.3028,4.99434);
+INSERT INTO creature_battleground (guid,eventIndex) SELECT guid, 28 FROM creature ORDER BY guid DESC LIMIT 4;
+
+    -- graves
+    -- firstaid
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13332,30,635.17,-29.5594,46.5056,4.81711);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13332,30,642.488,-32.9437,46.365,4.67748);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13332,30,642.326,-27.9442,46.9211,4.59022);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13332,30,635.945,-33.6171,45.7164,4.97419);
+INSERT INTO creature_battleground (guid,eventIndex) SELECT guid, 4 FROM creature ORDER BY guid DESC LIMIT 4;
+    -- stormpike
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13332,30,669.272,-297.304,30.291,4.66604);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13332,30,674.08,-292.328,30.4817,0.0918785);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13332,30,667.01,-288.532,29.8809,1.81583);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13332,30,664.153,-294.042,30.2851,3.28531);
+INSERT INTO creature_battleground (guid,eventIndex) SELECT guid, 8 FROM creature ORDER BY guid DESC LIMIT 4;
+    -- stone
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13332,30,81.7027,-406.135,47.7843,0.598464);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13332,30,78.1431,-409.215,48.0401,5.05953);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13332,30,73.4135,-407.035,46.7527,3.34736);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13332,30,78.2258,-401.859,46.4202,2.05852);
+INSERT INTO creature_battleground (guid,eventIndex) SELECT guid, 12 FROM creature ORDER BY guid DESC LIMIT 4;
+    -- snowfall
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13332,30,-207.412,-110.616,78.7959,2.43251);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13332,30,-197.95,-112.205,78.5686,6.22441);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13332,30,-202.709,-116.829,78.4358,5.13742);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13332,30,-202.059,-108.314,78.5783,5.91968);
+INSERT INTO creature_battleground (guid,eventIndex) SELECT guid, 16 FROM creature ORDER BY guid DESC LIMIT 4;
+    -- ice
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13332,30,-615.501,-393.802,60.4299,3.06147);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13332,30,-608.513,-392.717,62.5724,2.06323);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13332,30,-609.769,-400.072,60.7174,5.22367);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13332,30,-616.093,-398.293,60.5628,3.73613);
+INSERT INTO creature_battleground (guid,eventIndex) SELECT guid, 20 FROM creature ORDER BY guid DESC LIMIT 4;
+    -- frost
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13332,30,-1077.7,-340.21,55.4682,6.25569);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13332,30,-1082.74,-333.821,54.7962,2.05459);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13332,30,-1090.66,-341.267,54.6768,3.27746);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13332,30,-1081.58,-344.63,55.256,4.75636);
+INSERT INTO creature_battleground (guid,eventIndex) SELECT guid, 24 FROM creature ORDER BY guid DESC LIMIT 4;
+    -- frost hut
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13332,30,-1408.95,-311.69,89.2536,4.49954);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13332,30,-1407.15,-305.323,89.1993,2.86827);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13332,30,-1400.64,-304.3,89.7008,1.0595);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13332,30,-1400.4,-311.35,89.3028,4.99434);
+INSERT INTO creature_battleground (guid,eventIndex) SELECT guid, 28 FROM creature ORDER BY guid DESC LIMIT 4;
+
+    -- graves
+    -- firstaid
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13421,30,635.17,-29.5594,46.5056,4.81711);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13421,30,642.488,-32.9437,46.365,4.67748);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13421,30,642.326,-27.9442,46.9211,4.59022);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13421,30,635.945,-33.6171,45.7164,4.97419);
+INSERT INTO creature_battleground (guid,eventIndex) SELECT guid, 4 FROM creature ORDER BY guid DESC LIMIT 4;
+    -- stormpike
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13421,30,669.272,-297.304,30.291,4.66604);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13421,30,674.08,-292.328,30.4817,0.0918785);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13421,30,667.01,-288.532,29.8809,1.81583);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13421,30,664.153,-294.042,30.2851,3.28531);
+INSERT INTO creature_battleground (guid,eventIndex) SELECT guid, 8 FROM creature ORDER BY guid DESC LIMIT 4;
+    -- stone
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13421,30,81.7027,-406.135,47.7843,0.598464);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13421,30,78.1431,-409.215,48.0401,5.05953);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13421,30,73.4135,-407.035,46.7527,3.34736);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13421,30,78.2258,-401.859,46.4202,2.05852);
+INSERT INTO creature_battleground (guid,eventIndex) SELECT guid, 12 FROM creature ORDER BY guid DESC LIMIT 4;
+    -- snowfall
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13421,30,-207.412,-110.616,78.7959,2.43251);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13421,30,-197.95,-112.205,78.5686,6.22441);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13421,30,-202.709,-116.829,78.4358,5.13742);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13421,30,-202.059,-108.314,78.5783,5.91968);
+INSERT INTO creature_battleground (guid,eventIndex) SELECT guid, 16 FROM creature ORDER BY guid DESC LIMIT 4;
+    -- ice
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13421,30,-615.501,-393.802,60.4299,3.06147);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13421,30,-608.513,-392.717,62.5724,2.06323);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13421,30,-609.769,-400.072,60.7174,5.22367);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13421,30,-616.093,-398.293,60.5628,3.73613);
+INSERT INTO creature_battleground (guid,eventIndex) SELECT guid, 20 FROM creature ORDER BY guid DESC LIMIT 4;
+    -- frost
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13421,30,-1077.7,-340.21,55.4682,6.25569);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13421,30,-1082.74,-333.821,54.7962,2.05459);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13421,30,-1090.66,-341.267,54.6768,3.27746);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13421,30,-1081.58,-344.63,55.256,4.75636);
+INSERT INTO creature_battleground (guid,eventIndex) SELECT guid, 24 FROM creature ORDER BY guid DESC LIMIT 4;
+    -- frost hut
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13421,30,-1408.95,-311.69,89.2536,4.49954);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13421,30,-1407.15,-305.323,89.1993,2.86827);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13421,30,-1400.64,-304.3,89.7008,1.0595);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13421,30,-1400.4,-311.35,89.3028,4.99434);
+INSERT INTO creature_battleground (guid,eventIndex) SELECT guid, 28 FROM creature ORDER BY guid DESC LIMIT 4;
+-- give those creatures randommovement type
+UPDATE creature SET movementtype=1 WHERE id IN (12050,13326,13331,13422,12053,13328,13332,13421);
+
+
+
+-- spiritguides
+-- alliance
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13116,30,643.000000,44.000000,69.740196,-0.001854);
+INSERT INTO creature_battleground (guid,eventIndex) SELECT guid, 2 FROM creature ORDER BY guid DESC LIMIT 1;
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13116,30,676.000000,-374.000000,30.000000,-0.001854);
+INSERT INTO creature_battleground (guid,eventIndex) SELECT guid, 6 FROM creature ORDER BY guid DESC LIMIT 1;
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13116,30,73.417755,-496.433105,48.731918,-0.001854);
+INSERT INTO creature_battleground (guid,eventIndex) SELECT guid, 10 FROM creature ORDER BY guid DESC LIMIT 1;
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13116,30,-157.409195,31.206272,77.050598,-0.001854);
+INSERT INTO creature_battleground (guid,eventIndex) SELECT guid, 14 FROM creature ORDER BY guid DESC LIMIT 1;
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13116,30,-531.217834,-405.231384,49.551376,-0.001854);
+INSERT INTO creature_battleground (guid,eventIndex) SELECT guid, 18 FROM creature ORDER BY guid DESC LIMIT 1;
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13116,30,-1090.476807,-253.308670,57.672371,-0.001854);
+INSERT INTO creature_battleground (guid,eventIndex) SELECT guid, 22 FROM creature ORDER BY guid DESC LIMIT 1;
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13116,30,-1496.065063,-333.338409,101.134804,-0.001854);
+INSERT INTO creature_battleground (guid,eventIndex) SELECT guid, 26 FROM creature ORDER BY guid DESC LIMIT 1;
+
+-- horde
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13117,30,643.000000,44.000000,69.740196,-0.001854);
+INSERT INTO creature_battleground (guid,eventIndex) SELECT guid, 4 FROM creature ORDER BY guid DESC LIMIT 1;
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13117,30,676.000000,-374.000000,30.000000,-0.001854);
+INSERT INTO creature_battleground (guid,eventIndex) SELECT guid, 8 FROM creature ORDER BY guid DESC LIMIT 1;
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13117,30,73.417755,-496.433105,48.731918,-0.001854);
+INSERT INTO creature_battleground (guid,eventIndex) SELECT guid, 12 FROM creature ORDER BY guid DESC LIMIT 1;
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13117,30,-157.409195,31.206272,77.050598,-0.001854);
+INSERT INTO creature_battleground (guid,eventIndex) SELECT guid, 16 FROM creature ORDER BY guid DESC LIMIT 1;
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13117,30,-531.217834,-405.231384,49.551376,-0.001854);
+INSERT INTO creature_battleground (guid,eventIndex) SELECT guid, 20 FROM creature ORDER BY guid DESC LIMIT 1;
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13117,30,-1090.476807,-253.308670,57.672371,-0.001854);
+INSERT INTO creature_battleground (guid,eventIndex) SELECT guid, 24 FROM creature ORDER BY guid DESC LIMIT 1;
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13117,30,-1496.065063,-333.338409,101.134804,-0.001854);
+INSERT INTO creature_battleground (guid,eventIndex) SELECT guid, 28 FROM creature ORDER BY guid DESC LIMIT 1;
+-- mainspiritguides
+-- a
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13116,30,873.001770,-491.283630,96.541931,-0.001854);
+-- h
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13117,30,-1437.670044,-610.088989,51.161900,-0.001854);
+
+
+    -- towers
+    -- dun south - OK
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13358,30,569.395,-101.064,52.8296,2.34974);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13358,30,574.85,-92.9842,52.5869,3.09325);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13358,30,575.411,-83.597,52.3626,6.26573);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13358,30,571.352,-75.6582,52.479,0.523599);
+INSERT INTO creature_battleground (guid,eventIndex) SELECT guid, 30 FROM creature ORDER BY guid DESC LIMIT 4;
+    -- dun north - OK
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13358,30,668.60,-122.53,64.12,2.34);                        -- not 100% ok
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13358,30,662.253,-129.105,64.1794,2.77507);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13358,30,661.209,-138.877,64.2251,3.38594);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13358,30,665.481,-146.857,64.1271,3.75246);
+INSERT INTO creature_battleground (guid,eventIndex) SELECT guid, 34 FROM creature ORDER BY guid DESC LIMIT 4;
+    -- icewing - OK
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13358,30,225.228,-368.909,56.9983,6.23806);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13358,30,191.36,-369.899,57.1524,3.24631);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13358,30,215.518,-384.019,56.9889,5.09636);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13358,30,199.625,-382.177,56.8691,4.08407);
+INSERT INTO creature_battleground (guid,eventIndex) SELECT guid, 38 FROM creature ORDER BY guid DESC LIMIT 4;
+    -- stone
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13358,30,-172.851,-452.366,40.8725,3.31829);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13358,30,-147.147,-435.053,40.8022,0.599238);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13358,30,-169.456,-440.325,40.985,2.59101);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13358,30,-163.494,-434.904,41.0725,1.84174);
+INSERT INTO creature_battleground (guid,eventIndex) SELECT guid, 42 FROM creature ORDER BY guid DESC LIMIT 4;
+    -- ice - OK
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13359,30,-573.522,-271.854,75.0078,3.9619);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13359,30,-565.616,-269.051,74.9952,5.02655);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13359,30,-562.825,-261.087,74.9898,5.95157);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13359,30,-569.176,-254.446,74.8771,0.820305);
+INSERT INTO creature_battleground (guid,eventIndex) SELECT guid, 48 FROM creature ORDER BY guid DESC LIMIT 4;
+
+    -- towerpoint
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13359,30,-763.04,-371.032,90.7933,5.25979);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13359,30,-759.764,-358.264,90.8681,0.289795);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13359,30,-768.808,-353.056,90.8811,1.52601);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13359,30,-775.944,-362.639,90.8949,2.59573);
+INSERT INTO creature_battleground (guid,eventIndex) SELECT guid, 52 FROM creature ORDER BY guid DESC LIMIT 4;
+    -- frost etower
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13359,30,-1294.13,-313.045,107.328,0.270162);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13359,30,-1306.5,-308.105,113.767,1.78755);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13359,30,-1294.78,-319.966,113.79,5.94545);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13359,30,-1294.83,-312.241,113.799,0.295293);
+INSERT INTO creature_battleground (guid,eventIndex) SELECT guid, 56 FROM creature ORDER BY guid DESC LIMIT 4;
+    -- frost wtower
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13359,30,-1300.96,-275.111,114.058,4.12804);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13359,30,-1302.41,-259.256,114.065,1.67602);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13359,30,-1287.97,-262.087,114.165,6.18264);
+INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(13359,30,-1291.59,-271.166,114.151,5.28257);
+INSERT INTO creature_battleground (guid,eventIndex) SELECT guid, 60 FROM creature ORDER BY guid DESC LIMIT 4;
 INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11603,30,-917.648,-46.8922,77.0872,5.27089);
 INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11603,30,-912.689,-45.4494,76.2277,4.60767);
 INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(11603,30,-905.455,-84.5179,75.3642,3.29867);
@@ -945,6 +1429,22 @@ INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES
 UPDATE creature c, creature_template t SET c.curhealth=t.minhealth WHERE c.map=30 AND c.id=t.entry;
 UPDATE creature c, creature_template t SET c.curmana=t.minmana WHERE c.map=30 AND c.id=t.entry;
 UPDATE creature SET spawndist=0 WHERE MovementType=0 AND map=30;
+
+-- horde and ally captains should never respawn:
+UPDATE creature SET spawntimesecs=86400 where id in (11949,11947);
+-- stonehewer a npc next to van respawns slow
+UPDATE creature SET spawntimesecs=1200 where id in (13816);
+
+-- delete to much reputation-gains from av-creatures
+DELETE FROM creature_onkill_reputation WHERE RewOnKillRepFaction1 IN (729,730) AND RewOnKillRepValue1 > 100;
+DROP TABLE IF EXISTS `gameobject_battleground`;
+CREATE TABLE `gameobject_battleground` (
+    `guid` int(10) unsigned NOT NULL COMMENT 'GameObject\'s GUID',
+    `eventIndex` tinyint(3) unsigned NOT NULL,
+    PRIMARY KEY  (`guid`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='GameObject battleground indexing system';
+
+DELETE FROM gameobject_battleground WHERE guid=( SELECT guid FROM gameobject WHERE map=30 );
 -- following gameobjects are static
 DELETE FROM gameobject WHERE map=30;
 INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (2061,30,-1423.16,-318.436,89.1136,2.35619,60);
@@ -1060,105 +1560,421 @@ INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientati
 INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (178784,30,-947.642,-208.807,77.0101,1.36136,60);
 INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (178784,30,-951.394,-193.695,67.634,0.802851,60);
 
+-- doors
+-- a
+INSERT INTO `gameobject` (id,map,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (180424,30,780.487,-493.024,99.9553,3.0976,60);
+-- h
+INSERT INTO `gameobject` (id,map,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (180424,30,-1375.193,-538.981,55.2824,0.72178, 60);
+INSERT INTO gameobject_battleground(guid,eventIndex) SELECT guid, 0 FROM gameobject ORDER BY guid DESC LIMIT 2;
+    -- dunns
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(179065,30,562.632,-88.1815,61.993,0.383972);
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(179065,30,562.523,-74.5028,37.9474,-0.0523599);
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(179065,30,558.097,-70.9842,52.4876,0.820305);
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(179065,30,578.167,-71.8191,38.1514,2.72271);
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(179065,30,556.028,-94.9242,44.8191,3.05433);
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(179065,30,572.451,-94.3655,37.9443,-1.72788);
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(179065,30,549.263,-79.3645,44.8191,0.436332);
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(179065,30,543.513,-94.4006,52.4819,0.0349066);
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(179065,30,572.149,-93.7862,52.5726,0.541052);
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(179065,30,582.162,-81.2375,37.9216,0.0872665);
+INSERT INTO gameobject_battleground(guid,eventIndex) SELECT guid, 32 FROM gameobject ORDER BY guid DESC LIMIT 10;
+    -- dunn
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(179065,30,664.797,-143.65,64.1784,-0.453786);
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(179065,30,664.505,-139.452,49.6696,-0.0349067);
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(179065,30,676.067,-124.319,49.6726,-1.01229);
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(179065,30,693.004,-144.025,64.1755,2.44346);
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(179065,30,661.175,-117.691,49.645,1.91986);
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(179065,30,684.423,-146.582,63.6662,0.994838);
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(179065,30,682.791,-127.769,62.4155,1.09956);
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(179065,30,674.576,-147.101,56.5425,-1.6057);
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(179065,30,655.719,-126.673,49.8138,2.80998);
+    -- only 8 here TODO missing?
+INSERT INTO gameobject_battleground(guid,eventIndex) SELECT guid, 36 FROM gameobject ORDER BY guid DESC LIMIT 9;
+    -- icew
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(179065,30,231.503,-356.688,42.3704,0.296706);
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(179065,30,224.989,-348.175,42.5607,1.50098);
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(179065,30,205.782,-351.335,56.8998,1.01229);
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(179065,30,196.605,-369.187,56.3914,2.46091);
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(179065,30,210.619,-376.938,49.2677,2.86234);
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(179065,30,209.647,-352.632,42.3959,-0.698132);
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(179065,30,220.65,-368.132,42.3978,-0.2618);
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(179065,30,224.682,-374.031,57.0679,0.541052);
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(179065,30,200.26,-359.968,49.2677,-2.89725);
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(179065,30,196.619,-378.016,56.9131,1.01229);
+INSERT INTO gameobject_battleground(guid,eventIndex) SELECT guid, 40 FROM gameobject ORDER BY guid DESC LIMIT 10;
+    -- stone
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(179065,30,-155.488,-437.356,33.2796,2.60054);
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(179065,30,-163.441,-454.188,33.2796,1.93732);
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(179065,30,-143.977,-445.148,26.4097,-1.8675);
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(179065,30,-135.764,-464.708,26.3823,2.25147);
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(179065,30,-154.076,-466.929,41.0636,-1.8675);
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(179065,30,-149.908,-460.332,26.4083,-2.09439);
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(179065,30,-151.638,-439.521,40.3797,0.436332);
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(179065,30,-131.301,-454.905,26.5771,2.93215);
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(179065,30,-171.291,-444.684,40.9211,2.30383);
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(179065,30,-143.591,-439.75,40.9275,-1.72788);
+INSERT INTO gameobject_battleground(guid,eventIndex) SELECT guid, 44 FROM gameobject ORDER BY guid DESC LIMIT 10;
+    -- iceblood
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(179065,30,-572.667,-267.923,56.8542,2.35619);
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(179065,30,-561.021,-262.689,68.4589,1.37881);
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(179065,30,-572.538,-262.649,88.6197,1.8326);
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(179065,30,-574.77,-251.45,74.9422,-1.18682);
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(179065,30,-578.625,-267.571,68.4696,0.506145);
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(179065,30,-571.476,-257.234,63.3223,3.10669);
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(179065,30,-566.035,-273.907,52.9582,-0.890118);
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(179065,30,-580.948,-259.77,68.4696,1.46608);
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(179065,30,-568.318,-267.1,75.0008,1.01229);
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(179065,30,-559.621,-268.597,52.8986,0.0523599);
+INSERT INTO gameobject_battleground(guid,eventIndex) SELECT guid, 46 FROM gameobject ORDER BY guid DESC LIMIT 10;
+    -- towerp
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(179065,30,-776.072,-368.046,84.3558,2.63545);
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(179065,30,-777.564,-368.521,90.6701,1.72788);
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(179065,30,-765.461,-357.711,90.888,0.314159);
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(179065,30,-768.763,-362.735,104.612,1.81514);
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(179065,30,-760.356,-358.896,84.3558,2.1293);
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(179065,30,-771.967,-352.838,84.3484,1.74533);
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(179065,30,-773.333,-364.653,79.2351,-1.64061);
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(179065,30,-764.109,-366.069,70.0934,0.383972);
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(179065,30,-767.103,-350.737,68.7933,2.80998);
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(179065,30,-760.115,-353.845,68.8633,1.79769);
+INSERT INTO gameobject_battleground(guid,eventIndex) SELECT guid, 50 FROM gameobject ORDER BY guid DESC LIMIT 10;
+    -- froste
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(179065,30,-1304.87,-304.525,91.8366,-0.680679);
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(179065,30,-1301.77,-310.974,95.8252,0.907571);
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(179065,30,-1305.58,-320.625,102.166,-0.558505);
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(179065,30,-1294.27,-323.468,113.893,-1.67552);
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(179065,30,-1302.65,-317.192,127.487,2.30383);
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(179065,30,-1293.89,-313.478,107.328,1.6057);
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(179065,30,-1312.41,-312.999,107.328,1.5708);
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(179065,30,-1311.57,-308.08,91.7666,-1.85005);
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(179065,30,-1314.7,-322.131,107.36,0.645772);
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(179065,30,-1304.6,-310.754,113.859,-0.401426);
+INSERT INTO gameobject_battleground(guid,eventIndex) SELECT guid, 54 FROM gameobject ORDER BY guid DESC LIMIT 10;
+    -- frostw
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(179065,30,-1308.24,-273.26,92.0514,-0.139626);
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(179065,30,-1302.26,-262.858,95.9269,0.418879);
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(179065,30,-1297.28,-267.773,126.756,2.23402);
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(179065,30,-1299.08,-256.89,114.108,-2.44346);
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(179065,30,-1303.41,-268.237,114.151,-1.23918);
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(179065,30,-1304.43,-273.682,107.612,0.244346);
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(179065,30,-1309.53,-265.951,92.1418,-2.49582);
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(179065,30,-1295.55,-263.865,105.033,0.925024);
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(179065,30,-1294.71,-281.466,107.664,-1.50098);
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(179065,30,-1289.69,-259.521,107.612,-2.19912);
+INSERT INTO gameobject_battleground(guid,eventIndex) SELECT guid, 58 FROM gameobject ORDER BY guid DESC LIMIT 10;
+-- a
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(178925,30,553.779,-78.6566,51.9378,-1.22173);               -- dunnbaldar south
+INSERT INTO gameobject_battleground(guid,eventIndex) SELECT guid, 30 FROM gameobject ORDER BY guid DESC LIMIT 1;
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(178925,30,674.001,-143.125,63.6615,0.994838);               -- dunbaldar north
+INSERT INTO gameobject_battleground(guid,eventIndex) SELECT guid, 34 FROM gameobject ORDER BY guid DESC LIMIT 1;
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(178925,30,203.281,-360.366,56.3869,-0.925024);              -- icew
+INSERT INTO gameobject_battleground(guid,eventIndex) SELECT guid, 38 FROM gameobject ORDER BY guid DESC LIMIT 1;
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(178925,30,-152.437,-441.758,40.3982,-1.95477);              -- stone
+INSERT INTO gameobject_battleground(guid,eventIndex) SELECT guid, 42 FROM gameobject ORDER BY guid DESC LIMIT 1;
+-- h
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(178943,30,-571.88,-262.777,75.0087,-0.802851);              -- ice tower
+INSERT INTO gameobject_battleground(guid,eventIndex) SELECT guid, 48 FROM gameobject ORDER BY guid DESC LIMIT 1;
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(178943,30,-768.907,-363.71,90.8949,1.07991);                 -- tower point
+INSERT INTO gameobject_battleground(guid,eventIndex) SELECT guid, 52 FROM gameobject ORDER BY guid DESC LIMIT 1;
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(178943,30,-1302.9,-316.981,113.867,2.00713);                -- frostwolf etower
+INSERT INTO gameobject_battleground(guid,eventIndex) SELECT guid, 56 FROM gameobject ORDER BY guid DESC LIMIT 1;
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(178943,30,-1297.5,-266.767,114.15,3.31044);                  -- frostwolf wtower
+INSERT INTO gameobject_battleground(guid,eventIndex) SELECT guid, 60 FROM gameobject ORDER BY guid DESC LIMIT 1;
+-- a_a
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(178940,30,-571.88,-262.777,75.0087,-0.802851);              -- ice tower
+INSERT INTO gameobject_battleground(guid,eventIndex) SELECT guid, 45 FROM gameobject ORDER BY guid DESC LIMIT 1;
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(178940,30,-768.907,-363.71,90.8949,1.07991);                 -- tower point
+INSERT INTO gameobject_battleground(guid,eventIndex) SELECT guid, 49 FROM gameobject ORDER BY guid DESC LIMIT 1;
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(178940,30,-1302.9,-316.981,113.867,2.00713);                -- frostwolf etower
+INSERT INTO gameobject_battleground(guid,eventIndex) SELECT guid, 53 FROM gameobject ORDER BY guid DESC LIMIT 1;
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(178940,30,-1297.5,-266.767,114.15,3.31044);                  -- frostwolf wtower
+INSERT INTO gameobject_battleground(guid,eventIndex) SELECT guid, 57 FROM gameobject ORDER BY guid DESC LIMIT 1;
+-- h_a
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(179435,30,553.779,-78.6566,51.9378,-1.22173);               -- dunnbaldar south
+INSERT INTO gameobject_battleground(guid,eventIndex) SELECT guid, 31 FROM gameobject ORDER BY guid DESC LIMIT 1;
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(179435,30,674.001,-143.125,63.6615,0.994838);               -- dunbaldar north
+INSERT INTO gameobject_battleground(guid,eventIndex) SELECT guid, 35 FROM gameobject ORDER BY guid DESC LIMIT 1;
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(179435,30,203.281,-360.366,56.3869,-0.925024);              -- icew
+INSERT INTO gameobject_battleground(guid,eventIndex) SELECT guid, 39 FROM gameobject ORDER BY guid DESC LIMIT 1;
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(179435,30,-152.437,-441.758,40.3982,-1.95477);              -- stone
+INSERT INTO gameobject_battleground(guid,eventIndex) SELECT guid, 43 FROM gameobject ORDER BY guid DESC LIMIT 1;
+-- a
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(178927,30,555.848,-84.4151,64.4397,3.12414);                -- duns
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(180421,30,555.848,-84.4151,64.4397,3.12414);                -- duns
+INSERT INTO gameobject_battleground(guid,eventIndex) SELECT guid, 30 FROM gameobject ORDER BY guid DESC LIMIT 2;
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(178927,30,679.339,-136.468,73.9626,-2.16421);               -- dunn
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(180421,30,679.339,-136.468,73.9626,-2.16421);               -- dunn
+INSERT INTO gameobject_battleground(guid,eventIndex) SELECT guid, 34 FROM gameobject ORDER BY guid DESC LIMIT 2;
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(178927,30,208.973,-365.971,66.7409,-0.244346);              -- icew
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(180421,30,208.973,-365.971,66.7409,-0.244346);              -- icew
+INSERT INTO gameobject_battleground(guid,eventIndex) SELECT guid, 38 FROM gameobject ORDER BY guid DESC LIMIT 2;
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(178927,30,-155.832,-449.401,52.7306,0.610865);              -- stone
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(180421,30,-155.832,-449.401,52.7306,0.610865);              -- stone
+INSERT INTO gameobject_battleground(guid,eventIndex) SELECT guid, 42 FROM gameobject ORDER BY guid DESC LIMIT 2;
+-- h
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(178955,30,-572.329,-262.476,88.6496,-0.575959);             -- icetower
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(180422,30,-572.329,-262.476,88.6496,-0.575959);             -- icetower
+INSERT INTO gameobject_battleground(guid,eventIndex) SELECT guid, 48 FROM gameobject ORDER BY guid DESC LIMIT 2;
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(178955,30,-768.199,-363.105,104.537,0.10472);               -- towerp
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(180422,30,-768.199,-363.105,104.537,0.10472);               -- towerp
+INSERT INTO gameobject_battleground(guid,eventIndex) SELECT guid, 52 FROM gameobject ORDER BY guid DESC LIMIT 2;
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(178955,30,-1302.84,-316.582,127.516,0.122173);              -- etower
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(180422,30,-1302.84,-316.582,127.516,0.122173);              -- etower
+INSERT INTO gameobject_battleground(guid,eventIndex) SELECT guid, 56 FROM gameobject ORDER BY guid DESC LIMIT 2;
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(178955,30,-1297.87,-266.762,127.796,0.0698132);             -- wtower
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(180422,30,-1297.87,-266.762,127.796,0.0698132);             -- wtower
+INSERT INTO gameobject_battleground(guid,eventIndex) SELECT guid, 60 FROM gameobject ORDER BY guid DESC LIMIT 2;
+-- aa
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(179446,30,-572.329,-262.476,88.6496,-0.575959);             -- icetower
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(180423,30,-572.329,-262.476,88.6496,-0.575959);             -- icetower
+INSERT INTO gameobject_battleground(guid,eventIndex) SELECT guid, 45 FROM gameobject ORDER BY guid DESC LIMIT 2;
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(179446,30,-768.199,-363.105,104.537,0.10472);               -- towerp
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(180423,30,-768.199,-363.105,104.537,0.10472);               -- towerp
+INSERT INTO gameobject_battleground(guid,eventIndex) SELECT guid, 49 FROM gameobject ORDER BY guid DESC LIMIT 2;
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(179446,30,-1302.84,-316.582,127.516,0.122173);              -- etower
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(180423,30,-1302.84,-316.582,127.516,0.122173);              -- etower
+INSERT INTO gameobject_battleground(guid,eventIndex) SELECT guid, 53 FROM gameobject ORDER BY guid DESC LIMIT 2;
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(179446,30,-1297.87,-266.762,127.796,0.0698132);             -- wtower
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(180423,30,-1297.87,-266.762,127.796,0.0698132);             -- wtower
+INSERT INTO gameobject_battleground(guid,eventIndex) SELECT guid, 57 FROM gameobject ORDER BY guid DESC LIMIT 2;
+-- ha
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(179436,30,555.848,-84.4151,64.4397,3.12414);                -- duns
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(180423,30,555.848,-84.4151,64.4397,3.12414);                -- duns
+INSERT INTO gameobject_battleground(guid,eventIndex) SELECT guid, 31 FROM gameobject ORDER BY guid DESC LIMIT 2;
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(179436,30,679.339,-136.468,73.9626,-2.16421);               -- dunn
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(180423,30,679.339,-136.468,73.9626,-2.16421);               -- dunn
+INSERT INTO gameobject_battleground(guid,eventIndex) SELECT guid, 35 FROM gameobject ORDER BY guid DESC LIMIT 2;
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(179436,30,208.973,-365.971,66.7409,-0.244346);              -- icew
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(180423,30,208.973,-365.971,66.7409,-0.244346);              -- icew
+INSERT INTO gameobject_battleground(guid,eventIndex) SELECT guid, 39 FROM gameobject ORDER BY guid DESC LIMIT 2;
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(179436,30,-155.832,-449.401,52.7306,0.610865);              -- stone
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(180423,30,-155.832,-449.401,52.7306,0.610865);              -- stone
+INSERT INTO gameobject_battleground(guid,eventIndex) SELECT guid, 43 FROM gameobject ORDER BY guid DESC LIMIT 2;
+-- BG_AV_OBJECTID_BANNER_A_B
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(178365,30,638.592,-32.422,46.0608,-1.62316);                -- firstaid station
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(180421,30,638.592,-32.422,46.0608,-1.62316);                -- firstaid station
+INSERT INTO gameobject_battleground(guid,eventIndex) SELECT guid, 2 FROM gameobject ORDER BY guid DESC LIMIT 2;
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(178365,30,669.007,-294.078,30.2909,2.77507);                -- stormpike
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(180421,30,669.007,-294.078,30.2909,2.77507);                -- stormpike
+INSERT INTO gameobject_battleground(guid,eventIndex) SELECT guid, 6 FROM gameobject ORDER BY guid DESC LIMIT 2;
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(178365,30,77.8013,-404.7,46.7549,-0.872665);                -- stone grave
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(180421,30,77.8013,-404.7,46.7549,-0.872665);                -- stone grave
+INSERT INTO gameobject_battleground(guid,eventIndex) SELECT guid, 10 FROM gameobject ORDER BY guid DESC LIMIT 2;
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(178365,30,-202.581,-112.73,78.4876,-0.715585);              -- snowfall
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(180421,30,-202.581,-112.73,78.4876,-0.715585);              -- snowfall
+INSERT INTO gameobject_battleground(guid,eventIndex) SELECT guid, 14 FROM gameobject ORDER BY guid DESC LIMIT 2;
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(178365,30,-611.962,-396.17,60.8351,2.53682);                 -- iceblood grave
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(180421,30,-611.962,-396.17,60.8351,2.53682);                 -- iceblood grave
+INSERT INTO gameobject_battleground(guid,eventIndex) SELECT guid, 18 FROM gameobject ORDER BY guid DESC LIMIT 2;
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(178365,30,-1082.45,-346.823,54.9219,-1.53589);              -- frostwolf grave
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(180421,30,-1082.45,-346.823,54.9219,-1.53589);              -- frostwolf grave
+INSERT INTO gameobject_battleground(guid,eventIndex) SELECT guid, 22 FROM gameobject ORDER BY guid DESC LIMIT 2;
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(178365,30,-1402.21,-307.431,89.4424,0.191986);              -- frostwolf hut
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(180421,30,-1402.21,-307.431,89.4424,0.191986);              -- frostwolf hut
+INSERT INTO gameobject_battleground(guid,eventIndex) SELECT guid, 26 FROM gameobject ORDER BY guid DESC LIMIT 2;
+-- horde
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(178364,30,638.592,-32.422,46.0608,-1.62316);                -- firstaid station
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(180422,30,638.592,-32.422,46.0608,-1.62316);                -- firstaid station
+INSERT INTO gameobject_battleground(guid,eventIndex) SELECT guid, 4 FROM gameobject ORDER BY guid DESC LIMIT 2;
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(178364,30,669.007,-294.078,30.2909,2.77507);                -- stormpike
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(180422,30,669.007,-294.078,30.2909,2.77507);                -- stormpike
+INSERT INTO gameobject_battleground(guid,eventIndex) SELECT guid, 8 FROM gameobject ORDER BY guid DESC LIMIT 2;
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(178364,30,77.8013,-404.7,46.7549,-0.872665);                -- stone grave
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(180422,30,77.8013,-404.7,46.7549,-0.872665);                -- stone grave
+INSERT INTO gameobject_battleground(guid,eventIndex) SELECT guid, 12 FROM gameobject ORDER BY guid DESC LIMIT 2;
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(178364,30,-202.581,-112.73,78.4876,-0.715585);              -- snowfall
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(180422,30,-202.581,-112.73,78.4876,-0.715585);              -- snowfall
+INSERT INTO gameobject_battleground(guid,eventIndex) SELECT guid, 16 FROM gameobject ORDER BY guid DESC LIMIT 2;
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(178364,30,-611.962,-396.17,60.8351,2.53682);                 -- iceblood grave
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(180422,30,-611.962,-396.17,60.8351,2.53682);                 -- iceblood grave
+INSERT INTO gameobject_battleground(guid,eventIndex) SELECT guid, 20 FROM gameobject ORDER BY guid DESC LIMIT 2;
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(178364,30,-1082.45,-346.823,54.9219,-1.53589);              -- frostwolf grave
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(180422,30,-1082.45,-346.823,54.9219,-1.53589);              -- frostwolf grave
+INSERT INTO gameobject_battleground(guid,eventIndex) SELECT guid, 24 FROM gameobject ORDER BY guid DESC LIMIT 2;
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(178364,30,-1402.21,-307.431,89.4424,0.191986);              -- frostwolf hut
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(180422,30,-1402.21,-307.431,89.4424,0.191986);              -- frostwolf hut
+INSERT INTO gameobject_battleground(guid,eventIndex) SELECT guid, 28 FROM gameobject ORDER BY guid DESC LIMIT 2;
+-- a_a
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(179286,30,638.592,-32.422,46.0608,-1.62316);                -- firstaid station
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(180423,30,638.592,-32.422,46.0608,-1.62316);                -- firstaid station
+INSERT INTO gameobject_battleground(guid,eventIndex) SELECT guid, 1 FROM gameobject ORDER BY guid DESC LIMIT 2;
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(179286,30,669.007,-294.078,30.2909,2.77507);                -- stormpike
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(180423,30,669.007,-294.078,30.2909,2.77507);                -- stormpike
+INSERT INTO gameobject_battleground(guid,eventIndex) SELECT guid, 5 FROM gameobject ORDER BY guid DESC LIMIT 2;
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(179286,30,77.8013,-404.7,46.7549,-0.872665);                -- stone grave
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(180423,30,77.8013,-404.7,46.7549,-0.872665);                -- stone grave
+INSERT INTO gameobject_battleground(guid,eventIndex) SELECT guid, 9 FROM gameobject ORDER BY guid DESC LIMIT 2;
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(179286,30,-202.581,-112.73,78.4876,-0.715585);              -- snowfall
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(180423,30,-202.581,-112.73,78.4876,-0.715585);              -- snowfall
+INSERT INTO gameobject_battleground(guid,eventIndex) SELECT guid, 13 FROM gameobject ORDER BY guid DESC LIMIT 2;
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(179286,30,-611.962,-396.17,60.8351,2.53682);                 -- iceblood grave
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(180423,30,-611.962,-396.17,60.8351,2.53682);                 -- iceblood grave
+INSERT INTO gameobject_battleground(guid,eventIndex) SELECT guid, 17 FROM gameobject ORDER BY guid DESC LIMIT 2;
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(179286,30,-1082.45,-346.823,54.9219,-1.53589);              -- frostwolf grave
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(180423,30,-1082.45,-346.823,54.9219,-1.53589);              -- frostwolf grave
+INSERT INTO gameobject_battleground(guid,eventIndex) SELECT guid, 21 FROM gameobject ORDER BY guid DESC LIMIT 2;
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(179286,30,-1402.21,-307.431,89.4424,0.191986);              -- frostwolf hut
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(180423,30,-1402.21,-307.431,89.4424,0.191986);              -- frostwolf hut
+INSERT INTO gameobject_battleground(guid,eventIndex) SELECT guid, 25 FROM gameobject ORDER BY guid DESC LIMIT 2;
+-- h_a
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(179287,30,638.592,-32.422,46.0608,-1.62316);                -- firstaid station
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(180423,30,638.592,-32.422,46.0608,-1.62316);                -- firstaid station
+INSERT INTO gameobject_battleground(guid,eventIndex) SELECT guid, 3 FROM gameobject ORDER BY guid DESC LIMIT 2;
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(179287,30,669.007,-294.078,30.2909,2.77507);                -- stormpike
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(180423,30,669.007,-294.078,30.2909,2.77507);                -- stormpike
+INSERT INTO gameobject_battleground(guid,eventIndex) SELECT guid, 7 FROM gameobject ORDER BY guid DESC LIMIT 2;
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(179287,30,77.8013,-404.7,46.7549,-0.872665);                -- stone grave
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(180423,30,77.8013,-404.7,46.7549,-0.872665);                -- stone grave
+INSERT INTO gameobject_battleground(guid,eventIndex) SELECT guid, 11 FROM gameobject ORDER BY guid DESC LIMIT 2;
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(179287,30,-202.581,-112.73,78.4876,-0.715585);              -- snowfall
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(180423,30,-202.581,-112.73,78.4876,-0.715585);              -- snowfall
+INSERT INTO gameobject_battleground(guid,eventIndex) SELECT guid, 15 FROM gameobject ORDER BY guid DESC LIMIT 2;
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(179287,30,-611.962,-396.17,60.8351,2.53682);                 -- iceblood grave
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(180423,30,-611.962,-396.17,60.8351,2.53682);                 -- iceblood grave
+INSERT INTO gameobject_battleground(guid,eventIndex) SELECT guid, 19 FROM gameobject ORDER BY guid DESC LIMIT 2;
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(179287,30,-1082.45,-346.823,54.9219,-1.53589);              -- frostwolf grave
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(180423,30,-1082.45,-346.823,54.9219,-1.53589);              -- frostwolf grave
+INSERT INTO gameobject_battleground(guid,eventIndex) SELECT guid, 23 FROM gameobject ORDER BY guid DESC LIMIT 2;
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(179287,30,-1402.21,-307.431,89.4424,0.191986);              -- frostwolf hut
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(180423,30,-1402.21,-307.431,89.4424,0.191986);              -- frostwolf hut
+INSERT INTO gameobject_battleground(guid,eventIndex) SELECT guid, 27 FROM gameobject ORDER BY guid DESC LIMIT 2;
 -- snowfall eyecandy:
 -- alliance
 INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (179044,30,-191.153,-129.868,78.5595,-1.25664,60);
 INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (179044,30,-201.282,-134.319,78.6753,-0.942478,60);
 INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (179044,30,-215.981,-91.4101,80.8702,-1.74533,60);
 INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (179044,30,-200.465,-96.418,79.7587,1.36136,60);
+INSERT INTO gameobject_battleground(guid,eventIndex) SELECT guid, 14 FROM gameobject ORDER BY guid DESC LIMIT 4;
 -- alliance assault
 INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (179424,30,-191.153,-129.868,78.5595,-1.25664,60);
 INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (179424,30,-201.282,-134.319,78.6753,-0.942478,60);
 INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (179424,30,-215.981,-91.4101,80.8702,-1.74533,60);
 INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (179424,30,-200.465,-96.418,79.7587,1.36136,60);
+INSERT INTO gameobject_battleground(guid,eventIndex) SELECT guid, 13 FROM gameobject ORDER BY guid DESC LIMIT 4;
 -- horde
 INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (179064,30,-191.153,-129.868,78.5595,-1.25664,60);
 INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (179064,30,-201.282,-134.319,78.6753,-0.942478,60);
 INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (179064,30,-215.981,-91.4101,80.8702,-1.74533,60);
 INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (179064,30,-200.465,-96.418,79.7587,1.36136,60);
+INSERT INTO gameobject_battleground(guid,eventIndex) SELECT guid, 16 FROM gameobject ORDER BY guid DESC LIMIT 4;
 -- horde assault
 INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (179425,30,-191.153,-129.868,78.5595,-1.25664,60);
 INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (179425,30,-201.282,-134.319,78.6753,-0.942478,60);
 INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (179425,30,-215.981,-91.4101,80.8702,-1.74533,60);
 INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (179425,30,-200.465,-96.418,79.7587,1.36136,60);
-delete from mangos_string where entry>10746 and entry<10781;
+INSERT INTO gameobject_battleground(guid,eventIndex) SELECT guid, 15 FROM gameobject ORDER BY guid DESC LIMIT 4;
+
+
+-- neutral banner+aura
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(180418,30,-202.581,-112.73,78.4876,-0.715585);              -- snowfall
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(180423,30,-202.581,-112.73,78.4876,-0.715585);              -- snowfall
+INSERT INTO gameobject_battleground(guid,eventIndex) SELECT guid, 61 FROM gameobject ORDER BY guid DESC LIMIT 2;
+    -- the two buildings of the captains
+    -- alliance
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(179066,30,-64.4987,-289.33,33.4616,-2.82743);
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(179066,30,-5.98025,-326.144,38.8538,0);
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(179066,30,-2.67893,-306.998,33.4165,0);
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(179066,30,-60.25,-309.232,50.2408,-1.46608);
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(179066,30,-48.7941,-266.533,47.7916,2.44346);
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(179065,30,-3.40929,-306.288,33.34,0);
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(179065,30,-48.619,-266.917,47.8168,0);
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(179065,30,-62.9474,-286.212,66.7288,0);
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(179065,30,-5.05132,-325.323,38.8536,0);
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(179065,30,-64.2677,-289.412,33.469,0);
+INSERT INTO gameobject_battleground(guid,eventIndex) SELECT guid, 63 FROM gameobject ORDER BY guid DESC LIMIT 10;
+    -- horde
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(179066,30,-524.276,-199.6,82.8733,-1.46608);
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(179066,30,-518.196,-173.085,102.43,0);
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(179066,30,-500.732,-145.358,88.5337,2.44346);
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(179066,30,-501.084,-150.784,80.8506,0);
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(179066,30,-518.309,-163.963,102.521,2.96706);
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(179065,30,-517.053,-200.429,80.759,0);
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(179065,30,-514.361,-163.864,104.163,0);
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(179065,30,-568.04,-188.707,81.55,0);
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(179065,30,-501.775,-151.581,81.2027,0);
+INSERT INTO gameobject(id,map,position_x,position_y,position_z,orientation) VALUES(179065,30,-509.975,-191.652,83.2978,0);
+INSERT INTO gameobject_battleground(guid,eventIndex) SELECT guid, 64 FROM gameobject ORDER BY guid DESC LIMIT 10;
+UPDATE gameobject SET animprogress=100 WHERE id IN (180424, 178925,178943,178940,179435,178365,178364,179286,179287,180418,179025,179024);
+UPDATE gameobject SET state =1 WHERE id IN ( 180424,178925, 178943, 178940, 179435,178365, 178364, 179286, 179287, 180418,179024, 179025 ) ;
+
+delete from mangos_string where entry>756 and entry<791;
 INSERT INTO mangos_string VALUES
-(10747,'Alliance',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(10748,'Horde',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(10749,'%s was destroyed by the %s!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(10750,'The %s is under attack! If left unchecked, the %s will destroy it!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(10751,'The %s was taken by the %s!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(10752,'The %s was taken by the %s!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(10753,'The %s was taken by the %s!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(10754,'The %s is under attack! If left unchecked, the %s will capture it!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(10755,'The %s has taken the %s! Its supplies will now be used for reinforcements!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(10756,'Irondeep Mine',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(10757,'Coldtooth Mine',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(10758,'Stormpike Aid Station',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(10759,'Dun Baldar South Bunker',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(10760,'Dun Baldar North Bunker',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(10761,'Stormpike Graveyard',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(10762,'Icewing Bunker',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(10763,'Stonehearth Graveyard',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(10764,'Stonehearth Bunker',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(10765,'Snowfall Graveyard',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(10766,'Iceblood Tower',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(10767,'Iceblood Graveyard',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(10768,'Tower Point',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(10769,'Frostwolf Graveyard',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(10770,'East Frostwolf Tower',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(10771,'West Frostwolf Tower',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(10772,'Frostwolf Relief Hut',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(10773,'2 minute until the battle for Alterac Valley begins.',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(10774,'1 minute until the battle for Alterac Valley begins.',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(10775,'30 seconds until the battle for Alterac Valley begins. Prepare yourselves!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(10776,'The battle for Alterac Valley has begun!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(10777,'The Alliance Team is running out of reinforcements!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(10778,'The Horde Team is running out of reinforcements!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(10779,'The Frostwolf General is Dead!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(10780,'The Stormpike General is Dead!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL)
+(757,'Alliance',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(758,'Horde',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(759,'%s was destroyed by the %s!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(760,'The %s is under attack! If left unchecked, the %s will destroy it!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(761,'The %s was taken by the %s!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(762,'The %s was taken by the %s!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(763,'The %s was taken by the %s!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(764,'The %s is under attack! If left unchecked, the %s will capture it!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(765,'The %s has taken the %s! Its supplies will now be used for reinforcements!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(766,'Irondeep Mine',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(767,'Coldtooth Mine',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(768,'Stormpike Aid Station',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(769,'Dun Baldar South Bunker',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(770,'Dun Baldar North Bunker',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(771,'Stormpike Graveyard',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(772,'Icewing Bunker',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(773,'Stonehearth Graveyard',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(774,'Stonehearth Bunker',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(775,'Snowfall Graveyard',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(776,'Iceblood Tower',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(777,'Iceblood Graveyard',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(778,'Tower Point',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(779,'Frostwolf Graveyard',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(780,'East Frostwolf Tower',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(781,'West Frostwolf Tower',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(782,'Frostwolf Relief Hut',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(783,'2 minutes until the battle for Alterac Valley begins.',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(784,'1 minute until the battle for Alterac Valley begins.',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(785,'30 seconds until the battle for Alterac Valley begins. Prepare yourselves!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(786,'The battle for Alterac Valley has begun!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(787,'The Alliance Team is running out of reinforcements!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(788,'The Horde Team is running out of reinforcements!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(789,'The Frostwolf General is Dead!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(790,'The Stormpike General is Dead!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL)
 ;
 
-UPDATE mangos_string SET content_loc3='Allianz' WHERE entry=10747;
-UPDATE mangos_string SET content_loc3='Horde' WHERE entry=10748;
-UPDATE mangos_string SET content_loc3='%s wurde von der %s zerstört!' WHERE entry=10749;
-UPDATE mangos_string SET content_loc3='%s wird angegriffen! Wenn er unbewacht bleibt, wird die %s ihn zerstören!' WHERE entry=10750;
+UPDATE mangos_string SET content_loc3='Allianz' WHERE entry=757;
+UPDATE mangos_string SET content_loc3='Horde' WHERE entry=758;
+UPDATE mangos_string SET content_loc3='%s wurde von der %s zerstört!' WHERE entry=759;
+UPDATE mangos_string SET content_loc3='%s wird angegriffen! Wenn er unbewacht bleibt, wird die %s ihn zerstören!' WHERE entry=760;
 -- Wenn _sie_ unbewacht bleibt wird allianz _sie_ TODO: don't store towers and gravenames, store complete strings with the names inside it, else i don't know how to implement this feature
 
-UPDATE mangos_string SET content_loc3='%s wurde von der %s erobert!' WHERE entry=10751;
-UPDATE mangos_string SET content_loc3='%s wurde von der %s erobert!' WHERE entry=10752;
-UPDATE mangos_string SET content_loc3='%s wurde von der %s erobert!' WHERE entry=10753;
+UPDATE mangos_string SET content_loc3='%s wurde von der %s erobert!' WHERE entry=761;
+UPDATE mangos_string SET content_loc3='%s wurde von der %s erobert!' WHERE entry=762;
+UPDATE mangos_string SET content_loc3='%s wurde von der %s erobert!' WHERE entry=763;
 
-UPDATE mangos_string SET content_loc3='%s wird angegriffen! Wenn er unbewacht bleibt, wird die %s ihn erobern!' WHERE entry=10754;
+UPDATE mangos_string SET content_loc3='%s wird angegriffen! Wenn er unbewacht bleibt, wird die %s ihn erobern!' WHERE entry=764;
 -- Wenn _sie_ unbewacht bleibt ... TODO...
 
-UPDATE mangos_string SET content_loc3='Die %s hat die %s eingenommen! Die dort befindlichen Vorräte werden zur Verstärkung eingesetzt!' WHERE entry=10755;
+UPDATE mangos_string SET content_loc3='Die %s hat die %s eingenommen! Die dort befindlichen Vorräte werden zur Verstärkung eingesetzt!' WHERE entry=765;
 
-UPDATE mangos_string SET content_loc3='Eisenschachtmine' WHERE entry=10756;
-UPDATE mangos_string SET content_loc3='Eisbeißermine' WHERE entry=10757;
-UPDATE mangos_string SET content_loc3='Das Lazarett der Sturmlanzen' WHERE entry=10758;
-UPDATE mangos_string SET content_loc3='Der Südbunker von Dun Baldar' WHERE entry=10759;
-UPDATE mangos_string SET content_loc3='Der Nordbunker von Dun Baldar' WHERE entry=10760;
-UPDATE mangos_string SET content_loc3='Der Friedhof der Sturmlanzen' WHERE entry=10761;
-UPDATE mangos_string SET content_loc3='Der Eisschwingenbunker' WHERE entry=10762;
-UPDATE mangos_string SET content_loc3='Der Steinbruchfriedhof' WHERE entry=10763;
-UPDATE mangos_string SET content_loc3='Der Steinbruchbunker' WHERE entry=10764;
-UPDATE mangos_string SET content_loc3='Der Schneewehenfriedhof' WHERE entry=10765;
-UPDATE mangos_string SET content_loc3='Der Eisblutturm' WHERE entry=10766;
-UPDATE mangos_string SET content_loc3='Der Eisblutfriedhof' WHERE entry=10767;
-UPDATE mangos_string SET content_loc3='Die Turmstellung' WHERE entry=10768;
-UPDATE mangos_string SET content_loc3='Der Friedhof der Frostwölfe' WHERE entry=10769;
-UPDATE mangos_string SET content_loc3='Der östliche Frostwolfturm' WHERE entry=10770;
-UPDATE mangos_string SET content_loc3='Der westliche Frostwolfturm' WHERE entry=10771;
-UPDATE mangos_string SET content_loc3='Die Heilerhütte der Frostwölfe' WHERE entry=10772;
-UPDATE mangos_string SET content_loc3='Der Kampf um das Alteractal beginnt in 2 Minuten.' WHERE entry=10773;
-UPDATE mangos_string SET content_loc3='Der Kampf um das Alteractal beginnt in 1 Minute.' WHERE entry=10774;
-UPDATE mangos_string SET content_loc3='Der Kampf um das Alteractal beginnt in 30 Sekunden.' WHERE entry=10775;
-UPDATE mangos_string SET content_loc3='Der Kampf um das Alteractal hat begonnen!' WHERE entry=10776;
-UPDATE mangos_string SET content_loc3='Die Allianz hat nurnoch wenige Verstärkungspunkte' WHERE entry=10777; -- TODO find right msg
-UPDATE mangos_string SET content_loc3='Die Horde hat nurnoch wenige Verstärkungspunkte' WHERE entry=10778; -- TODO same here
-UPDATE mangos_string SET content_loc3='Der General der Allianz ist tot!' WHERE entry=10779;
-UPDATE mangos_string SET content_loc3='Der General der Horde ist tot!' WHERE entry=10780;
+UPDATE mangos_string SET content_loc3='Eisenschachtmine' WHERE entry=766;
+UPDATE mangos_string SET content_loc3='Eisbeißermine' WHERE entry=767;
+UPDATE mangos_string SET content_loc3='Das Lazarett der Sturmlanzen' WHERE entry=768;
+UPDATE mangos_string SET content_loc3='Der Südbunker von Dun Baldar' WHERE entry=769;
+UPDATE mangos_string SET content_loc3='Der Nordbunker von Dun Baldar' WHERE entry=770;
+UPDATE mangos_string SET content_loc3='Der Friedhof der Sturmlanzen' WHERE entry=771;
+UPDATE mangos_string SET content_loc3='Der Eisschwingenbunker' WHERE entry=772;
+UPDATE mangos_string SET content_loc3='Der Steinbruchfriedhof' WHERE entry=773;
+UPDATE mangos_string SET content_loc3='Der Steinbruchbunker' WHERE entry=774;
+UPDATE mangos_string SET content_loc3='Der Schneewehenfriedhof' WHERE entry=775;
+UPDATE mangos_string SET content_loc3='Der Eisblutturm' WHERE entry=776;
+UPDATE mangos_string SET content_loc3='Der Eisblutfriedhof' WHERE entry=777;
+UPDATE mangos_string SET content_loc3='Die Turmstellung' WHERE entry=778;
+UPDATE mangos_string SET content_loc3='Der Friedhof der Frostwölfe' WHERE entry=779;
+UPDATE mangos_string SET content_loc3='Der östliche Frostwolfturm' WHERE entry=780;
+UPDATE mangos_string SET content_loc3='Der westliche Frostwolfturm' WHERE entry=781;
+UPDATE mangos_string SET content_loc3='Die Heilerhütte der Frostwölfe' WHERE entry=782;
+UPDATE mangos_string SET content_loc3='Der Kampf um das Alteractal beginnt in 2 Minuten.' WHERE entry=783;
+UPDATE mangos_string SET content_loc3='Der Kampf um das Alteractal beginnt in 1 Minute.' WHERE entry=784;
+UPDATE mangos_string SET content_loc3='Der Kampf um das Alteractal beginnt in 30 Sekunden.' WHERE entry=785;
+UPDATE mangos_string SET content_loc3='Der Kampf um das Alteractal hat begonnen!' WHERE entry=786;
+UPDATE mangos_string SET content_loc3='Die Allianz hat nurnoch wenige Verstärkungspunkte' WHERE entry=787; -- TODO find right msg
+UPDATE mangos_string SET content_loc3='Die Horde hat nurnoch wenige Verstärkungspunkte' WHERE entry=788; -- TODO same here
+UPDATE mangos_string SET content_loc3='Der General der Allianz ist tot!' WHERE entry=789;
+UPDATE mangos_string SET content_loc3='Der General der Horde ist tot!' WHERE entry=790;
 
 
 -- CHAT_MSG_BG_SYSTEM_ALLIANCE', 'txt': '$N hat den Schneewehenfriedhof besetzt! Wenn niemand eingreift, erlangt die Allianz die Kontrolle \xc3\xbcber ihn
