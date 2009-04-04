@@ -12,6 +12,9 @@
 #define DATA_EREDAR_TWINS_EVENT     3
 #define DATA_MURU_EVENT             4
 #define DATA_KILJAEDEN_EVENT        5
+#define DATA_ALYTHESS_EVENT         6
+#define DATA_SACROLASH_EVENT        7
+#define DATA_ENTROPIUS_EVENT        8
 
 /*** Creatures ***/
 #define DATA_KALECGOS_DRAGON        6
@@ -38,5 +41,9 @@
 #define DATA_GATE_5                 23
 
 /*** Misc ***/
+#define DATA_PLAYER_SPECTRAL_REALM  26
+#define DATA_SET_SPECTRAL_CHECK     27
+#define DATA_RANDOM_SPECTRAL_PLAYER 28
+#define DATA_INST_EJECT_PLAYERS     29
 #endif
 

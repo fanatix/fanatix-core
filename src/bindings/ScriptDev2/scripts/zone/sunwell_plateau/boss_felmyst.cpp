@@ -24,6 +24,16 @@ EndScriptData */
 #include "def_sunwell_plateau.h"
 #include "Player.h"
 
+#define SAY_FELMYST_BIRTH                      -1580036
+#define SAY_FELMYST_KILL1                      -1580037
+#define SAY_FELMYST_KILL2                      -1580038
+#define SAY_FELMYST_BREATH                     -1580039
+#define SAY_FELMYST_TAKEOFF                    -1580040
+#define SAY_FELMYST_BERSERK                    -1580041
+#define SAY_FELMYST_DEATH                      -1580042
+
+#define SAY_FELMYST_KALECGOS                   -1580043
+
 // AURA
 #define AURA_SUNWELL_RADIANCE           45769
 #define AURA_NOXIOUS_FUMES              47002
@@ -35,63 +45,44 @@ EndScriptData */
 #define SPELL_ENCAPSULATE_EFFECT        45665
 #define SPELL_ENCAPSULATE_AOE           45662
 // FLIGHT PHASE SPELL
-#define SPELL_VAPOR_SELECT      45391   // fel to player, force cast 45392, 50000y selete target
-#define SPELL_VAPOR_SUMMON      45392   // player summon vapor, radius around caster, 5y,
-#define SPELL_VAPOR_FORCE       45388   // vapor to fel, force cast 45389
-#define SPELL_VAPOR_CHANNEL     45389   // fel to vapor, green beam channel
-#define SPELL_VAPOR_TRIGGER     45411   // linked to 45389, vapor to self, trigger 45410 and 46931
-#define SPELL_VAPOR_DAMAGE      46931   // vapor damage, 4000
-#define SPELL_TRAIL_SUMMON      45410   // vapor summon trail
-#define SPELL_TRAIL_TRIGGER     45399   // trail to self, trigger 45402
-#define SPELL_TRAIL_DAMAGE      45402   // trail damage, 2000 + 2000 dot
-#define SPELL_DEAD_SUMMON       45400   // summon blazing dead, 5min
-#define SPELL_DEAD_PASSIVE      45415
-#define SPELL_FOG_BREATH        45495   // fel to self, speed burst
-#define SPELL_FOG_TRIGGER       45582   // fog to self, trigger 45782
-#define SPELL_FOG_FORCE         45782   // fog to player, force cast 45714
-#define SPELL_FOG_INFORM        45714   // player let fel cast 45717, script effect
-#define SPELL_FOG_CHARM         45717   // fel to player
-#define SPELL_FOG_CHARM2        45726   // link to 45717
+#define SPELL_VAPOR_SELECT              45391   // fel to player, force cast 45392, 50000y selete target
+#define SPELL_VAPOR_SUMMON              45392   // player summon vapor, radius around caster, 5y, 
+#define SPELL_VAPOR_FORCE               45388   // vapor to fel, force cast 45389
+#define SPELL_VAPOR_CHANNEL             45389   // fel to vapor, green beam channel
+#define SPELL_VAPOR_TRIGGER             45411   // linked to 45389, vapor to self, trigger 45410 and 46931
+#define SPELL_VAPOR_DAMAGE              46931   // vapor damage, 4000
+#define SPELL_TRAIL_SUMMON              45410   // vapor summon trail
+#define SPELL_TRAIL_TRIGGER             45399   // trail to self, trigger 45402
+#define SPELL_TRAIL_DAMAGE              45402   // trail damage, 2000 + 2000 dot
+#define SPELL_DEAD_SUMMON               45400   // summon blazing dead, 5min
+#define SPELL_DEAD_PASSIVE              45415
+#define SPELL_FOG_BREATH                45495   // fel to self, speed burst
+#define SPELL_FOG_TRIGGER               45582   // fog to self, trigger 45782
+#define SPELL_FOG_FORCE                 45782   // fog to player, force cast 45714
+#define SPELL_FOG_INFORM                45714   // player let fel cast 45717, script effect
+#define SPELL_FOG_CHARM                 45717   // fel to player
+#define SPELL_FOG_CHARM2                45726   // link to 45717
 
-#define SPELL_TRANSFORM_TRIGGER 44885   // madrigosa to self, trigger 46350
-#define SPELL_TRANSFORM_VISUAL  46350   //46411stun?
-#define SPELL_TRANSFORM_FELMYST 45068   // become fel
-#define SPELL_FELMYST_SUMMON    45069
+#define SPELL_TRANSFORM_TRIGGER         44885   // madrigosa to self, trigger 46350
+#define SPELL_TRANSFORM_VISUAL          46350   //46411stun?
+#define SPELL_TRANSFORM_FELMYST         45068   // become fel
+#define SPELL_FELMYST_SUMMON            45069
 // OTHER
-#define SPELL_BERSERK           45078
-#define SPELL_CLOUD_VISUAL      45212
-#define SPELL_CLOUD_SUMMON      45884
+#define SPELL_BERSERK                   45078
+#define SPELL_CLOUD_VISUAL              45212
+#define SPELL_CLOUD_SUMMON              45884
 
-//Creatures
-#define MOB_FELMYST             25038
-#define MOB_BRUTALLUS
-#define MOB_KALECGOS
-#define MOB_DEAD                25268
-#define MOB_MADRIGOSA           25160
-#define MOB_FELMYST_VISUAL      25041
-#define MOB_FLIGHT_LEFT         25357
-#define MOB_FLIGHT_RIGHT        25358
-#define MOB_DEATH_CLOUD         25703
-#define MOB_VAPOR               25265
-#define MOB_VAPOR_TRAIL         25267
-
-//Yells and Sounds
-#define YELL_BIRTH      "Glory to Kil'jaeden! Death to all who oppose!"
-#define SOUND_BIRTH            12477
-#define YELL_KILL1      "I kill for the master!"
-#define SOUND_KILL1            12480
-#define YELL_KILL2      "The end has come!"
-#define SOUND_KILL2            12481
-#define YELL_BREATH     "Choke on your final breath!"
-#define SOUND_BREATH   12478
-#define YELL_TAKEOFF    "I am stronger than ever before!"
-#define SOUND_TAKEOFF  12479
-#define YELL_BERSERK    "No more hesitation! Your fates are written!"
-#define SOUND_BERSERK  12482
-#define YELL_DEATH      "Kil'jaeden... will... prevail..."
-#define SOUND_DEATH            12483
-
-#define YELL_KALECGOS   "Madrigosa deserved a far better fate. You did what had to be done, but this battle is far from over."
+#define MOB_FELMYST                     25038
+#define MOB_BRUTALLUS                   
+#define MOB_KALECGOS                    
+#define MOB_DEAD                        25268
+#define MOB_MADRIGOSA                   25160
+#define MOB_FELMYST_VISUAL              25041
+#define MOB_FLIGHT_LEFT                 25357
+#define MOB_FLIGHT_RIGHT                25358
+#define MOB_DEATH_CLOUD                 25703
+#define MOB_VAPOR                       25265
+#define MOB_VAPOR_TRAIL                 25267
 
 enum PhaseFelmyst
 {
@@ -123,10 +114,14 @@ static EventFelmyst MaxTimer[]=
     EVENT_SUMMON_FOG,
 };
 
+/*######
+## Boss Felmyst
+######*/
 struct MANGOS_DLL_DECL boss_felmystAI : public ScriptedAI
 {
     boss_felmystAI(Creature *c) : ScriptedAI(c)
     {
+        pInstance = ((ScriptedInstance*)c->GetInstanceData());
         Reset();
 
         // wait for core patch be accepted
@@ -139,7 +134,9 @@ struct MANGOS_DLL_DECL boss_felmystAI : public ScriptedAI
         TempSpell = (SpellEntry*)GetSpellStore()->LookupEntry(SPELL_FOG_CHARM2);
         if((TempSpell->Attributes & SPELL_ATTR_PASSIVE) == 0)
             TempSpell->Attributes |= SPELL_ATTR_PASSIVE;
+
     }
+    ScriptedInstance *pInstance;
 
     PhaseFelmyst Phase;
     EventFelmyst Event;
@@ -157,21 +154,25 @@ struct MANGOS_DLL_DECL boss_felmystAI : public ScriptedAI
         Timer[EVENT_BERSERK] = 600000;
         FlightCount = 0;
 
-        m_creature->RemoveUnitMovementFlag(MOVEMENTFLAG_LEVITATING + MOVEMENTFLAG_ONTRANSPORT);
+        m_creature->RemoveUnitMovementFlag(MOVEMENTFLAG_LEVITATING);
         m_creature->SetFloatValue(UNIT_FIELD_BOUNDINGRADIUS, 10);
         m_creature->SetFloatValue(UNIT_FIELD_COMBATREACH, 10);
 
         DespawnSummons(MOB_VAPOR_TRAIL);
-        m_creature->SetActiveObjectState(false);
+
+        if(pInstance)
+            pInstance->SetData(DATA_FELMYST_EVENT, NOT_STARTED);
     }
 
     void Aggro(Unit *who)
     {
-        m_creature->SetActiveObjectState(true);
         DoZoneInCombat();
         m_creature->CastSpell(m_creature, AURA_SUNWELL_RADIANCE, true);
         m_creature->CastSpell(m_creature, AURA_NOXIOUS_FUMES, true);
         EnterPhase(PHASE_GROUND);
+
+        if(pInstance)
+            pInstance->SetData(DATA_FELMYST_EVENT, IN_PROGRESS);
     }
 
     void AttackStart(Unit *who)
@@ -182,6 +183,31 @@ struct MANGOS_DLL_DECL boss_felmystAI : public ScriptedAI
 
     void MoveInLineOfSight(Unit *who)
     {
+        if (!who)
+            return;
+
+        if (who == m_creature || who->GetTypeId() != TYPEID_PLAYER)
+            return;
+
+        if(pInstance)
+        {
+            Creature* pBrutallus = ((Creature*)Unit::GetUnit((*m_creature), pInstance->GetData64(DATA_BRUTALLUS)));
+            if (pBrutallus && !pBrutallus->isAlive() && m_creature->HasFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE))
+            {
+                m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
+                m_creature->SetVisibility(VISIBILITY_ON);
+                DoScriptText(SAY_FELMYST_BIRTH,m_creature);
+            }
+            else if (pBrutallus && pBrutallus->isAlive() && !m_creature->HasFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE))
+            {
+                m_creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
+                m_creature->SetVisibility(VISIBILITY_OFF);
+                return;
+            }
+            else if (pBrutallus && pBrutallus->isAlive() && m_creature->HasFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE))
+                return;
+        }
+
         if(Phase != PHASE_FLIGHT)
             ScriptedAI::MoveInLineOfSight(who);
     }
@@ -190,21 +216,16 @@ struct MANGOS_DLL_DECL boss_felmystAI : public ScriptedAI
     {
         switch(rand()%2)
         {
-        case 0:
-			m_creature->MonsterYell(YELL_KILL1,LANG_UNIVERSAL, NULL);
-            DoPlaySoundToSet(m_creature, SOUND_KILL1);
-            break;
-        case 1:
-            m_creature->MonsterYell(YELL_KILL2,LANG_UNIVERSAL, NULL);
-            DoPlaySoundToSet(m_creature, SOUND_KILL2);
-            break;
+        case 0: DoScriptText(SAY_FELMYST_KILL1,m_creature); break;
+        case 1: DoScriptText(SAY_FELMYST_KILL2,m_creature); break;
         }
     }
 
     void JustDied(Unit* Killer)
     {
-        m_creature->MonsterYell(YELL_DEATH, LANG_UNIVERSAL, NULL);
-        DoPlaySoundToSet(m_creature, SOUND_DEATH);
+        DoScriptText(SAY_FELMYST_DEATH,m_creature);
+        if(pInstance)
+            pInstance->SetData(DATA_FELMYST_EVENT, DONE);
     }
 
     void SpellHit(Unit *caster, const SpellEntry *spell)
@@ -284,26 +305,26 @@ struct MANGOS_DLL_DECL boss_felmystAI : public ScriptedAI
             m_creature->AttackStop();
             m_creature->GetMotionMaster()->Clear(false);
             m_creature->HandleEmoteCommand(EMOTE_ONESHOT_LIFTOFF);
-            m_creature->SetUnitMovementFlags(MOVEMENTFLAG_LEVITATING + MOVEMENTFLAG_ONTRANSPORT);
+            m_creature->SetUnitMovementFlags(MOVEMENTFLAG_LEVITATING);
             m_creature->StopMoving();
-            m_creature->MonsterYell(YELL_TAKEOFF, LANG_UNIVERSAL, NULL);
-            DoPlaySoundToSet(m_creature, SOUND_TAKEOFF);
+            DoScriptText(SAY_FELMYST_TAKEOFF,m_creature);
             Timer[EVENT_FLIGHT_SEQUENCE] = 2000;
             break;
         case 1:
+            m_creature->AddUnitMovementFlag(MOVEMENTFLAG_ONTRANSPORT);
             m_creature->GetMotionMaster()->MovePoint(0, m_creature->GetPositionX()+1, m_creature->GetPositionY(), m_creature->GetPositionZ()+10);
+            m_creature->RemoveUnitMovementFlag(MOVEMENTFLAG_ONTRANSPORT);
             Timer[EVENT_FLIGHT_SEQUENCE] = 0;
             break;
         case 2:
-            if(Unit* target = SelectUnit(SELECT_TARGET_RANDOM, 0))
+            if(Player* target = SelectRandomPlayer(50))
             {
-                Creature* Vapor = m_creature->SummonCreature(MOB_VAPOR, target->GetPositionX()-5+rand()%10, target->GetPositionY()-5+rand()%10, target->GetPositionZ(), 0, TEMPSUMMON_TIMED_DESPAWN, 9000);
-                if(Vapor)
+                if(Creature* Vapor = m_creature->SummonCreature(MOB_VAPOR, target->GetPositionX()-5+rand()%10, target->GetPositionY()-5+rand()%10, target->GetPositionZ(), 0, TEMPSUMMON_TIMED_DESPAWN, 9000))
                 {
                     Vapor->AI()->AttackStart(target);
+                    Vapor->CastSpell(Vapor, SPELL_VAPOR_TRIGGER, true);
                     m_creature->InterruptNonMeleeSpells(false);
                     m_creature->CastSpell(Vapor, SPELL_VAPOR_CHANNEL, false); // core bug
-                    Vapor->CastSpell(Vapor, SPELL_VAPOR_TRIGGER, true);
                 }
             }else EnterEvadeMode();
             Timer[EVENT_FLIGHT_SEQUENCE] = 10000;
@@ -311,16 +332,16 @@ struct MANGOS_DLL_DECL boss_felmystAI : public ScriptedAI
         case 3:
             DespawnSummons(MOB_VAPOR_TRAIL);
             //m_creature->CastSpell(m_creature, SPELL_VAPOR_SELECT); need core support
-            if(Unit* target = SelectUnit(SELECT_TARGET_RANDOM, 0))
+            if(Player* target = SelectRandomPlayer(50))
             {
                 //target->CastSpell(target, SPELL_VAPOR_SUMMON, true); need core support
                 Creature* Vapor = m_creature->SummonCreature(MOB_VAPOR, target->GetPositionX()-5+rand()%10, target->GetPositionY()-5+rand()%10, target->GetPositionZ(), 0, TEMPSUMMON_TIMED_DESPAWN, 9000);
                 if(Vapor)
                 {
                     Vapor->AI()->AttackStart(target);
+                    Vapor->CastSpell(Vapor, SPELL_VAPOR_TRIGGER, true);
                     m_creature->InterruptNonMeleeSpells(false);
                     m_creature->CastSpell(Vapor, SPELL_VAPOR_CHANNEL, false); // core bug
-                    Vapor->CastSpell(Vapor, SPELL_VAPOR_TRIGGER, true);
                 }
             }else EnterEvadeMode();
             Timer[EVENT_FLIGHT_SEQUENCE] = 10000;
@@ -330,20 +351,22 @@ struct MANGOS_DLL_DECL boss_felmystAI : public ScriptedAI
             Timer[EVENT_FLIGHT_SEQUENCE] = 1;
             break;
         case 5:
-            if(Unit* target = SelectUnit(SELECT_TARGET_RANDOM, 0))
+            if(Player* target = SelectRandomPlayer(80))
             {
                 BreathX = target->GetPositionX();
                 BreathY = target->GetPositionY();
                 float x, y, z;
-                target->GetContactPoint(m_creature, x, y, z, 70);
+                target->GetContactPoint(m_creature, x, y, z, 40);
+                m_creature->AddUnitMovementFlag(MOVEMENTFLAG_ONTRANSPORT);
                 m_creature->GetMotionMaster()->MovePoint(0, x, y, z+10);
+                m_creature->RemoveUnitMovementFlag(MOVEMENTFLAG_ONTRANSPORT);
             }else EnterEvadeMode();
             Timer[EVENT_FLIGHT_SEQUENCE] = 0;
             break;
         case 6:
             m_creature->SetOrientation(m_creature->GetAngle(BreathX, BreathY));
             m_creature->StopMoving();
-			m_creature->MonsterTextEmote("takes a deep breath.", NULL);
+            //DoTextEmote("takes a deep breath.", NULL);
             Timer[EVENT_FLIGHT_SEQUENCE] = 10000;
             break;
         case 7:
@@ -353,7 +376,9 @@ struct MANGOS_DLL_DECL boss_felmystAI : public ScriptedAI
                 m_creature->GetPosition(x, y, z);
                 x = 2 * BreathX - x;
                 y = 2 * BreathY - y;
+                m_creature->AddUnitMovementFlag(MOVEMENTFLAG_ONTRANSPORT);
                 m_creature->GetMotionMaster()->MovePoint(0, x, y, z);
+                m_creature->RemoveUnitMovementFlag(MOVEMENTFLAG_ONTRANSPORT);
             }
             Timer[EVENT_SUMMON_FOG] = 1;
             Timer[EVENT_FLIGHT_SEQUENCE] = 0;
@@ -370,12 +395,14 @@ struct MANGOS_DLL_DECL boss_felmystAI : public ScriptedAI
             {
                 float x, y, z;
                 target->GetContactPoint(m_creature, x, y, z);
+                m_creature->AddUnitMovementFlag(MOVEMENTFLAG_ONTRANSPORT);
                 m_creature->GetMotionMaster()->MovePoint(0, x, y, z);
+                m_creature->RemoveUnitMovementFlag(MOVEMENTFLAG_ONTRANSPORT);
             }else EnterEvadeMode();
             Timer[EVENT_FLIGHT_SEQUENCE] = 0;
             break;
         case 10:
-            m_creature->RemoveUnitMovementFlag(MOVEMENTFLAG_LEVITATING + MOVEMENTFLAG_ONTRANSPORT);
+            m_creature->RemoveUnitMovementFlag(MOVEMENTFLAG_LEVITATING);
             m_creature->StopMoving();
             m_creature->HandleEmoteCommand(EMOTE_ONESHOT_LAND);
             EnterPhase(PHASE_GROUND);
@@ -389,7 +416,7 @@ struct MANGOS_DLL_DECL boss_felmystAI : public ScriptedAI
 
     void UpdateAI(const uint32 diff)
     {
-        if (!m_creature->SelectHostilTarget() || !m_creature->getVictim())
+        if (!m_creature->SelectHostilTarget() && !m_creature->getVictim())
         {
             if(Phase == PHASE_FLIGHT && !m_creature->IsInEvadeMode())
                 EnterEvadeMode();
@@ -415,8 +442,7 @@ struct MANGOS_DLL_DECL boss_felmystAI : public ScriptedAI
             switch(Event)
             {
             case EVENT_BERSERK:
-				m_creature->MonsterYell(YELL_BERSERK, LANG_UNIVERSAL, NULL);
-                DoPlaySoundToSet(m_creature, SOUND_BERSERK);
+                DoScriptText(SAY_FELMYST_BERSERK,m_creature);
                 m_creature->CastSpell(m_creature, SPELL_BERSERK, true);
                 Timer[EVENT_BERSERK] = 0;
                 break;
@@ -433,7 +459,7 @@ struct MANGOS_DLL_DECL boss_felmystAI : public ScriptedAI
                 Timer[EVENT_GAS_NOVA] = 20000 + rand()%5 * 1000;
                 break;
             case EVENT_ENCAPSULATE:
-                if(Unit* target = SelectUnit(SELECT_TARGET_RANDOM, 0))
+                if(Unit* target = SelectRandomPlayer(50))
                 {
                     m_creature->CastSpell(target, SPELL_ENCAPSULATE_CHANNEL, false);
                     target->CastSpell(target, SPELL_ENCAPSULATE_EFFECT, true);// linked aura, need core patch to remove this hack
@@ -453,8 +479,7 @@ struct MANGOS_DLL_DECL boss_felmystAI : public ScriptedAI
             switch(Event)
             {
             case EVENT_BERSERK:
-                m_creature->MonsterYell(YELL_BERSERK, LANG_UNIVERSAL, NULL);
-                DoPlaySoundToSet(m_creature, SOUND_BERSERK);
+                DoScriptText(SAY_FELMYST_BERSERK,m_creature);
                 m_creature->CastSpell(m_creature, SPELL_BERSERK, true);
                 Timer[EVENT_BERSERK] = 0;
                 break;
@@ -482,41 +507,63 @@ struct MANGOS_DLL_DECL boss_felmystAI : public ScriptedAI
 
     void DespawnSummons(uint32 entry)
     {
+        CellPair pair(MaNGOS::ComputeCellPair(m_creature->GetPositionX(), m_creature->GetPositionY()));
+        Cell cell(pair);
+        cell.data.Part.reserved = ALL_DISTRICT;
+        cell.SetNoCreate();
+
         std::list<Creature*> templist;
-        float x, y, z;
-        m_creature->GetPosition(x, y, z);
 
+        AllCreaturesOfEntryInRange check(m_creature, entry, 100);
+        MaNGOS::CreatureListSearcher<AllCreaturesOfEntryInRange> searcher(m_creature, templist, check);
+        TypeContainerVisitor<MaNGOS::CreatureListSearcher<AllCreaturesOfEntryInRange>, GridTypeMapContainer> visitor(searcher);
+
+        CellLock<GridReadGuard> cell_lock(cell, pair);
+        cell_lock->Visit(cell_lock, visitor, *(m_creature->GetMap()));
+
+        if (!templist.empty())
         {
-            CellPair pair(MaNGOS::ComputeCellPair(x, y));
-            Cell cell(pair);
-            cell.data.Part.reserved = ALL_DISTRICT;
-            cell.SetNoCreate();
-
-            AllCreaturesOfEntryInRange check(m_creature, entry, 100);
-            MaNGOS::CreatureListSearcher<AllCreaturesOfEntryInRange> searcher(m_creature, templist, check);
-
-            TypeContainerVisitor<MaNGOS::CreatureListSearcher<AllCreaturesOfEntryInRange>, GridTypeMapContainer> cSearcher(searcher);
-
-            CellLock<GridReadGuard> cell_lock(cell, pair);
-            cell_lock->Visit(cell_lock, cSearcher, *(m_creature->GetMap()));
-        }
-
-        for(std::list<Creature*>::iterator i = templist.begin(); i != templist.end(); ++i)
-        {
-            if(entry == MOB_VAPOR_TRAIL && Phase == PHASE_FLIGHT)
+            for(std::list<Creature*>::iterator itr = templist.begin(); itr != templist.end(); ++itr)
             {
-                float x, y, z;
-                (*i)->GetPosition(x, y, z);
-                m_creature->SummonCreature(MOB_DEAD, x, y, z, 0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 5000);
+                if(entry == MOB_VAPOR_TRAIL && Phase == PHASE_FLIGHT)
+                {
+                    Creature* Deads = (*itr)->SummonCreature(MOB_DEAD, (*itr)->GetPositionX(), (*itr)->GetPositionY(), (*itr)->GetPositionZ(), 0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 5000);
+                    if(Deads)
+                        Deads->AI()->AttackStart(SelectUnit(SELECT_TARGET_RANDOM, 0));
+                }
+
+                (*itr)->SetVisibility(VISIBILITY_OFF);
+                (*itr)->setDeathState(JUST_DIED);
             }
-            (*i)->SetVisibility(VISIBILITY_OFF);
-            (*i)->setDeathState(JUST_DIED);
-            if((*i)->getDeathState() == CORPSE)
-                (*i)->RemoveCorpse();
         }
+    }
+
+    Player* SelectRandomPlayer(float range = 0.0f)
+    {
+        Map *map = m_creature->GetMap();
+        if (map->IsDungeon())
+        {
+            Map::PlayerList const &PlayerList = map->GetPlayers();
+
+            if (PlayerList.isEmpty())
+                return NULL;
+
+            for (Map::PlayerList::const_iterator i = PlayerList.begin(); i != PlayerList.end(); ++i)
+            {
+                if((range == 0.0f || m_creature->IsWithinDistInMap(i->getSource(), range))
+                    && i->getSource()->isTargetableForAttack())
+                    return i->getSource();
+            }
+            return NULL;
+        }
+        else
+            return NULL;
     }
 };
 
+/*######
+## Mob Felmyst Vapor
+######*/
 struct MANGOS_DLL_DECL mob_felmyst_vaporAI : public ScriptedAI
 {
     mob_felmyst_vaporAI(Creature *c) : ScriptedAI(c)
@@ -525,10 +572,11 @@ struct MANGOS_DLL_DECL mob_felmyst_vaporAI : public ScriptedAI
         m_creature->SetSpeed(MOVE_RUN, 0.8);
     }
     void Reset() {}
+
     void Aggro(Unit* who)
     {
         DoZoneInCombat();
-        //m_creature->CastSpell(m_creature, SPELL_VAPOR_FORCE, true); core bug
+        //m_creature->CastSpell(m_creature, SPELL_VAPOR_FORCE, true); //core bug
     }
     void UpdateAI(const uint32 diff)
     {
@@ -537,6 +585,9 @@ struct MANGOS_DLL_DECL mob_felmyst_vaporAI : public ScriptedAI
     }
 };
 
+/*######
+## Mob Felmyst Trial
+######*/
 struct MANGOS_DLL_DECL mob_felmyst_trailAI : public ScriptedAI
 {
     mob_felmyst_trailAI(Creature *c) : ScriptedAI(c)
@@ -547,7 +598,7 @@ struct MANGOS_DLL_DECL mob_felmyst_trailAI : public ScriptedAI
         m_creature->SetFloatValue(UNIT_FIELD_BOUNDINGRADIUS, 0.01); // core bug
     }
     void Reset() {}
-    void Aggro(Unit* who) {}
+    void Aggro(Unit* who) { }
     void AttackStart(Unit* who) {}
     void MoveInLineOfSight(Unit* who) {}
     void UpdateAI(const uint32 diff) {}
@@ -571,19 +622,19 @@ CreatureAI* GetAI_mob_felmyst_trail(Creature *_Creature)
 void AddSC_boss_felmyst()
 {
     Script *newscript;
+
     newscript = new Script;
-    newscript->Name="boss_felmyst";
+    newscript->Name = "boss_felmyst";
     newscript->GetAI = &GetAI_boss_felmyst;
     newscript->RegisterSelf();
 
     newscript = new Script;
-    newscript->Name="mob_felmyst_vapor";
+    newscript->Name = "mob_felmyst_vapor";
     newscript->GetAI = &GetAI_mob_felmyst_vapor;
     newscript->RegisterSelf();
 
     newscript = new Script;
-    newscript->Name="mob_felmyst_trail";
+    newscript->Name = "mob_felmyst_trail";
     newscript->GetAI = &GetAI_mob_felmyst_trail;
     newscript->RegisterSelf();
 }
-
