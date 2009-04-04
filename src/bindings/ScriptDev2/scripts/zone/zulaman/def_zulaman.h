@@ -17,5 +17,6 @@
 #define DATA_HEXLORDGUID    11
 #define TYPE_EVENT_RUN      12
 #define DATA_HARRISON       13
+#define TYPE_MALACRASS      14
 
 #endif

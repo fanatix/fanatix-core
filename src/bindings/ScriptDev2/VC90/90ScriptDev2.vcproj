@@ -2688,6 +2688,10 @@
 						>
 					</File>
 					<File
+						RelativePath="..\scripts\zone\zulaman\boss_malacrass.cpp"
+						>
+					</File>
+					<File
 						RelativePath="..\scripts\zone\zulaman\boss_nalorakk.cpp"
 						>
 					</File>
