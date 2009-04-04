@@ -276,6 +276,9 @@ extern void AddSC_instance_deadmines();
 //Deadwind pass
 //Desolace
 //Dire Maul
+//Dragonblight
+extern void AddSC_dragonblight();
+
 //Dun Morogh
 extern void AddSC_dun_morogh();
 
@@ -439,6 +442,7 @@ extern void AddSC_razorfen_kraul();
 extern void AddSC_boss_arcanist_doan();
 extern void AddSC_boss_azshir_the_sleepless();
 extern void AddSC_boss_bloodmage_thalnos();
+extern void AddSC_boss_headless_horseman();
 extern void AddSC_boss_herod();
 extern void AddSC_boss_high_inquisitor_fairbanks();
 extern void AddSC_boss_houndmaster_loksey();
@@ -1929,6 +1933,9 @@ void ScriptsInit()
     //Deadwind pass
     //Desolace
     //Dire Maul
+    //Dragonblight
+    AddSC_dragonblight();
+
     //Dun Morogh
     AddSC_dun_morogh();
 
@@ -2092,6 +2099,7 @@ void ScriptsInit()
     AddSC_boss_arcanist_doan();
     AddSC_boss_azshir_the_sleepless();
     AddSC_boss_bloodmage_thalnos();
+    AddSC_boss_headless_horseman();
     AddSC_boss_herod();
     AddSC_boss_high_inquisitor_fairbanks();
     AddSC_boss_houndmaster_loksey();

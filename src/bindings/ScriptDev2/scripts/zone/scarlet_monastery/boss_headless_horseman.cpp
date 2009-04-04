@@ -128,7 +128,7 @@ static Summon Text[]=
     {"Now, know demise!"}
 };
 
-struct TRINITY_DLL_DECL mob_wisp_invisAI : public ScriptedAI
+struct MANGOS_DLL_DECL mob_wisp_invisAI : public ScriptedAI
 {
     mob_wisp_invisAI(Creature *c) : ScriptedAI(c)
     {
@@ -195,7 +195,7 @@ struct TRINITY_DLL_DECL mob_wisp_invisAI : public ScriptedAI
     }
 };
 
-struct TRINITY_DLL_DECL mob_headAI : public ScriptedAI
+struct MANGOS_DLL_DECL mob_headAI : public ScriptedAI
 {
     mob_headAI(Creature *c) : ScriptedAI(c) {Reset();}
 
@@ -315,7 +315,7 @@ struct TRINITY_DLL_DECL mob_headAI : public ScriptedAI
     }
 };
 
-struct TRINITY_DLL_DECL boss_headless_horsemanAI : public ScriptedAI
+struct MANGOS_DLL_DECL boss_headless_horsemanAI : public ScriptedAI
 {
     boss_headless_horsemanAI(Creature *c) : ScriptedAI(c)
     {
@@ -649,7 +649,7 @@ struct TRINITY_DLL_DECL boss_headless_horsemanAI : public ScriptedAI
                 DoPlaySoundToSet(m_creature, RandomLaught[rand()%3]);
             } else laugh -= diff;
 
-            if (UpdateVictim())
+            if(!m_creature->SelectHostilTarget() || !m_creature->getVictim() )
             {
                 DoMeleeAttackIfReady();
                 if (cleave < diff) {
@@ -715,7 +715,7 @@ void mob_headAI::Disappear()
     }
 }
 
-struct TRINITY_DLL_DECL mob_pulsing_pumpkinAI : public ScriptedAI
+struct MANGOS_DLL_DECL mob_pulsing_pumpkinAI : public ScriptedAI
 {
     mob_pulsing_pumpkinAI(Creature *c) : ScriptedAI(c) {Reset();}
 
@@ -778,7 +778,7 @@ struct TRINITY_DLL_DECL mob_pulsing_pumpkinAI : public ScriptedAI
     void UpdateAI(const uint32 diff)
     {
         if (sprouted)
-            if (UpdateVictim())
+            if(!m_creature->SelectHostilTarget() || !m_creature->getVictim() )
                 DoMeleeAttackIfReady();
     }
 };
@@ -825,22 +825,22 @@ void AddSC_boss_headless_horseman()
     Script *newscript;
 
     newscript = new Script;
-    newscript->Name="boss_headless_horseman";
+    newscript->Name = "boss_headless_horseman";
     newscript->GetAI = &GetAI_boss_headless_horseman;
     newscript->RegisterSelf();
 
     newscript = new Script;
-    newscript->Name="mob_head";
+    newscript->Name = "mob_head";
     newscript->GetAI = &GetAI_mob_head;
     newscript->RegisterSelf();
 
     newscript = new Script;
-    newscript->Name="mob_pulsing_pumpkin";
+    newscript->Name = "mob_pulsing_pumpkin";
     newscript->GetAI = &GetAI_mob_pulsing_pumpkin;
     newscript->RegisterSelf();
 
     newscript = new Script;
-    newscript->Name="mob_wisp_invis";
+    newscript->Name = "mob_wisp_invis";
     newscript->GetAI = &GetAI_mob_wisp_invis;
     newscript->RegisterSelf();
 

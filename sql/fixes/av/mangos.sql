@@ -15,7 +15,6 @@ REPLACE INTO gameobject_template VALUES (180101,6,1311,"Horde Banner Aura","",""
 REPLACE INTO gameobject_template VALUES (180421,6,2232,"Alliance Banner Aura, Large","","",0,0,5,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,"");
 REPLACE INTO gameobject_template VALUES (180423,6,266,"Neutral Banner Aura, Large","","",0,0,5,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,"");
 REPLACE INTO gameobject_template VALUES (180422,6,1311,"Horde Banner Aura, Large","","",0,0,5,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,"");
->>>>>>> b8813e5e6e89a72a94dfc300277a9282bad1b0cf:sql/updates/av/mangos.sql
 
 -- removes the damage from the fire-gos (used for destroyed towers) - but this is not blizzlike TODO remove this hack
 UPDATE `gameobject_template` SET `type` = '5',`data0` = '0',`data1` = '0',`data2` = '0',`data3` = '1',`data5` = '0',`data10` = '0' WHERE `gameobject_template`.`entry` =179065 LIMIT 1 ;

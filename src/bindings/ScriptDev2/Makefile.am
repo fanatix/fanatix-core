@@ -342,6 +342,7 @@ scripts/zone/ruins_of_ahnqiraj/instance_ruins_of_ahnqiraj.cpp \
 scripts/zone/scarlet_monastery/boss_arcanist_doan.cpp \
 scripts/zone/scarlet_monastery/boss_azshir_the_sleepless.cpp \
 scripts/zone/scarlet_monastery/boss_bloodmage_thalnos.cpp \
+scripts/zone/scarlet_monastery/boss_headless_horseman.cpp \
 scripts/zone/scarlet_monastery/boss_herod.cpp \
 scripts/zone/scarlet_monastery/boss_high_inquisitor_fairbanks.cpp \
 scripts/zone/scarlet_monastery/boss_houndmaster_loksey.cpp \

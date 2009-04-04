@@ -21,7 +21,7 @@ update `creature_template` set faction_A = 21, faction_H = 21 where `entry` in (
 delete from `creature` where `id` in (16286);
 update `creature_template` set faction_A = 21, faction_H = 21 where `entry` in (16286); -- Lortheb Spores
 -- Sapphie
-update `creature_template` set flag1 = 0 where entry = 15989;</div>
+update `creature_template` set flag1 = 0 where entry = 15989;
 GoDoors
 -- Spawns
 -- Delete existing Spawns
@@ -79,8 +79,9 @@ update gameobject_template set size = 1.2 where entry = 181201;
 update gameobject_template set faction = 14 where entry in (181126,181195,181167,181235,181197,181209,181123, 181120,181121,181124,181125,18
 170,181119,181200,181201,181202,181203,181241,1812 25,181228,181496,181366);</div>
 
-ScriptsAdd
+-- Naxxramas
 update `creature_template` set `scriptname` = 'boss_anubrekhan' where `entry`= 15956;
+update `creature_template` set `scriptname` = 'mob_crypt_guard' where `entry`= 16573;
 update `creature_template` set `scriptname` = 'boss_faerlina' where `entry`= 15953;
 update `creature_template` set `scriptname` = 'boss_maexxna' where `entry`= 15952;
 update `creature_template` set `scriptname` = 'mob_webwrap' where `entry`= 16486;
@@ -107,4 +108,4 @@ update `creature_template` set `scriptname` = 'boss_loatheb' where `entry`= 1601
 update `creature_template` set `scriptname` = 'mob_loatheb_spores' where `entry`= 16286;
 update `creature_template` set `scriptname` = 'boss_sapphiron' where `entry`= 15989;
 update `creature_template` set `scriptname` = 'boss_kelthuzad' where `entry`= 15990;
-update `instance_template` set `script` = 'instance_naxxramas' where `map`= 533;</div> 
+update `instance_template` set `script` = 'instance_naxxramas' where `map`= 533;

@@ -1362,7 +1362,7 @@ Ra.Secure = 1
 #
 #    Auction House Bot character data
 #        AuctionHouseBot.Account is the account number (in realmd->account table) of the player you want to run as the auction bot.
-# 	    AuctionHouseBot.GUID is the GUID (in characters->characters table) of the player you want to run as the auction bot. 
+#         AuctionHouseBot.GUID is the GUID (in characters->characters table) of the player you want to run as the auction bot. 
 #    Default: 0 (Auction House Bot disabled)
 #
 #    AuctionHouseBot.VendorItems
