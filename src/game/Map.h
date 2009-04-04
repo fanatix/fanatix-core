@@ -269,6 +269,10 @@ class MANGOS_DLL_SPEC Map : public GridRefManager<NGridType>, public MaNGOS::Obj
         template<class T> void Remove(T *, bool);
 
         virtual void Update(const uint32&);
+        
+        void AddCellForUpdate(CellPair& cell) { this->update_cells.push(cell); }
+        bool NeedsUpdateCells() { return !this->update_cells.empty (); }
+        void UpdateCells (uint32 diff);
 
         void MessageBroadcast(Player *, WorldPacket *, bool to_self);
         void MessageBroadcast(WorldObject *, WorldPacket *);
@@ -473,6 +477,10 @@ class MANGOS_DLL_SPEC Map : public GridRefManager<NGridType>, public MaNGOS::Obj
         time_t i_gridExpiry;
 
         std::set<WorldObject *> i_objectsToRemove;
+
+        //cells that need to be updated
+        typedef std::queue<CellPair> update_cells_type;
+        update_cells_type update_cells;
 
         // Type specific code for add/remove to/from grid
         template<class T>

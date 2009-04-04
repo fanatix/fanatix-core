@@ -309,7 +309,9 @@ libmangosgame_a_SOURCES = \
 	FollowerRefManager.h \
 	GroupReference.cpp \
 	GroupReference.h \
-	GroupRefManager.h
+	GroupRefManager.h \
+	MapUpdater.h \
+	MapUpdater.cpp
 
 ## Link against shared library
 libmangosgame_a_LIBADD = ../shared/libmangosshared.a ../shared/Auth/libmangosauth.a ../shared/Config/libmangosconfig.a ../shared/Database/libmangosdatabase.a ../shared/vmap/libmangosvmaps.a

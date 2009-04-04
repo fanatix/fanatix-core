@@ -47,7 +47,9 @@ libmangosshared_a_SOURCES = \
 	Util.h \
 	WorldPacket.h \
 	revision_nr.h \
-	revision.h
+	revision.h \
+	DelayExecutor.h \
+	DelayExecutor.cpp
 
 # Get revision (git or svn)
 REVISION_FILE = revision.h

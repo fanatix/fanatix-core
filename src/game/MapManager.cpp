@@ -16,6 +16,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+#include "MapUpdater.h"
 #include "MapManager.h"
 #include "InstanceSaveMgr.h"
 #include "Policies/SingletonImp.h"
@@ -28,6 +29,7 @@
 #include "DestinationHolderImp.h"
 #include "World.h"
 #include "CellImpl.h"
+#include "Config/ConfigEnv.h"
 #include "Corpse.h"
 #include "ObjectMgr.h"
 
@@ -37,9 +39,11 @@ INSTANTIATE_CLASS_MUTEX(MapManager, ZThread::Mutex);
 
 extern GridState* si_GridStates[];                          // debugging code, should be deleted some day
 
-MapManager::MapManager() : i_gridCleanUpDelay(sWorld.getConfig(CONFIG_INTERVAL_GRIDCLEAN))
+MapManager::MapManager() : i_gridCleanUpDelay(sWorld.getConfig(CONFIG_INTERVAL_GRIDCLEAN)),
+i_NumThreads(0)
 {
     i_timer.SetInterval(sWorld.getConfig(CONFIG_INTERVAL_MAPUPDATE));
+	i_MapUpdater = new MapUpdater ();
 }
 
 MapManager::~MapManager()
@@ -51,6 +55,7 @@ MapManager::~MapManager()
         delete *i;
 
     Map::DeleteStateMachine();
+	delete i_MapUpdater;
 }
 
 void
@@ -68,6 +73,15 @@ MapManager::Initialize()
     }
 
     InitMaxInstanceId();
+    
+    i_NumThreads = sConfig.GetIntDefault ("Map.Threads", 0);
+
+  if (i_NumThreads > 0)
+    if (this->i_MapUpdater->activate (static_cast<size_t> (i_NumThreads)) == -1)
+      {
+        sLog.outError("Failed to start mtmap threads");
+        abort ();
+      }
 }
 
 // debugging code, should be deleted some day
@@ -312,6 +326,38 @@ void MapManager::InitMaxInstanceId()
         i_MaxInstanceId = result->Fetch()[0].GetUInt32();
         delete result;
     }
+}
+
+void MapManager::UpdateAllMaps(uint32 diff)
+{
+  //shouldnt be called if multithreaded maps are disabled
+  assert(i_NumThreads > 0);
+
+  for (MapMapType::iterator iter = i_maps.begin (); iter != i_maps.end (); ++iter)
+    {
+      Map* map = iter->second;
+      if(map->NeedsUpdateCells ())
+        {
+          this->i_MapUpdater->schedule_update (*map,diff);
+        }
+      
+      if(map->Instanceable ())
+        {
+          MapInstanced::InstancedMaps& imaps = ((MapInstanced*)map)->GetInstancedMaps ();
+          
+            for (MapInstanced::InstancedMaps::iterator iiter = imaps.begin (); iiter != imaps.end (); ++iiter)
+              {
+                Map* imap = iiter->second;
+                
+                if(imap->NeedsUpdateCells ())
+                  {
+                    this->i_MapUpdater->schedule_update (*imap,diff);
+                  }
+              }
+        }
+    }
+  
+  this->i_MapUpdater->wait ();
 }
 
 uint32 MapManager::GetNumInstances()

@@ -58,13 +58,13 @@ public:
   Map& m_map;
   MapUpdater& m_updater;
   ACE_UINT32 m_diff;
-  MapUpdateRequest (Map& m, MapUpdater& u, ACE_UINT32 d) : m_map(m), m_updater(u), m_diff(d) { }
+  MapUpdateRequest (Map& m,MapUpdater& u,ACE_UINT32 d) : m_map(m),m_updater(u),m_diff(d) { }
   virtual int
   call (void)
   {
-    m_map.Update (m_diff);
+    m_map.UpdateCells (m_diff);
     m_updater.update_finished ();
-    return 0;
+	return 0;
   }
 };
 
@@ -72,7 +72,7 @@ MapUpdater::MapUpdater () :
 m_mutex (),
 m_condition (m_mutex),
 m_executor (),
-pending_requests (0)
+pedning_requests (0)
 {
   return;
 }
@@ -94,45 +94,39 @@ int
 MapUpdater::deactivate (void)
 {
   this->wait ();
-
+  
   return this->m_executor.deactivate ();
 }
 
 int
-MapUpdater::wait ()
+MapUpdater::wait () 
 {
-  ACE_GUARD_RETURN(ACE_Thread_Mutex, guard, this->m_mutex,-1);
-
-  while(this->pending_requests > 0)
+  ACE_GUARD_RETURN(ACE_Thread_Mutex,guard,this->m_mutex,-1);
+  
+  while(this->pedning_requests > 0)
     this->m_condition.wait ();
-
+  
   return 0;
 }
 
-int
+int 
 MapUpdater::schedule_update(Map& map, ACE_UINT32 diff)
 {
-  ACE_GUARD_RETURN(ACE_Thread_Mutex, guard, this->m_mutex,-1);
-
-  ++this->pending_requests;
-
-  if( this->m_executor.execute (new MapUpdateRequest(map, *this, diff)) == -1)
+  ACE_GUARD_RETURN(ACE_Thread_Mutex,guard,this->m_mutex,-1);
+  
+  ++this->pedning_requests;
+  
+  if( this->m_executor.execute (new MapUpdateRequest(map,*this,diff)) == -1)
     {
       ACE_DEBUG ((LM_ERROR,
                   ACE_TEXT ("(%t) \n"),
                   ACE_TEXT ("Failed to schedule Map Update")));
-
-      --this->pending_requests;
+      
+      --this->pedning_requests;
       return -1;
     }
-
+  
   return 0;
-}
-
-bool
-MapUpdater::activated ()
-{
-  return m_executor.activated();
 }
 
 void
@@ -140,7 +134,7 @@ MapUpdater::update_finished ()
 {
   ACE_GUARD (ACE_Thread_Mutex, guard, this->m_mutex);
 
-  if (this->pending_requests == 0)
+  if (this->pedning_requests == 0)
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("(%t)\n"),
@@ -149,8 +143,8 @@ MapUpdater::update_finished ()
       return;
     }
 
-  --this->pending_requests;
-
+  --this->pedning_requests;
+  
   //TODO can more than one thread call wait (), it shouldnt happen
   //however I ensure if in future more than 1 thread call it by
   //using broadcast instead of signal ()

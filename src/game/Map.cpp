@@ -1935,6 +1935,33 @@ void Map::AddObjectToRemoveList(WorldObject *obj)
     //sLog.outDebug("Object (GUID: %u TypeId: %u ) added to removing list.",obj->GetGUIDLow(),obj->GetTypeId());
 }
 
+void Map::UpdateCells (uint32 diff)
+{
+  MaNGOS::ObjectUpdater updater (diff);
+  // for creature
+  TypeContainerVisitor<MaNGOS::ObjectUpdater, GridTypeMapContainer > grid_object_update (updater);
+  // for pets
+  TypeContainerVisitor<MaNGOS::ObjectUpdater, WorldTypeMapContainer > world_object_update (updater);
+
+  while(!update_cells.empty ())
+ {
+   CellPair& cell_pair = update_cells.front ();
+
+   Cell cell (cell_pair);
+   cell.data.Part.reserved = CENTER_DISTRICT;
+   cell.SetNoCreate ();
+   CellLock<NullGuard> cell_lock (cell, cell_pair);
+   cell_lock->Visit (cell_lock, grid_object_update, *this);
+   cell_lock->Visit (cell_lock, world_object_update, *this);
+
+   update_cells.pop ();
+ }
+
+  //ensure cells are unmarked ,note there is one call in ObjectAccessor
+  //it needs to be removed when the old method for updating is removed
+  this->resetMarkedCells ();
+}
+
 void Map::RemoveAllObjectsInRemoveList()
 {
     if(i_objectsToRemove.empty())
