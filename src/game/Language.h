@@ -862,6 +862,12 @@ enum MangosStrings
     LANG_OPVP_SI_CAPTURE_H              = 9049,
     LANG_OPVP_SI_CAPTURE_A              = 9050,
     // FREE IDS                           1200-9999
+    // Debug commands
+    LANG_CINEMATIC_NOT_EXIST            = 1200,
+    LANG_MOVIE_NOT_EXIST                = 1201,
+    // Room for more debug                1202-1299 not used
+
+    // FREE IDS                           1300-9999
 
     // Use for custom patches             11000-11999
 
