@@ -97,6 +97,10 @@ libmangosgame_a_SOURCES = \
 	CreatureAIRegistry.h \
 	CreatureAISelector.cpp \
 	CreatureAISelector.h \
+	CreatureEventAI.cpp \
+	CreatureEventAI.h \
+	CreatureEventAIMgr.cpp \
+	CreatureEventAIMgr.h \
 	Creature.cpp \
 	Creature.h \
 	DBCEnums.h \
