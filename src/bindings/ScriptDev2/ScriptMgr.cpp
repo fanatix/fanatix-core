@@ -528,6 +528,8 @@ extern void AddSC_boss_muru_entropius();
 extern void AddSC_tanaris();
 
 //Teldrassil
+extern void AddSC_teldrassil();
+
 //Tempest Keep
 //--Arcatraz
 extern void AddSC_arcatraz();
@@ -2185,6 +2187,8 @@ void ScriptsInit()
     AddSC_tanaris();
 
     //Teldrassil
+    AddSC_teldrassil();
+
     //Tempest Keep
     //--Arcatraz
     AddSC_arcatraz();

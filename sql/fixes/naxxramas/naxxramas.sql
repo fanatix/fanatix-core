@@ -1,13 +1,13 @@
--- Delete Copse Scarabs
-delete from `creature` where `id`= 16698;
+// Delete Copse Scarabs
+DELETE from `creature` where `id`= 16698;
 UPDATE `creature_template` SET `mindmg` = 400, `maxdmg` = 600, `attackpower` = ROUND((`mindmg` + `maxdmg`) / 4 * 7), `mindmg` = ROUND(`mindmg` - `attackpower` / 7), `maxdmg` = ROUND(`maxdmg` - `attackpower` / 7) WHERE `entry` = 16698;
--- Delete Gothik adds
+// Delete Gothik adds
 delete from `creature` where `id`in (16124,16125,16126,16127,16148,16149,16150);
--- Faction Gothik adds
-update `creature_template` set faction_A = 21, faction_H = 21 where `entry` in (16124,16125,16126,16127,16148,16149,16150);
--- Grobbulus Wolke
+// Faction Gothik adds
+update `creature_template` set faction_A = 21, faction_H = 21 where `entry` in(16124,16125,16126,16127,16148,16149,16150);
+// Grobbulus Wolke
 update `creature_template` set faction_A = 21, faction_H = 21 where `entry` in (16363);
--- Razevous Damage
+// Razevous Damage
 UPDATE `creature_template` SET 
 `mindmg` = 9000, 
 `maxdmg` = 11000, 
@@ -15,16 +15,17 @@ UPDATE `creature_template` SET
 `mindmg` = ROUND(`mindmg` - `attackpower` / 7), 
 `maxdmg` = ROUND(`maxdmg` - `attackpower` / 7) 
 WHERE `entry` = 16061;
--- several mobs
+// several mobs
 delete from `creature` where `id` in (16983,16981,16982,16984);
-update `creature_template` set faction_A = 21, faction_H = 21 where `entry` in (16983,16981,16982,16984); -- Noth Skelletions
+update `creature_template` set faction_A = 21, faction_H = 21 where `entry` in (16983,16981,16982,16984); 
+// Noth Skelletions
 delete from `creature` where `id` in (16286);
 update `creature_template` set faction_A = 21, faction_H = 21 where `entry` in (16286); -- Lortheb Spores
--- Sapphie
-update `creature_template` set flag1 = 0 where entry = 15989;
+// Sapphie
+update `creature_template` set unit_flags = 0 where entry = 15989;
 GoDoors
--- Spawns
--- Delete existing Spawns
+// Spawns
+// Delete existing Spawns
 delete from gameobject where id in (181126,181195,181167,181235,181197,181209,181123, 181120,181121,181124,181125,18
 170,181119,181200,181201,181202,181203,181241,1812 25,181228,181496);
 insert into `gameobject` (`guid`, `id`, `map`, `position_x`, `position_y`, `position_z`, `orientation`, `rotation0`, `rotation1`, `rotation2`, `rotation3`, `spawntimesecs`, `animprogress`, `state`) values
@@ -72,14 +73,14 @@ insert into `gameobject` (`guid`, `id`, `map`, `position_x`, `position_y`, `posi
 ('333019','181228','533','3635.34','-5090.31','143.206','1.37','0','0','0.632673','0.77 4419','6','0','1');
 
 
--- aendere size ... Tuer Passt nicht und man konnte vorher an den Rand vorbei
+// aendere size ... Tuer Passt nicht und man konnte vorher an den Rand vorbei
 update gameobject_template set size = 1.2 where entry = 181201;
---
+
 
 update gameobject_template set faction = 14 where entry in (181126,181195,181167,181235,181197,181209,181123, 181120,181121,181124,181125,18
 170,181119,181200,181201,181202,181203,181241,1812 25,181228,181496,181366);</div>
 
--- Naxxramas
+// Naxxramas
 update `creature_template` set `scriptname` = 'boss_anubrekhan' where `entry`= 15956;
 update `creature_template` set `scriptname` = 'mob_crypt_guard' where `entry`= 16573;
 update `creature_template` set `scriptname` = 'boss_faerlina' where `entry`= 15953;

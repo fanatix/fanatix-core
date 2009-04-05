@@ -401,6 +401,7 @@ scripts/zone/sunwell_plateau/boss_muru_entropius.cpp \
 scripts/zone/sunwell_plateau/def_sunwell_plateau.h \
 scripts/zone/sunwell_plateau/instance_sunwell_plateau.cpp \
 scripts/zone/tanaris/tanaris.cpp \
+scripts/zone/teldrassil/teldrassil.cpp \
 scripts/zone/tempest_keep/arcatraz/arcatraz.cpp \
 scripts/zone/tempest_keep/arcatraz/boss_harbinger_skyriss.cpp \
 scripts/zone/tempest_keep/arcatraz/def_arcatraz.h \
