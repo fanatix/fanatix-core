@@ -324,7 +324,75 @@ void ObjectMgr::LoadCreatureLocales()
     sLog.outString();
     sLog.outString( ">> Loaded %lu creature locale strings", (unsigned long)mCreatureLocaleMap.size() );
 }
+/*
+void ObjectMgr::LoadGossipSelectLocales()
+{
+    mGossipSelectLocaleMap.clear();                              // need for reload case
 
+    QueryResult *result = WorldDatabase.Query("SELECT entry,"
+        "option_text_loc1,box_text_loc1,option_text_loc2,box_text_loc2,"
+        "option_text_loc3,box_text_loc3,option_text_loc4,box_text_loc4,"
+        "option_text_loc5,box_text_loc5,option_text_loc6,box_text_loc6,"
+        "option_text_loc7,box_text_loc7,option_text_loc8,box_text_loc8 "
+        "FROM locales_npc_option");
+
+    if(!result)
+    {
+        barGoLink bar(1);
+
+        bar.step();
+
+        sLog.outString();
+        sLog.outString(">> Loaded 0 guard_gossip_locale strings. DB table `locales_guards_gossip` is empty.");
+        return;
+    }
+
+    barGoLink bar(result->GetRowCount());
+
+    do
+    {
+        Field *fields = result->Fetch();
+        bar.step();
+
+        uint32 entry = fields[0].GetUInt32();
+
+        GossipSelectLocale& data = mGossipSelectLocaleMap[entry];
+
+        for(int i = 1; i < MAX_LOCALE; ++i)
+        {
+            std::string str = fields[1+2*(i-1)].GetCppString();
+            if(!str.empty())
+            {
+                int idx = GetOrNewIndexForLocale(LocaleConstant(i));
+                if(idx >= 0)
+                {
+                    if(data.OptionText.size() <= idx)
+                        data.OptionText.resize(idx+1);
+
+                    data.OptionText[idx] = str;
+                }
+            }
+            str = fields[1+2*(i-1)+1].GetCppString();
+            if(!str.empty())
+            {
+                int idx = GetOrNewIndexForLocale(LocaleConstant(i));
+                if(idx >= 0)
+                {
+                    if(data.BoxText.size() <= idx)
+                        data.BoxText.resize(idx+1);
+
+                    data.BoxText[idx] = str;
+                }
+            }
+        }
+    } while (result->NextRow());
+
+    delete result;
+
+    sLog.outString();
+    sLog.outString( ">> Loaded %lu gossip_guards locale strings", (unsigned long)mGossipSelectLocaleMap.size() );
+}
+*/
 void ObjectMgr::LoadNpcOptionLocales()
 {
     mNpcOptionLocaleMap.clear();                              // need for reload case

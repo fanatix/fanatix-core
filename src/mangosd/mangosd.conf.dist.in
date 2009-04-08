@@ -1433,3 +1433,27 @@ AuctionHouseBot.Bind_Quest_Item = 0
 AuctionHouseBot.ItemsPerCycle = 200
 AuctionHouseBot.UseBuyPriceForSeller = 0
 AuctionHouseBot.UseBuyPriceForBuyer = 0
+
+###################################################################################################################
+# AUTO BROADCAST
+#
+# AutoBroadcast.On
+# Enable auto broadcast
+# Default: 0 - off
+# 1 - on
+#
+# AutoBroadcast.Center
+# Display method
+# Default: 0 - announce
+# 1 - notify
+# 2 - both
+#
+# AutoBroadcast.Timer
+# Timer for auto broadcast
+#
+###################################################################################################################
+
+AutoBroadcast.On = 1
+AutoBroadcast.Center = 2
+AutoBroadcast.Timer = 30000
+

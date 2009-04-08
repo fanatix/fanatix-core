@@ -198,6 +198,10 @@ enum BG_AV_Nodes
 /// the last dimension 2 is for 0=assaulted, 1=controlled
 /// neutral node (snowfall) will get into an extra enum)
 /// destroyed will be handled as controlled by opponent
+
+/* we use (node * 4) + (2 * bg_team_id) + controlled + 1 instead of this array
+ * but i think with this array it's more clear which id does what, thats why i
+ * dont delete it
 const uint8 BG_AV_NodeEventIndexes[BG_AV_NODES_MAX][BG_TEAMS_COUNT][2] = {
     { {1, 2}, {3, 4} },                                     // FIRSTAID_STATION
     { {5, 6}, {7,  8} },                                    // STORMPIKE_GRAVE
@@ -215,6 +219,7 @@ const uint8 BG_AV_NodeEventIndexes[BG_AV_NODES_MAX][BG_TEAMS_COUNT][2] = {
     { {53, 54}, {55, 56} },                                 // FROSTWOLF_ETOWER
     { {57, 58}, {59, 60} }                                  // FROSTWOLF_WTOWER
 };
+*/
 // cause snowfall is the only neutral one, i will give it an extra variable, and
 // don't add neutral state to this array
 #define BG_AV_NodeEventSnowfall 61                          // neutral state of snowfall
@@ -609,6 +614,7 @@ class BattleGroundAV : public BattleGround
 
         uint64 m_DB_Creature[BG_AV_DB_CREATURE_MAX];
 
+        BG_AV_Nodes m_assault_in_progress;                  // this node gets currently assaulted and must be ignored for getclosestgrave
         BGCreatures m_MineCreatures[2][3];                  // 2 mines, 3 factions (neutral, alliance, horde)
 
         // 7 grave yards 2kinds: alliance/horde-captured, 4 different creaturetypes (there is a quest where you can improve those creatures)

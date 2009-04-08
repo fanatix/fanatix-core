@@ -151,8 +151,8 @@ extern int main(int argc, char **argv)
     sLog.outTitle( " 888    8    .oP'888   888   888   .oP'888   888    888     Y888'    ");
     sLog.outTitle( " 888        d8(  888   888   888  d8(  888   888 .  888   .o8''88b   ");
     sLog.outTitle( "o888o       `Y888''8o o888o o888o `Y888''8o  888   o888o o88'   888o ");
-    sLog.outTitle( ":::::::::::::::CORE::::VISIT::::WWW.WOW-FANATIX.DE:::::::::::::::::::");
-	sLog.outTitle( "Modify from Trainzfreak\n\n");
+	sLog.outTitle( ":::::::::::::::CORE::::VISIT::::WWW.FANATIX.BIZ::::::::::::::::::::::");
+	sLog.outTitle( "Modify from Thyros\n\n");
 
     sLog.outString("Using configuration file %s.", cfg_file);
 

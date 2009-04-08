@@ -69,14 +69,15 @@ enum ShutdownExitCode
 /// Timers for different object refresh rates
 enum WorldTimers
 {
-    WUPDATE_OBJECTS     = 0,
-    WUPDATE_SESSIONS    = 1,
-    WUPDATE_AUCTIONS    = 2,
-    WUPDATE_WEATHERS    = 3,
-    WUPDATE_UPTIME      = 4,
-    WUPDATE_CORPSES     = 5,
-    WUPDATE_EVENTS      = 6,
-    WUPDATE_COUNT       = 7
+    WUPDATE_OBJECTS       = 0,
+    WUPDATE_SESSIONS      = 1,
+    WUPDATE_AUCTIONS      = 2,
+    WUPDATE_WEATHERS      = 3,
+    WUPDATE_UPTIME        = 4,
+    WUPDATE_CORPSES       = 5,
+    WUPDATE_EVENTS        = 6,
+    WUPDATE_AUTOBROADCAST = 7,
+    WUPDATE_COUNT         = 8
 };
 
 /// Configuration elements
@@ -370,6 +371,7 @@ class World
 
         WorldSession* FindSession(uint32 id) const;
         void AddSession(WorldSession *s);
+        void SendBroadcast();
         bool RemoveSession(uint32 id);
         /// Get the number of current active sessions
         void UpdateMaxSessionCounters();

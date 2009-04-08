@@ -62,10 +62,11 @@ enum BattleGroundMarksCount
     ITEM_LOSER_COUNT                = 1
 };
 
-enum BattleGroundCreatures
+enum BGHonorMode
 {
-    BG_CREATURE_ENTRY_A_SPIRITGUIDE      = 13116,           // alliance
-    BG_CREATURE_ENTRY_H_SPIRITGUIDE      = 13117,           // horde
+    BG_NORMAL = 0,
+    BG_HOLIDAY,
+    BG_HONOR_MODE_NUM
 };
 
 enum BattleGroundSpells
@@ -188,7 +189,10 @@ enum ScoreType
     SCORE_GRAVEYARDS_DEFENDED   = 12,
     SCORE_TOWERS_ASSAULTED      = 13,
     SCORE_TOWERS_DEFENDED       = 14,
-    SCORE_SECONDARY_OBJECTIVES  = 15
+    SCORE_MINES_CAPTURED        = 15,
+    SCORE_LEADERS_KILLED        = 16,
+    SCORE_SECONDARY_OBJECTIVES  = 17
+    // TODO : implement them
 };
 
 enum ArenaType
@@ -266,12 +270,6 @@ class BattleGroundScore
         uint32 HealingDone;
 };
 
-enum BGHonorMode
-{
-    BG_NORMAL = 0,
-    BG_HOLIDAY,
-    BG_HONOR_MODE_NUM
-};
 /*
 This class is used to:
 1. Add player to battleground
@@ -360,7 +358,7 @@ class BattleGround
         void IncreaseInvitedCount(uint32 team)      { (team == ALLIANCE) ? ++m_InvitedAlliance : ++m_InvitedHorde; }
         uint32 GetInvitedCount(uint32 team) const
         {
-            if( team == ALLIANCE )
+            if (team == ALLIANCE)
                 return m_InvitedAlliance;
             else
                 return m_InvitedHorde;
@@ -389,9 +387,12 @@ class BattleGround
 
         GameObject* GetBGObject(uint32 type);
         Creature* GetBGCreature(uint32 type);
+
         /* Location */
         void SetMapId(uint32 MapID) { m_MapId = MapID; }
         uint32 GetMapId() const { return m_MapId; }
+
+        virtual void OnCreatureRespawn(Creature* /*creature*/) {}
 
         void SetTeamStartLoc(uint32 TeamID, float X, float Y, float Z, float O);
         void GetTeamStartLoc(uint32 TeamID, float &X, float &Y, float &Z, float &O) const
@@ -427,11 +428,11 @@ class BattleGround
 
         void SendMessageToAll(int32 entry, ChatMsg type, Player const* source = NULL);
         void SendYellToAll(int32 entry, uint32 language, uint64 const& guid);
+        void SendYell2ToAll(int32 entry, uint32 language, uint64 const& guid, int32 arg1, int32 arg2);
         void PSendMessageToAll(int32 entry, ChatMsg type, Player const* source, ...  );
 
         // specialized version with 2 string id args
         void SendMessage2ToAll(int32 entry, ChatMsg type, Player const* source, int32 strId1 = 0, int32 strId2 = 0);
-        void SendYell2ToAll(int32 entry, uint32 language, uint64 const& guid, int32 arg1, int32 arg2);
 
         /* Raid Group */
         Group *GetBgRaid(uint32 TeamID) const { return TeamID == ALLIANCE ? m_BgRaids[BG_TEAM_ALLIANCE] : m_BgRaids[BG_TEAM_HORDE]; }
@@ -444,7 +445,7 @@ class BattleGround
         uint32 GetAlivePlayersCountByTeam(uint32 Team) const;   // used in arenas to correctly handle death in spirit of redemption / last stand etc. (killer = killed) cases
         void UpdatePlayersCountByTeam(uint32 Team, bool remove)
         {
-            if(remove)
+            if (remove)
                 --m_PlayersCount[GetTeamIndexByTeamId(Team)];
             else
                 ++m_PlayersCount[GetTeamIndexByTeamId(Team)];
@@ -481,29 +482,26 @@ class BattleGround
         virtual void RemovePlayerAtLeave(uint64 guid, bool Transport, bool SendPacket);
                                                             // can be extended in in BG subclass
 
-        virtual void OnObjectDBLoad(Creature* /*creature*/) {}
-        virtual void OnObjectDBLoad(GameObject* /*gameobject*/) {}
-        virtual void OnCreatureRespawn(Creature* /*creature*/) {}
-
         void HandleTriggerBuff(uint64 const& go_guid);
         void SetHoliday(bool is_holiday);
+        virtual void OnObjectDBLoad(Creature* /*creature*/) {}
+        virtual void OnObjectDBLoad(GameObject* /*gameobject*/) {}
 
         // TODO: make this protected:
         typedef std::vector<uint64> BGObjects;
         typedef std::vector<uint64> BGCreatures;
         BGObjects m_BgObjects;
         BGCreatures m_BgCreatures;
-        void SpawnBGObject(uint64 const& guid, uint32 respawntime);
+        void SpawnBGObject(uint32 type, uint32 respawntime);
         bool AddObject(uint32 type, uint32 entry, float x, float y, float z, float o, float rotation0, float rotation1, float rotation2, float rotation3, uint32 respawnTime = 0);
-        void SpawnBGCreature(uint64 const& guid, uint32 respawntime);
+        void SpawnBGCreature(uint32 type, uint32 respawntime);
         Creature* AddCreature(uint32 entry, uint32 type, uint32 teamval, float x, float y, float z, float o, uint32 respawntime = 0);
         bool DelCreature(uint32 type);
         bool DelObject(uint32 type);
         bool AddSpiritGuide(uint32 type, float x, float y, float z, float o, uint32 team);
-        int32 GetObjectType(uint64 const& guid);
 
-        void DoorOpen(uint64 const& guid);
-        void DoorClose(uint64 const& guid);
+        void DoorOpen(uint32 type);
+        void DoorClose(uint32 type);
 
         virtual bool HandlePlayerUnderMap(Player * /*plr*/) { return false; }
 

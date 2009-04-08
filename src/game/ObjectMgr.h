@@ -517,6 +517,7 @@ class ObjectMgr
         void LoadNpcTextLocales();
         void LoadPageTextLocales();
         void LoadNpcOptionLocales();
+        /*void LoadGossipSelectLocales();*/
         void LoadPointOfInterestLocales();
         void LoadInstanceTemplate();
 
