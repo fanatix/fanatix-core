@@ -24,6 +24,10 @@ DELETE FROM `creature_template_addon` WHERE `entry` IN(13358,13359);
 INSERT INTO `creature_template_addon` (`entry`, `auras`) VALUES ('13358', '42716 0 42716 1');
 INSERT INTO `creature_template_addon` (`entry`, `auras`) VALUES ('13359', '42716 0 42716 1');
 
+-- delete auras from marshalls around vanndar - somehow it's possible, that
+-- normal player get buffed by them and walk around with 30k health
+DELETE FROM `creature_template_addon` WHERE `entry` IN(14762,14763,14764,14765);
+
 -- following is the player loot.. it takes the id 1 - be sure that i don't delete anything
 REPLACE INTO `creature_loot_template` (`entry` ,`item` ,`ChanceOrQuestChance` ,`groupid` ,`mincountOrRef` ,`maxcount` ,`lootcondition` ,`condition_value1` ,`condition_value2`)
 VALUES ('1', '17306', '33', '0', '5', '15',  '6', '67', '0'),

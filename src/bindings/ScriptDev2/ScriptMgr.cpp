@@ -963,7 +963,7 @@ void ScriptsInit()
     outstring_log("MM  M M  M ");
     outstring_log(" MMM  MMM  http://www.scriptdev2.com");
     outstring_log("");
-    outstring_log(":CORE::VISIT::WWW.WOW-FANATIX.DE:");
+	outstring_log("::CORE::VISIT::WWW.FANATIX.BIZ:::");
 	outstring_log("#################################");
 	outstring_log("#  Compiled from Fanatix Team   #");
 	outstring_log("#################################");
