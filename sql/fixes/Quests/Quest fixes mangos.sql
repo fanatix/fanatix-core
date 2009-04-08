@@ -23,4 +23,8 @@ UPDATE `quest_template` SET `StartScript`='0' WHERE entry=10211;
 -- Khadgar
 UPDATE `creature_template` SET `ScriptName`='npc_khadgar' WHERE `entry` = '18166';
 
+UPDATE 'creature_template' SET 'ScriptName' = 'npc_broodling' WHERE 'entry' = '7047';
+UPDATE 'creature_template' SET 'ScriptName' = 'npc_broodling' WHERE 'entry' = '7048';
+UPDATE 'creature_template' SET 'ScriptName' = 'npc_broodling' WHERE 'entry' = '7049';
+
 

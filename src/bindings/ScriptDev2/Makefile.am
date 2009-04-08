@@ -209,6 +209,7 @@ scripts/zone/draktharon_keep/boss_trollgore.cpp \
 scripts/zone/draktharon_keep/def_drak_tharon_keep.h \
 scripts/zone/draktharon_keep/instance_drak_tharon_keep.cpp \
 scripts/zone/dun_morogh/dun_morogh.cpp \
+scripts/zone/duskwood/duskwood.cpp \
 scripts/zone/dustwallow_marsh/dustwallow_marsh.cpp \
 scripts/zone/eastern_plaguelands/eastern_plaguelands.cpp \
 scripts/zone/ebon_hold/ebon_hold.cpp \

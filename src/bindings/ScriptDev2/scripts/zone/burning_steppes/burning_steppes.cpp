@@ -17,12 +17,13 @@
 /* ScriptData
 SDName: Burning_Steppes
 SD%Complete: 100
-SDComment: Quest support: 4224, 4866
+SDComment: Quest support: 4224, 4866, 4726
 SDCategory: Burning Steppes
 EndScriptData */
 
 /* ContentData
 npc_ragged_john
+npc_broodling
 EndContentData */
 
 #include "precompiled.h"
@@ -137,6 +138,45 @@ bool GossipSelect_npc_ragged_john(Player *player, Creature *_Creature, uint32 se
     }
     return true;
 }
+/*######
+## npc_broodling
+######*/
+
+#define BROODLING_ESSENCE_QUEST          4726
+#define DRACO_INCARCINATRIX_900_SPELL    16007
+#define CREATE_BROODLING_ESSENCE_SPELL   16027
+
+bool mDracoCasted;
+
+struct MANGOS_DLL_DECL npc_broodlingAI : public ScriptedAI
+{
+    npc_broodlingAI(Creature* c) : ScriptedAI(c)
+    {
+        Reset();
+    }
+    void Reset() 
+    {
+        mDracoCasted = false;
+    }
+    void Aggro(Unit* mVictim) {}
+    void SpellHit(Unit* mCaster, const SpellEntry* mSpell)
+    {
+        if(mSpell->Id == DRACO_INCARCINATRIX_900_SPELL)
+        {
+            mDracoCasted = true;
+        }
+    }
+    void JustDied(Unit* mKiller)
+    {
+        if(((Player*)mKiller)->IsActiveQuest(BROODLING_ESSENCE_QUEST) && mDracoCasted)
+            m_creature->CastSpell(m_creature, CREATE_BROODLING_ESSENCE_SPELL, true);
+    }
+};
+
+CreatureAI* GetAI_npc_broodling(Creature* _Creature)
+{
+    return new npc_broodlingAI(_Creature);
+}
 
 void AddSC_burning_steppes()
 {
@@ -147,5 +187,10 @@ void AddSC_burning_steppes()
     newscript->GetAI = &GetAI_npc_ragged_john;
     newscript->pGossipHello =  &GossipHello_npc_ragged_john;
     newscript->pGossipSelect = &GossipSelect_npc_ragged_john;
+    newscript->RegisterSelf();
+
+    newscript = new Script;
+    newscript->Name = "npc_broodling";
+    newscript->GetAI = &GetAI_npc_broodling;
     newscript->RegisterSelf();
 }
