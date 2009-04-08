@@ -673,14 +673,14 @@ void AchievementMgr::UpdateAchievementCriteria(AchievementCriteriaTypes type, ui
                 // AchievementMgr::UpdateAchievementCriteria might also be called on login - skip in this case
                 if(!miscvalue1)
                     continue;
-                // skip wrong arena achievements, if not achievIdByArenaSlot then normal totla death counter
+                // skip wrong arena achievements, if not achievIdByArenaSlot then normal total death counter
                 bool notfit = false;
                 for(int i = 0; i < MAX_ARENA_SLOT; ++i)
                 {
                     if(achievIdByArenaSlot[i] == achievement->ID)
                     {
                         BattleGround* bg = GetPlayer()->GetBattleGround();
-                        if(!bg || ArenaTeam::GetSlotByType(bg->GetArenaType())!=i)
+                        if(!bg || !bg->isArena() || ArenaTeam::GetSlotByType(bg->GetArenaType()) != i)
                             notfit = true;
 
                         break;

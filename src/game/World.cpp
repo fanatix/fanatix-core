@@ -1454,6 +1454,8 @@ void World::SetInitialWorldSettings()
     uint32 nextGameEvent = gameeventmgr.Initialize();
     m_timers[WUPDATE_EVENTS].SetInterval(nextGameEvent);    //depend on next event
 
+    sLog.outString("Starting Autobroadcast system..." );
+
     sLog.outString("Initialize AuctionHouseBot...");
     AuctionHouseBotInit();
 
@@ -2809,8 +2811,9 @@ void World::SendBroadcast()
     if(!result)
         return;
 
-    nextid = result->Fetch()[1].GetUInt8();
-    msg = result->Fetch()[0].GetString();
+    Field *fields = result->Fetch();
+    nextid  = fields[1].GetUInt32();
+    msg = fields[0].GetString();
     delete result;
 
     static uint32 abcenter = 0;

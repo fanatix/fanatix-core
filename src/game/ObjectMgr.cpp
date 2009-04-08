@@ -5490,6 +5490,30 @@ struct SQLGameObjectLoader : public SQLStorageLoaderBase<SQLGameObjectLoader>
     }
 };
 
+inline void CheckGOLockId(GameObjectInfo const* goInfo,uint32 dataN,uint32 N)
+{
+    if(sLockStore.LookupEntry(dataN))
+        return;
+
+    sLog.outErrorDb("Gameobject (Entry: %u GoType: %u) have data%d=%u but lock (Id: %u) not found.",
+        goInfo->id,goInfo->type,N,goInfo->door.lockId,goInfo->door.lockId);
+}
+
+inline void CheckGOLinkedTrapId(GameObjectInfo const* goInfo,uint32 dataN,uint32 N)
+{
+    if(GameObjectInfo const* trapInfo = sGOStorage.LookupEntry<GameObjectInfo>(dataN))
+    {
+        if(trapInfo->type!=GAMEOBJECT_TYPE_TRAP)
+            sLog.outErrorDb("Gameobject (Entry: %u GoType: %u) have data%d=%u but GO (Entry %u) have not GAMEOBJECT_TYPE_TRAP (%u) type.",
+            goInfo->id,goInfo->type,N,dataN,dataN,GAMEOBJECT_TYPE_TRAP);
+    }
+    /* disable check for while (too many error reports baout not existed in trap templates
+    else
+        sLog.outErrorDb("Gameobject (Entry: %u GoType: %u) have data%d=%u but trap GO (Entry %u) not exist in `gameobject_template`.",
+            goInfo->id,goInfo->type,N,dataN,dataN);
+    */
+}
+
 void ObjectMgr::LoadGameobjectInfo()
 {
     SQLGameObjectLoader loader;
@@ -5507,49 +5531,34 @@ void ObjectMgr::LoadGameobjectInfo()
             case GAMEOBJECT_TYPE_DOOR:                      //0
             {
                 if(goInfo->door.lockId)
-                {
-                    if(!sLockStore.LookupEntry(goInfo->door.lockId))
-                        sLog.outErrorDb("Gameobject (Entry: %u GoType: %u) have data1=%u but lock (Id: %u) not found.",
-                            id,goInfo->type,goInfo->door.lockId,goInfo->door.lockId);
-                }
+                    CheckGOLockId(goInfo,goInfo->door.lockId,1);
                 break;
             }
             case GAMEOBJECT_TYPE_BUTTON:                    //1
             {
                 if(goInfo->button.lockId)
-                {
-                    if(!sLockStore.LookupEntry(goInfo->button.lockId))
-                        sLog.outErrorDb("Gameobject (Entry: %u GoType: %u) have data1=%u but lock (Id: %u) not found.",
-                            id,goInfo->type,goInfo->button.lockId,goInfo->button.lockId);
-                }
+                    CheckGOLockId(goInfo,goInfo->button.lockId,1);
+                break;
+            }
+            case GAMEOBJECT_TYPE_QUESTGIVER:                //2
+            {
+                if(goInfo->questgiver.lockId)
+                    CheckGOLockId(goInfo,goInfo->questgiver.lockId,0);
                 break;
             }
             case GAMEOBJECT_TYPE_CHEST:                     //3
             {
                 if(goInfo->chest.lockId)
-                {
-                    if(!sLockStore.LookupEntry(goInfo->chest.lockId))
-                        sLog.outErrorDb("Gameobject (Entry: %u GoType: %u) have data0=%u but lock (Id: %u) not found.",
-                            id,goInfo->type,goInfo->chest.lockId,goInfo->chest.lockId);
-                }
+                    CheckGOLockId(goInfo,goInfo->chest.lockId,0);
+
                 if(goInfo->chest.linkedTrapId)              // linked trap
-                {
-                    if(GameObjectInfo const* trapInfo = sGOStorage.LookupEntry<GameObjectInfo>(goInfo->chest.linkedTrapId))
-                    {
-                        if(trapInfo->type!=GAMEOBJECT_TYPE_TRAP)
-                            sLog.outErrorDb("Gameobject (Entry: %u GoType: %u) have data7=%u but GO (Entry %u) have not GAMEOBJECT_TYPE_TRAP (%u) type.",
-                                id,goInfo->type,goInfo->chest.linkedTrapId,goInfo->chest.linkedTrapId,GAMEOBJECT_TYPE_TRAP);
-                    }
-                    /* disable check for while
-                    else
-                        sLog.outErrorDb("Gameobject (Entry: %u GoType: %u) have data2=%u but trap GO (Entry %u) not exist in `gameobject_template`.",
-                            id,goInfo->type,goInfo->chest.linkedTrapId,goInfo->chest.linkedTrapId);
-                    */
-                }
+                    CheckGOLinkedTrapId(goInfo,goInfo->chest.linkedTrapId,7);
                 break;
             }
             case GAMEOBJECT_TYPE_TRAP:                      //6
             {
+                if(goInfo->trap.lockId)
+                    CheckGOLockId(goInfo,goInfo->trap.lockId,0);
                 /* disable check for while
                 if(goInfo->trap.spellId)                    // spell
                 {
@@ -5580,23 +5589,14 @@ void ObjectMgr::LoadGameobjectInfo()
                 }
 
                 if(goInfo->spellFocus.linkedTrapId)         // linked trap
-                {
-                    if(GameObjectInfo const* trapInfo = sGOStorage.LookupEntry<GameObjectInfo>(goInfo->spellFocus.linkedTrapId))
-                    {
-                        if(trapInfo->type!=GAMEOBJECT_TYPE_TRAP)
-                            sLog.outErrorDb("Gameobject (Entry: %u GoType: %u) have data2=%u but GO (Entry %u) have not GAMEOBJECT_TYPE_TRAP (%u) type.",
-                                id,goInfo->type,goInfo->spellFocus.linkedTrapId,goInfo->spellFocus.linkedTrapId,GAMEOBJECT_TYPE_TRAP);
-                    }
-                    /* disable check for while
-                    else
-                        sLog.outErrorDb("Gameobject (Entry: %u GoType: %u) have data2=%u but trap GO (Entry %u) not exist in `gameobject_template`.",
-                            id,goInfo->type,goInfo->spellFocus.linkedTrapId,goInfo->spellFocus.linkedTrapId);
-                    */
-                }
+                    CheckGOLinkedTrapId(goInfo,goInfo->spellFocus.linkedTrapId,2);
                 break;
             }
             case GAMEOBJECT_TYPE_GOOBER:                    //10
             {
+                if(goInfo->goober.lockId)
+                    CheckGOLockId(goInfo,goInfo->goober.lockId,0);
+
                 if(goInfo->goober.pageId)                   // pageId
                 {
                     if(!sPageTextStore.LookupEntry<PageText>(goInfo->goober.pageId))
@@ -5612,19 +5612,19 @@ void ObjectMgr::LoadGameobjectInfo()
                 }
                 */
                 if(goInfo->goober.linkedTrapId)             // linked trap
-                {
-                    if(GameObjectInfo const* trapInfo = sGOStorage.LookupEntry<GameObjectInfo>(goInfo->goober.linkedTrapId))
-                    {
-                        if(trapInfo->type!=GAMEOBJECT_TYPE_TRAP)
-                            sLog.outErrorDb("Gameobject (Entry: %u GoType: %u) have data12=%u but GO (Entry %u) have not GAMEOBJECT_TYPE_TRAP (%u) type.",
-                                id,goInfo->type,goInfo->goober.linkedTrapId,goInfo->goober.linkedTrapId,GAMEOBJECT_TYPE_TRAP);
-                    }
-                    /* disable check for while
-                    else
-                        sLog.outErrorDb("Gameobject (Entry: %u GoType: %u) have data12=%u but trap GO (Entry %u) not exist in `gameobject_template`.",
-                            id,goInfo->type,goInfo->goober.linkedTrapId,goInfo->goober.linkedTrapId);
-                    */
-                }
+                    CheckGOLinkedTrapId(goInfo,goInfo->goober.linkedTrapId,12);
+                break;
+            }
+            case GAMEOBJECT_TYPE_AREADAMAGE:                //12
+            {
+                if(goInfo->areadamage.lockId)
+                    CheckGOLockId(goInfo,goInfo->areadamage.lockId,0);
+                break;
+            }
+            case GAMEOBJECT_TYPE_CAMERA:                    //13
+            {
+                if(goInfo->camera.lockId)
+                    CheckGOLockId(goInfo,goInfo->camera.lockId,0);
                 break;
             }
             case GAMEOBJECT_TYPE_MO_TRANSPORT:              //15
@@ -5657,6 +5657,24 @@ void ObjectMgr::LoadGameobjectInfo()
                         sLog.outErrorDb("Gameobject (Entry: %u GoType: %u) have data3=%u but Spell (Entry %u) not exist.",
                             id,goInfo->type,goInfo->spellcaster.spellId,goInfo->spellcaster.spellId);
                 }
+                break;
+            }
+            case GAMEOBJECT_TYPE_FLAGSTAND:                 //24
+            {
+                if(goInfo->flagstand.lockId)
+                    CheckGOLockId(goInfo,goInfo->flagstand.lockId,0);
+                break;
+            }
+            case GAMEOBJECT_TYPE_FISHINGHOLE:               //25
+            {
+                if(goInfo->fishinghole.lockId)
+                    CheckGOLockId(goInfo,goInfo->fishinghole.lockId,4);
+                break;
+            }
+            case GAMEOBJECT_TYPE_FLAGDROP:                  //26
+            {
+                if(goInfo->flagdrop.lockId)
+                    CheckGOLockId(goInfo,goInfo->flagdrop.lockId,0);
                 break;
             }
             case GAMEOBJECT_TYPE_BARBER_CHAIR:              //32
