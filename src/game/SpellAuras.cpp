@@ -3347,20 +3347,22 @@ void Aura::HandleModFear(bool apply, bool Real)
 
     m_target->SetFeared(apply, GetCasterGUID(), GetId());
 
-       if(!apply)
+   if(!apply && m_spellProto->SpellFamilyName == SPELLFAMILY_WARLOCK)
+     {
+       Unit* caster = GetCaster();
+       int32 spell_id = 0;
+       if(!caster || caster->GetTypeId() != TYPEID_PLAYER)
+          return;
+       else
        {
-       // Nightmare
-                  if(m_spellProto->EffectApplyAuraName[0] == SPELL_AURA_MOD_FEAR && m_spellProto->SpellFamilyName == SPELLFAMILY_WARLOCK)
-               {
-               uint32 spell_id;
-               if(GetCaster()->HasAura(53754, 0))
-                      spell_id = 60946;
-               if(GetCaster()->HasAura(53759, 0))
-                      spell_id = 60947;
-               if(spell_id)
-                      m_target->CastSpell(m_target, spell_id, false);
-               }
+           if(caster->HasAura(53754, 0))
+              spell_id = 60946;
+           else if(caster->HasAura(53759, 0))
+              spell_id = 60947;
        }
+       if(spell_id)
+          m_target->CastSpell(m_target, spell_id, false);
+    }
 }
 
 void Aura::HandleFeignDeath(bool apply, bool Real)

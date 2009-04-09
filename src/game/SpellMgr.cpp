@@ -1066,19 +1066,6 @@ bool SpellMgr::IsRankSpellDueToSpell(SpellEntry const *spellInfo_1,uint32 spellI
     if(!spellInfo_1 || !spellInfo_2) return false;
     if(spellInfo_1->Id == spellId_2) return false;
 
-    SpellChainMap::const_iterator itr_1 = mSpellChains.find(spellInfo_1->Id);
-    SpellChainMap::const_iterator itr_2 = mSpellChains.find(spellId_2);
-    if(itr_1 != mSpellChains.end() && itr_2 != mSpellChains.end())
-    {
-        if(uint32 reqSpell1 = itr_1->second.req)
-            if(GetFirstSpellInChain(reqSpell1) == GetFirstSpellInChain(spellId_2))
-                return true;
-
-        if(uint32 reqSpell2 = itr_2->second.req)
-            if(GetFirstSpellInChain(reqSpell2) == GetFirstSpellInChain(spellInfo_1->Id))
-                return true;
-    }
-
     return GetFirstSpellInChain(spellInfo_1->Id)==GetFirstSpellInChain(spellId_2);
 }
 
@@ -1273,9 +1260,6 @@ bool SpellMgr::IsNoStackSpellDueToSpell(uint32 spellId_1, uint32 spellId_2) cons
 
             // Combustion and Fire Protection Aura (multi-family check)
             if( spellInfo_1->Id == 11129 && spellInfo_2->SpellIconID == 33 && spellInfo_2->SpellVisual[0] == 321 )
-                return false;
-
-            if( spellInfo_1->EffectSpellClassMaskC[0] == 262144 && spellInfo_2->EffectSpellClassMaskC[0] == 262144)
                 return false;
 
             break;
@@ -2137,49 +2121,121 @@ void SpellMgr::LoadSpellPetAuras()
     sLog.outString( ">> Loaded %u spell pet auras", count );
 }
 
+uint32* SpellMgr::LoadPetLevelupSpellMapWarlockInit(uint32 *pet_spell_db_count)
+{
+    uint32 *pet_spell_data = NULL;
+    *pet_spell_db_count = 0;
+
+    //                                                 0      1
+    QueryResult *result = WorldDatabase.PQuery("SELECT entry, spell FROM pet_levelspell");
+
+    if(!result)
+    {
+        sLog.outErrorDb(">> Loaded 0 pet dblevel spell. DB table `pet_levelspell` is empty.");
+        return(NULL);
+    }
+    else
+    {
+        *pet_spell_db_count = result->GetRowCount();
+        uint32 pet_spell_count = 0;
+
+        if(*pet_spell_db_count)
+        {
+            if ((pet_spell_data = (uint32 *) malloc(*pet_spell_db_count * sizeof(uint32) * 2)) == NULL) {
+                sLog.outErrorDb(">> Loaded 0 pet dblevel spell. DB table `pet_levelspell` allocate memory error.");
+                return(NULL);
+            }
+        }
+        else {
+            sLog.outErrorDb(">> Loaded 0 pet dblevel spell. DB table `pet_levelspell` count is zero.");
+            return(NULL);
+        }
+
+        do {
+            Field *fields = result->Fetch();
+
+            pet_spell_data[(pet_spell_count*2)+0] = fields[0].GetUInt32();
+            pet_spell_data[(pet_spell_count*2)+1] = fields[1].GetUInt32();
+
+            pet_spell_count++;
+
+            if(pet_spell_count >= *pet_spell_db_count)
+            {
+                break;
+            }
+        }
+        while ( result->NextRow() );
+
+        delete result;
+
+        sLog.outString();
+        sLog.outString( ">> Loaded %u spell pet dblevel spell", pet_spell_count );
+
+    }
+
+    return(pet_spell_data);
+
+}
+
+bool SpellMgr::LoadPetLevelupSpellMapWarlockCheck(CreatureFamilyEntry const *creatureFamily)
+{
+    bool pet_spell_is;
+
+    //WARLOCK
+    switch (creatureFamily->ID) {
+        case CREATURE_FAMILY_IMP:
+        case CREATURE_FAMILY_VOIDWALKER:
+        case CREATURE_FAMILY_SUCCUBUS:
+        case CREATURE_FAMILY_FELHUNTER:
+        case CREATURE_FAMILY_FELGUARD:
+            pet_spell_is = true;
+            break;
+        default:
+            pet_spell_is = false;
+            break;
+    }
+
+    return(pet_spell_is);
+
+}
+
+uint32 SpellMgr::LoadPetLevelupSpellMapWarlockLoad(CreatureFamilyEntry const *creatureFamily, SpellEntry const *spell, uint32 *pet_spell_data, uint32 pet_spell_count)
+{
+    uint32 count = 0;
+
+    for(uint32 k = 0; k < pet_spell_count; k++)
+    {
+        if(creatureFamily->ID == pet_spell_data[(k*2)+0] && spell->Id == pet_spell_data[(k*2)+1])
+        {
+            mPetLevelupSpellMap[creatureFamily->ID][spell->spellLevel + (k*0x10000)] = spell->Id;
+            count++;
+            break;
+        }
+    }
+
+    return(count);
+}
+
+void SpellMgr::LoadPetLevelupSpellMapWarlockEnd(uint32 *pet_spell_data)
+{
+
+    if(pet_spell_data != NULL) {
+        free(pet_spell_data);
+    }
+
+}
+
 void SpellMgr::LoadPetLevelupSpellMap()
 {
     CreatureFamilyEntry const *creatureFamily;
     SpellEntry const *spell;
     uint32 count = 0;
 
-	#define MAX_PET_SPELL_COUNT 1024
-	uint32 pet_spell_db_no = 0;
-	uint32 pet_spell_is;
-	uint32 pet_spell_count;
-	uint32 pet_spell_data[MAX_PET_SPELL_COUNT][2];
-	QueryResult *result = WorldDatabase.PQuery("SELECT entry, spell FROM pet_levelspells");
-	if(!result)
-	{
-		sLog.outErrorDb(">> Loaded 0 pet dblevel spells. DB table `pet_levelspells` is empty.");
-		pet_spell_db_no = 1;
-	}
-	else
-	{
-		pet_spell_count = 0;
-		do 
-		{
-			Field *fields = result->Fetch();
-			
-			pet_spell_data[pet_spell_count][0] = fields[0].GetUInt32();
-			pet_spell_data[pet_spell_count][1] = fields[1].GetUInt32();
-			
-			pet_spell_count++;
-			
-			if(pet_spell_count >= MAX_PET_SPELL_COUNT)
-			{
-				// Overflow Detect
-				sLog.outErrorDb(">> Loaded %u over pet dblevel spells. DB table `pet_levelspells`.",pet_spell_count);
-				break;
-			}
-		}
-		while ( result->NextRow() );
+    uint32 *warlock_pet_spell_data = NULL;
+    uint32 warlock_pet_spell_count = 0;
 
-		delete result;
-
-		sLog.outString();
-		sLog.outString( ">> Loaded %u spell pet dblevel spells", pet_spell_count );
-	}
+    // Load Pet Spell Warlock From DB
+    warlock_pet_spell_data = LoadPetLevelupSpellMapWarlockInit(&warlock_pet_spell_count);
 
     for (uint32 i = 0; i < sCreatureFamilyStore.GetNumRows(); ++i)
     {
@@ -2188,33 +2244,18 @@ void SpellMgr::LoadPetLevelupSpellMap()
         if(!creatureFamily)                                 // not exist
             continue;
 
-        if(pet_spell_db_no == 0)
-		{
-			//WARLOCK
-			switch(creatureFamily->ID)
-			{
-			case CREATURE_FAMILY_IMP:
-			case CREATURE_FAMILY_VOIDWALKER:
-			case CREATURE_FAMILY_SUCCUBUS:
-			case CREATURE_FAMILY_FELHUNTER:
-			case CREATURE_FAMILY_FELGUARD:
-				pet_spell_is = 1;
-				break;
-			default:
-				pet_spell_is = 0;
-				break;
-			}
-		}
-		else
-		{
-			pet_spell_is = 0;
-		}
+        //WARLOCK
+        bool warlock_pet_spell_true = false;
+        if(warlock_pet_spell_count)
+        {
+            warlock_pet_spell_true = LoadPetLevelupSpellMapWarlockCheck(creatureFamily);
+        }
 
-		if(pet_spell_is == 0)
-		{
-			if(creatureFamily->petTalentType < 0) // not hunter pet family
-				continue;
-		}
+        if(warlock_pet_spell_true == false)
+        {
+            if(creatureFamily->petTalentType < 0)               // not hunter pet family
+                continue;
+        }
 
         for(uint32 j = 0; j < sSpellStore.GetNumRows(); ++j)
         {
@@ -2223,35 +2264,11 @@ void SpellMgr::LoadPetLevelupSpellMap()
             // not exist
             if(!spell)
                 continue;
-			
-			//WARLOCK
-			if(pet_spell_is)
-			{
-				for(uint32 k = 0; k < pet_spell_count; k++)
-				{
-					if(creatureFamily->ID == pet_spell_data[k][0] && spell->Id == pet_spell_data[k][1])
-					{
-						mPetLevelupSpellMap[creatureFamily->ID][spell->spellLevel + (k*0x10000)] = spell->Id;
-						count++;
-						break;
-					}
-				}
-				continue;
-			}
 
             //WARLOCK
-            if(pet_spell_is)
+            if(warlock_pet_spell_true == true)
             {
-                for(uint32 k = 0; k < pet_spell_count; k++)
-                {    
-                    if(creatureFamily->ID == pet_spell_data[k][0] && spell->Id == pet_spell_data[k][1])
-                    {
-                        mPetLevelupSpellMap[creatureFamily->ID][spell->spellLevel + (k*0x10000)] = spell->Id;
-                        count++;
-                        break;
-                    }
-                }
-
+                count += LoadPetLevelupSpellMapWarlockLoad(creatureFamily, spell, warlock_pet_spell_data, warlock_pet_spell_count);
                 continue;
             }
 
@@ -2407,83 +2424,10 @@ void SpellMgr::LoadPetLevelupSpellMap()
         }
     }
 
+    LoadPetLevelupSpellMapWarlockEnd(warlock_pet_spell_data);
+
     sLog.outString();
     sLog.outString( ">> Loaded %u pet levelup spells", count );
-}
-
-void SpellMgr::LoadWarlockPetLevelupSpellMap()
-{
-	sLog.outString();
-    CreatureFamilyEntry const *creatureFamily;
-    SpellEntry const *spell;
-    uint32 count = 0;
-
-    for (uint32 i = 0; i < sCreatureFamilyStore.GetNumRows(); ++i)
-    {
-        creatureFamily = sCreatureFamilyStore.LookupEntry(i);
- 
-		// 100% RIGHT
-        if(!creatureFamily)                                 // not exist
-            continue;
-        
-		if(creatureFamily->ID != CREATURE_FAMILY_SUCCUBUS && creatureFamily->ID != CREATURE_FAMILY_FELGUARD && creatureFamily->ID != CREATURE_FAMILY_IMP && creatureFamily->ID != CREATURE_FAMILY_VOIDWALKER && creatureFamily->ID != CREATURE_FAMILY_FELHUNTER)
-          continue;
-
-        for(uint32 j = 0; j < sSpellStore.GetNumRows(); ++j)
-        {
-            spell = sSpellStore.LookupEntry(j);
-
-            // not exist - 100% RIGHT
-            if(!spell)
-                continue;
-
-            // not warlock spell - 100% RIGHT
-            if(spell->SpellFamilyName != SPELLFAMILY_WARLOCK)
-		    	continue;
-
-            // not pet spell - NOT RIGHT
-			//if(!(spell->SpellFamilyFlags & 0x1000000000000000LL))
-			// 	continue;
-		
-				switch(creatureFamily->ID)
-                {   
-                    case CREATURE_FAMILY_SUCCUBUS:  
-					    if(spell->SpellIconID != 48 && spell->SpellIconID != 331 && spell->SpellIconID != 694 && spell->SpellIconID != 542)
-						  continue;
-                    break;
-
-					case CREATURE_FAMILY_FELGUARD:
-                        if(spell->SpellIconID != 277 && spell->SpellIconID != 169 && spell->SpellIconID != 173 && spell->SpellIconID != 516)
-						 continue;
-					break;
-                    
-					case CREATURE_FAMILY_IMP:  
-					    if(spell->SpellIconID != 18 && spell->SpellIconID != 541 && spell->SpellIconID != 211 && spell->SpellIconID != 16)
-                          continue;
-                    break;
-                    
-					case CREATURE_FAMILY_VOIDWALKER:    
-					  if(spell->SpellIconID != 173 && spell->SpellIconID != 693 && spell->SpellIconID != 207 && spell->SpellIconID != 9)
-                         continue;
-                    break;
-
-                    case CREATURE_FAMILY_FELHUNTER:   
-				        if(spell->SpellIconID != 47 && spell->SpellIconID != 77 && spell->SpellIconID != 1987 && spell->SpellIconID != 1940)
-                        continue;
-                    break;
-                    
-					default:
-						sLog.outError("LoadWarlockPetLevelupSpellMap: Unhandled creature family %u (spell %u)", creatureFamily->ID, spell->Id);
-                		continue;
-				 }
-
-            mWarlockPetLevelupSpellMap[creatureFamily->ID][spell->spellLevel] = spell->Id;
-            count++;
-		  }
-		}
-    
-	sLog.outString( ">> Loaded %u warlock pet levelup spells ", count);
-    sLog.outString();
 }
 
 /// Some checks for spells, to prevent adding deprecated/broken spells for trainers, spell book, etc

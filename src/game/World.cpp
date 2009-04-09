@@ -1249,8 +1249,8 @@ void World::SetInitialWorldSettings()
     sLog.outString( "Loading pet levelup spells..." );
     spellmgr.LoadPetLevelupSpellMap();
 
-    sLog.outString( "Loading Warlock pet levelup spells..." );
-    spellmgr.LoadWarlockPetLevelupSpellMap();
+    //sLog.outString( "Loading Warlock pet levelup spells..." );
+    //spellmgr.LoadPetLevelupSpellMapWarlockInit();
 
     sLog.outString( "Loading Player Create Info & Level Stats..." );
     sLog.outString();
