@@ -477,6 +477,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\scripts\custom\paradox.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\scripts\custom\paymaster.cpp"
 					>
 				</File>

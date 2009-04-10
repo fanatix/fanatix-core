@@ -54,7 +54,7 @@ extern void AddSC_npc_wyrmresttempel_taxi();
 extern void AddSC_telefratz();
 extern void AddSC_npc_paymaster();
 extern void AddSC_npc_sickness();
-//extern void AddSC_paradox();
+extern void AddSC_paradox();
 
 // -- Examples --
 extern void AddSC_example_creature();
@@ -1020,6 +1020,7 @@ void ScriptsInit()
     AddSC_telefratz();
 	AddSC_npc_paymaster();
 	AddSC_npc_sickness();
+    AddSC_paradox();
 
     // -- Examples --
     AddSC_example_creature();

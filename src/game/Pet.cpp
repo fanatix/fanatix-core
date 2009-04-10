@@ -191,23 +191,14 @@ bool Pet::LoadPetFromDB( Player* owner, uint32 petentry, uint32 petnumber, bool 
     SetName(fields[9].GetString());
 
     bool petlevelchange = false;
-    switch(owner->getClass())
-    {
-        case CLASS_WARLOCK:
-        {
-            // if player level up without pet, when player summon a pet, pet auto level up. (only warlock)
-            _LoadSpells();
-            _LoadSpellCooldowns();
+    if(owner->getClass() == CLASS_WARLOCK) {
+        // if player level up without pet, when player summon a pet, pet auto level up. (only warlock)
+        _LoadSpells();
+        _LoadSpellCooldowns();
 
-            if(owner->getLevel() > petlevel)
-            {
-                petlevelchange = true;
-            }
-
-            break;
+        if(owner->getLevel() > petlevel) {
+            petlevelchange = true;
         }
-        default:
-            break;
     }
 
     switch(getPetType())
@@ -243,7 +234,6 @@ bool Pet::LoadPetFromDB( Player* owner, uint32 petentry, uint32 petnumber, bool 
         InitStatsForLevel(petlevel);
     }
 
-    InitStatsForLevel(petlevel);
     SetUInt32Value(UNIT_FIELD_PET_NAME_TIMESTAMP, time(NULL));
     SetUInt32Value(UNIT_FIELD_PETEXPERIENCE, fields[5].GetUInt32());
     SetCreatorGUID(owner->GetGUID());
@@ -341,24 +331,16 @@ bool Pet::LoadPetFromDB( Player* owner, uint32 petentry, uint32 petnumber, bool 
     map->Add((Creature*)this);
 
     // Spells should be loaded after pet is added to map, because in CheckCast is check on it
-    switch(owner->getClass())
-    {
-        case CLASS_WARLOCK:
-        {
-            //if player level up to high level without pet, when player summon a pet, pet auto level up. (only warlock)
-            if(petlevelchange == true) {
-                // when crash, use mode 2
-                InitStatsForLevel(petlevel, 2);
-            }
-
-            break;
+    if(owner->getClass() == CLASS_WARLOCK) {
+        //if player level up to high level without pet, when player summon a pet, pet auto level up. (only warlock)
+        if(petlevelchange == true) {
+            // when crash, use mode 2
+            InitStatsForLevel(petlevel, 2);
         }
-        default:
-        {
-            _LoadSpells();
-            _LoadSpellCooldowns();
-            break;
-        }
+    }
+    else {
+        _LoadSpells();
+        _LoadSpellCooldowns();
     }
 
     owner->SetPet(this);                                    // in DB stored only full controlled creature
@@ -795,7 +777,7 @@ bool Pet::CreateBaseAtCreature(Creature* creature)
     setPowerType(POWER_FOCUS);
     SetUInt32Value(UNIT_FIELD_PET_NAME_TIMESTAMP, 0);
     SetUInt32Value(UNIT_FIELD_PETEXPERIENCE, 0);
-    SetUInt32Value(UNIT_FIELD_PETNEXTLEVELEXP, objmgr.GetXPForLevel(creature->getLevel())/10);
+    SetUInt32Value(UNIT_FIELD_PETNEXTLEVELEXP, objmgr.GetXPForLevel(creature->getLevel())/4);
     SetUInt32Value(UNIT_NPC_FLAGS, 0);
 
     if(CreatureFamilyEntry const* cFamily = sCreatureFamilyStore.LookupEntry(cinfo->family))
@@ -830,10 +812,8 @@ bool Pet::InitStatsForLevel(uint32 petlevel, uint32 mode)
     if(mode == 2)
     {
         // when crash, use mode 2
-
         // WARLOCK
         learnLevelupSpellsWarlock();
-
         return true;
     }
 
@@ -891,7 +871,7 @@ bool Pet::InitStatsForLevel(uint32 petlevel, uint32 mode)
                         uint32 fire  = owner->GetUInt32Value(PLAYER_FIELD_MOD_DAMAGE_DONE_POS + SPELL_SCHOOL_FIRE);
                         uint32 shadow = owner->GetUInt32Value(PLAYER_FIELD_MOD_DAMAGE_DONE_POS + SPELL_SCHOOL_SHADOW);
                         uint32 val  = (fire > shadow) ? fire : shadow;
-						
+
                         if(mode == 0)
                         {
                             // WARLOCK
@@ -953,7 +933,7 @@ bool Pet::InitStatsForLevel(uint32 petlevel, uint32 mode)
         }
         case HUNTER_PET:
         {
-            SetUInt32Value(UNIT_FIELD_PETNEXTLEVELEXP, objmgr.GetXPForLevel(petlevel)/10);
+            SetUInt32Value(UNIT_FIELD_PETNEXTLEVELEXP, objmgr.GetXPForLevel(petlevel)/4);
             learnLevelupSpells();
             //these formula may not be correct; however, it is designed to be close to what it should be
             //this makes dps 0.5 of pets level
@@ -1149,8 +1129,9 @@ void Pet::_SaveSpells()
         if (itr->second->type == PETSPELL_FAMILY) continue; // prevent saving family passives to DB
         if (itr->second->state == PETSPELL_REMOVED || itr->second->state == PETSPELL_CHANGED)
             CharacterDatabase.PExecute("DELETE FROM pet_spell WHERE guid = '%u' and spell = '%u'", m_charmInfo->GetPetNumber(), itr->first);
-        if (itr->second->state == PETSPELL_NEW || itr->second->state == PETSPELL_CHANGED) 
+        if (itr->second->state == PETSPELL_NEW || itr->second->state == PETSPELL_CHANGED)
             CharacterDatabase.PExecute("INSERT IGNORE INTO pet_spell (guid,spell,active) VALUES ('%u', '%u', '%u')", m_charmInfo->GetPetNumber(), itr->first, itr->second->active);
+
         if (itr->second->state == PETSPELL_REMOVED)
             _removeSpell(itr->first);
         else
@@ -1482,8 +1463,8 @@ void Pet::learnLevelupSpellsWarlock()
             }
         }
     }
-}
 
+}
 
 bool Pet::existLowRankOfSpell(uint32 spell_id)
 {

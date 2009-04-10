@@ -2143,6 +2143,7 @@ uint32* SpellMgr::LoadPetLevelupSpellMapWarlockInit(uint32 *pet_spell_db_count)
         {
             if ((pet_spell_data = (uint32 *) malloc(*pet_spell_db_count * sizeof(uint32) * 2)) == NULL) {
                 sLog.outErrorDb(">> Loaded 0 pet dblevel spell. DB table `pet_levelspell` allocate memory error.");
+                *pet_spell_db_count = 0;
                 return(NULL);
             }
         }
@@ -2169,7 +2170,7 @@ uint32* SpellMgr::LoadPetLevelupSpellMapWarlockInit(uint32 *pet_spell_db_count)
         delete result;
 
         sLog.outString();
-        sLog.outString( ">> Loaded %u spell pet dblevel spell", pet_spell_count );
+        sLog.outString( ">> Loaded %u pet dblevel spell", pet_spell_count );
 
     }
 
@@ -2177,55 +2178,7 @@ uint32* SpellMgr::LoadPetLevelupSpellMapWarlockInit(uint32 *pet_spell_db_count)
 
 }
 
-bool SpellMgr::LoadPetLevelupSpellMapWarlockCheck(CreatureFamilyEntry const *creatureFamily)
-{
-    bool pet_spell_is;
-
-    //WARLOCK
-    switch (creatureFamily->ID) {
-        case CREATURE_FAMILY_IMP:
-        case CREATURE_FAMILY_VOIDWALKER:
-        case CREATURE_FAMILY_SUCCUBUS:
-        case CREATURE_FAMILY_FELHUNTER:
-        case CREATURE_FAMILY_FELGUARD:
-            pet_spell_is = true;
-            break;
-        default:
-            pet_spell_is = false;
-            break;
-    }
-
-    return(pet_spell_is);
-
-}
-
-uint32 SpellMgr::LoadPetLevelupSpellMapWarlockLoad(CreatureFamilyEntry const *creatureFamily, SpellEntry const *spell, uint32 *pet_spell_data, uint32 pet_spell_count)
-{
-    uint32 count = 0;
-
-    for(uint32 k = 0; k < pet_spell_count; k++)
-    {
-        if(creatureFamily->ID == pet_spell_data[(k*2)+0] && spell->Id == pet_spell_data[(k*2)+1])
-        {
-            mPetLevelupSpellMap[creatureFamily->ID][spell->spellLevel + (k*0x10000)] = spell->Id;
-            count++;
-            break;
-        }
-    }
-
-    return(count);
-}
-
-void SpellMgr::LoadPetLevelupSpellMapWarlockEnd(uint32 *pet_spell_data)
-{
-
-    if(pet_spell_data != NULL) {
-        free(pet_spell_data);
-    }
-
-}
-
-void SpellMgr::LoadPetLevelupSpellMap()
+void SpellMgr::LoadPetLevelupSpellMapWarlock()
 {
     CreatureFamilyEntry const *creatureFamily;
     SpellEntry const *spell;
@@ -2244,16 +2197,26 @@ void SpellMgr::LoadPetLevelupSpellMap()
         if(!creatureFamily)                                 // not exist
             continue;
 
-        //WARLOCK
         bool warlock_pet_spell_true = false;
         if(warlock_pet_spell_count)
         {
-            warlock_pet_spell_true = LoadPetLevelupSpellMapWarlockCheck(creatureFamily);
+            //WARLOCK
+            switch (creatureFamily->ID) {
+                case CREATURE_FAMILY_IMP:
+                case CREATURE_FAMILY_VOIDWALKER:
+                case CREATURE_FAMILY_SUCCUBUS:
+                case CREATURE_FAMILY_FELHUNTER:
+                case CREATURE_FAMILY_FELGUARD:
+                    warlock_pet_spell_true = true;
+                    break;
+                default:
+                    warlock_pet_spell_true = false;
+                    break;
+            }
         }
 
         if(warlock_pet_spell_true == false)
         {
-            if(creatureFamily->petTalentType < 0)               // not hunter pet family
                 continue;
         }
 
@@ -2265,12 +2228,50 @@ void SpellMgr::LoadPetLevelupSpellMap()
             if(!spell)
                 continue;
 
-            //WARLOCK
-            if(warlock_pet_spell_true == true)
+            for(uint32 k = 0; k < warlock_pet_spell_count; k++)
             {
-                count += LoadPetLevelupSpellMapWarlockLoad(creatureFamily, spell, warlock_pet_spell_data, warlock_pet_spell_count);
-                continue;
+                if(creatureFamily->ID == warlock_pet_spell_data[(k*2)+0] && spell->Id == warlock_pet_spell_data[(k*2)+1])
+                {
+                    mPetLevelupSpellMap[creatureFamily->ID][spell->spellLevel + (k*0x10000)] = spell->Id;
+                    count++;
+                    break;
+                }
             }
+
+        }
+    }
+
+    if(warlock_pet_spell_data != NULL) {
+        free(warlock_pet_spell_data);
+    }
+
+    sLog.outString();
+    sLog.outString( ">> Loaded %u Warlock pet levelup spells", count );
+}
+
+void SpellMgr::LoadPetLevelupSpellMap()
+{
+    CreatureFamilyEntry const *creatureFamily;
+    SpellEntry const *spell;
+    uint32 count = 0;
+
+    for (uint32 i = 0; i < sCreatureFamilyStore.GetNumRows(); ++i)
+    {
+        creatureFamily = sCreatureFamilyStore.LookupEntry(i);
+
+        if(!creatureFamily)                                 // not exist
+            continue;
+
+        if(creatureFamily->petTalentType < 0)               // not hunter pet family
+            continue;
+
+        for(uint32 j = 0; j < sSpellStore.GetNumRows(); ++j)
+        {
+            spell = sSpellStore.LookupEntry(j);
+
+            // not exist
+            if(!spell)
+                continue;
 
             // not hunter spell
             if(spell->SpellFamilyName != SPELLFAMILY_HUNTER)
@@ -2423,8 +2424,6 @@ void SpellMgr::LoadPetLevelupSpellMap()
             count++;
         }
     }
-
-    LoadPetLevelupSpellMapWarlockEnd(warlock_pet_spell_data);
 
     sLog.outString();
     sLog.outString( ">> Loaded %u pet levelup spells", count );

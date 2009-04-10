@@ -870,9 +870,7 @@ class SpellMgr
         void LoadSkillLineAbilityMap();
         void LoadSpellPetAuras();
         uint32* LoadPetLevelupSpellMapWarlockInit(uint32 *pet_spell_db_count);
-        bool LoadPetLevelupSpellMapWarlockCheck(CreatureFamilyEntry const *creatureFamily);
-        uint32 LoadPetLevelupSpellMapWarlockLoad(CreatureFamilyEntry const *creatureFamily, SpellEntry const *spell, uint32 *pet_spell_data, uint32 pet_spell_count);
-        void LoadPetLevelupSpellMapWarlockEnd(uint32 *pet_spell_data);
+        void LoadPetLevelupSpellMapWarlock();
         void LoadPetLevelupSpellMap();
         void LoadSpellAreas();
 

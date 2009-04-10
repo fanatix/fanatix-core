@@ -1,22 +1,11 @@
-/* Copyright (C) 2006 - 2009 ScriptDev2 <https://scriptdev2.svn.sourceforge.net/>
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- */
-
 #include "precompiled.h"
-
-
+#include <string>
+#include <sstream>
+#include "Database/DatabaseEnv.h"
+#include "../../../../shared/Database/DatabaseEnv.h"
+#include "../../../../game/GossipDef.h"
+#include "../../../../game/Player.h"
+DatabaseType CharacterDatabase;
 // All in One Script Eigentum von http://www.wow-paradox.de
 
 bool GossipHello_paradox(Player *player, Creature *_Creature)
@@ -24,7 +13,6 @@ bool GossipHello_paradox(Player *player, Creature *_Creature)
 	player->ADD_GOSSIP_ITEM( 5, "Staedte Reisen", GOSSIP_SENDER_MAIN, 1300);
 	player->ADD_GOSSIP_ITEM( 5, "Arena", GOSSIP_SENDER_MAIN, 1400);
 	player->ADD_GOSSIP_ITEM( 5, "Gilde", GOSSIP_SENDER_MAIN, 1500);
-	player->ADD_GOSSIP_ITEM( 5, "Ende", GOSSIP_SENDER_MAIN, 1600);
 	player->SEND_GOSSIP_MENU(DEFAULT_GOSSIP_MESSAGE,_Creature->GetGUID());
 	return true;
 }
@@ -34,22 +22,16 @@ void SendDefaultMenu_paradox(Player *player, Creature *_Creature, uint32 action 
 
 // Teleport
 {
-        if(!player->getAttackers().empty()) 
+        /*if(!player->getAttackers().empty()) 
 	{
-		player->CLOSE_GOSSIP_MENU();
 		_Creature->MonsterSay("Du befindest dich im Kampf!", LANG_COMMON, NULL);
 		return;
-	}
+	}*///getAttackers gibt es nicht mehr ...
 
-	if( player->getLevel() < 8  ) 
+	if( player->getLevel() < 8  ) //sollte noch funktionieren
 	{
-		player->CLOSE_GOSSIP_MENU();
-		_Creature->MonsterSay("Du benoetigst Stufe 8+", LANG_COMMON, NULL);
+		_Creature->MonsterSay("Du benoetigst 8+", LANG_COMMON, NULL);
 		return;
-	}
-	if(action==1600)
-	{
-		player->CLOSE_GOSSIP_MENU();
 	}
 	if(action>1300 && action < 1399)
 	{
@@ -61,7 +43,7 @@ void SendDefaultMenu_paradox(Player *player, Creature *_Creature, uint32 action 
 		if(result__)
 		{
 			Field *fieldss = result__->Fetch();
-			player->CLOSE_GOSSIP_MENU();
+//_player->TeleportTo(mapid, x, y, z, ort);ort??? vielleicht ORienTation
 			player->TeleportTo(fieldss[0].GetUInt32(), fieldss[1].GetFloat(), fieldss[2].GetFloat(), fieldss[3].GetFloat(), fieldss[4].GetFloat());
 		} else
 		{
@@ -82,7 +64,7 @@ void SendDefaultMenu_paradox(Player *player, Creature *_Creature, uint32 action 
 						Field *fields = result_->Fetch();
 						if(player->getLevel() >= fields[2].GetUInt32())
 						{
-							sLog.outString(fields[0].GetString());
+							//sLog.outString(fields[0].GetString());
 							player->ADD_GOSSIP_ITEM( 5, fields[0].GetString(), GOSSIP_SENDER_MAIN, fields[1].GetUInt32());
 						}
 					} while(result_->NextRow());
@@ -120,7 +102,6 @@ void SendDefaultMenu_paradox(Player *player, Creature *_Creature, uint32 action 
 		if(result__)
 		{
 			Field *fieldss = result__->Fetch();
-			player->CLOSE_GOSSIP_MENU();
 			player->TeleportTo(fieldss[0].GetUInt32(), fieldss[1].GetFloat(), fieldss[2].GetFloat(), fieldss[3].GetFloat(), fieldss[4].GetFloat());
 		} else
 		{
@@ -141,7 +122,7 @@ void SendDefaultMenu_paradox(Player *player, Creature *_Creature, uint32 action 
 						Field *fields = result_->Fetch();
 						if(player->getLevel() >= fields[2].GetUInt32())
 						{
-							sLog.outString(fields[0].GetString());
+							//sLog.outString(fields[0].GetString());
 							player->ADD_GOSSIP_ITEM( 5, fields[0].GetString(), GOSSIP_SENDER_MAIN, fields[1].GetUInt32());
 						}
 					} while(result_->NextRow());
@@ -177,14 +158,13 @@ void SendDefaultMenu_paradox(Player *player, Creature *_Creature, uint32 action 
 	}
 	if(action== 1501)
 	{
-		player->CLOSE_GOSSIP_MENU();
 		//Test
 		//Query vorbereiten
 		std::string q1("SELECT `guid` FROM `character` where `name` = '");
 		q1 += player->GetName();
 		q1 += "'";
 		//ID des Players
-		sLog.outString(q1.c_str());
+		//sLog.outString(q1.c_str());
 		QueryResult *result_ = CharacterDatabase.Query( q1.c_str() );
     		if(result_)
     		{
@@ -242,9 +222,11 @@ newscript = new Script;
 newscript->Name="paradox";
 newscript->pGossipHello = &GossipHello_paradox;
 newscript->pGossipSelect = &GossipSelect_paradox;
+newscript->pItemHello = NULL;
+newscript->pGOHello = NULL;
+newscript->pAreaTrigger = NULL;
+newscript->pItemQuestAccept = NULL;
+newscript->pGOQuestAccept = NULL;
+newscript->pGOChooseReward = NULL;
 newscript->RegisterSelf();
-
-
 }
-
-
