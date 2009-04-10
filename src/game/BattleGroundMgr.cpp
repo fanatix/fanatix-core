@@ -2120,4 +2120,3 @@ void BattleGroundMgr::SetHolidayWeekends(uint32 mask)
         }
     }
 }
-

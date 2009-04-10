@@ -26,6 +26,12 @@
 #include "WorldPacket.h"
 #include "Util.h"
 
+// these variables aren't used outside of this file, so declare them only here
+uint32 BG_EY_HonorScoreTicks[BG_HONOR_MODE_NUM] = {
+    330, // normal honor
+    200  // holiday
+};
+
 BattleGroundEY::BattleGroundEY()
 {
     m_BuffChange = true;
@@ -121,10 +127,10 @@ void BattleGroundEY::AddPoints(uint32 Team, uint32 Points)
     uint8 team_index = GetTeamIndexByTeamId(Team);
     m_TeamScores[team_index] += Points;
     m_HonorScoreTics[team_index] += Points;
-    if (m_HonorScoreTics[team_index] >= m_HonorTics )
+    if (m_HonorScoreTics[team_index] >= BG_EY_HonorScoreTicks[m_HonorMode])
     {
         RewardHonorToTeam(GetBonusHonorFromKill(1), Team);
-        m_HonorScoreTics[team_index] -= m_HonorTics;
+        m_HonorScoreTics[team_index] -= BG_EY_HonorScoreTicks[m_HonorMode];
     }
     UpdateTeamScore(Team);
 }

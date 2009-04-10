@@ -83,7 +83,8 @@ enum MangosStrings
     LANG_MOTD_CURRENT                   = 56,
     LANG_USING_WORLD_DB                 = 57,
     LANG_USING_SCRIPT_LIB               = 58,
-    // Room for more level 0              59-99 not used
+    LANG_USING_EVENT_AI                 = 59,
+    // Room for more level 0              60-99 not used
 
     // level 1 chat
     LANG_GLOBAL_NOTIFY                  = 100,
@@ -736,6 +737,12 @@ enum MangosStrings
 
 
     // Room for batleground/arena strings 790-799 not used
+
+    LANG_BG_COMMAND_UPDATE              = 756,
+    LANG_BG_COMMAND_END                 = 757,
+    LANG_BG_COMMAND_NO_BG_FOUND         = 758,
+    LANG_BG_COMMAND_LIST                = 759,
+    // Room for batleground/arena strings 759-799 not used
 
     // in game strings
     //                                  = 800, not used

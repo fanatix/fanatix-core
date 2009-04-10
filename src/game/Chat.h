@@ -20,6 +20,7 @@
 #define MANGOSSERVER_CHAT_H
 
 #include "SharedDefines.h"
+#include "BattleGroundMgr.h"
 
 class ChatHandler;
 class WorldSession;
@@ -472,6 +473,26 @@ class ChatHandler
         //! Development Commands
         bool HandleSet32Bit(const char* args);
         bool HandleSaveAllCommand(const char* args);
+
+        //! BattleGround Commands
+        bool HandleBgUpdateCommand(const char* args);
+        bool HandleBgEndCommand(const char* args);
+        bool HandleBgListCommand(const char* args);
+        bool HandleBgJoinCommand(const char* args);
+        bool HandleBgCreateCommand(const char* args);
+        bool HandleBgDebugCommand(const char * args);
+
+        BattleGround* extractBattleGroundFromLinkOrTargetOrPlayer(char* text);
+        BattleGroundQueueTypeId extractBgQueueTypeIdFromLink(char* text);
+        std::string battlegroundLink(BattleGround* bg) const
+        {
+            std::ostringstream str;
+            str << "|cff33ff00|Hbattleground:" << bg->GetInstanceID() << ",";
+            str << sBattleGroundMgr.BGQueueTypeId(bg->GetTypeID(),bg->GetArenaType());
+            str << "|h[" << bg->GetName() << " " << bg->GetClientInstanceID() << "]|h|r";
+            return str.str();
+        }
+
 
         Player*   getSelectedPlayer();
         Creature* getSelectedCreature();

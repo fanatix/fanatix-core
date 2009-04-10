@@ -26,6 +26,17 @@
 #include "Util.h"
 #include "WorldPacket.h"
 
+// these variables aren't used outside of this file, so declare them only here
+uint32 BG_AB_HonorScoreTicks[BG_HONOR_MODE_NUM] = {
+    330, // normal honor
+    200  // holiday
+};
+
+uint32 BG_AB_ReputationScoreTicks[BG_HONOR_MODE_NUM] = {
+    200, // normal honor
+    150  // holiday
+};
+
 BattleGroundAB::BattleGroundAB()
 {
     m_BuffChange = true;
@@ -117,15 +128,15 @@ void BattleGroundAB::Update(uint32 diff)
                 m_TeamScores[team] += BG_AB_TickPoints[points];
                 m_HonorScoreTics[team] += BG_AB_TickPoints[points];
                 m_ReputationScoreTics[team] += BG_AB_TickPoints[points];
-                if (m_ReputationScoreTics[team] >= m_ReputationTics)
+                if( m_ReputationScoreTics[team] >= BG_AB_ReputationScoreTicks[m_HonorMode] )
                 {
                     (team == BG_TEAM_ALLIANCE) ? RewardReputationToTeam(509, 10, ALLIANCE) : RewardReputationToTeam(510, 10, HORDE);
-                    m_ReputationScoreTics[team] -= m_ReputationTics;
+                    m_ReputationScoreTics[team] -= BG_AB_ReputationScoreTicks[m_HonorMode];
                 }
-                if (m_HonorScoreTics[team] >= m_HonorTics)
+                if( m_HonorScoreTics[team] >= BG_AB_HonorScoreTicks[m_HonorMode] )
                 {
                     RewardHonorToTeam(GetBonusHonorFromKill(1), (team == BG_TEAM_ALLIANCE) ? ALLIANCE : HORDE);
-                    m_HonorScoreTics[team] -= m_HonorTics;
+                    m_HonorScoreTics[team] -= BG_AB_HonorScoreTicks[m_HonorMode];
                 }
                 if (!m_IsInformedNearVictory && m_TeamScores[team] > BG_AB_WARNING_NEAR_VICTORY_SCORE)
                 {

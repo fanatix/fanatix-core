@@ -310,7 +310,6 @@ void GameEventMgr::LoadFromDB()
     }
     else
     {
-
         barGoLink bar2( result->GetRowCount() );
         do
         {
@@ -981,6 +980,50 @@ void GameEventMgr::LoadFromDB()
         } while( result->NextRow() );
         sLog.outString();
         sLog.outString( ">> Loaded %u pools in game events", count );
+        delete result;
+    }
+
+    // set all flags to 0
+    mGameEventBattleGroundHolidays.resize(mGameEvent.size(),0);
+    // load game event battleground flags
+    //                                   0     1
+    result = WorldDatabase.Query("SELECT event, bgflag FROM game_event_battleground_holiday");
+
+    count = 0;
+    if( !result )
+    {
+        barGoLink bar3(1);
+        bar3.step();
+
+        sLog.outString();
+        sLog.outString(">> Loaded %u battleground holidays in game events", count );
+    }
+    else
+    {
+
+        barGoLink bar3( result->GetRowCount() );
+        do
+        {
+            Field *fields = result->Fetch();
+
+            bar3.step();
+
+            uint16 event_id = fields[0].GetUInt16();
+
+            if(event_id >= mGameEvent.size())
+            {
+                sLog.outErrorDb("`game_event_battleground_holiday` game event id (%u) is out of range compared to max event id in `game_event`",event_id);
+                continue;
+            }
+
+            ++count;
+
+            mGameEventBattleGroundHolidays[event_id] = fields[1].GetUInt32();
+
+        } while( result->NextRow() );
+        sLog.outString();
+        sLog.outString( ">> Loaded %u battleground holidays in game events", count );
+
         delete result;
     }
 }

@@ -33,6 +33,9 @@
 #include "AccountMgr.h"
 
 // Supported shift-links (client generated and server side)
+// the color is trucolor in hexadecimal, begins with a "c" the first byte (ff)
+// seems to be unused, but should be between 00 and ff - the following 3 bytes
+// are like in html
 // |color|Harea:area_id|h[name]|h|r
 // |color|Hcreature:creature_guid|h[name]|h|r
 // |color|Hcreature_entry:creature_id|h[name]|h|r
@@ -47,6 +50,7 @@
 // |color|Hspell:spell_id|h[name]|h|r                                     - client, spellbook spell icon shift-click
 // |color|Htalent:talent_id,rank|h[name]|h|r                              - client, talent icon shift-click
 // |color|Htele:id|h[name]|h|r
+// |color|Hbattleground:InstanceId,bgQueueTypeId|h[name]|h|r
 // |color|Htrade:spell_id,cur_value,max_value,unk3int,unk3str|h[name]|h|r - client, spellbook profession icon shift-click
 
 bool ChatHandler::load_command_table = true;
@@ -134,7 +138,6 @@ ChatCommand * ChatHandler::getCommandTable()
     {
         { "anim",           SEC_GAMEMASTER,     false, &ChatHandler::HandleDebugAnimCommand,                "", NULL },
         { "arena",          SEC_ADMINISTRATOR,  false, &ChatHandler::HandleDebugArenaCommand,               "", NULL },
-        { "bg",             SEC_ADMINISTRATOR,  false, &ChatHandler::HandleDebugBattlegroundCommand,        "", NULL },
         { "getitemstate",   SEC_ADMINISTRATOR,  false, &ChatHandler::HandleDebugGetItemState,               "", NULL },
         { "lootrecipient",  SEC_GAMEMASTER,     false, &ChatHandler::HandleDebugGetLootRecipient,           "", NULL },
         { "getvalue",       SEC_ADMINISTRATOR,  false, &ChatHandler::HandleDebugGetValue,                   "", NULL },
@@ -202,6 +205,17 @@ ChatCommand * ChatHandler::getCommandTable()
         { "invite",         SEC_GAMEMASTER,     true,  &ChatHandler::HandleGuildInviteCommand,         "", NULL },
         { "uninvite",       SEC_GAMEMASTER,     true,  &ChatHandler::HandleGuildUninviteCommand,       "", NULL },
         { "rank",           SEC_GAMEMASTER,     true,  &ChatHandler::HandleGuildRankCommand,           "", NULL },
+        { NULL,             0,                  false, NULL,                                           "", NULL }
+    };
+
+    static ChatCommand bgCommandTable[] =
+    {
+        { "update",         SEC_ADMINISTRATOR,  false, &ChatHandler::HandleBgUpdateCommand,            "", NULL },
+        { "end",            SEC_ADMINISTRATOR,  false, &ChatHandler::HandleBgEndCommand,               "", NULL },
+        { "list",           SEC_ADMINISTRATOR,  false, &ChatHandler::HandleBgListCommand,              "", NULL },
+        { "join",           SEC_ADMINISTRATOR,  false, &ChatHandler::HandleBgJoinCommand,              "", NULL },
+        { "create",         SEC_ADMINISTRATOR,  false, &ChatHandler::HandleBgCreateCommand,            "", NULL },
+        { "debug",          SEC_ADMINISTRATOR,  false, &ChatHandler::HandleBgDebugCommand,             "", NULL },
         { NULL,             0,                  false, NULL,                                           "", NULL }
     };
 
@@ -589,6 +603,7 @@ ChatCommand * ChatHandler::getCommandTable()
         { "unban",          SEC_ADMINISTRATOR,  true,  NULL,                                           "", unbanCommandTable },
         { "baninfo",        SEC_ADMINISTRATOR,  false, NULL,                                           "", baninfoCommandTable },
         { "banlist",        SEC_ADMINISTRATOR,  true,  NULL,                                           "", banlistCommandTable },
+        { "bg",             SEC_ADMINISTRATOR,  false, NULL,                                           "", bgCommandTable },
         { "plimit",         SEC_ADMINISTRATOR,  true,  &ChatHandler::HandlePLimitCommand,              "", NULL },
         { "start",          SEC_PLAYER,         false, &ChatHandler::HandleStartCommand,               "", NULL },
         { "taxicheat",      SEC_MODERATOR,      false, &ChatHandler::HandleTaxiCheatCommand,           "", NULL },
@@ -1408,6 +1423,45 @@ GameTele const* ChatHandler::extractGameTeleFromLink(char* text)
 
     return objmgr.GetGameTele(cId);
 }
+
+BattleGround* ChatHandler::extractBattleGroundFromLinkOrTargetOrPlayer(char* text)
+{
+    if(text)
+    {
+        // |color|Hbattleground:instance,bgQueueTypeId|[name]|h|r
+        strtok(text,":");
+        char* tmp_str = strtok(NULL, ",");
+        if(!tmp_str)
+            return NULL;
+        uint32 instance = atoi(tmp_str);
+        tmp_str = strtok(NULL, "|");
+        if(!tmp_str)
+            return NULL;
+        uint32 bgQueueTypeId = atoi(tmp_str);
+        return sBattleGroundMgr.GetBattleGround(instance,BattleGroundMgr::BGTemplateId(BattleGroundQueueTypeId(bgQueueTypeId)));
+    }
+    BattleGround* bg = NULL;
+    if(getSelectedPlayer())
+        bg = getSelectedPlayer()->GetBattleGround();
+    if(!bg)
+        bg = m_session->GetPlayer()->GetBattleGround();
+    return bg;
+}
+
+BattleGroundQueueTypeId ChatHandler::extractBgQueueTypeIdFromLink(char* text)
+{
+    // |color|Hbattleground:instance,bgQueueTypeId|[name]|h|r
+    // skip everything until bgqueuetype
+    strtok(text,",");
+    char* type_str = strtok(NULL, "|");
+    uint32 bgQueueTypeId;
+    if(!type_str) //this was no correct shiftlink..
+        bgQueueTypeId = atoi(text); //try converting the current text to an integer maybe player just entered bgqueuetypid
+    else
+        bgQueueTypeId = atoi(type_str);
+    return BattleGroundQueueTypeId(bgQueueTypeId);
+}
+
 
 enum GuidLinkType
 {
