@@ -16398,6 +16398,15 @@ void Player::Uncharm()
     if(!charm)
         return;
 
+    if(charm->GetTypeId() == TYPEID_UNIT)
+    {
+        if(((Creature*)charm)->isPet() && ((Pet*)charm)->getPetType() == SUMMON_TYPE_POSESSED)
+            ((Pet*)charm)->Remove(PET_SAVE_AS_DELETED);
+        else if(((Creature*)charm)->isVehicle())
+            ExitVehicle((Vehicle*)charm);
+    }
+    if(GetCharmGUID())
+
     charm->RemoveSpellsCausingAura(SPELL_AURA_MOD_CHARM);
     charm->RemoveSpellsCausingAura(SPELL_AURA_MOD_POSSESS);
 }
@@ -16587,6 +16596,45 @@ void Player::PossessSpellInitialize()
     uint8 count = 0;
     data << uint8(count);                                   // cooldowns count
 
+    GetSession()->SendPacket(&data);
+}
+
+void Player::VehicleSpellInitialize()
+{
+    Unit* charm = GetCharm();
+    if(!charm || charm->GetTypeId() != TYPEID_UNIT)
+        return;
+
+    WorldPacket data(SMSG_PET_SPELLS, 8+4+4+4+4*10+1+1);
+    data << uint64(charm->GetGUID());
+    data << uint32(0x00000000);
+    data << uint32(0x00000000);
+    data << uint32(0x00000101);
+
+    for(uint32 i = 0; i < CREATURE_MAX_SPELLS; ++i)
+    {
+        uint32 spellId = ((Creature*)charm)->m_spells[i];
+        if(!spellId)
+            continue;
+
+        SpellEntry const *spellInfo = sSpellStore.LookupEntry(spellId);
+        if(!spellInfo)
+            continue;
+
+        if(IsPassiveSpell(spellId) || spellInfo->activeIconID == 2158) //flight
+        {
+            charm->CastSpell(charm, spellId, true);
+            data << uint16(0) << uint8(0) << uint8(i+8);
+        }
+        else
+            data << uint16(spellId) << uint8(0) << uint8(i+8);
+    }
+
+    for(uint32 i = CREATURE_MAX_SPELLS; i < 10; ++i)
+        data << uint16(0) << uint8(0) << uint8(i+8);
+
+    data << uint8(0);
+    data << uint8(0);
     GetSession()->SendPacket(&data);
 }
 
@@ -19495,18 +19543,7 @@ void Player::EnterVehicle(Vehicle *vehicle)
     data << uint32(0);                                      // fall time
     GetSession()->SendPacket(&data);
 
-    data.Initialize(SMSG_PET_SPELLS, 8+4+4+4+4*10+1+1);
-    data << uint64(vehicle->GetGUID());
-    data << uint32(0x00000000);
-    data << uint32(0x00000000);
-    data << uint32(0x00000101);
-
-    for(uint32 i = 0; i < 10; ++i)
-        data << uint16(0) << uint8(0) << uint8(i+8);
-
-    data << uint8(0);
-    data << uint8(0);
-    GetSession()->SendPacket(&data);
+    VehicleSpellInitialize();
 }
 
 void Player::ExitVehicle(Vehicle *vehicle)

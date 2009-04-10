@@ -32,6 +32,8 @@
 #include "ObjectMgr.h"
 #include "World.h"
 
+//#define __ANTI_DEBUG__
+
 #ifdef __ANTI_DEBUG__
 #include "Chat.h"
 std::string FlagsToStr(const uint32 Flags)
@@ -384,7 +386,8 @@ void WorldSession::HandleMovementOpcodes( WorldPacket & recv_data )
             movementInfo.z+movementInfo.t_z, movementInfo.o+movementInfo.t_o) )
             return;
 
-        if ((GetPlayer()->m_anti_transportGUID == 0) && (movementInfo.t_guid !=0)) 
+                // if we boarded a transport, add us to it
+        if (plMover && !plMover->m_transport)
         {
             // if we boarded a transport, add us to it
             if (!GetPlayer()->m_transport)

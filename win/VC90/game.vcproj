@@ -917,10 +917,12 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\game\AuctionHouseBot.cpp">
+				RelativePath="..\..\src\game\AuctionHouseBot.cpp"
+				>
 			</File>
 			<File
-				RelativePath="..\..\src\game\AuctionHouseBot.h">
+				RelativePath="..\..\src\game\AuctionHouseBot.h"
+				>
 			</File>
 			<File
 				RelativePath="..\..\src\game\AuctionHouseMgr.cpp"
@@ -999,6 +1001,22 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\game\CreatureEventAI.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\game\CreatureEventAI.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\game\CreatureEventAIMgr.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\game\CreatureEventAIMgr.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\game\DestinationHolder.cpp"
 				>
 			</File>
@@ -1016,22 +1034,6 @@
 			</File>
 			<File
 				RelativePath="..\..\src\game\DynamicObject.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\game\CreatureEventAI.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\game\CreatureEventAI.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\game\CreatureEventAIMgr.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\game\CreatureEventAIMgr.h"
 				>
 			</File>
 			<File
@@ -1483,14 +1485,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\game\MapUpdater.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\game\MapUpdater.h"
-				>
-			</File>
-			<File
 				RelativePath="..\..\src\game\HostilRefManager.cpp"
 				>
 			</File>
@@ -1504,6 +1498,14 @@
 			</File>
 			<File
 				RelativePath="..\..\src\game\MapRefManager.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\game\MapUpdater.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\game\MapUpdater.h"
 				>
 			</File>
 			<File
