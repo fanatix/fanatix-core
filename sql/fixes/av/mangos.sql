@@ -17,12 +17,13 @@ REPLACE INTO gameobject_template VALUES (180423,6,266,"Neutral Banner Aura, Larg
 REPLACE INTO gameobject_template VALUES (180422,6,1311,"Horde Banner Aura, Large","","",0,0,5,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,"");
 
 -- removes the damage from the fire-gos (used for destroyed towers) - but this is not blizzlike TODO remove this hack
-UPDATE `gameobject_template` SET `type` = '5',`data0` = '0',`data1` = '0',`data2` = '0',`data3` = '1',`data5` = '0',`data10` = '0' WHERE `gameobject_template`.`entry` =179065 LIMIT 1 ;
+REPLACE INTO `gameobject_template` SET `type` = '5',`data0` = '0',`data1` = '0',`data2` = '0',`data3` = '1',`data5` = '0',`data10` = '0' WHERE `gameobject_template`.`entry` =179065 LIMIT 1 ;
 
 -- bowman apply aura entangling root (so they can't move)
-DELETE FROM `creature_template_addon` WHERE `entry` IN(13358,13359);
-INSERT INTO `creature_template_addon` (`entry`, `auras`) VALUES ('13358', '42716 0 42716 1');
-INSERT INTO `creature_template_addon` (`entry`, `auras`) VALUES ('13359', '42716 0 42716 1');
+-- INSERT INTO `creature_template_addon` (`entry`, `auras`) VALUES ('13358', '42716 0 42716 1');
+-- INSERT INTO `creature_template_addon` (`entry`, `auras`) VALUES ('13359', '42716 0 42716 1');
+REPLACE INTO `creature_template_addon` (`entry`, `auras`) VALUES ('13358', '42716 0');
+REPLACE INTO `creature_template_addon` (`entry`, `auras`) VALUES ('13359', '42716 0');
 
 -- delete auras from marshalls around vanndar - somehow it's possible, that
 -- normal player get buffed by them and walk around with 30k health
@@ -41,9 +42,25 @@ VALUES ('1', '17306', '33', '0', '5', '15',  '6', '67', '0'),
 ( '1', '17328', '30', '2', '5', '10', '6', '67', '0' );
 
 -- blizzlike mobs in the mines don't have any loot (not even gold, it doesn't show the looticon if i go with my mouse over them)
--- broken after the strange new loot-table appeared (but not important)  delete from creature_loot_template where entry in (13396,13080,13098,13078,13397,13099,13081,13079,11603,11604,11605,11677,10982,13317,13096,13087,13086,13316,13097,13089,13088);
+-- broken after the strange new loot-table appeared (but not important)  
+delete from creature_loot_template where entry in(13396,13080,13098,13078,13397,13099,13081,13079,11603,11604,11605,11677,10982,13317,13096,13087,13086,13316,13097,13089,13088);
 -- TODO: write own loottable
 
+-- fixed the reputation requirement for the av-trinket-quest
+-- please look at this critical i just looked at wowhead-comments and i'm not
+-- realy sure
+UPDATE quest_template SET RequiredMinRepFaction=730, RequiredMinRepValue=42980 WHERE entry=7172;
+UPDATE quest_template SET RequiredMinRepFaction=730, RequiredMinRepValue=42000 WHERE entry=7171;
+UPDATE quest_template SET RequiredMinRepFaction=730, RequiredMinRepValue=21000 WHERE entry=7170;
+UPDATE quest_template SET RequiredMinRepFaction=730, RequiredMinRepValue=9000  WHERE entry=7169;
+UPDATE quest_template SET RequiredMinRepFaction=730, RequiredMinRepValue=3000  WHERE entry=7168;
+
+
+UPDATE quest_template SET RequiredMinRepFaction=729, RequiredMinRepValue=42980  WHERE entry=7167;
+UPDATE quest_template SET RequiredMinRepFaction=729, RequiredMinRepValue=42000  WHERE entry=7166;
+UPDATE quest_template SET RequiredMinRepFaction=729, RequiredMinRepValue=21000  WHERE entry=7165;
+UPDATE quest_template SET RequiredMinRepFaction=729, RequiredMinRepValue=9000   WHERE entry=7164;
+UPDATE quest_template SET RequiredMinRepFaction=729, RequiredMinRepValue=3000   WHERE entry=7163;
 
 REPLACE INTO creature_template
    (`entry`, `heroic_entry`, `modelid_A`, `modelid_A2`, `modelid_H`, `modelid_H2`, `name`, `subname`, `IconName`, `minlevel`, `maxlevel`, `minhealth`, `maxhealth`, `minmana`, `maxmana`, `armor`, `faction_A`, `faction_H`, `npcflag`, `speed`, `scale`, `rank`, `mindmg`, `maxdmg`, `dmgschool`, `attackpower`, `baseattacktime`, `rangeattacktime`, `unit_flags`, `dynamicflags`, `family`, `trainer_type`, `trainer_spell`, `class`, `race`, `minrangedmg`, `maxrangedmg`, `rangedattackpower`, `type`, `type_flags`, `lootid`, `pickpocketloot`, `skinloot`, `resistance1`, `resistance2`, `resistance3`, `resistance4`, `resistance5`, `resistance6`, `spell1`, `spell2`, `spell3`, `spell4`, `PetSpellDataId`, `mingold`, `maxgold`, `AIName`, `MovementType`, `InhabitType`, `RacialLeader`, `RegenHealth`, `equipment_id`, `mechanic_immune_mask`, `flags_extra`, `ScriptName`)
@@ -205,7 +222,7 @@ CREATE TABLE `creature_battleground` (
     PRIMARY KEY  (`guid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='Creature battleground indexing system';
 
-DELETE FROM creature_battleground WHERE guid=( SELECT guid FROM creature WHERE map=30 );
+DELETE FROM creature_battleground WHERE guid IN ( SELECT guid FROM creature WHERE map=30 );
 DELETE FROM creature WHERE map=30;
 INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(2225,30,-1235.31, -340.777, 60.5088, 3.31613);
 INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(3343,30,-1244.02, -323.795, 61.0485, 5.21853);
@@ -1447,7 +1464,7 @@ CREATE TABLE `gameobject_battleground` (
     PRIMARY KEY  (`guid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='GameObject battleground indexing system';
 
-DELETE FROM gameobject_battleground WHERE guid=( SELECT guid FROM gameobject WHERE map=30 );
+DELETE FROM gameobject_battleground WHERE guid IN ( SELECT guid FROM gameobject WHERE map=30 );
 -- following gameobjects are static
 DELETE FROM gameobject WHERE map=30;
 INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (2061,30,-1423.16,-318.436,89.1136,2.35619,60);

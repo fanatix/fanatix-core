@@ -1,4 +1,4 @@
-DELETE FROM creature_battleground WHERE guid=( SELECT guid FROM creature WHERE map=30 );
+DELETE FROM creature_battleground WHERE guid IN ( SELECT guid FROM creature WHERE map=30 );
 DELETE FROM creature WHERE map=30;
 INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(2225,30,-1235.31, -340.777, 60.5088, 3.31613);
 INSERT INTO creature(id,map,position_x,position_y,position_z,orientation) VALUES(3343,30,-1244.02, -323.795, 61.0485, 5.21853);

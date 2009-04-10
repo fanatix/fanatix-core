@@ -1,4 +1,4 @@
-DELETE FROM gameobject_battleground WHERE guid=( SELECT guid FROM gameobject WHERE map=30 );
+DELETE FROM gameobject_battleground WHERE guid IN ( SELECT guid FROM gameobject WHERE map=30 );
 -- following gameobjects are static
 DELETE FROM gameobject WHERE map=30;
 INSERT INTO `gameobject` (`id` ,`map`,position_x,position_y,position_z,orientation,spawntimesecs) VALUES (2061,30,-1423.16,-318.436,89.1136,2.35619,60);
