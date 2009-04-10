@@ -39,6 +39,9 @@
 #include <iostream>
 #include <fstream>
 #include <map>
+#include "BattleGround.h"
+#include "BattleGroundMgr.h"
+#include "ArenaTeam.h"
 #include "GlobalEvents.h"
 
 #include "TargetedMovementGenerator.h"                      // for HandleNpcUnFollowCommand
@@ -4376,3 +4379,294 @@ bool ChatHandler::HandleWaterwalkCommand(const char* args)
     return true;
 }
 
+bool ChatHandler::HandleBgUpdateCommand(const char* args)
+{
+    if(!*args)
+        return false;
+
+    char* arg1 = strtok((char*)args, " ");
+    if (!arg1)
+        return false;
+
+    uint32 diff = atoi(arg1);
+
+    char* arg2 = strtok(NULL,"");
+    BattleGround* bg = extractBattleGroundFromLinkOrTargetOrPlayer(arg2);
+    if(!bg)
+    {
+        SendSysMessage(LANG_BG_COMMAND_NO_BG_FOUND);
+        SetSentErrorMessage(true);
+        return false;
+    }
+
+    bg->Update(diff*1000); //*1000 cause update is called in milliseconds
+    PSendSysMessage(LANG_BG_COMMAND_UPDATE, battlegroundLink(bg).c_str(), diff);
+    return true;
+}
+
+bool ChatHandler::HandleBgEndCommand(const char* args)
+{
+    if(!*args)
+        return false;
+
+    char* arg1 = strtok((char*)args, " ");
+    if (!arg1)
+        return false;
+
+    uint32 winner = atoi(arg1);
+    std::string winner_str;
+    if(winner==0)
+    {
+        winner=HORDE;
+        winner_str = GetMangosString(LANG_BG_AB_HORDE);
+    }
+    else if(winner=1)
+    {
+        winner=ALLIANCE;
+        winner_str = GetMangosString(LANG_BG_AB_ALLY);
+    }
+    else
+    {
+        winner=0;
+        winner_str = "draw";
+    }
+
+    char* arg2 = strtok(NULL,"");
+    BattleGround* bg = extractBattleGroundFromLinkOrTargetOrPlayer(arg2);
+    if(!bg)
+    {
+        SendSysMessage(LANG_BG_COMMAND_NO_BG_FOUND);
+        SetSentErrorMessage(true);
+        return false;
+    }
+
+    bg->EndBattleGround(winner);
+    PSendSysMessage(LANG_BG_COMMAND_END, battlegroundLink(bg).c_str(), winner_str.c_str());
+    return true;
+}
+
+bool ChatHandler::HandleBgListCommand(const char* args)
+{
+    uint32 arena_filter  = 0;
+    uint32 bgtype_filter = 0;
+    if(*args)
+    {
+        BattleGroundQueueTypeId bgQueueTypeId = extractBgQueueTypeIdFromLink((char*)args);
+        arena_filter = sBattleGroundMgr.BGArenaType(bgQueueTypeId);
+        if(!arena_filter)
+            bgtype_filter = sBattleGroundMgr.BGTemplateId(bgQueueTypeId);
+    }
+    BattleGroundSet::iterator itr;
+    std::ostringstream reply;
+    BattleGround* current_bg = m_session->GetPlayer()->GetBattleGround();
+
+    for(uint32 bgtype_itr = BATTLEGROUND_AV; bgtype_itr < MAX_BATTLEGROUND_TYPE_ID; bgtype_itr++)
+    {
+        if(bgtype_filter && bgtype_itr != bgtype_filter)
+            continue;
+        BattleGroundTypeId bgtype = BattleGroundTypeId(bgtype_itr);
+
+        for(itr = sBattleGroundMgr.GetBattleGroundsBegin(bgtype); itr != sBattleGroundMgr.GetBattleGroundsEnd(bgtype); ++itr)
+        {
+            BattleGround* bg = itr->second;
+            if(!bg)
+                continue;
+            if(bg->GetInstanceID()==0) //skip templates
+                continue;
+            if(arena_filter && bg->GetArenaType()!=arena_filter)
+                continue;
+
+            if( current_bg && current_bg==bg ) //a star will mark the current battleground where the player is inside
+                reply << "* ";
+            else
+                reply << "  ";
+            reply << battlegroundLink(bg).c_str();
+            if(bg->isArena())
+            {
+                if( bg->isRated() )
+                    reply << " rated";
+                switch(bg->GetArenaType())
+                {
+                    case ARENA_TYPE_2v2: reply << " 2v2"; break;
+                    case ARENA_TYPE_3v3: reply << " 3v3"; break;
+                    case ARENA_TYPE_5v5: reply << " 5v5"; break;
+                    default: break;
+                }
+                //note: teams doesn't have to do with alliance and Horde
+                ArenaTeam* teamA = objmgr.GetArenaTeamById(bg->GetArenaTeamIdForTeam(ALLIANCE));
+                ArenaTeam* teamH = objmgr.GetArenaTeamById(bg->GetArenaTeamIdForTeam(HORDE));
+                if(teamA)
+                    reply << " Team1:" << teamA->GetName() << ":" << teamA->GetRating();
+                if(teamH)
+                    reply << " Team2:" << teamH->GetName() << ":" << teamH->GetRating();
+            }
+            else
+            {
+                reply << " lvl:" << bg->GetMinLevel() << "-" << bg->GetMaxLevel();
+                reply << " Invited, A:" << bg->GetInvitedCount(ALLIANCE) << " H:" << bg->GetInvitedCount(HORDE);
+            }
+            reply << " time:" << bg->GetStartTime()%60000;
+            reply << "\n";
+        }
+    }
+    if(reply.str().empty())
+        SendSysMessage(LANG_BG_COMMAND_NO_BG_FOUND);
+    else
+        PSendSysMessage(LANG_BG_COMMAND_LIST,reply.str().c_str());
+
+    return true;
+}
+
+bool ChatHandler::HandleBgJoinCommand(const char* args)
+{
+    //TODO:  join as visitor (maybe with the same effect like ghost in arena or phasemask=0)
+    //TODO2: join not in group - for gms who just want to look at the bg
+    //idea: arg2 is used as team: 0:ally, 1:horde, 2:visitor, 3:outside
+    //to allow then normal users this create command wtih just one argument,
+    //then append " 2" on this argument and redirect it to this function
+    //but we maybe should then create a new battlegroundplayersmap or just
+    //remove those visitor from the battleground at the end, before the delete
+    //also i would like, that the visitor and other could see the battlegroundstatistics
+    //i think this wil be a bit more work at the battleground-code to make it work :-/
+    if(!*args)
+        return false;
+
+    char* arg1 = strtok((char*)args, " ");
+    if (!arg1)
+        return false;
+    uint32 bgteam = atoi(arg1);
+    if(bgteam>2)
+    {
+        SendSysMessage("the specified team must be between 0 and 2");
+        SetSentErrorMessage(true);
+        return false;
+    }
+
+    char* arg2 = strtok(NULL,"");
+    BattleGround* bg = extractBattleGroundFromLinkOrTargetOrPlayer(arg2);
+    if(bg)
+    {
+        Player* pl = getSelectedPlayer();
+        if(!pl)
+            pl=m_session->GetPlayer();
+        pl->SetBattleGroundEntryPoint(pl->GetMapId(), pl->GetPositionX(), pl->GetPositionY(), pl->GetPositionZ(), pl->GetOrientation());
+
+        // check entry point and fix to homebind if need
+        MapEntry const* mapEntry = sMapStore.LookupEntry(pl->GetMapId());
+        if(!mapEntry || mapEntry->Instanceable()
+            || !MapManager::IsValidMapCoord(pl->GetPositionX(), pl->GetPositionY(), pl->GetPositionZ(), pl->GetOrientation()))
+        {
+            pl->SetBattleGroundEntryPoint(pl->m_homebindMapId,pl->m_homebindX,pl->m_homebindY,pl->m_homebindZ,0.0f);
+        }
+
+        BattleGroundQueueTypeId bgQueueTypeId = sBattleGroundMgr.BGQueueTypeId(bg->GetTypeID(), bg->GetArenaType());
+        pl->AddBattleGroundQueueId(bgQueueTypeId);
+
+        pl->SetBattleGroundId(bg->GetInstanceID(), BattleGroundMgr::BGTemplateId(bgQueueTypeId));
+        if(bgteam==0)
+            bgteam=pl->GetTeam();
+        else if(bgteam==1)
+            bgteam=ALLIANCE;
+        else if(bgteam==2)
+            bgteam=HORDE;
+        pl->SetBGTeam(bgteam);
+
+        //join player to battleground group
+        bg->EventPlayerLoggedIn(pl, pl->GetGUID());
+        bg->AddOrSetPlayerToCorrectBgGroup(pl, pl->GetGUID(), bgteam);
+
+        pl->SetInviteForBattleGroundQueueType(bgQueueTypeId,bg->GetInstanceID());
+        sBattleGroundMgr.SendToBattleGround(pl, bg->GetInstanceID(), BattleGroundMgr::BGTemplateId(bgQueueTypeId));
+        return true;
+    }
+    SendSysMessage(LANG_BG_COMMAND_NO_BG_FOUND);
+    SetSentErrorMessage(true);
+    return false;
+
+}
+
+bool ChatHandler::HandleBgCreateCommand(const char* args)
+{
+    if(!*args)
+        return false;
+    char* arg1 = strtok((char*)args, " ");
+    char* arg2 = strtok(NULL, " ");
+    if(!arg1 || !arg2)
+        return false;
+    uint32 bgTypeId_ = atoi(arg1);
+    if(bgTypeId_<=0 || bgTypeId_>=MAX_BATTLEGROUND_TYPE_ID)
+        return false;
+    BattleGroundTypeId bgTypeId=BattleGroundTypeId(bgTypeId_);
+    BattleGround *bg_template = sBattleGroundMgr.GetBattleGroundTemplate(bgTypeId);
+    if(!bg_template)
+        return false;
+
+    uint32 level = atoi(arg2);
+
+    if(level > bg_template->GetMaxLevel())
+    {
+        PSendSysMessage("specified level(%i) is higher than bg-maxlevel(%i)",level, bg_template->GetMaxLevel());
+        SetSentErrorMessage(true);
+        return false;
+    }
+    if(level < bg_template->GetMinLevel())
+    {
+        PSendSysMessage("specified level(%i) is lower than bg-minlevel(%i)",level, bg_template->GetMinLevel());
+        SetSentErrorMessage(true);
+        return false;
+    }
+    //start calculating queueid
+    BGQueueIdBasedOnLevel queue_id;
+    {
+        uint32 diff=(bgTypeId==BATTLEGROUND_AV)?1:0;
+        if(level==10+diff)
+            level++;
+        queue_id=BGQueueIdBasedOnLevel(uint32((level-(10+diff))/10));
+        if(queue_id>=MAX_BATTLEGROUND_QUEUES)
+        {
+            PSendSysMessage("too high queue_id %u this shouldn't happen",queue_id);
+            SetSentErrorMessage(true);
+            return false;
+        }
+    }
+
+    bool isRated=false;
+    uint32 arenatype=0;
+    if(bg_template->isArena())
+    {
+        char* arg3 = strtok(NULL, " ");
+        char* arg4 = strtok(NULL, " ");
+        if(!arg3 || !arg4)
+            return false;
+        arenatype = atoi(arg3);
+        isRated = atoi(arg4);
+        if(!(arenatype==ARENA_TYPE_2v2 || arenatype==ARENA_TYPE_3v3 || arenatype==ARENA_TYPE_5v5))
+        {
+            PSendSysMessage("wrong arenatype specified must be %i, %i or %i you used %i",ARENA_TYPE_2v2, ARENA_TYPE_3v3, ARENA_TYPE_5v5,arenatype);
+            SetSentErrorMessage(true);
+            return false;
+        }
+
+    }
+    BattleGround* bg = sBattleGroundMgr.CreateNewBattleGround(bgTypeId,queue_id,arenatype,isRated);
+    // start the joining of the bg
+    bg->SetStatus(STATUS_WAIT_JOIN);
+    bg->StartBattleGround();
+
+    std::ostringstream reply;
+    reply << battlegroundLink(bg).c_str();
+    reply << " lvl:" << bg->GetMinLevel() << "-" << bg->GetMaxLevel();
+    if(reply.str().empty())
+        SendSysMessage(LANG_BG_COMMAND_NO_BG_FOUND);
+    else
+        SendSysMessage(reply.str().c_str());
+    return true;
+
+
+}
+
+bool ChatHandler::HandleBgDebugCommand(const char * /*args*/)
+{
+    sBattleGroundMgr.ToggleTesting();
+    return true;
+}
